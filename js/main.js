@@ -1,12 +1,27 @@
 console.log("Hello World!")
 
-var canvas = new fabric.Canvas("canvas")
-console.log(canvas)
 
-function resizeCanvas() {
-  // resize to full window width and height
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
+
+var canvas
+
+function getPixelRatio() {
+  let dpr = window.devicePixelRatio || 1,
+      bsr = ctx.webkitBackingStorePixelRatio ||
+            ctx.mozBackingStorePixelRatio ||
+            ctx.msBackingStorePixelRatio ||
+            ctx.oBackingStorePixelRatio ||
+            ctx.backingStorePixelRatio || 1
+  return dpr / bsr
+}
+
+function createCanvas() {
+  let c = document.getElementById("canvas")
+  c.width = window.innerWidth
+  c.height = window.innerHeight
+  c.style.width = window.innerWidth + "px"
+  c.style.height = window.innerHeight + "px"
+  canvas = new fabric.Canvas("canvas")
+  console.log(canvas)
 }
 
 function test_1() {
@@ -21,6 +36,8 @@ function test_1() {
 
   // "add" rectangle onto canvas
   canvas.add(rect)
+  
+  console.log(rect)
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -28,5 +45,5 @@ document.addEventListener("DOMContentLoaded", function() {
 })
 
 window.addEventListener("load", function() {
-  resizeCanvas()
+  test_1()
 })

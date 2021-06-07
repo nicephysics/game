@@ -1,0 +1,12 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  user-select: none;
+}
+
+#canvas-area {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+}

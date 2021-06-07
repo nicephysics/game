@@ -5,7 +5,8 @@ console.log(canvas)
 
 function resizeCanvas() {
   // resize to full window width and height
-  
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
 }
 
 function test_1() {
@@ -21,3 +22,11 @@ function test_1() {
   // "add" rectangle onto canvas
   canvas.add(rect)
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  // moo
+})
+
+window.addEventListener("load", function() {
+  resizeCanvas()
+})

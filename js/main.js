@@ -21,7 +21,7 @@ function createCanvas() {
   c.style.width = window.innerWidth + "px"
   c.style.height = window.innerHeight + "px"
   canvas = new fabric.Canvas("canvas", {
-    selecting: false,
+    selection: false,
   })
   fabric.Object.prototype.selectable = false
   console.log(canvas)

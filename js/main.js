@@ -22,6 +22,7 @@ function createCanvas() {
   c.style.height = window.innerHeight + "px"
   canvas = new fabric.Canvas("canvas", {
     selection: false,
+    hoverCursor: "default",
   })
   fabric.Object.prototype.selectable = false
   console.log(canvas)

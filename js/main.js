@@ -22,8 +22,8 @@ function createCanvas() {
   c.style.height = window.innerHeight + "px"
   canvas = new fabric.Canvas("canvas", {
     selection: false,
-    interactive: false,
   })
+  canvas.selection = false
   console.log(canvas)
 }
 
@@ -36,6 +36,7 @@ function test_1() {
     width: 20,
     height: 20,
     angle: 0,
+    selection: false,
   })
 
   // "add" rectangle onto canvas

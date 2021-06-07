@@ -23,7 +23,6 @@ function createCanvas() {
   canvas = new fabric.Canvas("canvas", {
     selecting: false,
   })
-  canvas.prototype.selecting = false
   fabric.Object.prototype.selectable = false
   console.log(canvas)
 }

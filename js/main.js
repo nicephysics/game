@@ -2,7 +2,7 @@
 
 // util
 import { events } from "./util/events.js"
-import { world } from "./util/world.js"
+import { util_world } from "./util/world.js"
 import { display } from "./util/display.js"
 
 // matter.js module aliases

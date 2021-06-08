@@ -50,6 +50,7 @@ var init = function() {
     options: {
       width: _width,
       height: _height,
+      hasBounds: true,
       pixelRatio: 1, // for now... TODO
       background: '#FAFAFA', // ok
       wireframes: false, // yes

@@ -1,4 +1,9 @@
-// imports go here
+// ===== imports go here =====
+
+// util
+import { events } from "./util/events.js"
+import { world } from "./util/world.js"
+import { display } from "./util/display.js"
 
 // matter.js module aliases
 var Engine = Matter.Engine,
@@ -58,7 +63,7 @@ var init = function() {
       console.log(composite)
   })
   
-  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true })
+  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, render: display.default.ground })
   Composite.add(world, [ ground ])
 
   // run the renderer

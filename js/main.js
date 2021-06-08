@@ -1,0 +1,61 @@
+// imports go here
+
+// matter.js module aliases
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Bodies = Matter.Bodies,
+    Mouse = Matter.Mouse,
+    Composite = Matter.Composite,
+    engine, // default engine
+    world, // default world
+    canvas, // canvas
+    _width = 0, // window width
+    _height = 0, // window height
+    _end_of_global_variables_ // the end
+
+// called on window load
+var init = function() {
+  // create the engine
+  engine = Engine.create()
+  engine.gravity.x = 0
+  engine.gravity.y = 0
+    
+  canvas = document.getElementById("canvas")
+  _width = window.innerWidth
+  _height = window.innerHeight
+    
+  canvas.width = _width
+  canvas.height = _height
+  
+  // create a renderer
+  var render = Render.create({
+    canvas: canvas,
+    engine: engine,
+    mouse: Mouse.create(canvas),
+    options: {
+      width: _width,
+      height: _height,
+      pixelRatio: 1, // for now... TODO
+      background: '#FAFAFA', // ok
+      wireframes: false, // yes
+      showMousePosition: true, // ?
+    }
+  })
+  
+  world = engine.world
+  // Composite.add(engine.world, [])
+
+  // run the renderer
+  Render.run(render)
+
+  // create runner
+  var runner = Runner.create()
+
+  // run the engine
+  Runner.run(runner, engine)
+}
+
+window.addEventListener("load", function() {
+    init()
+})

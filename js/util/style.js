@@ -1,11 +1,11 @@
 /* this file creates render objects */
 
-export var display = { }
+export var style = { }
 
-display.default = {
+style.default = {
   ground: { fillStyle: "#bd3900" },
 }
 
-display.fill = function(fillStyle) {
+style.fill = function(fillStyle) {
   return { fillStyle: fillStyle }
 }

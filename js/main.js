@@ -53,17 +53,16 @@ var init = function() {
       pixelRatio: 1, // for now... TODO
       background: '#FAFAFA', // ok
       wireframes: false, // yes
-      showMousePosition: true, // ?
+      showMousePosition: true, // to display the mouse coords, see Mouse.create(canvas) above
     }
   })
   
-  // an example of using composite events on the world
-  Events.on(world, 'afterAdd', function(event) {
-      var composite = event.object // not confirmed whether it is a composite
-      console.log(composite)
+  // example test
+  events.afterAdd(engine, function(compositeArray) {
+      console.log("Added: ", composite)
   })
   
-  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, render: display.default.ground })
+  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, label: "Ground", render: display.default.ground })
   Composite.add(world, [ ground ])
 
   // run the renderer

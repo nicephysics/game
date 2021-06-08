@@ -1,3 +1,5 @@
+var Events = Matter.Events
+
 export var events = { }
 
 // input_function(compositeArray) { for (let composite of compositeArray) { ... } }

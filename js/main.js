@@ -64,7 +64,7 @@ var init = function() {
   
   // example test
   events.afterAdd(engine, function(compositeArray) {
-      console.log("Added: ", composite)
+      console.log("Added: ", compositeArray)
   })
   
   var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, label: "Ground", render: style.default.ground })

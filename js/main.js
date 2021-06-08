@@ -22,7 +22,7 @@ var Engine = Matter.Engine,
     canvas, // the canvas
     engine, // default engine
     world, // default world
-    renderer, // default render
+    render, // default render
     mouse, // default mouse created from canvas
     mouseConstraint, // the mouse constraint
     _width = 0, // window width
@@ -67,7 +67,7 @@ var init = function() {
   Composite.add(world, mouseConstraint)
   
   // create the renderer
-  renderer = Render.create({
+  render = Render.create({
     canvas: canvas,
     engine: engine,
     mouse: mouse,
@@ -129,7 +129,7 @@ var init = function() {
   })
 
   // run the renderer
-  Render.run(renderer)
+  Render.run(render)
 
   // create runner
   var runner = Runner.create()

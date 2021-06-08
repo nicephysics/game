@@ -22,6 +22,7 @@ var Engine = Matter.Engine,
     canvas, // the canvas
     engine, // default engine
     world, // default world
+    renderer, // default render
     mouse, // default mouse created from canvas
     _width = 0, // window width
     _height = 0, // window height
@@ -43,11 +44,29 @@ var init = function() {
     
   canvas.width = _width
   canvas.height = _height
+  
+  // example event test
+  events.afterAdd(engine, function(compositeArray) {
+      console.log("Added: ", compositeArray)
+  })
+  
+  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, label: "Ground", render: style.default.ground })
+  Composite.add(world, [ ground ])
     
   mouse = Mouse.create(canvas)
+  mouseConstraint = MouseConstraint.create(engine, {
+    mouse: mouse,
+    constraint: {
+      stiffness: 0.2,
+      render: {
+        visible: true,
+      },
+    },
+  })
+  Composite.add(world, mouseConstraint)
   
-  // create a renderer
-  var render = Render.create({
+  // create the renderer
+  renderer = Render.create({
     canvas: canvas,
     engine: engine,
     mouse: mouse,
@@ -61,17 +80,9 @@ var init = function() {
       showMousePosition: true, // to display the mouse coords, see Mouse.create(canvas) above
     }
   })
-  
-  // example test
-  events.afterAdd(engine, function(compositeArray) {
-      console.log("Added: ", compositeArray)
-  })
-  
-  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true, label: "Ground", render: style.default.ground })
-  Composite.add(world, [ ground ])
 
   // run the renderer
-  Render.run(render)
+  Render.run(renderer)
 
   // create runner
   var runner = Runner.create()

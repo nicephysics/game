@@ -36,3 +36,17 @@ events.collisionEnd = function(engine, input_function) {
     input_function(event.pairs)
   })
 }
+
+// input_function() { ... }
+events.beforeRender = function(render, input_function) {
+  Events.on(render, "beforeRender", function(event) {
+    input_function()
+  })
+}
+
+// input_function() { ... }
+events.afterRender = function(render, input_function) {
+  Events.on(render, "afterRender", function(event) {
+    input_function()
+  })
+}

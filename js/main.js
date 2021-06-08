@@ -24,6 +24,7 @@ var Engine = Matter.Engine,
     world, // default world
     renderer, // default render
     mouse, // default mouse created from canvas
+    mouseConstraint, // the mouse constraint
     _width = 0, // window width
     _height = 0, // window height
     _end_of_global_variables_ // the end

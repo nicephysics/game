@@ -1,6 +1,6 @@
 export var events = { }
 
-// input_function(object) { ??? }
+// input_function(compositeArray) { for (let composite of compositeArray) { ... } }
 events.afterAdd = function(engine, input_function) {
   Events.on(engine, 'afterAdd', function(event) {
     input_function(event.object)

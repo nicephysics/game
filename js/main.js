@@ -22,6 +22,7 @@ var Engine = Matter.Engine,
     canvas, // the canvas
     engine, // default engine
     world, // default world
+    mouse, // default mouse created from canvas
     _width = 0, // window width
     _height = 0, // window height
     _end_of_global_variables_ // the end
@@ -42,12 +43,14 @@ var init = function() {
     
   canvas.width = _width
   canvas.height = _height
+    
+  mouse = Mouse.create(canvas)
   
   // create a renderer
   var render = Render.create({
     canvas: canvas,
     engine: engine,
-    mouse: Mouse.create(canvas),
+    mouse: mouse,
     options: {
       width: _width,
       height: _height,

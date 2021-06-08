@@ -58,7 +58,15 @@ var init = function() {
       console.log("Added: ", compositeArray)
   })
   
-  var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, { isStatic: true, label: "Ground", render: style.default.ground })
+  var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
+    isStatic: true,
+    collisionFilter: {
+      category: 0, // none yet
+    }
+    label: "Ground", 
+    render: style.default.ground,
+  })
+  
   Composite.add(world, [ ground ])
     
   mouse = Mouse.create(canvas)
@@ -69,6 +77,9 @@ var init = function() {
       render: {
         visible: true,
       },
+    },
+    collisionFilter: {
+      mask: 0, // none yet
     },
   })
   Composite.add(world, mouseConstraint)

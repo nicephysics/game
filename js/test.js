@@ -21,9 +21,12 @@ function createCanvas() {
   c.style.width = window.innerWidth + "px"
   c.style.height = window.innerHeight + "px"
   canvas = new fabric.Canvas("canvas", {
+    // needed for non-interactivity
     selection: false,
     hoverCursor: "default",
   })
+  // and this line is important!!!
+  // can still set { selectable: true } in options
   fabric.Object.prototype.selectable = false
   console.log(canvas)
 }
@@ -41,14 +44,14 @@ function test_1() {
 
   // "add" rectangle onto canvas
   canvas.add(rect)
-  
+  // log for testing
   console.log(rect)
-  
+  // not needed?
   canvas.renderAll()
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  // moo
+  // ok
 })
 
 window.addEventListener("load", function() {

@@ -85,14 +85,16 @@ var init = function() {
   // MOUSE TEST
   
   // keep track of current bounds scale (view zoom)
-  var boundsScaleTarget = 1,
-      boundsScale = {
-        x: 1,
-        y: 1
-      };
+  var boundsScale = {
+    x: 1,
+    y: 1,
+    target: 1,
+  };
   
   // render event listener
   events.beforeRender(render, function() {
+    console.log(boundsScale)
+      
     var mouse = render.mouse,
         world = render.engine.world,
         translate
@@ -100,13 +102,13 @@ var init = function() {
     var scaleFactor = mouse.wheelDelta * -0.1;
     if (scaleFactor !== 0) {
       if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.4)) {
-        boundsScaleTarget += scaleFactor;
+        boundsScale.target += scaleFactor;
       }
     }
     
-    if (Math.abs(boundsScale.x - boundsScaleTarget) > 0.01) {
+    if (Math.abs(boundsScale.x - boundsScale.target) > 0.01) {
       // smoothly tween scale factor
-      scaleFactor = (boundsScaleTarget - boundsScale.x) * 0.2;
+      scaleFactor = (boundsScale.target - boundsScale.x) * 0.2;
       boundsScale.x += scaleFactor;
       boundsScale.y += scaleFactor;
 

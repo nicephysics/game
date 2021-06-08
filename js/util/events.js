@@ -2,7 +2,7 @@ export var events = { }
 
 // input_function(compositeArray) { for (let composite of compositeArray) { ... } }
 events.afterAdd = function(engine, input_function) {
-  Events.on(engine, 'afterAdd', function(event) {
+  Events.on(engine.world, 'afterAdd', function(event) {
     input_function(event.object)
   })
 }

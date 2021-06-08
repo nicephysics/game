@@ -6,6 +6,11 @@ import { util_world } from "./util/world.js"
 import { display } from "./util/display.js"
 import { style } from "./util/style.js"
 
+if (true) {
+  // realise that this file has two spaces as a tab
+  1
+}
+
 // matter.js module aliases
 var Engine = Matter.Engine,
     Render = Matter.Render,
@@ -17,6 +22,8 @@ var Engine = Matter.Engine,
     Composite = Matter.Composite,
     Composites = Matter.Composites,
     Common = Matter.Common,
+    Vector = Matter.Vector,
+    Bounds = Matter.Bounds,
     MouseConstraint = Matter.MouseConstraint,
     Detector = Matter.Detector, // ?
     canvas, // the canvas

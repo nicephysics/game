@@ -4,12 +4,18 @@
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
+    Body = Matter.Body,
     Bodies = Matter.Bodies,
     Mouse = Matter.Mouse,
+    Events = Matter.Events,
     Composite = Matter.Composite,
+    Composites = Matter.Composites,
+    Common = Matter.Common,
+    MouseConstraint = Matter.MouseConstraint,
+    Detector = Matter.Detector, // ?
+    canvas, // the canvas
     engine, // default engine
     world, // default world
-    canvas, // canvas
     _width = 0, // window width
     _height = 0, // window height
     _end_of_global_variables_ // the end
@@ -18,8 +24,11 @@ var Engine = Matter.Engine,
 var init = function() {
   // create the engine
   engine = Engine.create()
+  world = engine.world
+  
+  // set gravity
   engine.gravity.x = 0
-  engine.gravity.y = 0
+  engine.gravity.y = 0.001
     
   canvas = document.getElementById("canvas")
   _width = window.innerWidth
@@ -43,8 +52,14 @@ var init = function() {
     }
   })
   
-  world = engine.world
-  // Composite.add(engine.world, [])
+  // an example of using composite events on the world
+  Events.on(world, 'afterAdd', function(event) {
+      var composite = event.object // not confirmed whether it is a composite
+      console.log(composite)
+  })
+  
+  var ground = Bodies.rectangle(_width / 2, _height + 10, _width + 10, 60, { isStatic: true })
+  Composite.add(world, [ ground ])
 
   // run the renderer
   Render.run(render)

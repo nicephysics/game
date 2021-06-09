@@ -109,6 +109,8 @@ var init = function() {
   display_view.init(render, mouseConstraint)
   
   Tower.init(render)
+  var tower = new Tower()
+  tower.test_1()
 
   // run the renderer
   Render.run(render)

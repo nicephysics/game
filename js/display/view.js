@@ -30,8 +30,8 @@ display_view.init = function(
 
   // create limits for the viewport
   var limits = {
-      min: { x: _width * -5.5, y: -300 },
-      max: { x: _width * 5.5, y: _height },
+      min: { x: _width * -6.0, y: -300 },
+      max: { x: _width * 6.0, y: _height },
       zoom: { min: 1.0, max: 1.0 },
   }
   

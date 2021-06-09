@@ -59,12 +59,12 @@ export class Tower {
   // ##### end tower static fields
   
   // ##### tower public instance fields
+  type = "basic" // string
   position = Vector.create(0, 0) // Vector
   rotation = 0 // floating-point in radians
-  stat = new Stat(this) // Stat
-  type = "basic" // string
   master = this // Tower
   guns = null // Gun[]
+  stat = new Stat(this) // Stat
   // matter instances
   body = null // Matter.Body
   // ##### end tower public instance fields

@@ -9,6 +9,8 @@ import { display } from "./display/display.js"
 import { display_view } from "./display/view.js"
 // config
 import { config, category } from "./config/config.js"
+// game
+import { Tower } from "./game/tower.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -105,6 +107,8 @@ var init = function() {
   })
   
   display_view.init(render, mouseConstraint)
+  
+  Tower.init(render)
 
   // run the renderer
   Render.run(render)

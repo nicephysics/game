@@ -62,7 +62,7 @@ export class Tower {
   type = "basic" // string
   position = Vector.create(0, 0) // Vector
   rotation = 0 // floating-point in radians
-  master = this // Tower
+  parent = this // Tower
   guns = [ ] // Gun[]
   stat = new Stat(this) // Stat
   // matter instances

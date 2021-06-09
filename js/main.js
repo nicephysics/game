@@ -50,7 +50,7 @@ var init = function() {
   
   // set gravity
   engine.gravity.x = 0
-  engine.gravity.y = 0.001
+  engine.gravity.y = 1.0
     
   canvas = document.getElementById("canvas")
   _width = window.innerWidth

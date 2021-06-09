@@ -60,7 +60,7 @@ display_view.init = function(
   
   // render event listener (main function)
   events.beforeRender(render, function() {
-    console.log(display_view.mousedown, display_view.dragging)
+    // console.log(display_view.mousedown, display_view.dragging)
       
     var mouse = render.mouse,
         mousepos = mouse.absolute,

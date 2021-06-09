@@ -13,6 +13,9 @@ export var guns = [ ] // Gun[]
 export class Gun {
   // static
   static set = { } // to be filled later
+  static create(tower, guntype) {
+    return new Gun(tower, set[guntype])
+  }
   
   // fields
   tower = null
@@ -24,6 +27,8 @@ export class Gun {
   
   // constructor
   constructor(tower, set) {
+    guns.push(this)
+    
     this.tower = tower
     this.setLocation(set)
   }

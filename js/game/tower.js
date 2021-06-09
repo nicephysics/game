@@ -1,5 +1,6 @@
 import { stats, Stat } from "./stat.js"
 import { Gun } from "./gun.js"
+import { config, category } from "../config/config.js"
 
 if (true) {
   // 2 spaces indent
@@ -31,20 +32,23 @@ var tower = new Tower(type, parent); // parent's parent will be taken, if any
 */
 export class Tower {
   // ##### tower static fields
+  // a running number for ID and default label
+  static create_count = 1
+  // all tower types (string) in an array
   static types = [
     "basic",
   ]
-  
+  // map from type to kind
   static kinds = {
     basic: "shooter",
   }
-  
+  // matter.js stuff (static and global) (useful!)
   static engine = null
   static render = null
   static canvas = null
   static mouse = null
   static world = null
-  
+  // init function, important!
   static init(render) {
     Tower.render = render
     Tower.engine = render.engine
@@ -52,7 +56,7 @@ export class Tower {
     Tower.mouse = render.mouse
     Tower.world = render.engine.world
   }
-  
+  // draw all guns (and other stuff related to towers not already drawn by matter renderer)
   static drawAll() {
     towers.forEach((tower) => {
       tower.guns.forEach((gun) => {
@@ -63,9 +67,9 @@ export class Tower {
   // ##### end tower static fields
   
   // ##### tower public instance fields
-  type = "basic" // string
-  position = Vector.create(0, 0) // Vector
-  rotation = 0 // floating-point in radians
+  id = Tower.create_count++ // integer, also increment Tower.create_count
+  label = (this.id).toString(10) // default (string) label for towers, uses base 10
+  type = "basic" // default (string) tower type is basic
   parent = this // Tower
   guns = [ ] // Gun[]
   stat = new Stat(this) // Stat
@@ -82,12 +86,27 @@ export class Tower {
   }
   
   // ##### tower getter functions
+  // gets the kind of the tower
   get kind() {
     return Tower.kinds[this.type]
   }
+  // returns the tower body's current position (as a Matter.Vector)
+  get position() {
+    return this.body.position
+  }
+  // returns the tower body's current angle
+  get rotation() {
+    return this.body.angle
+  }
+  // alias for this.rotation, try not to use
+  get angle() {
+    return this.body.angle
+  }
+  // this.position's x-coordinate
   get x() {
     return this.position.x
   }
+  // this.position's y-coordinate
   get y() {
     return this.position.y
   }
@@ -104,7 +123,10 @@ export class Tower {
   
   // ##### tower setter functions
   set type(t) {
-    this.stat.setType(t)
+    this.refresh()
+  }
+  set label(label) {
+    this.body.label = label
   }
   // ##### end of tower setter functions
   
@@ -130,7 +152,14 @@ export class Tower {
   }
   
   createBody() {
-    this.body = Bodies.circle(this.x, this.y, this.size)
+    this.body = Bodies.circle(this.x, this.y, this.size, {
+      isStatic: true,
+      label: "Tower Body " + this.label,
+      collisionFilter: {
+        category: category.you,
+        // mask: category.all & !category.you
+      }
+    })
     // add to world
     Composite.add(Tower.world, this.body)
   }

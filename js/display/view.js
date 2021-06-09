@@ -102,6 +102,7 @@ display_view.init = function(
     if (display_view.panning()) {
       // get the vector to translate the view      
       translate = Vector.clone(display_view.mousedelta)
+      display_view.mousedelta = Vector.create(0, 0)
       
       console.log(translate)
 

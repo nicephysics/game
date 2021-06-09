@@ -64,7 +64,6 @@ display_view.init = function(
   // render event listener (main function)
   events.beforeRender(render, function() {
     console.log(display_view.mousedown, display_view.dragging)
-    if (display_view.mousedown) { console.log(display_view.mousedownpos) }
       
     var mouse = render.mouse,
         world = render.engine.world,
@@ -101,10 +100,12 @@ display_view.init = function(
     } // end zooming
     
     if (display_view.panning()) {
-      // create a vector to translate the view, allowing the user to control view speed
+      // create a vector to translate the view
       var mousepos = mouse.absolute
       
       translate = Vector.sub(display_view.mousedownpos, mousepos)
+      
+      console.log(display_view.mousedownpos, mousepos, translate)
 
       // prevent the view moving outside the extents
       if (render.bounds.min.x + translate.x < limits.min.x)

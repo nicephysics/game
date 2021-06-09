@@ -33,7 +33,7 @@ var tower = new Tower(type, parent); // parent's parent will be taken, if any
 export class Tower {
   // ##### tower static fields
   // a running number for ID and default label
-  static create_count = 1
+  static _count = 1
   // all tower types (string) in an array
   static types = [
     "basic",
@@ -67,7 +67,7 @@ export class Tower {
   // ##### end tower static fields
   
   // ##### tower public instance fields
-  id = Tower.create_count++ // integer, also increment Tower.create_count
+  id = Tower._count++ // integer, also increment Tower.create_count
   label = "Tower #" + (this.id).toString(10) // default (string) label for towers, uses base 10
   type = "basic" // default (string) tower type is basic
   targetpos = Vector.create(0, 0) // target position of tower
@@ -156,7 +156,7 @@ export class Tower {
   createBody() {
     this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
       isStatic: true,
-      label: "Tower Body #" + this.id,
+      label: "Tower Body #" + this.id.toString(10),
       collisionFilter: {
         category: category.you,
         // mask: category.all & !category.you

@@ -68,8 +68,10 @@ export class Tower {
   
   // ##### tower public instance fields
   id = Tower.create_count++ // integer, also increment Tower.create_count
-  label = (this.id).toString(10) // default (string) label for towers, uses base 10
+  label = "Tower #" + (this.id).toString(10) // default (string) label for towers, uses base 10
   type = "basic" // default (string) tower type is basic
+  targetpos = Vector.create(0, 0) // target position of tower
+  targetrot = 0 // target rotation of tower
   parent = this // Tower
   guns = [ ] // Gun[]
   stat = new Stat(this) // Stat
@@ -152,9 +154,9 @@ export class Tower {
   }
   
   createBody() {
-    this.body = Bodies.circle(this.x, this.y, this.size, {
+    this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
       isStatic: true,
-      label: "Tower Body " + this.label,
+      label: "Tower Body #" + this.id,
       collisionFilter: {
         category: category.you,
         // mask: category.all & !category.you

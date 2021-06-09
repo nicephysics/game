@@ -12,7 +12,7 @@ var Bounds = Matter.Bounds,
 export var display_view = { }
 
 display_view.mousedown = false
-display_view.mousedownpos = 0 // Vector
+display_view.mousepos = Vector.create(0, 0) // Vector
 display_view.mousedelta = Vector.create(0, 0) // Vector
 display_view.dragging = false
 display_view.panning = function() {
@@ -44,13 +44,10 @@ display_view.init = function(
   
   events.mousedown(mouseConstraint, function(mouse) {
     display_view.mousedown = true
-    display_view.mousedelta = Vector.add(display_view.mousedelta, Vector.sub(display_view.mousedownpos, mouse.absolute))
-    display_view.mousedownpos = mouse.absolute
   })
   
   events.mouseup(mouseConstraint, function(mouse) {
     display_view.mousedown = false
-    display_view.mousedownpos = mouse.absolute
   })
   
   events.startdrag(mouseConstraint, function(body) {
@@ -66,6 +63,7 @@ display_view.init = function(
     console.log(display_view.mousedown, display_view.dragging)
       
     var mouse = render.mouse,
+        mousepos = mouse.absolute,
         world = render.engine.world,
         translate
     
@@ -102,10 +100,9 @@ display_view.init = function(
     if (display_view.panning()) {
       // get the vector to translate the view      
       translate = Vector.clone(display_view.mousedelta)
-      display_view.mousedelta = Vector.create(0, 0)
       
       console.log(translate)
-
+      
       // prevent the view moving outside the extents
       if (render.bounds.min.x + translate.x < limits.min.x)
           translate.x = limits.min.x - render.bounds.min.x
@@ -125,5 +122,8 @@ display_view.init = function(
       // we must update the mouse too
       Mouse.setOffset(mouse, render.bounds.min)
     } // end panning
+    
+    display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)
+    display_view.mousepos = Vector.clone(mousepos)
   }) // end events.beforeRender
 } // end display_view.init

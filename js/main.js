@@ -63,7 +63,7 @@ var init = function() {
     isStatic: true,
     collisionFilter: {
       category: 0, // none yet
-    }
+    },
     label: "Ground", 
     render: style.default.ground,
   })

@@ -1,5 +1,9 @@
 import { events } from "../util/events.js"
 
+if (true) {
+  // 2 spaces!
+}
+
 var Bounds = Matter.Bounds,
     Events = Matter.Events, // not used?
     Mouse = Matter.Mouse,
@@ -39,7 +43,9 @@ display_view.init = function(
   
   events.mousedown(mouseConstraint, function(mouse) {
     display_view.mousedown = true
-    display_view.mousedownpos = mouse.absolute
+    if (display_view.mousedownpos == null) {
+      display_view.mousedownpos = mouse.absolute
+    }
   })
   
   events.mouseup(mouseConstraint, function(mouse) {

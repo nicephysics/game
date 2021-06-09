@@ -3,8 +3,9 @@
 // util
 import { events } from "./util/events.js"
 import { util_world } from "./util/world.js"
-import { display } from "./util/display.js"
+import { display } from "./display/display.js"
 import { style } from "./util/style.js"
+import { display_view } from "./display/view.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -100,53 +101,7 @@ var init = function() {
     }
   })
   
-  // MOUSE TEST
-  
-  // keep track of current bounds scale (view zoom)
-  var boundsScale = {
-    x: 1,
-    y: 1,
-    target: 1,
-  };
-  
-  // render event listener
-  events.beforeRender(render, function() {
-    console.log(boundsScale)
-      
-    var mouse = render.mouse,
-        world = render.engine.world,
-        translate
-    
-    var scaleFactor = mouse.wheelDelta * -0.1;
-    if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= 0.6) || (scaleFactor > 0 && boundsScale.x <= 1.4)) {
-        boundsScale.target += scaleFactor;
-      }
-    }
-    
-    if (Math.abs(boundsScale.x - boundsScale.target) > 0.002) {
-      // smoothly tween scale factor
-      scaleFactor = (boundsScale.target - boundsScale.x) * 0.2;
-      boundsScale.x += scaleFactor;
-      boundsScale.y += scaleFactor;
-
-      // scale the render bounds
-      render.bounds.max.x = render.bounds.min.x + render.options.width * boundsScale.x;
-      render.bounds.max.y = render.bounds.min.y + render.options.height * boundsScale.y;
-
-      // translate so zoom is from centre of view
-      translate = {
-        x: render.options.width * scaleFactor * -0.5,
-        y: render.options.height * scaleFactor * -0.5
-      };
-
-      Bounds.translate(render.bounds, translate);
-
-      // update mouse
-      Mouse.setScale(mouse, boundsScale);
-      Mouse.setOffset(mouse, render.bounds.min);
-    }
-  })
+  display_view.init(render, mouseConstraint)
 
   // run the renderer
   Render.run(render)

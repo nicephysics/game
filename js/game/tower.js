@@ -1,4 +1,5 @@
 import { stats, Stat } from "./stat.js"
+import { Gun } from "./gun.js"
 
 if (true) {
   // 2 spaces indent
@@ -60,7 +61,7 @@ export class Tower {
   // ##### tower public instance fields
   position = Vector.create(0, 0) // Vector
   rotation = 0 // floating-point in radians
-  stat = Stat(this) // Stat
+  stat = new Stat(this) // Stat
   type = "basic" // string
   master = this // Tower
   guns = null // Gun[]

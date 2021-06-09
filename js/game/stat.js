@@ -36,6 +36,6 @@ export class Stat {
   }
   
   setType(type) {
-    set(stats[type])
+    this.set(stats[type])
   }
 }

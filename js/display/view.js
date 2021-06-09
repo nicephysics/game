@@ -69,7 +69,7 @@ display_view.init = function(
     
     var scaleFactor = mouse.wheelDelta * -0.1
     if (scaleFactor !== 0) {
-      if ((scaleFactor < 0 && boundsScale.x >= limits.zoom.min) || (scaleFactor > 0 && boundsScale.x <= limits.zoom.max)) {
+      if ((scaleFactor < 0 && boundsScale.x > limits.zoom.min) || (scaleFactor > 0 && boundsScale.x < limits.zoom.max)) {
         boundsScale.target += scaleFactor
       }
     }

@@ -57,7 +57,8 @@ display_view.init = function(
   
   // render event listener (main function)
   events.beforeRender(render, function() {
-    console.log(boundsScale)
+    console.log(display_view.mousedown, display_view.dragging)
+    if (display_view.mousedown) { console.log(display_view.mousedownpos) }
       
     var mouse = render.mouse,
         world = render.engine.world,

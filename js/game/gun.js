@@ -12,12 +12,15 @@ export var guns = [ ] // Gun[]
 
 export class Gun {
   // static
+  static _count = 1
   static set = { } // to be filled later
   static create(tower, guntype) {
     return new Gun(tower, Gun.set[guntype])
   }
   
   // fields
+  id = Gun._count++
+  label = "Gun #" + this.id
   tower = null
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)

@@ -12,7 +12,7 @@ var Bounds = Matter.Bounds,
 export var display_view = { }
 
 display_view.mousedown = false
-display_view.mousedownpos = null // Vector
+display_view.mousedownpos = 0 // Vector
 display_view.dragging = false
 display_view.panning = function() {
   return display_view.mousedown && !display_view.dragging
@@ -43,14 +43,14 @@ display_view.init = function(
   
   events.mousedown(mouseConstraint, function(mouse) {
     display_view.mousedown = true
-    if (display_view.mousedownpos == null) {
+    if (display_view.mousedownpos === 0) {
       display_view.mousedownpos = mouse.absolute
     }
   })
   
   events.mouseup(mouseConstraint, function(mouse) {
     display_view.mousedown = false
-    display_view.mousedownpos = null
+    display_view.mousedownpos = 0
   })
   
   events.startdrag(mouseConstraint, function(body) {

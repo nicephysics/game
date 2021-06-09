@@ -37,6 +37,8 @@ events.collisionEnd = function(engine, input_function) {
   })
 }
 
+/* RENDER EVENTS */
+
 // input_function() { ... }
 events.beforeRender = function(render, input_function) {
   Events.on(render, "beforeRender", function(event) {
@@ -48,5 +50,41 @@ events.beforeRender = function(render, input_function) {
 events.afterRender = function(render, input_function) {
   Events.on(render, "afterRender", function(event) {
     input_function()
+  })
+}
+
+// input_function(mouse) { ... }
+events.mousedown = function(mouseConstraint, input_function) {
+  Events.on(mouseConstraint, "mousedown", function(event) {
+    input_function(event.mouse)
+  })
+}
+
+
+// input_function(mouse) { ... }
+events.mousemove = function(mouseConstraint, input_function) {
+  Events.on(mouseConstraint, "mousemove", function(event) {
+    input_function(event.mouse)
+  })
+}
+
+// input_function(mouse) { ... }
+events.mouseup = function(mouseConstraint, input_function) {
+  Events.on(mouseConstraint, "mouseup", function(event) {
+    input_function(event.mouse)
+  })
+}
+
+// input_function(body) { ... }
+events.startdrag = function(mouseConstraint, input_function) {
+  Events.on(mouseConstraint, "startdrag", function(event) {
+    input_function(event.body)
+  })
+}
+
+// input_function(body) { ... }
+events.enddrag = function(mouseConstraint, input_function) {
+  Events.on(mouseConstraint, "enddrag", function(event) {
+    input_function(event.body)
   })
 }

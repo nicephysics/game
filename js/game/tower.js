@@ -17,15 +17,15 @@ var Bodies = Matter.Bodies,
 
 /*
 
-# How to use class Tower
+# How to use class: Tower
 
 ## IMPORTANT!
 Initialize the class first by calling:
 Tower.init(render);
 
 ## Initialization
-var tower = new Tower(); OR
-var tower = new Tower(type); OR
+var tower = new Tower(); // basic tower
+var tower = new Tower(type); // specify type of tower
 var tower = new Tower(type, parent); // parent's parent will be taken, if any
 
 */
@@ -34,14 +34,17 @@ export class Tower {
   static types = [
     "basic",
   ]
+  
   static kinds = {
     basic: "shooter",
   }
+  
   static engine = null
   static render = null
   static canvas = null
   static mouse = null
   static world = null
+  
   static init(render) {
     Tower.render = render
     Tower.engine = render.engine
@@ -49,12 +52,13 @@ export class Tower {
     Tower.mouse = render.mouse
     Tower.world = render.engine.world
   }
+  
   static drawAll() {
-    towers.forEach( (tower) => {
-      tower.guns.forEach( (gun) => {
+    towers.forEach((tower) => {
+      tower.guns.forEach((gun) => {
         gun.draw(Tower.render)
-      } )
-    } )
+      })
+    })
   }
   // ##### end tower static fields
   
@@ -71,7 +75,7 @@ export class Tower {
   
   constructor(type = "basic", parent = this) {
     towers.push(this)
-    // ...
+    
     this.type = type || "basic"
     this.parent = parent.parent || (parent || this)
     this.refresh()

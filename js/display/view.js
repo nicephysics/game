@@ -11,7 +11,7 @@ display_view.mousedown = false
 display_view.mousedownpos = null // Vector
 display_view.dragging = false
 display_view.panning = function() {
-  return mousedown && !dragging
+  return display_view.mousedown && !display_view.dragging
 }
 
 // needs render and mouse constraint, in that order

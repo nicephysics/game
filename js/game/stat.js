@@ -3,13 +3,15 @@ export var stats = {
   basic: {
     speed: 1,
     mass: 1,
+    size: 30,
   }
 }
 
 export class Stat {
   level = 0
-  speed = 1
-  mass = 1
+  speed = 0
+  mass = 0
+  size = 0
   tower = null // tower
   
   constructor(tower) {
@@ -30,6 +32,7 @@ export class Stat {
   set(s) {
     this.speed = s.speed
     this.mass = s.mass
+    this.size = s.size
   }
   
   setType(type) {

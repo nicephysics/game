@@ -3,7 +3,7 @@ export var config = {
 }
 
 export var category = {
-  obstacles: 0x0001,
+  wall: 0x0001,
   you: 0x0002,
   bad: 0x0004,
   mouse: 0x0008,

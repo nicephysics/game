@@ -14,7 +14,7 @@ export class Gun {
   // static
   static set = { } // to be filled later
   static create(tower, guntype) {
-    return new Gun(tower, set[guntype])
+    return new Gun(tower, Gun.set[guntype])
   }
   
   // fields

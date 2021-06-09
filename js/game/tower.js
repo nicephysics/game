@@ -116,6 +116,7 @@ export class Tower {
   
   removeBody() {
     if (this.body != null) {
+      // remove from world
       Composite.remove(Tower.world, this.body)
       return true
     } else {
@@ -125,6 +126,8 @@ export class Tower {
   
   createBody() {
     this.body = Bodies.circle(this.x, this.y, this.size)
+    // add to world
+    Composite.add(Tower.world, this.body)
   }
   
   addGun(guntype) {

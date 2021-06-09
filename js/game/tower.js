@@ -74,6 +74,7 @@ export class Tower {
     // ...
     this.type = type || "basic"
     this.parent = parent.parent || (parent || this)
+    this.refresh()
   }
   
   // ##### tower getter functions

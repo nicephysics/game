@@ -5,8 +5,11 @@ import { events } from "./util/events.js"
 import { math } from "./util/math.js"
 import { random } from "./util/random.js"
 import { util_world } from "./util/world.js"
-import { display } from "./util/display.js"
 import { style } from "./util/style.js"
+
+// display
+import { display } from "./display/display.js"
+import { display_view } from "./display/view.js"
 
 // config
 import { config, category } from "./config/config.js"

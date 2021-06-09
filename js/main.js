@@ -3,9 +3,12 @@
 // util
 import { events } from "./util/events.js"
 import { util_world } from "./util/world.js"
-import { display } from "./display/display.js"
 import { style } from "./util/style.js"
+// display
+import { display } from "./display/display.js"
 import { display_view } from "./display/view.js"
+// config
+import { config, category } from "./config/config.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -62,7 +65,7 @@ var init = function() {
   var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
     isStatic: true,
     collisionFilter: {
-      category: 0, // none yet
+      category: category.wall, // none yet
     },
     label: "Ground", 
     render: style.default.ground,
@@ -80,7 +83,7 @@ var init = function() {
       },
     },
     collisionFilter: {
-      mask: 0, // none yet
+      mask: category.mouse, // none yet
     },
   })
   Composite.add(world, mouseConstraint)

@@ -101,7 +101,7 @@ display_view.init = function(
       // get the vector to translate the view      
       translate = Vector.clone(display_view.mousedelta)
       
-      console.log(translate)
+      // console.log(translate)
       
       // prevent the view moving outside the extents
       if (render.bounds.min.x + translate.x < limits.min.x)

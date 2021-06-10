@@ -44,6 +44,7 @@ display_view.init = function(
   
   // right click = pan
   document.body.addEventListener('mousedown', (event) => {
+    // if right mouse button pressed
     if ((event.buttons & 2) > 0) {
       display_view.mousedown = true
       event.preventDefault()

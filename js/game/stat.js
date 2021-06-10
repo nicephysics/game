@@ -80,6 +80,17 @@ export class Stat {
     }
   }
   
+  setString(stat) {
+    this.set_base(stats.base)
+    if (stat instanceof Array) {
+      for (let s in stat) {
+        this.add(stats[s])
+      }
+    } else {
+      this.add(stats[stat])
+    }
+  }
+  
   set_base(s) {
     this.size = s.z || s.size || 1
     this.mass = s.m || s.mass || 1

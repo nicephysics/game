@@ -32,17 +32,22 @@ export class Gun {
   id = Gun._count++
   label = "Gun #" + this.id
   bulletcount = 1
+  shot = 0 // reload counter
   tower = null
+  // positions
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)
   angle = 0
+  // shape
   shape = "rectangle"
+  // styles
   fill = "#a7a7af"
   stroke = "#a7a7af"
+  lineWidth = 3
+  // others
   aspects = { } // optional
   stat = new Stat(this)
   children = [ ] // Matter.Body[]
-  shot = 0 // counter
   
   // constructor
   constructor(tower, location, stat) {
@@ -107,17 +112,17 @@ export class Gun {
   // go!
   draw(render) {
     var ctx = render.context
+    draw.setFillDarkenStroke(ctx, this.fill)
+    draw.setLineWidth(ctx, this.lineWidth)
+    if (this.stroke !== this.fill) {
+      draw.setStroke(ctx, this.stroke)
+    }
     switch (this.shape) {
       case "rectangle":
-        // todo
-        draw.setFillDarkenStroke(ctx, this.fill)
-        if (this.stroke !== this.fill) {
-          draw.setStroke(ctx, this.stroke)
-        }
         draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width, 1, this.direction)
         break
       case "circle": // a CIRCULAR gun???
-        // todo
+        draw.circle(render, this.gunMiddle.x, this.gunMiddle.y, this.width)
         break
     }
   }
@@ -175,6 +180,7 @@ export class Gun {
     this.angle = set.a || 0
     this.fill = style.gun[set.s] || set.s || "#a7a7af"
     this.stroke = style.gun[set.stroke] || set.stroke || this.fill
+    this.lineWidth = set.lineWidth || 3
     this.shape = set.shape || "rectangle"
     this.aspects = set.aspects || { }
   }
@@ -206,7 +212,8 @@ Gun.set.some_random_comments = {
   a: 0, // angle (default: 0)
   s: "#a7a7af", // fill style (default: "#a7a7af")
   stroke: null, // stroke style (default: same as fill style)
-  shape: "", // shape (default: rectangle)
+  lineWidth: 3, // stroke line width (default: 3)
+  shape: "rectangle", // shape (default: rectangle)
   aspects: { } // shape aspects (default: nothing)
 }
 

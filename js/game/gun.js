@@ -61,7 +61,7 @@ export class Gun {
   // get
   get realPosition() {
     if (this.size.x === 0) {
-      let x = this.position.x * this.stat.size // difference!
+      let x = this.position.x * this.stat.size * 2 // difference!
       let y = this.position.y * this.tower.size * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),

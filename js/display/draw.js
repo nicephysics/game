@@ -16,8 +16,8 @@ draw.setStroke = function(ctx, stroke) {
 }
 
 draw.setFillAndStroke = function(ctx, both) {
-  draw.setFill(both)
-  draw.setStroke(both)
+  draw.setFill(ctx, both)
+  draw.setStroke(ctx, both)
 }
 
 draw.rect = function(ctx, x, y, w, h) {

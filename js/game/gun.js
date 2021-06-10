@@ -125,7 +125,7 @@ export class Gun {
     if (this.tower.controlled) {
       // hmmm
     } else {
-      if (this.shot > this.stat.reloadFrames) {
+      if (this.shot >= this.stat.reloadFrames) {
         this.shot = 0
         this.shoot()
       }

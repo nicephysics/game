@@ -56,15 +56,15 @@ export class Gun {
   // get
   get realPosition() {
     if (this.size.x === 0) {
-      let x = this.position.x * this.stat.size / this.tower.size / Gun.set.scale
-      let y = this.position.y
+      let x = this.position.x * this.stat.size // difference!
+      let y = this.position.y * this.tower.size * Gun.set.scale
       return Vector.create(
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
         y * Math.cos(this.direction) + x * Math.sin(this.direction),
       )
     } else {
-      let x = this.position.x
-      let y = this.position.y
+      let x = this.position.x * this.tower.size * Gun.set.scale
+      let y = this.position.y * this.tower.size * Gun.set.scale
       return Vector.create(
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
         y * Math.cos(this.direction) + x * Math.sin(this.direction),
@@ -72,7 +72,7 @@ export class Gun {
     }
   }
   get location() {
-    return Vector.add(this.tower.position, Vector.mult(this.realPosition, this.tower.size * Gun.set.scale))
+    return Vector.add(this.tower.position, this.realPosition)
   }
   get x() {
     return this.location.x

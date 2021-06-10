@@ -80,6 +80,7 @@ export class Tower {
   parent = this // Tower
   guns = [ ] // Gun[]
   stat = new TowerStat(this) // TowerStat
+  controlled = false
   // matter instances
   body = null // Matter.Body
   // ##### end tower public instance fields

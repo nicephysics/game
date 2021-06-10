@@ -139,6 +139,11 @@ export class Gun {
     this.stat.set(s)
   }
   
+  setStatString(s) {
+    s = s || []
+    this.stat.setString(s)
+  }
+  
   setLocation(set) {
     this.position = Vector.create(set.x, set.y)
     this.size = Vector.create(set.w, set.h)

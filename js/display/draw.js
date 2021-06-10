@@ -5,9 +5,14 @@ export var draw = { }
 
 draw.ctx = document.getElementById("canvas").getContext("2d") // not actually needed?
 
-draw.fill = function(ctx, fill) {
+draw.setFill = function(ctx, fill) {
   ctx = ctx || draw.ctx
   ctx.fillStyle = fill
+}
+
+draw.setStroke = function(ctx, stroke) {
+  ctx = ctx || draw.ctx
+  ctx.strokeStyle = stroke
 }
 
 draw.rectangle = function(ctx, x, y, w, h) {

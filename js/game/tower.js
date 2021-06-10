@@ -36,6 +36,9 @@ var tower = new Tower(type, parent); // parent's parent will be taken, if any
 */
 export class Tower {
   // ##### tower static fields
+  // reference to all towers
+  static allTowers = towers
+  static towers = towers
   // a running number for ID and default label
   static _count = 1
   // all tower types (string) in an array

@@ -20,6 +20,15 @@ draw.rectangle = function(ctx, x, y, w, h) {
   // todo
 }
 
+draw.circle = function(ctx, x, y, r) {
+  ctx = ctx || draw.ctx
+  // todo
+  ctx.beginPath()
+  ctx.arc(x, y, r, 0, 2 * Math.PI)
+  ctx.stroke()
+  ctx.fill()
+}
+
 draw.gun = function(render, x, y, length, height, aspect, angle) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y

@@ -27,9 +27,12 @@ export var stats = {
 
 export class Stat {
   // STATic
+  static count = 1
   static stats = stats // just another reference (when only importing Stat)
   
   // fields
+  id = Stat.count++
+  gun = null
   size = 1
   mass = 1
   speed = 1
@@ -43,6 +46,7 @@ export class Stat {
   
   // constructor
   constructor(gun, stat = []) {
+    this.gun = gun
     // does a set_base(stats.base) first
     this.set(stat)
   }
@@ -52,6 +56,10 @@ export class Stat {
     return [
       this.size, this.mass, this.speed, this.reload, this.inertia, this.timeScale, this.restitution, this.kineticFriction, this.staticFriction, this.airResistance
     ]
+  }
+  // don't use, just use console.log(this)!
+  get string() {
+    return "Stat #" + this.id + " " + this.array.toString()
   }
   
   // set

@@ -15,7 +15,7 @@ var c = {
 export var category = {
   c: c,
   mouseConstraint: {
-    mask: c.default | c.ground | c.you_tower | c.bad_tower // remove?
+    mask: c.ground | c.you_tower | c.bad_tower // remove?
   },
   ground: {
     category: c.ground,

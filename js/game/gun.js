@@ -59,14 +59,14 @@ export class Gun {
       let x = this.position.x * this.stat.size // difference!
       let y = this.position.y * this.tower.size * Gun.set.scale
       return Vector.create(
-        y * Math.cos(this.direction) + x * Math.sin(this.direction),
+        y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
       )
     } else {
       let x = this.position.x * this.tower.size * Gun.set.scale
       let y = this.position.y * this.tower.size * Gun.set.scale
       return Vector.create(
-        y * Math.cos(this.direction) + x * Math.sin(this.direction),
+        y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
       )
     }

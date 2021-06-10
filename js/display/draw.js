@@ -20,16 +20,26 @@ draw.setFillAndStroke = function(ctx, both) {
   draw.setStroke(both)
 }
 
+draw.rect = function(ctx, x, y, w, h) {
+  ctx = ctx || draw.ctx
+  ctx.beginPath()
+    ctx.rect(x, y, w, h)
+  ctx.stroke()
+  ctx.fill()
+}
+
 draw.rectangle = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
-  // todo
+  ctx.beginPath()
+    ctx.rect(x - w / 2, y - h / 2, w, h)
+  ctx.stroke()
+  ctx.fill()
 }
 
 draw.circle = function(ctx, x, y, r) {
   ctx = ctx || draw.ctx
-  // todo
   ctx.beginPath()
-  ctx.arc(x, y, r, 0, 2 * Math.PI)
+    ctx.arc(x, y, r, 0, 2 * Math.PI)
   ctx.stroke()
   ctx.fill()
 }

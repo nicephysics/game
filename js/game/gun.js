@@ -121,11 +121,15 @@ export class Gun {
       frictionStatic: s.staticFriction,
       frictionAir: s.airResistance,
     })
-    Body.setVelocity(b, Vector.mult(
-      Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),
-      s.speed
-    ))
-    // Body.setInertia(b, b.inertia * s.inertia) // ?
+    if (s.speed !== 0) {
+      Body.setVelocity(b, Vector.mult(
+        Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),
+        s.speed
+      ))
+    }
+    if (s.inertia !== 1) {
+      Body.setInertia(b, b.inertia * s.inertia) // works?
+    }
     Composite.add(Tower.world, b)
     this.children.push(b)
   }

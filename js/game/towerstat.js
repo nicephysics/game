@@ -1,13 +1,11 @@
 
 export var stats = {
   basic: {
-    speed: 1,
-    mass: 1,
     size: 30,
   }
 }
 
-export class Stat {
+export class TowerStat {
   level = 0
   speed = 0
   mass = 0
@@ -30,8 +28,6 @@ export class Stat {
   }
   
   set(s) {
-    this.speed = s.speed
-    this.mass = s.mass
     this.size = s.size
   }
   

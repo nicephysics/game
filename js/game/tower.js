@@ -191,6 +191,7 @@ export class Tower {
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
     })
+    this.body.canDrag = true
     // this.body.gravityScale = 0
     // this.body.disableVelocity = true
     // add to world

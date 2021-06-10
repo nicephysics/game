@@ -101,7 +101,8 @@ export class Tower {
     
     this.type = type || "basic"
     this.parent = parent.parent || (parent || this)
-    this.refresh()
+    this.stat.setType(this.type)
+    this.createBody(true)
   }
   
   // ##### tower getter functions
@@ -174,8 +175,16 @@ export class Tower {
     }
   }
   
-  createBody() {
-    this.body = Bodies.circle(0, 0, this.size, {
+  createBody(zero = false) {
+    var x, y
+    if (zero) {
+      x = 0
+      y = 0
+    } else {
+      x = this.x
+      y = this.y
+    }
+    this.body = Bodies.circle(x, y, this.size, {
       isStatic: true,
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: category.yourTower,

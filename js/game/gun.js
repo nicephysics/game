@@ -214,9 +214,9 @@ Gun.set.basic = {
 }
 
 Gun.set.double_left = {
-  x: -0.5, y: 0, w: 0, h: 10, a: 0, s: "double_1",
+  x: -0.5, y: 0, w: 0, h: 10, a: 0, s: "double",
 }
 
 Gun.set.double_right = {
-  x: 0.5, y: 0, w: 0, h: 10, a: 0, s: "double_1",
+  x: 0.5, y: 0, w: 0, h: 10, a: 0, s: "double",
 }

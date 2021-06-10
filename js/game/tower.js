@@ -221,7 +221,7 @@ export class Tower {
       case "basic":
         // todo
         let circleStyle = style.gun.basic
-        draw.setFillAndStroke(ctx, circleStyle)
+        draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.size * 0.5)
         break;
     }

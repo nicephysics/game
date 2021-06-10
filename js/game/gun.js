@@ -1,7 +1,7 @@
 // imports
 import { stats, Stat } from "./stat.js"
 import { category, config } from "../config/config.js"
-import { style } from "../display/display.js"
+import { style } from "../display/style.js"
 import { Tower } from "./tower.js"
 // drawing?
 

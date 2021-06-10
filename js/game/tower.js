@@ -1,5 +1,5 @@
 // game
-import { stats, Stat } from "./stat.js"
+import { TowerStat } from "./towerstat.js"
 import { Gun } from "./gun.js"
 // config
 import { config, category } from "../config/config.js"
@@ -79,7 +79,7 @@ export class Tower {
   targetrot = 0 // target rotation of tower
   parent = this // Tower
   guns = [ ] // Gun[]
-  stat = new Stat(this) // Stat
+  stat = new TowerStat(this) // TowerStat
   // matter instances
   body = null // Matter.Body
   // ##### end tower public instance fields

@@ -5,6 +5,7 @@ import { Gun } from "./gun.js"
 import { config, category } from "../config/config.js"
 // display
 import { style } from "../display/style.js"
+import { draw } from "../display/draw.js"
 
 if (true) {
   // 2 spaces indent
@@ -219,6 +220,10 @@ export class Tower {
     switch (this.type) {
       case "basic":
         // todo
+        let style = style.gun.basic
+        draw.fill(ctx, style)
+        draw.stroke(ctx, style)
+        draw.circle(ctx, this.x, this.y, this.size * 0.4)
         break;
     }
   }

@@ -106,9 +106,9 @@ var init = function() {
   
   Tower.init(render)
   var tower = new Tower("basic")
-  tower.moveTo(_width * 0.5, _height - 50)
+  tower.moveTo(_width * 0.5, _height - 100)
   var tower2 = new Tower("double")
-  tower2.moveTo( _width * 1.5, _height - 50)
+  tower2.moveTo( _width * 1.5, _height - 100)
   
   events.afterRender(render, function() {
     Tower.tickAll()

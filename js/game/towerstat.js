@@ -1,14 +1,16 @@
 
-export var stats = {
+export var towerstats = {
   basic: {
     size: 30,
   }
 }
 
 export class TowerStat {
+  // STATic
+  static stats = towerstats
+  
+  // fields
   level = 0
-  speed = 0
-  mass = 0
   size = 0
   tower = null // tower
   
@@ -32,6 +34,6 @@ export class TowerStat {
   }
   
   setType(type) {
-    this.set(stats[type])
+    this.set(towerstats[type])
   }
 }

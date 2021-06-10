@@ -2,14 +2,6 @@
 
 export var style = { }
 
-style.default = {
-  ground: style.fill("#bd3900"),
-}
-
-style.tower = {
-  basic: style.fill("#009ebd"),
-}
-
 style.fill = function(fillStyle, opacity = 1) {
   return {
     fillStyle: fillStyle,
@@ -38,4 +30,12 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
       yScale: yScale,
     }
   }
+}
+
+style.default = {
+  ground: style.fill("#bd3900"),
+}
+
+style.tower = {
+  basic: style.fill("#009ebd"),
 }

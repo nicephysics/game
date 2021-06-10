@@ -13,3 +13,9 @@ import { display_view } from "./display/view.js"
 
 // config
 import { config, category } from "./config/config.js"
+
+// game
+import { Tower } from "./game/tower.js"
+import { Gun } from "./game/gun.js"
+import { stats, Stat } from "./game/stat.js"
+import { towerstats, TowerStat } from "./game/towerstat.js"

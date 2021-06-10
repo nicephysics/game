@@ -144,10 +144,13 @@ display_view.init = function(
     } // end panning
     
     if (display_view.pulling()) {
-      let bodies = Query.point(Composite.allBodies(world), mouse.position)
-      var body = bodies[0]
-      if (body.canDrag) {
-        Body.translate(body, display_view.mousedelta)
+      var bodies = Query.point(Composite.allBodies(world), mouse.position)
+      if (bodies.length > 0) {
+        var body = bodies[0]
+        if (body && body.canDrag) {
+          var translate = Vector.clone(display_view.mousedelta)
+          Body.translate(body, translate)
+        }
       }
     } // end pulling
     

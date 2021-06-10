@@ -84,7 +84,6 @@ export class Tower {
   id = Tower._count++ // integer, also increment Tower.create_count
   label = "Tower #" + (this.id).toString(10) // default (string) label for towers, uses base 10
   type = "basic" // default (string) tower type is basic
-  targetpos = Vector.create(0, 0) // target position of tower
   targetrot = 0 // target rotation of tower
   parent = this // Tower
   guns = [ ] // Gun[]
@@ -173,7 +172,7 @@ export class Tower {
   }
   
   createBody() {
-    this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
+    this.body = Bodies.circle(0, 0, this.size, {
       isStatic: false,
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: category.yourTower,
@@ -200,7 +199,6 @@ export class Tower {
   
   tick() {
     Body.setAngle(this.body, this.targetrot)
-    Body.setPosition(this.body, this.targetpos)
     this.targetrot += 0.01
   }
   
@@ -213,8 +211,9 @@ export class Tower {
     }
   }
   
+  // important! if not, the body will stay at 0, 0
   moveTo(x, y) {
-    this.targetpos = Vector.create(x, y)
+    Body.setPosition(this.body, Vector.create(x, y))
   }
   
   turnTo(angle) {

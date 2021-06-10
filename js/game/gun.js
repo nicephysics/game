@@ -93,7 +93,7 @@ export class Gun {
         // todo
         console.log(this)
         draw.fill(ctx, "#a7a7af")
-        draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width, 1, this.direction)
+        draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width / 2, 1, this.direction)
         break
       case "circle": // a CIRCULAR gun???
         // todo
@@ -165,13 +165,13 @@ Gun.set = {
 Gun.set.some_random_comments = {
   x: 0, // position.x (*)
   y: 0, // position.y (*)
-  w: 20, // size.x (*)
-  h: 50, // size.y (*)
+  w: 0, // size.x (*)
+  h: 20, // size.y (*)
   a: 0, // angle (default: 0)
   s: "", // shape (default: rectangle)
   aspects: { } // shape aspects (default: nothing)
 }
 
 Gun.set.default = {
-  x: 0, y: 0, w: 0, h: 50, a: 0, s: "rectangle",
+  x: 0, y: 0, w: 0, h: 20, a: 0, s: "rectangle",
 }

@@ -200,6 +200,7 @@ export class Tower {
   
   tick() {
     Body.setAngle(this.body, this.targetrot)
+    Body.setPosition(this.body, this.targetpos)
     this.targetrot += 0.01
   }
   
@@ -210,6 +211,10 @@ export class Tower {
         // todo
         break;
     }
+  }
+  
+  moveTo(x, y) {
+    this.targetpos = Vector.create(x, y)
   }
   
   // WARNING: testing functions below!

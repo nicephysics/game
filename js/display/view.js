@@ -42,8 +42,15 @@ display_view.init = function(
     target: 1,
   }
   
-  events.mousedown(mouseConstraint, function(mouse) {
+  // right click = pan
+  document.body.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
     display_view.mousedown = true
+    return false;
+  }, false);
+  
+  events.mousedown(mouseConstraint, function(mouse) {
+    // display_view.mousedown = true
   })
   
   events.mouseup(mouseConstraint, function(mouse) {

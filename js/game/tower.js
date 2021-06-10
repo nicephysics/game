@@ -197,7 +197,8 @@ export class Tower {
   }
   
   tick() {
-    
+    Body.setAngle(this.body, this.targetrot)
+    this.targetrot += 0.01
   }
   
   draw(render) {

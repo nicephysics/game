@@ -84,6 +84,7 @@ export class Stat {
     this.set_base(stats.base)
     if (stat instanceof Array) {
       for (let s in stat) {
+        console.log(s)
         this.add(stats[s])
       }
     } else {

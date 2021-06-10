@@ -14,14 +14,14 @@ var c = {
 export var category = {
   c: c,
   mouseConstraint: {
-    mask: c.mouse,
+    mask: c.mouse
   },
   ground: {
     category: c.wall,
     mask: c.bad | c.bullet
   },
   yourTower: {
-    category: c.you | c.wall,
+    category: c.you | c.wall | c.mouse, // remove c.mouse
     mask: c.bad
   },
   yourBullet: {

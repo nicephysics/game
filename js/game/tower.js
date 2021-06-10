@@ -220,9 +220,8 @@ export class Tower {
     switch (this.type) {
       case "basic":
         // todo
-        let style = style.gun.basic
-        draw.fill(ctx, style)
-        draw.stroke(ctx, style)
+        let circleStyle = style.gun.basic
+        draw.setFillAndStroke(ctx, circleStyle)
         draw.circle(ctx, this.x, this.y, this.size * 0.4)
         break;
     }

@@ -66,6 +66,7 @@ export class Tower {
       tower.guns.forEach((gun) => {
         gun.draw(Tower.render)
       })
+      tower.draw(Tower.render)
     })
   }
   // ##### end tower static fields
@@ -175,6 +176,15 @@ export class Tower {
     var gun = Gun.create(this, guntype)
     this.guns.push(gun)
     return gun
+  }
+  
+  draw(render) {
+    var ctx = render.context
+    switch (this.type) {
+      case "basic":
+        // todo
+        break;
+    }
   }
   
   // WARNING: testing functions below!

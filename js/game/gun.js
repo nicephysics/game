@@ -55,12 +55,19 @@ export class Gun {
   // get
   get realPosition() {
     if (this.size.x === 0) {
+      let x = this.position.x * this.stat.size / this.tower.size / Gun.set.scale
+      let y = this.position.y
       return Vector.create(
-        this.position.x * this.stat.size / this.tower.size / Gun.set.scale,
-        this.position.y
+        x * Math.cos(this.direction) + y * Math.sin(this.direction),
+        y * Math.cos(this.direction) + x * Math.sin(this.direction),
       )
     } else {
-      return this.position
+      let x = this.position.x
+      let y = this.position.y
+      return Vector.create(
+        x * Math.cos(this.direction) + y * Math.sin(this.direction),
+        y * Math.cos(this.direction) + x * Math.sin(this.direction),
+      )
     }
   }
   get location() {

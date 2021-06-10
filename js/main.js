@@ -111,6 +111,19 @@ var init = function() {
     Tower.tickAll()
     Tower.drawAll()
   })
+  
+  events.beforeUpdate(engine, function(engine) {
+    var all = Composite.allBodies(engine.world)
+    var gravity = engine.gravity
+    for (let body of all) {
+      let gravityScale = body.gravityScale || continue;
+      let scale = scale - 1
+      Body.applyForce(body, body.position, {
+        x: gravity.x * scale * gravity.scale * body.mass,
+        y: gravity.y * scale * gravity.scale * body.mass
+      })
+    }
+  })
 
   // run the renderer
   Render.run(render)

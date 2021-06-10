@@ -189,7 +189,7 @@ export class Tower {
   
   removeAllGuns() {
     for (let gun of this.guns) {
-      gun.tower = null
+      gun.remove(false)
     }
     this.guns = [ ]
   }

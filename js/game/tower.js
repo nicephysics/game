@@ -178,8 +178,9 @@ export class Tower {
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
+      density: 100000000000000000000000000000000000000000000000000.0,
     })
-    Body.setInertia(this.body, 100000000000000000000000000000000000000000000000000.0)
+    body.gravityScale = 0
     // add to world
     Composite.add(Tower.world, this.body)
   }

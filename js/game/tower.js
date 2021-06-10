@@ -174,10 +174,11 @@ export class Tower {
   
   createBody() {
     this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
-      isStatic: true,
+      isStatic: false,
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
+      density: 100000000000000000000000000000000000000000000000000.0,
     })
     // add to world
     Composite.add(Tower.world, this.body)

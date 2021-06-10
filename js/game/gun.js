@@ -62,7 +62,7 @@ export class Gun {
     return this.location.y
   }
   get width() {
-    return this.size.x * this.tower.size * Gun.set.scale
+    return Math.max(this.size.x * this.tower.size * Gun.set.scale, this.stat.size)
   }
   get height() {
     return this.size.y * this.tower.size * Gun.set.scale
@@ -111,7 +111,7 @@ export class Gun {
   
   shoot() {
     var s = this.stat
-    var b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, this.width * s.size, {
+    var b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
       isStatic: false,
       label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
       categoryFilter: category.yourBullet,
@@ -157,5 +157,5 @@ Gun.set.some_random_comments = {
 }
 
 Gun.set.default = {
-  x: 0, y: 0, w: 20, h: 50, a: 0, s: "rectangle",
+  x: 0, y: 0, w: 0, h: 50, a: 0, s: "rectangle",
 }

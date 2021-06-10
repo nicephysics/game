@@ -15,10 +15,7 @@ var Body = Matter.Body,
     Composites = Matter.Composites,
     Mouse = Matter.Mouse,
     MouseConstraint = Matter.MouseConstraint,
-    Vector = Matter.Vector,
-    engine = Tower.engine,
-    world = Tower.world,
-    render = Tower.render
+    Vector = Matter.Vector
 
 export var guns = [ ] // Gun[]
 
@@ -123,7 +120,7 @@ export class Gun {
       velocity: Vector.mult(this.direction, s.speed),
     })
     // b.setInertia(b.inertia * s.inertia) // ?
-    Composite.add(world, b)
+    Composite.add(Tower.world, b)
     this.children.push(b)
   }
   

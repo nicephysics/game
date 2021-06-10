@@ -5,7 +5,7 @@ export var towerstats = {
     guns: [
       { // main gun
         label: "basic",
-        type: "default",
+        type: "basic",
         stat: ["shooter", "basic"]
       },
     ],

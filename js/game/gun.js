@@ -142,7 +142,7 @@ export class Gun {
 
 Gun.set = {
   // overall gun scale
-  scale = 0.1,
+  scale: 0.1,
 }
 
 Gun.set.some_random_comments = {

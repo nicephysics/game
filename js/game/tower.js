@@ -116,12 +116,12 @@ export class Tower {
     return this.body.angle
   }
   // alias for this.rotation
-  get direction() {
-    return this.body.angle
-  }
-  // alias for this.rotation
   get angle() {
     return this.body.angle
+  }
+  // alias for this.targetrot
+  get direction() {
+    return this.targetrot
   }
   // this.position's x-coordinate
   get x() {

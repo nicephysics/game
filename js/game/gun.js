@@ -52,8 +52,18 @@ export class Gun {
   }
   
   // get
+  get realPosition() {
+    if (this.size.x === 0) {
+      return Vector.create(
+        this.position.x * this.stat.size / this.tower.size / Gun.set.scale,
+        this.position.y
+      )
+    } else {
+      return this.position
+    }
+  }
   get location() {
-    return Vector.add(this.tower.position, Vector.mult(this.position, this.tower.size * Gun.set.scale))
+    return Vector.add(this.tower.position, Vector.mult(this.realPosition, this.tower.size * Gun.set.scale))
   }
   get x() {
     return this.location.x
@@ -174,4 +184,12 @@ Gun.set.some_random_comments = {
 
 Gun.set.default = {
   x: 0, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
+}
+
+Gun.set.double_left = {
+  x: -0.5, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
+}
+
+Gun.set.double_right = {
+  x: 0.5, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
 }

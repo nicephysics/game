@@ -116,8 +116,8 @@ var init = function() {
     var all = Composite.allBodies(engine.world)
     var gravity = engine.gravity
     for (let body of all) {
-      let gravityScale = body.gravityScale
-      if (gravityScale == null) continue;
+      let gravityScale = body.gravityScale || 1
+      if (gravityScale === 1) continue;
       let scale = gravityScale - 1
       Body.applyForce(body, body.position, {
         x: gravity.x * scale * gravity.scale * body.mass,

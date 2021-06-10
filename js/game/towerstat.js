@@ -50,11 +50,6 @@ export class TowerStat {
   // go!
   refresh() {
     this.setType(this.tower.type)
-    this.tower.removeAllGuns()
-    for (let gun of this.guns) {
-      let g = this.tower.addGun(gun.type)
-      g.setStatString(gun.stat)
-    }
   }
   
   set(s) {
@@ -62,7 +57,13 @@ export class TowerStat {
     this.guns = s.guns
   }
   
+  // the real refresh function?
   setType(type) {
     this.set(towerstats[type])
+    this.tower.removeAllGuns()
+    for (let gun of this.guns) {
+      let g = this.tower.addGun(gun.type)
+      g.setStatString(gun.stat)
+    }
   }
 }

@@ -49,6 +49,8 @@ display_view.init = function(
       display_view.mousedown = true
       event.preventDefault()
       console.log(event.buttons)
+    } else {
+      display_view.mousedown = false
     }
   })
   

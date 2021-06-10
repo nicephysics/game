@@ -20,7 +20,7 @@ draw.setFillAndStroke = function(ctx, both) {
   draw.setStroke(ctx, both)
 }
 
-draw.rect = function(ctx, x, y, w, h) {
+draw._rect = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.rect(x, y, w, h)
@@ -28,7 +28,14 @@ draw.rect = function(ctx, x, y, w, h) {
   ctx.fill()
 }
 
-draw.rectangle = function(ctx, x, y, w, h) {
+draw.rect = function(render, x, y, w, h) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._rect(ctx, x, y, w, h)
+}
+
+draw._rectangle = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.rect(x - w / 2, y - h / 2, w, h)
@@ -36,12 +43,26 @@ draw.rectangle = function(ctx, x, y, w, h) {
   ctx.fill()
 }
 
-draw.circle = function(ctx, x, y, r) {
+draw.rectangle = function(render, x, y, w, h) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._rectangle(ctx, x, y, w, h)
+}
+
+draw._circle = function(ctx, x, y, r) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.arc(x, y, r, 0, 2 * Math.PI)
   ctx.stroke()
   ctx.fill()
+}
+
+draw.circle = function(render, x, y, r) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._circle(ctx, x, y, r)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {

@@ -179,6 +179,13 @@ export class Tower {
     Composite.add(Tower.world, this.body)
   }
   
+  removeAllGuns() {
+    for (let gun of this.guns) {
+      gun.tower = null
+    }
+    this.guns = [ ]
+  }
+  
   addGun(guntype) {
     var gun = Gun.create(this, guntype)
     this.guns.push(gun)

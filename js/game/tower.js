@@ -183,6 +183,7 @@ export class Tower {
       density: 100000000000000000000000000000000000000000000000000.0,
     })
     this.body.gravityScale = 0
+    this.body.disableVelocity = true
     // add to world
     Composite.add(Tower.world, this.body)
   }

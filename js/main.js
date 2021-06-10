@@ -67,7 +67,8 @@ var init = function() {
   var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
     isStatic: true,
     collisionFilter: {
-      category: category.wall, // none yet
+      category: category.wall,
+      mask: category.bad,
     },
     label: "Ground", 
     render: style.default.ground,

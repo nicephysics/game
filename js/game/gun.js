@@ -2,6 +2,7 @@
 import { stats, Stat } from "./stat.js"
 import { category, config } from "../config/config.js"
 import { style } from "../display/style.js"
+import { draw } from "../display/draw.js"
 import { Tower } from "./tower.js"
 // drawing?
 
@@ -87,10 +88,12 @@ export class Gun {
     switch (this.shape) {
       case "rectangle":
         // todo
-        break;
+        draw.fill(ctx, "#a7a7af")
+        draw.gun(render, this.x, this.y, this.height, this.width, 1, this.direction)
+        break
       case "circle": // a CIRCULAR gun???
         // todo
-        break;
+        break
     }
   }
   

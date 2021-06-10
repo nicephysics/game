@@ -43,11 +43,13 @@ display_view.init = function(
   }
   
   // right click = pan
-  document.body.addEventListener('contextmenu', (event) => {
-    event.preventDefault();
-    display_view.mousedown = true
-    return false;
-  }, false);
+  document.body.addEventListener('mousedown', (event) => {
+    if (event.buttons & 2 > 0) {
+      display_view.mousedown = true
+      event.preventDefault()
+      console.log(event.buttons)
+    }
+  }, false)
   
   events.mousedown(mouseConstraint, function(mouse) {
     // display_view.mousedown = true
@@ -66,9 +68,7 @@ display_view.init = function(
   })
   
   // render event listener (main function)
-  events.beforeRender(render, function() {
-    // console.log(display_view.mousedown, display_view.dragging)
-      
+  events.beforeRender(render, function() {      
     var mouse = render.mouse,
         mousepos = mouse.absolute,
         world = render.engine.world,
@@ -107,8 +107,6 @@ display_view.init = function(
     if (display_view.panning()) {
       // get the vector to translate the view      
       translate = Vector.clone(display_view.mousedelta)
-      
-      // console.log(translate)
       
       // prevent the view moving outside the extents
       if (render.bounds.min.x + translate.x < limits.min.x)

@@ -71,7 +71,7 @@ export class Stat {
   set(stat) {
     if (stat instanceof Array) {
       this.set_base(stats.base)
-      for (let s in stat) {
+      for (let s of stat) {
         this.add(s)
       }
     } else {
@@ -83,8 +83,7 @@ export class Stat {
   setString(stat) {
     this.set_base(stats.base)
     if (stat instanceof Array) {
-      for (let s in stat) {
-        console.log(s)
+      for (let s of stat) {
         this.add(stats[s])
       }
     } else {

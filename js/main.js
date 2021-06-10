@@ -105,7 +105,10 @@ var init = function() {
   display_view.init(render, mouseConstraint)
   
   Tower.init(render)
-  var tower = new Tower()
+  var tower = new Tower("basic")
+  tower.moveTo(_height - 50, _width * 0.5)
+  var tower2 = new Tower("double")
+  tower.moveTo(_height - 50, _width * 1.5)
   
   events.afterRender(render, function() {
     Tower.tickAll()

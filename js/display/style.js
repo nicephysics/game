@@ -38,4 +38,9 @@ style.default = {
 
 style.tower = {
   basic: style.fill("#009ebd"),
+  double: style.fill("#bd7500"),
+}
+
+style.gun = {
+  
 }

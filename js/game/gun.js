@@ -125,6 +125,7 @@ export class Gun {
   }
   
   setStat(s) {
+    s = s || []
     this.stat.set(s)
   }
   
@@ -145,7 +146,7 @@ Gun.set = {
 Gun.set.some_random_comments = {
   x: 0, // position.x (*)
   y: 0, // position.y (*)
-  w: 0, // size.x (*)
+  w: 20, // size.x (*)
   h: 50, // size.y (*)
   a: 0, // angle (default: 0)
   s: "", // shape (default: rectangle)
@@ -153,5 +154,5 @@ Gun.set.some_random_comments = {
 }
 
 Gun.set.default = {
-  x: 0, y: 0, w: 0, h: 50, a: 0, s: "rectangle",
+  x: 0, y: 0, w: 20, h: 50, a: 0, s: "rectangle",
 }

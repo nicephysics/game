@@ -115,7 +115,11 @@ export class Tower {
   get rotation() {
     return this.body.angle
   }
-  // alias for this.rotation, try not to use
+  // alias for this.rotation
+  get direction() {
+    return this.body.angle
+  }
+  // alias for this.rotation
   get angle() {
     return this.body.angle
   }

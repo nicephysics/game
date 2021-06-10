@@ -79,7 +79,7 @@ var init = function() {
     constraint: {
       stiffness: 0.2,
       render: {
-        visible: true,
+        visible: false,
       },
     },
     collisionFilter: category.mouseConstraint,
@@ -98,7 +98,7 @@ var init = function() {
       pixelRatio: 1, // for now... TODO
       background: '#FAFAFA', // ok
       wireframes: false, // yes
-      showMousePosition: true, // to display the mouse coords, see Mouse.create(canvas) above
+      showMousePosition: false, // to display the mouse coords, see Mouse.create(canvas) above // disabled
     }
   })
   

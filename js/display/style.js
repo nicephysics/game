@@ -42,5 +42,7 @@ style.tower = {
 }
 
 style.gun = {
-  
+  basic: "#27a0b8",
+  double_1: "#c29d61",
+  double_2: "#c29d61",
 }

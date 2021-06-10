@@ -162,10 +162,7 @@ export class Tower {
     this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
       isStatic: true,
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
-      collisionFilter: {
-        category: category.you,
-        // mask: category.all & !category.you
-      },
+      collisionFilter: category.yourTower,
       render: style.tower[this.type],
     })
     // add to world

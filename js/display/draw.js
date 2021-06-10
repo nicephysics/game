@@ -20,6 +20,11 @@ draw.setFillAndStroke = function(ctx, both) {
   draw.setStroke(ctx, both)
 }
 
+draw.setFillDarkenStroke = function(ctx, both) {
+  draw.setFill(ctx, both)
+  draw.setStroke(ctx, chroma(both).darken().hex())
+}
+
 draw._rect = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   ctx.beginPath()

@@ -25,6 +25,11 @@ draw.setFillDarkenStroke = function(ctx, both) {
   draw.setStroke(ctx, chroma(both).darken().hex())
 }
 
+draw.setLineWidth = function(ctx, lineWidth) {
+  ctx = ctx || draw.ctx
+  ctx.lineWidth = lineWidth
+}
+
 draw._rect = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   ctx.beginPath()

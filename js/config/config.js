@@ -3,38 +3,39 @@ export var config = {
 }
 
 var c = {
-  wall: 0x0001,
-  you: 0x0002,
-  bad: 0x0004,
-  mouse: 0x0008,
-  bullet: 0x0016,
+  ground: 0x0001,
+  mouse: 0x0002,
+  you_tower: 0x0004,
+  bad_tower: 0x0008,
+  you_bullet: 0x0016,
+  bad_bullet: 0x0032,
   all: 0x0031, // 5 category types so far, so category.all = (2^5 - 1)
 }
 
 export var category = {
   c: c,
   mouseConstraint: {
-    mask: c.mouse
+    mask: c.you_tower // remove?
   },
   ground: {
-    category: c.wall,
-    mask: c.bad | c.you | c.bullet
+    category: c.ground,
+    mask: c.bad_bullet | c.you_bullet
   },
   yourTower: {
-    category: c.you | c.wall | c.mouse, // remove c.mouse
-    mask: c.bad
+    category: c.you_tower,
+    mask: c.bad_bullet
   },
   yourBullet: {
-    category: c.you | c.bullet,
-    mask: c.bad | c.wall | c.bullet
+    category: c.you_bullet,
+    mask: c.ground | c.bad_tower | c.bad_bullet
   },
   badTower: {
-    category: c.bad | c.wall,
-    mask: c.bad
+    category: c.bad_tower,
+    mask: c.your_bullet
   },
   badBullet: {
-    category: c.bad | c.bullet,
-    mask: c.you | c.wall | c.bullet
+    category: c.bad_bullet,
+    mask: c.ground | c.you_tower | c.you_bullet
   },
 }
 

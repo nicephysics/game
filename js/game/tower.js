@@ -69,6 +69,15 @@ export class Tower {
       tower.draw(Tower.render)
     })
   }
+  // tick all guns and towers
+  static tickAll() {
+    towers.forEach((tower) => {
+      tower.guns.forEach((gun) => {
+        gun.tick()
+      })
+      tower.tick()
+    })
+  }
   // ##### end tower static fields
   
   // ##### tower public instance fields
@@ -174,6 +183,10 @@ export class Tower {
     var gun = Gun.create(this, guntype)
     this.guns.push(gun)
     return gun
+  }
+  
+  tick() {
+    
   }
   
   draw(render) {

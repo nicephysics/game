@@ -18,7 +18,7 @@ export var category = {
   },
   ground: {
     category: c.wall,
-    mask: c.bad
+    mask: c.bad | c.bullet
   },
   yourTower: {
     category: c.you | c.wall,

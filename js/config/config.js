@@ -4,11 +4,10 @@ export var config = {
 
 var c = {
   ground: 0x0001,
-  mouse: 0x0002,
-  you_tower: 0x0004,
-  bad_tower: 0x0008,
-  you_bullet: 0x0016,
-  bad_bullet: 0x0032,
+  you_tower: 0x0002,
+  bad_tower: 0x0004,
+  you_bullet: 0x0008,
+  bad_bullet: 0x0016,
   all: 0x0031, // 5 category types so far, so category.all = (2^5 - 1)
 }
 

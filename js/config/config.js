@@ -19,7 +19,7 @@ export var category = {
   },
   ground: {
     category: c.ground,
-    mask: c.bad_bullet | c.you_bullet
+    mask: c.default | c.bad_bullet | c.you_bullet
   },
   yourTower: {
     category: c.you_tower,
@@ -27,15 +27,15 @@ export var category = {
   },
   yourBullet: {
     category: c.you_bullet,
-    mask: c.ground | c.bad_tower | c.bad_bullet
+    mask: c.default | c.ground | c.bad_tower | c.bad_bullet
   },
   badTower: {
     category: c.bad_tower,
-    mask: c.default | c.your_bullet
+    mask: c.default | c.default | c.your_bullet
   },
   badBullet: {
     category: c.bad_bullet,
-    mask: c.ground | c.you_tower | c.you_bullet
+    mask: c.default | c.ground | c.you_tower | c.you_bullet
   },
 }
 

@@ -1,6 +1,10 @@
+// game
 import { stats, Stat } from "./stat.js"
 import { Gun } from "./gun.js"
+// config
 import { config, category } from "../config/config.js"
+// display
+import { style } from "../display/style.js"
 
 if (true) {
   // 2 spaces indent
@@ -156,11 +160,12 @@ export class Tower {
   createBody() {
     this.body = Bodies.circle(this.targetpos.x, this.targetpos.y, this.size, {
       isStatic: true,
-      label: "Tower Body #" + this.id.toString(10),
+      label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: {
         category: category.you,
         // mask: category.all & !category.you
-      }
+      },
+      render: style.tower[this.type],
     })
     // add to world
     Composite.add(Tower.world, this.body)

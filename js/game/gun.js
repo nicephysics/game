@@ -174,6 +174,19 @@ export class Gun {
     this.style = style.gun[set.s] || set.s || "#a7a7af"
     this.aspects = set.aspects || { }
   }
+  
+  remove(removeFromArray = true) {
+    if (removeFromArray) {
+      const index = this.tower.guns.indexOf(this);
+      if (index > -1) {
+        this.tower.guns.splice(index, 1);
+      }
+    }
+    for (let body of this.children) {
+      Composite.remove(Tower.world, body)
+    }
+    this.tower = null
+  }
 }
 
 Gun.set = {

@@ -217,6 +217,10 @@ export class Tower {
     this.targetpos = Vector.create(x, y)
   }
   
+  turnTo(angle) {
+    this.targetrot = angle
+  }
+  
   // WARNING: testing functions below!
   
   test_1() {

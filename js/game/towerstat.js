@@ -2,6 +2,7 @@
 export var towerstats = {
   basic: {
     size: 30,
+    guns: ["default"],
   }
 }
 
@@ -12,6 +13,7 @@ export class TowerStat {
   // fields
   level = 0
   size = 0
+  guns = []
   tower = null // tower
   
   constructor(tower) {
@@ -30,7 +32,8 @@ export class TowerStat {
   }
   
   set(s) {
-    this.size = s.size
+    this.size = s.size || 10
+    this.guns = s.guns.slice()
   }
   
   setType(type) {

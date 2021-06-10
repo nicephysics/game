@@ -18,7 +18,7 @@ export var category = {
   },
   ground: {
     category: c.wall,
-    mask: c.bad | c.bullet
+    mask: c.bad | c.you | c.bullet
   },
   yourTower: {
     category: c.you | c.wall | c.mouse, // remove c.mouse

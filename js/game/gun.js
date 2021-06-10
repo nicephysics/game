@@ -37,6 +37,7 @@ export class Gun {
   size = Vector.create(0, 0)
   angle = 0
   shape = "rectangle"
+  style = "#a7a7af"
   aspects = { } // optional
   stat = new Stat(this)
   children = [ ] // Matter.Body[]
@@ -101,7 +102,8 @@ export class Gun {
     switch (this.shape) {
       case "rectangle":
         // todo
-        draw.fill(ctx, "#a7a7af")
+        draw.setFill(ctx, this.style)
+        draw.setStroke(ctx, this.style)
         draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width, 1, this.direction)
         break
       case "circle": // a CIRCULAR gun???
@@ -161,7 +163,8 @@ export class Gun {
     this.position = Vector.create(set.x, set.y)
     this.size = Vector.create(set.w, set.h)
     this.angle = set.a || 0
-    this.shape = set.s || "rectangle"
+    this.shape = set.shape || "rectangle"
+    this.style = style.gun[set.s] || set.s || "#a7a7af"
     this.aspects = set.aspects || { }
   }
 }
@@ -177,18 +180,23 @@ Gun.set.some_random_comments = {
   w: 0, // size.x (*)
   h: 10, // size.y (*)
   a: 0, // angle (default: 0)
-  s: "", // shape (default: rectangle)
+  s: "#a7a7af", // style (default: "#a7a7af")
+  shape: "", // shape (default: rectangle)
   aspects: { } // shape aspects (default: nothing)
 }
 
 Gun.set.default = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
+  x: 0, y: 0, w: 0, h: 10, a: 0, shape: "rectangle",
+}
+
+Gun.set.basic = {
+  x: 0, y: 0, w: 0, h: 10, a: 0, s: "basic",  
 }
 
 Gun.set.double_left = {
-  x: -0.5, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
+  x: -0.5, y: 0, w: 0, h: 10, a: 0, s: "double_1",
 }
 
 Gun.set.double_right = {
-  x: 0.5, y: 0, w: 0, h: 10, a: 0, s: "rectangle",
+  x: 0.5, y: 0, w: 0, h: 10, a: 0, s: "double_1",
 }

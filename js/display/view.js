@@ -4,19 +4,26 @@ if (true) {
   // 2 spaces!
 }
 
-var Bounds = Matter.Bounds,
+var Body = Matter.Body,
+    Bounds = Matter.Bounds,
+    Composite = Matter.Composite,
     Events = Matter.Events, // not used?
     Mouse = Matter.Mouse,
+    Query = Matter.Query,
     Vector = Matter.Vector
 
 export var display_view = { }
 
-display_view.mousedown = false
+display_view.mousedown = true
+display_view.rightmousedown = false
 display_view.mousepos = Vector.create(0, 0) // Vector
 display_view.mousedelta = Vector.create(0, 0) // Vector
 display_view.dragging = false
 display_view.panning = function() {
-  return display_view.mousedown && !display_view.dragging
+  return display_view.rightmousedown && !display_view.dragging
+}
+display_view.pulling = function() {
+  return display_view.leftmousedown && !display_view.dragging
 }
 
 // needs render and mouse constraint, in that order
@@ -46,19 +53,25 @@ display_view.init = function(
   document.addEventListener("mousedown", function(event) {
     // if right mouse button pressed
     if ((event.buttons & 2) > 0) {
-      display_view.mousedown = true
+      display_view.rightmousedown = true
+      display_view.leftmousedown = false
       event.preventDefault()
+    } else if ((event.buttons & 1) > 0) {
+      display_view.leftmousedown = true
+      display_view.rightmousedown = false
     } else {
-      display_view.mousedown = false
+      display_view.rightmousedown = false
+      display_view.leftmousedown = false
     }
   })
   
   events.mousedown(mouseConstraint, function(mouse) {
-    // display_view.mousedown = true
+    // display_view.rightmousedown = true
   })
   
   events.mouseup(mouseConstraint, function(mouse) {
-    display_view.mousedown = false
+    display_view.rightmousedown = false
+    display_view.leftmousedown = false
   })
   
   events.startdrag(mouseConstraint, function(body) {
@@ -130,7 +143,14 @@ display_view.init = function(
       Mouse.setOffset(mouse, render.bounds.min)
     } // end panning
     
+    if (display_view.pulling()) {
+      let bodies = Query.point(Composite.allBodies(world), mouse.position)
+      var body = bodies[0]
+      Body.translate(body, display_view.mousedelta)
+    } // end pulling
+    
     display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)
     display_view.mousepos = Vector.clone(mousepos)
+    
   }) // end events.beforeRender
 } // end display_view.init

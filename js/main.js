@@ -107,6 +107,11 @@ var init = function() {
   Tower.init(render)
   var tower = new Tower()
   tower.test_1()
+  
+  events.afterRender(render, function() {
+    Tower.tickAll()
+    Tower.drawAll()
+  })
 
   // run the renderer
   Render.run(render)

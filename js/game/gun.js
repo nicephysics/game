@@ -72,12 +72,15 @@ export class Gun {
   }
   get gunDifference() {
     return Vector.create(
-      this.height * Math.sin(this.direction),
-      this.height * Math.cos(this.direction)
+      this.height * Math.cos(this.direction),
+      this.height * Math.sin(this.direction)
     )
   }
   get gunEnd() {
     return Vector.add(this.location, this.gunDifference)
+  }
+  get gunMiddle() {
+    return Vector.add(this.location, Vector.mult(this.gunDifference, 0.5))
   }
   
   // set
@@ -90,7 +93,7 @@ export class Gun {
         // todo
         console.log(this)
         draw.fill(ctx, "#a7a7af")
-        draw.gun(render, this.x, this.y, this.height, this.width, 1, this.direction)
+        draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height, this.width, 1, this.direction)
         break
       case "circle": // a CIRCULAR gun???
         // todo

@@ -101,7 +101,6 @@ export class Gun {
     switch (this.shape) {
       case "rectangle":
         // todo
-        console.log(this)
         draw.fill(ctx, "#a7a7af")
         draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width, 1, this.direction)
         break

@@ -60,9 +60,9 @@ var init = function() {
   canvas.height = _height
   
   // example event test
-  events.afterAdd(engine, function(compositeArray) {
-      console.log("Added: ", compositeArray)
-  })
+  // events.afterAdd(engine, function(compositeArray) {
+  //     console.log("Added: ", compositeArray)
+  // })
   
   var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
     isStatic: true,

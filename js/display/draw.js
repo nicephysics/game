@@ -15,6 +15,11 @@ draw.setStroke = function(ctx, stroke) {
   ctx.strokeStyle = stroke
 }
 
+draw.setFillAndStroke = function(ctx, both) {
+  draw.setFill(both)
+  draw.setStroke(both)
+}
+
 draw.rectangle = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   // todo

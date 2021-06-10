@@ -110,8 +110,10 @@ export class Gun {
     switch (this.shape) {
       case "rectangle":
         // todo
-        draw.setFill(ctx, this.fill)
-        draw.setStroke(ctx, this.stroke)
+        draw.setFillDarkenStroke(ctx, this.fill)
+        if (this.stroke !== this.fill) {
+          draw.setStroke(ctx, this.stroke)
+        }
         draw.gun(render, this.gunMiddle.x, this.gunMiddle.y, this.height / 2, this.width, 1, this.direction)
         break
       case "circle": // a CIRCULAR gun???
@@ -172,7 +174,7 @@ export class Gun {
     this.size = Vector.create(set.w, set.h)
     this.angle = set.a || 0
     this.fill = style.gun[set.s] || set.s || "#a7a7af"
-    this.stroke = set.stroke || this.fill
+    this.stroke = style.gun[set.stroke] || set.stroke || this.fill
     this.shape = set.shape || "rectangle"
     this.aspects = set.aspects || { }
   }
@@ -213,7 +215,7 @@ Gun.set.default = {
 }
 
 Gun.set.basic = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, s: "basic",  
+  x: 0, y: 0, w: 0, h: 10, a: 0, s: "basic",
 }
 
 Gun.set.double_left = {

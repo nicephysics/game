@@ -3,12 +3,28 @@ export var towerstats = {
   basic: {
     size: 30,
     guns: [
-      { 
+      { // main gun
+        label: "basic",
         type: "default",
         stat: ["shooter", "basic"]
       },
     ],
-  }
+  },
+  double: {
+    size: 25,
+    guns: [
+      { // left gun
+        label: "double left",
+        type: "double_left",
+        stat: ["shooter", "double"]
+      },
+      { // right gun
+        label: "double right",
+        type: "double_right",
+        stat: ["shooter", "double"]
+      },
+    ],
+  },
 }
 
 export class TowerStat {

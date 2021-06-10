@@ -176,14 +176,13 @@ export class Tower {
   
   createBody() {
     this.body = Bodies.circle(0, 0, this.size, {
-      isStatic: false,
+      isStatic: true,
       label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
-      density: 100000000000000000000000000000000000000000000000000.0,
     })
-    this.body.gravityScale = 0
-    this.body.disableVelocity = true
+    // this.body.gravityScale = 0
+    // this.body.disableVelocity = true
     // add to world
     Composite.add(Tower.world, this.body)
   }

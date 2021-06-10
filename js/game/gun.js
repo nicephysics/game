@@ -120,9 +120,12 @@ export class Gun {
       friction: s.kineticFriction,
       frictionStatic: s.staticFriction,
       frictionAir: s.airResistance,
-      velocity: Vector.mult(this.direction, s.speed),
     })
-    // b.setInertia(b.inertia * s.inertia) // ?
+    Body.setVelocity(b, Vector.mult(
+      Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),
+      s.speed
+    ))
+    // Body.setInertia(b, b.inertia * s.inertia) // ?
     Composite.add(Tower.world, b)
     this.children.push(b)
   }

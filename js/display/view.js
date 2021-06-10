@@ -146,7 +146,9 @@ display_view.init = function(
     if (display_view.pulling()) {
       let bodies = Query.point(Composite.allBodies(world), mouse.position)
       var body = bodies[0]
-      Body.translate(body, display_view.mousedelta)
+      if (body.canDrag) {
+        Body.translate(body, display_view.mousedelta)
+      }
     } // end pulling
     
     display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)

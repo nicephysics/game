@@ -1,5 +1,5 @@
 
-export var aim { }
+export var aim = { }
 
 // aim! credits: https://math.stackexchange.com/questions/1792507/finding-launch-angle-for-two-projectile-collision
 aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTime, gravity) {

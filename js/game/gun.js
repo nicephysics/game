@@ -169,7 +169,7 @@ export class Gun {
       isStatic: false,
       label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
       collisionFilter: category.yourBullet,
-      render: style.tower.basic, // todo
+      render: style.ammo.bullet, // todo
       density: s.mass,
       friction: s.kineticFriction,
       frictionStatic: s.staticFriction,

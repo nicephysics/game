@@ -20,8 +20,9 @@ display_view.leftmousedown = false
 display_view.mousepos = Vector.create(0, 0) // Vector
 display_view.mousedelta = Vector.create(0, 0) // Vector
 display_view.dragging = false
+display_view.spacepressed = false
 display_view.panning = function() {
-  return display_view.rightmousedown && !display_view.dragging
+  return (display_view.rightmousedown && !display_view.dragging) || (display_view.leftmousedown && display_view.spacepressed)
 }
 display_view.pulling = function() {
   console.log(display_view.leftmousedown, display_view.dragging)
@@ -82,6 +83,20 @@ display_view.init = function(
       display_view.rightmousedown = false
       display_view.leftmousedown = false
       pulledBody = null
+    }
+  })
+  
+  document.addEventListener("keydown", function(event) {
+    switch (event.code) {
+      case "Space":
+        display_view.spacepressed = true
+    }
+  })
+  
+  document.addEventListener("keyup", function(event) {
+    switch (event.code) {
+      case "Space":
+        display_view.spacepressed = false
     }
   })
   

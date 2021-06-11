@@ -22,7 +22,7 @@ export var stats = {
     z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, t: "base", o: { }
   },
   basic: {
-    z: 0.6, m: 1, s: 1, r: 1, t; 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.6, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   double: {
     z: 0.5, m: 0.9, s: 1, r: 1.1, t: 0.7, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,

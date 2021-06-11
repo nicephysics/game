@@ -38,6 +38,7 @@ export class Gun {
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)
   angle = 0
+  dummy = false
   // shape
   shape = "rectangle"
   // styles
@@ -132,8 +133,8 @@ export class Gun {
     if (this.tower.controlled) {
       // hmmm
     } else {
-      if (this.shot >= this.stat.reloadFrames) {
-        this.shot = 0
+      while (this.shot >= this.stat.reloadFrames && !this.dummy) {
+        this.shot -= this.stat.reloadFrames
         this.shoot()
       }
     }
@@ -182,6 +183,7 @@ export class Gun {
     this.stroke = style.gun[set.stroke] || set.stroke || this.fill
     this.lineWidth = set.lineWidth || 3
     this.shape = set.shape || "rectangle"
+    this.dummy = set.dummy || false
     this.aspects = set.aspects || { }
   }
   
@@ -214,6 +216,7 @@ Gun.set.some_random_comments = {
   stroke: null, // stroke style (default: same as fill style)
   lineWidth: 3, // stroke line width (default: 3)
   shape: "rectangle", // shape (default: rectangle)
+  dummy: false, // dummy gun (default: false)
   aspects: { } // shape aspects (default: nothing)
 }
 

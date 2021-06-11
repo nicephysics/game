@@ -62,3 +62,6 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   console.log(ti, a)
   return a
 }
+
+aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81)
+

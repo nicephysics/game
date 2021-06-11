@@ -54,3 +54,7 @@ style.gun = {
   basic: "#62a7b5",
   double: "#c29d61",
 }
+
+style.ammo = {
+  bullet: style.fillStroke("#a7a7af"),
+}

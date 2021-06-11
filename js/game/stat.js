@@ -13,13 +13,13 @@ export var stats = {
     kineticFriction: 1, // [kf] kinetic friction of the projectile
     staticFriction: 1, // [sf] static friction of the projectile
     airResistance: 1, // [a]
-    type: "base", // [t] type of the projectile
+    type: "base", // [y] type of the projectile
     other: { // [o] other options, if type !== "base"
       // object
     },
   },
   shooter: {
-    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, t: "base", o: { }
+    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, y: "base", o: { }
   },
   basic: {
     z: 0.6, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
@@ -114,7 +114,7 @@ export class Stat {
   }
 
   add(s) {
-    this.type = s.t || s.type || "base"
+    this.type = s.y || s.type || "base"
     
     this.size *= s.z || s.size || 1
     this.mass *= s.m || s.mass || 1

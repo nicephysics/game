@@ -213,6 +213,9 @@ export class Gun {
     this.shape = set.shape || "rectangle"
     this.dummy = set.dummy || false
     this.aspects = set.aspects || { }
+    if (this.stat) {
+      this.setStatString(this.stat)
+    }
     this.refreshStats()
   }
   
@@ -258,14 +261,17 @@ Gun.set.default = {
 Gun.set.basic = {
   x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
   style: "basic",
+  stat: ["shooter", "basic"],
 }
 
 Gun.set.double_left = {
   x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0,
   style: "double",
+  stat: ["shooter", "double"],
 }
 
 Gun.set.double_right = {
   x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5,
   style: "double",
+  stat: ["shooter", "double"],
 }

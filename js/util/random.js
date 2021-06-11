@@ -15,7 +15,7 @@ random.randint = function(start, end) {
 
 
 // implementation
-random.random_seed_generator = (function(str) {
+random.random_seed_generator_generator = function(str) {
   for (var i = 0, h = 1779033703 ^ str.length; i < str.length; i++)
     h = Math.imul(h ^ str.charCodeAt(i), 3432918353),
   h = h << 13 | h >>> 19;
@@ -24,7 +24,9 @@ random.random_seed_generator = (function(str) {
       h = Math.imul(h ^ h >>> 13, 3266489909);
       return (h ^= h >>> 16) >>> 0;
   }
-})("phyzicz");
+}
+
+random.random_seed_generator = random.random_seed_generator_generator("phyzicz");
 
 random.seed = function() {
   return random.random_seed_generator()

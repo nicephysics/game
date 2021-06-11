@@ -49,6 +49,9 @@ import('./game/towerstat.js').then(m => {
   game.TowerStat = m.TowerStat
   game.towerstats = m.towerstats
 })
+import('./game/wave.js').then(m => {
+  game.wave = m.wave
+})
 
 // display
 var disp = { }

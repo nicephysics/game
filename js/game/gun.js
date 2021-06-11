@@ -184,6 +184,7 @@ export class Gun {
     }
     if (s.inertia !== 1) {
       Body.setInertia(b, b.inertia * s.inertia) // works?
+      b.gravityScale = 1 / s.inertia
     }
     Composite.add(Tower.world, b)
     this.children.push(b)

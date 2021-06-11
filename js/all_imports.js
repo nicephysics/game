@@ -25,8 +25,10 @@ import { towerstats, TowerStat } from "./game/towerstat.js"
 */
 
 // hack for console
-var t, g, s, ts
-import('./game/tower.js').then(m => t = m)
+var a, e, g, s, t, ts
+import('./game/aim.js').then(m => a = m)
+import('./game/enemy.js').then(m => e = m)
 import('./game/gun.js').then(m => g = m)
 import('./game/stat.js').then(m => s = m)
+import('./game/tower.js').then(m => t = m)
 import('./game/towerstat.js').then(m => ts = m)

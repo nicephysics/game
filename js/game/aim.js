@@ -33,10 +33,11 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
       min = Math.min,
       atan2 = Math.atan2,
       zzz = s(sin)*sv+2*g*y
+  console.log(v, a)
   if (zzz < 0) return console.log("Target projectile never reaches the ground!", zzz)
   var tz = sin*v/g+sr(zzz)/g-t
   if (tz < 0) return console.log("Target projectile already reached destination", -tz, "seconds before launch.")
-  var tmin = max(0,(x-cos*t*v)/(cos*v-u)),
+  var tmin = max(0,(x-cos*t*v)/(cos*v+u)),
       tmax = min(tz,(x-cos*t*v)/(cos*v))
   if (tmin > tmax) return console.log("No suitable launch time!", tmin, tmax)
   //var d = 2*(sg*st-2*v*g*t*sin+sv+su),

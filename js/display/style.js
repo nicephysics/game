@@ -2,18 +2,27 @@
 
 export var style = { }
 
+style.fillStroke = function(fillStyle, opacity = 1) {
+  return {
+    fillStyle: fillStyle,
+    strokeStyle: chroma(fillStyle).darken().hex(),
+    lineWidth: 3,
+    opacity: opacity,
+  }
+}
+
 style.fill = function(fillStyle, opacity = 1) {
   return {
     fillStyle: fillStyle,
-    strokeStyle: "#000000",
-    lineWidth: 1,
+    strokeStyle: "transparent",
+    lineWidth: 0,
     opacity: opacity,
   }
 }
 
 style.stroke = function(strokeStyle, lineWidth = 1, opacity = 1) {
   return {
-    fillStyle: "#00000000",
+    fillStyle: "transparent", // transparent, hopefully
     strokeStyle: strokeStyle,
     lineWidth: lineWidth,
     opacity: opacity,
@@ -33,12 +42,12 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
 }
 
 style.default = {
-  ground: style.fill("#bd3900"),
+  ground: style.fillStroke("#bd3900"),
 }
 
 style.tower = {
-  basic: style.fill("#009ebd"),
-  double: style.fill("#bd7500"),
+  basic: style.fillStroke("#009ebd"),
+  double: style.fillStroke("#bd7500"),
 }
 
 style.gun = {

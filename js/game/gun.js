@@ -57,12 +57,11 @@ export class Gun {
   childrenTime = [ ] // queue of int
   
   // constructor
-  constructor(tower, location, stat) {
+  constructor(tower, location) {
     guns.push(this)
     
     this.tower = tower
     this.setLocation(location)
-    this.setStat(stat)
   }
   
   // get
@@ -189,12 +188,6 @@ export class Gun {
     Composite.add(Tower.world, b)
     this.children.push(b)
     this.childrenTime.push(this.gunTime)
-  }
-  
-  setStat(s) {
-    s = s || []
-    this.stat.set(s)
-    this.refreshStats()
   }
   
   setStatString(s) {

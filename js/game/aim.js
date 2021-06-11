@@ -39,13 +39,13 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   var tmin = max(0,(x-cos*t*v)/(cos*v-u)),
       tmax = min(tz,(x-cos*t*v)/(cos*v))
   if (tmin > tmax) return false
-  var d = 2*(sg*st-2*v*g*t*sin+sv+su),
-      q = v*(3*g*st-2*y)*sin+2*v*x*cos-t*(sg*st-2*g*y+2*v),
-      s = st*(sg*st*su-4*sg*sx-4*g*su*y+4*su*sv)+4*(su*sx+su*sy-sv*sx) + 4*t*v*x*(sg*st+2*g*y-2*su)*cos-sv*(g*st*2*x+2*y)*(g*st-2*x+2*y)*s(cos) - 4*sv*x*(g*st+2*y)*cos*sin-4*v*t(g*st*su-2*g*sx-2*su*y)*sin
+  //var d = 2*(sg*st-2*v*g*t*sin+sv+su),
+  //    q = v*(3*g*st-2*y)*sin+2*v*x*cos-t*(sg*st-2*g*y+2*v),
+  //    s = st*(sg*st*su-4*sg*sx-4*g*su*y+4*su*sv)+4*(su*sx+su*sy-sv*sx) + 4*t*v*x*(sg*st+2*g*y-2*su)*cos-sv*(g*st*2*x+2*y)*(g*st-2*x+2*y)*s(cos) - 4*sv*x*(g*st+2*y)*cos*sin-4*v*t(g*st*su-2*g*sx-2*su*y)*sin
       
-      // s = t*t*(g*g*t*t*u*u - 4*g*g*x*x - 4*g*u*u*y+4*u*u*v*v)+4*u*u*x*x+4*u*u*y*y-4*v*v*x*x + cos*4*t*v*x*(g*g*t*t+2*g*y-2*u*u) - cos*cos*v*v*(g*t*t+2*x+2*y)*(g*t*t-2*x+2*y) - cos*sin*4*v*v*x*(g*t*t+2*y) - sin*4*v*t*(g*t*t*u*u-2*g*x*x-2*u*u*y)
-      // d = 2*(g*g*t*t - 2*v*sin*g*t - u*u + v*v)
-      // q = sin*v*(3*g*t*t - 2*y) + 2*cos*v*x - t*(g*g*t*t - 2*g*y + 2*v*v)
+  var s = t*t*(g*g*t*t*u*u - 4*g*g*x*x - 4*g*u*u*y+4*u*u*v*v)+4*u*u*x*x+4*u*u*y*y-4*v*v*x*x + cos*4*t*v*x*(g*g*t*t+2*g*y-2*u*u) - cos*cos*v*v*(g*t*t+2*x+2*y)*(g*t*t-2*x+2*y) - cos*sin*4*v*v*x*(g*t*t+2*y) - sin*4*v*t*(g*t*t*u*u-2*g*x*x-2*u*u*y),
+      d = 2*(g*g*t*t - 2*v*sin*g*t - u*u + v*v),
+      q = sin*v*(3*g*t*t - 2*y) + 2*cos*v*x - t*(g*g*t*t - 2*g*y + 2*v*v)
   if (s < 0 || d === 0) return false
   var t1 = (q + sr(s)) / d,
       t2 = (q - sr(s)) / d,

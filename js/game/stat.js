@@ -6,6 +6,7 @@ export var stats = {
     mass: 1, // [m] mass of projectile, the higher the better
     speed: 1, // [s] speed of projectile, the higher the better
     reload: 1, // [r] reload of the gun, the lower the better
+    time: 1, // [t] how long the projectile lasts, the higher the better
     inertia: 1, // [i] gravity scale (sort of), the higher the better
     timeScale: 1, // [ts] slow motion, ???
     restitution: 1, // [e] coefficient of restitution of the projectile, the higher the better
@@ -18,13 +19,13 @@ export var stats = {
     },
   },
   shooter: {
-    z: 10, m: 10, s: 10, r: 1, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, t: "base", o: { }
+    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, t: "base", o: { }
   },
   basic: {
-    z: 0.6, m: 1, s: 1, r: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.6, m: 1, s: 1, r: 1, t; 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   double: {
-    z: 0.5, m: 0.9, s: 1, r: 1.1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.5, m: 0.9, s: 1, r: 1.1, t: 0.7, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
 }
 
@@ -40,6 +41,7 @@ export class Stat {
   mass = 1
   speed = 1
   reload = 1
+  time = 1
   inertia = 1
   timeScale = 1
   restitution = 1
@@ -66,6 +68,9 @@ export class Stat {
   }
   get reloadFrames() {
     return this.reload * 60 // 60 fps?
+  }
+  get timeFrames() {
+    return this.time * 60 // 60 fps?
   }
   
   // set
@@ -99,6 +104,7 @@ export class Stat {
     this.mass = s.m || s.mass || 1
     this.speed = s.s || s.speed || 1
     this.reload = s.r || s.reload || 1
+    this.time = s.t || s.time || 1
     this.inertia = s.i || s.inertia || 1
     this.timeScale = s.ts || s.timeScale || 1
     this.restitution = s.e || s.restitution || 1
@@ -114,6 +120,7 @@ export class Stat {
     this.mass *= s.m || s.mass || 1
     this.speed *= s.s || s.speed || 1
     this.reload *= s.r || s.reload || 1
+    this.time *= s.t || s.time || 1
     this.inertia *= s.i || s.inertia || 1
     this.timeScale *= s.ts || s.timeScale || 1
     this.restitution *= s.e || s.restitution || 1

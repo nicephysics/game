@@ -44,9 +44,8 @@ export class TowerStat {
   setType(type) {
     this.set(towerstats[type])
     this.tower.removeAllGuns()
-    for (let gun of this.guns) {
-      this.tower.addGun(gun)
-      // g.setStatString(gun.stat) // old stuff
+    for (let guntype of this.guns) {
+      this.tower.addGun(guntype)
     }
   }
 }

@@ -16,6 +16,7 @@ export var display_view = { }
 
 display_view.mousedown = true
 display_view.rightmousedown = false
+display_view.leftmousedown = false
 display_view.mousepos = Vector.create(0, 0) // Vector
 display_view.mousedelta = Vector.create(0, 0) // Vector
 display_view.dragging = false
@@ -149,7 +150,7 @@ display_view.init = function(
       if (bodies.length > 0) {
         var body = bodies[0]
         if (body && body.canDrag) {
-          var translate = Vector.clone(display_view.mousedelta)
+          var translate = Vector.neg(Vector.clone(display_view.mousedelta))
           Body.translate(body, translate)
         }
       }

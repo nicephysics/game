@@ -51,19 +51,33 @@ display_view.init = function(
     target: 1,
   }
   
+  var pulledBody = null
+  
   // right click = pan
   document.addEventListener("mousedown", function(event) {
     // if right mouse button pressed
     if ((event.buttons & 2) > 0) {
       display_view.rightmousedown = true
       display_view.leftmousedown = false
+      pulledBody = null
       event.preventDefault()
     } else if ((event.buttons & 1) > 0) {
+      if (!display_view.leftmousedown) {
+        var bodies = Query.point(Composite.allBodies(world), mouse.position)
+        pulledBody = null
+        if (bodies.length > 0) {
+          var body = bodies[0]
+          if (body) {
+            pulledBody = body
+          }
+        }
+      }
       display_view.leftmousedown = true
       display_view.rightmousedown = false
     } else {
       display_view.rightmousedown = false
       display_view.leftmousedown = false
+      pulledBody = null
     }
   })
   
@@ -74,6 +88,7 @@ display_view.init = function(
   events.mouseup(mouseConstraint, function(mouse) {
     display_view.rightmousedown = false
     display_view.leftmousedown = false
+    pulledBody = null
   })
   
   events.startdrag(mouseConstraint, function(body) {
@@ -145,14 +160,9 @@ display_view.init = function(
       Mouse.setOffset(mouse, render.bounds.min)
     } // end panning
     
-    if (display_view.pulling()) {
-      var bodies = Query.point(Composite.allBodies(world), mouse.position)
-      if (bodies.length > 0) {
-        var body = bodies[0]
-        if (body && body.canDrag) {
-          var translate = Vector.neg(Vector.clone(display_view.mousedelta))
-          Body.translate(body, translate)
-        }
+    if (display_view.pulling() && pulledBody && pulledBody.canDrag) {
+        var translate = Vector.neg(Vector.clone(display_view.mousedelta))
+        Body.translate(pulledBody, translate)
       }
     } // end pulling
     

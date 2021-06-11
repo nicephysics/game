@@ -26,7 +26,7 @@ display_view.panning = function() {
 }
 display_view.pulling = function() {
   console.log(display_view.leftmousedown, display_view.dragging)
-  return display_view.leftmousedown
+  return display_view.leftmousedown && !display_view.spacepressed
 }
 
 // needs render and mouse constraint, in that order

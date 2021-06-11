@@ -1,6 +1,8 @@
-var Vector = Matter.Vector
+export var aim = {
+  // indent is 2 spaces
+}
 
-export var aim = { }
+var Vector = Matter.Vector
 
 // aim! credits: https://math.stackexchange.com/questions/1792507/finding-launch-angle-for-two-projectile-collision
 aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTime, gravity) {

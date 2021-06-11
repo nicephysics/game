@@ -1,3 +1,4 @@
+var Vector = Matter.Vector
 
 export var aim = { }
 

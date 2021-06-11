@@ -34,8 +34,10 @@ display_view.init = function(
   mouseConstraint
 ) {
   // MOUSE TEST
-  var _width = render.options.width
-  var _height = render.options.height
+  var _width = render.options.width,
+      _height = render.options.height,
+      mouse = render.mouse,
+      world = render.engine.world        
 
   // create limits for the viewport
   var limits = {
@@ -55,13 +57,15 @@ display_view.init = function(
   
   // right click = pan
   document.addEventListener("mousedown", function(event) {
-    // if right mouse button pressed
+    // check which mouse button pressed
     if ((event.buttons & 2) > 0) {
+      // right mouse button pressed
       display_view.rightmousedown = true
       display_view.leftmousedown = false
       pulledBody = null
       event.preventDefault()
     } else if ((event.buttons & 1) > 0) {
+      // left mouse button pressed
       if (!display_view.leftmousedown) {
         var bodies = Query.point(Composite.allBodies(world), mouse.position)
         pulledBody = null
@@ -100,10 +104,8 @@ display_view.init = function(
   })
   
   // render event listener (main function)
-  events.beforeRender(render, function() {      
-    var mouse = render.mouse,
-        mousepos = mouse.absolute,
-        world = render.engine.world,
+  events.beforeRender(render, function() {
+    var mousepos = mouse.absolute,
         translate
     
     var scaleFactor = mouse.wheelDelta * -0.1

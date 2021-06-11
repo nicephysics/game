@@ -38,6 +38,8 @@ export class Gun {
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)
   angle = 0
+  // shooting
+  delay = 0
   dummy = false
   // shape
   shape = "rectangle"
@@ -55,8 +57,8 @@ export class Gun {
     guns.push(this)
     
     this.tower = tower
-    this.setStat(stat)
     this.setLocation(location)
+    this.setStat(stat)
   }
   
   // get
@@ -111,6 +113,10 @@ export class Gun {
   // set
   
   // go!
+  refreshStats() {
+    this.shot = this.delay * this.stat.reloadFrames
+  }
+  
   draw(render) {
     var ctx = render.context
     draw.setFillDarkenStroke(ctx, this.fill)
@@ -129,10 +135,13 @@ export class Gun {
   }
   
   tick() {
-    this.shot++
     if (this.tower.controlled) {
       // hmmm
+      if (this.shot <= this.stat.reloadFrames) {
+        this.shot++
+      }
     } else {
+      this.shot++
       while (this.shot >= this.stat.reloadFrames && !this.dummy) {
         this.shot -= this.stat.reloadFrames
         this.shoot()
@@ -168,23 +177,27 @@ export class Gun {
   setStat(s) {
     s = s || []
     this.stat.set(s)
+    this.refreshStats()
   }
   
   setStatString(s) {
     s = s || []
     this.stat.setString(s)
+    this.refreshStats()
   }
   
   setLocation(set) {
     this.position = Vector.create(set.x, set.y)
     this.size = Vector.create(set.w, set.h)
     this.angle = set.a || 0
-    this.fill = style.gun[set.s] || set.s || "#a7a7af"
+    this.delay = set.d || 0
+    this.fill = style.gun[set.style] || set.style || "#a7a7af"
     this.stroke = style.gun[set.stroke] || set.stroke || this.fill
     this.lineWidth = set.lineWidth || 3
     this.shape = set.shape || "rectangle"
     this.dummy = set.dummy || false
     this.aspects = set.aspects || { }
+    this.refreshStats()
   }
   
   remove(removeFromArray = true) {
@@ -212,7 +225,8 @@ Gun.set.some_random_comments = {
   w: 0, // size.x (*)
   h: 10, // size.y (*)
   a: 0, // angle (default: 0)
-  s: "#a7a7af", // fill style (default: "#a7a7af")
+  d: 0, // shooting delay (default: 0)
+  style: "#a7a7af", // fill style (default: "#a7a7af")
   stroke: null, // stroke style (default: same as fill style)
   lineWidth: 3, // stroke line width (default: 3)
   shape: "rectangle", // shape (default: rectangle)
@@ -221,17 +235,21 @@ Gun.set.some_random_comments = {
 }
 
 Gun.set.default = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, shape: "rectangle",
+  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+  shape: "rectangle",
 }
 
 Gun.set.basic = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, s: "basic",
+  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+  style: "basic",
 }
 
 Gun.set.double_left = {
-  x: -0.54, y: 0, w: 0, h: 10, a: 0, s: "double",
+  x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0,
+  style: "double",
 }
 
 Gun.set.double_right = {
-  x: 0.54, y: 0, w: 0, h: 10, a: 0, s: "double",
+  x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5,
+  style: "double",
 }

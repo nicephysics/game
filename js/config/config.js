@@ -1,5 +1,13 @@
+var _width = window.innerWidth,
+    _height = window.innerHeight
+
 export var config = {
   version: "0.0.0",
+  limits: {
+    min: { x: _width * -6.0, y: 0 },
+    max: { x: _width * 6.0, y: _height },
+    zoom: { min: 1.0, max: 1.0 },
+  }
 }
 
 var c = {

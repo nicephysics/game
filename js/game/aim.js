@@ -9,7 +9,8 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   function s(a) { // square
     return a * a
   }
-  var px = position.x,
+  var pi = Math.PI,
+      px = position.x,
       py = position.y,
       tx = targetPosition.x,
       ty = targetPosition.y,
@@ -21,7 +22,8 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
       su = s(u),
       v = Vector.magnitude(targetVelocity),
       sv = Vector.magnitudeSquared(targetVelocity),
-      a = Vector.angle(Vector.create(0, 0), targetVelocity),
+      aa = Vector.angle(Vector.create(0, 0), targetVelocity),
+      a = pi/2 - aa,
       t = targetTime,
       st = s(t),
       g = gravity,

@@ -1,5 +1,7 @@
 // ALL IMPORTS (don't know if this will cause performance issues)
 
+/*
+
 // util
 import { events } from "./util/events.js"
 import { math } from "./util/math.js"
@@ -19,3 +21,12 @@ import { Tower } from "./game/tower.js"
 import { Gun } from "./game/gun.js"
 import { stats, Stat } from "./game/stat.js"
 import { towerstats, TowerStat } from "./game/towerstat.js"
+
+*/
+
+// hack for console
+var t, g, s, ts
+import('./game/tower.js').then(m => t = m)
+import('./game/gun.js').then(m => g = m)
+import('./game/stat.js').then(m => s = m)
+import('./game/towerstat.js').then(m => ts = m)

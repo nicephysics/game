@@ -168,7 +168,7 @@ export class Gun {
     var b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
       isStatic: false,
       label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
-      categoryFilter: category.yourBullet,
+      collisionFilter: category.yourBullet,
       render: style.tower.basic, // todo
       density: s.mass,
       friction: s.kineticFriction,

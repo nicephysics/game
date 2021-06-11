@@ -32,7 +32,10 @@ export class Gun {
   id = Gun._count++
   label = "Gun #" + this.id
   bulletcount = 1
+  // counters
+  gunTime = 0
   shot = 0 // reload counter
+  // tower
   tower = null
   // positions
   position = Vector.create(0, 0)
@@ -51,6 +54,7 @@ export class Gun {
   aspects = { } // optional
   stat = new Stat(this)
   children = [ ] // Matter.Body[]
+  childrenTime = [ ] // queue of int
   
   // constructor
   constructor(tower, location, stat) {
@@ -135,17 +139,28 @@ export class Gun {
   }
   
   tick() {
+    // tick
+    this.gunTime++;
+    // check whether gun can shoot
     if (this.tower.controlled) {
-      // hmmm
+      // hmmm controlment
       if (this.shot <= this.stat.reloadFrames) {
         this.shot++
       }
+      // todo
     } else {
       this.shot++
-      while (this.shot >= this.stat.reloadFrames && !this.dummy) {
+      while (!this.dummy && this.shot >= this.stat.reloadFrames) {
         this.shot -= this.stat.reloadFrames
         this.shoot()
       }
+    }
+    // remove earliest created child, if possible
+    while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
+      this.childrenTime.shift()
+      var b = this.children[0]
+      Composite.remove(Tower.world, b)
+      this.children.shift()
     }
   }
   
@@ -172,6 +187,7 @@ export class Gun {
     }
     Composite.add(Tower.world, b)
     this.children.push(b)
+    this.childrenTime.push(this.gunTime)
   }
   
   setStat(s) {

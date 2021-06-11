@@ -23,7 +23,7 @@ display_view.panning = function() {
   return display_view.rightmousedown && !display_view.dragging
 }
 display_view.pulling = function() {
-  return display_view.leftmousedown && !display_view.dragging
+  return display_view.leftmousedown
 }
 
 // needs render and mouse constraint, in that order

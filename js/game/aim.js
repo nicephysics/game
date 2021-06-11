@@ -64,11 +64,11 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   }
   var c = (x-cos*v*(t+ti))/(ti*u)
   if (c <= 0.0 || c >= 1.0) return console.log("Incorrect launch angle:", c)
-  var ta = atan2(c, sr(1-c*c))
-  console.log(ti, c)
-  return c
+  var ta = atan2(sr(1-c*c), c)
+  console.log(ti, ta)
+  return ta
 }
 
-// should return 2.9310744713341257 0.5235987755982987
+// should return 2.9310744713341257 0.4729842
 console.log(0.4729842 === aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81))
 

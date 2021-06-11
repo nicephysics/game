@@ -1,4 +1,5 @@
 import { events } from "../util/events.js"
+import { config } from "../config/config.js"
 
 if (true) {
   // 2 spaces!
@@ -41,11 +42,7 @@ display_view.init = function(
       world = render.engine.world        
 
   // create limits for the viewport
-  var limits = {
-      min: { x: _width * -6.0, y: -300 },
-      max: { x: _width * 6.0, y: _height },
-      zoom: { min: 1.0, max: 1.0 },
-  }
+  var limits = config.limits
   
   // keep track of current bounds scale (view zoom)
   var boundsScale = {

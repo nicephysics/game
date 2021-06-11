@@ -2,29 +2,12 @@
 export var towerstats = {
   basic: {
     size: 30,
-    guns: [
-      { // main gun
-        label: "basic",
-        type: "basic",
-        stat: ["shooter", "basic"]
-      },
-    ],
+    guns: ["basic"],
   },
   double: {
     size: 25,
-    guns: [
-      { // left gun
-        label: "double left",
-        type: "double_left",
-        stat: ["shooter", "double"]
-      },
-      { // right gun
-        label: "double right",
-        type: "double_right",
-        stat: ["shooter", "double"]
-      },
-    ],
-  },
+    guns: ["double_left", "double_right"],
+  }
 }
 
 export class TowerStat {
@@ -62,8 +45,8 @@ export class TowerStat {
     this.set(towerstats[type])
     this.tower.removeAllGuns()
     for (let gun of this.guns) {
-      let g = this.tower.addGun(gun.type)
-      g.setStatString(gun.stat)
+      this.tower.addGun(gun)
+      // g.setStatString(gun.stat) // old stuff
     }
   }
 }

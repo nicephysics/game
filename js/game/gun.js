@@ -213,10 +213,7 @@ export class Gun {
     this.shape = set.shape || "rectangle"
     this.dummy = set.dummy || false
     this.aspects = set.aspects || { }
-    if (this.stat) {
-      this.setStatString(this.stat)
-    }
-    this.refreshStats()
+    this.setStatString(this.stat)
   }
   
   remove(removeFromArray = true) {

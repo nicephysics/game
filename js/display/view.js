@@ -161,9 +161,8 @@ display_view.init = function(
     } // end panning
     
     if (display_view.pulling() && pulledBody && pulledBody.canDrag) {
-        var translate = Vector.neg(Vector.clone(display_view.mousedelta))
-        Body.translate(pulledBody, translate)
-      }
+      var translate = Vector.neg(Vector.clone(display_view.mousedelta))
+      Body.translate(pulledBody, translate)
     } // end pulling
     
     display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)

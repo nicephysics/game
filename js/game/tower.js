@@ -1,6 +1,7 @@
 // game
 import { TowerStat } from "./towerstat.js"
 import { Gun } from "./gun.js"
+import { aim } from "./aim.js"
 // config
 import { config, category } from "../config/config.js"
 // display

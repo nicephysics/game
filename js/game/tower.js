@@ -200,6 +200,8 @@ export class Tower {
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
     })
+    this.body.type = "tower"
+    this.body.tower = this
     this.body.canDrag = true
     // this.body.gravityScale = 0
     // this.body.disableVelocity = true

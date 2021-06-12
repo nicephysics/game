@@ -4,7 +4,8 @@ export var aim = {
   // indent is 2 spaces
 }
 
-var Vector = Matter.Vector
+var Vector = Matter.Vector,
+    canprint = false
 
 // aim! credits: https://math.stackexchange.com/questions/1792507/finding-launch-angle-for-two-projectile-collision
 // IT WORKS
@@ -38,20 +39,25 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
       min = Math.min,
       atan2 = Math.atan2,
       zzz = s(sin)*sv+2*g*y
-  console.log(v, a)
   if (zzz < 0) {
-    console.error("Target projectile never reaches the ground!", zzz)
+    if (canprint) {
+      console.error("Target projectile never reaches the ground!", zzz)
+    }
     return "fail"
   }
   var tz = sin*v/g+sr(zzz)/g-t
   if (tz < 0) {
-    console.error("Target projectile already reached destination", -tz, "seconds before launch.")
+    if (canprint) {
+      console.error("Target projectile already reached destination", -tz, "seconds before launch.")
+    }
     return "fail"
   }
   var tmin = max(0,(x-cos*t*v)/(cos*v+u)),
       tmax = min(tz,(x-cos*t*v)/(cos*v))
   if (tmin > tmax) {
-    console.error("No suitable launch time!", tmin, tmax)
+    if (canprint) {
+      console.error("No suitable launch time!", tmin, tmax)
+    }
     return "fail"
   }
   //var d = 2*(sg*st-2*v*g*t*sin+sv+su),
@@ -61,7 +67,9 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
       d = 2*(g*g*t*t - 2*v*sin*g*t - u*u + v*v),
       q = sin*v*(3*g*t*t - 2*y) + 2*cos*v*x - t*(g*g*t*t - 2*g*y + 2*v*v)
   if (s < 0 || d === 0) {
-    console.error("Launch is not possible!", s, d)
+    if (canprint) {
+      console.error("Launch is not possible!", s, d)
+    }
     return "fail"
   }
   var t1 = (q + sr(s)) / d,
@@ -74,21 +82,29 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   } else if (t2 >= tmin && t2 <= tmax) {
     ti = t2
   } else {
-    console.error("Launch will fail!")
+    if (canprint) {
+      console.error("Launch will fail!")
+    }
     return "fail"
   }
   var c = (x-cos*v*(t+ti))/(ti*u)
   if (c <= 0.0 || c >= 1.0) {
-    console.error("Incorrect launch angle:", c)
+    if (canprint) {
+      console.error("Incorrect launch angle:", c)
+    }
     return "fail"
   }
   var ta = atan2(sr(1-c*c), c)
-  console.log(ti, ta)
+  if (canprint) {
+    console.log(ti, ta)
+  }
   return ta
 }
 
 // should return 2.9310744713341257 0.4729842
-console.log(0.4729842 === aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81))
+if (canprint) {
+  console.log(0.4729842 === aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81))
+}
 
 aim.angle = function(tower, enemy) {
   return aim.aim(

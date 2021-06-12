@@ -18,9 +18,9 @@ if (true) {
 var Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
-    Vector = Matter.Vector,
+    Vector = Matter.Vector
 
-function getInitialSpawnBounds() {
+var getInitialSpawnBounds = function() {
   return {
     x: 0, y: window.innerHeight,
     w: window.innerWidth,

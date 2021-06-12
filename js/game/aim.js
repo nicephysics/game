@@ -101,9 +101,9 @@ aim.aim = function(position, velocity, targetPosition, targetVelocity, targetTim
   return ta
 }
 
-// should return 2.9310744713341257 0.4729842
+// should return 2.9310744713341257 0.47276449502514806
 if (canprint) {
-  console.log(0.4729842 === aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81))
+  console.log(0.47276449502514806 === aim.aim(Vector.create(0, 0), 120, Vector.create(1000, 30), Vector.mult(Vector.create(-Math.cos(Math.PI/6), Math.sin(Math.PI/6)), 100), 5, 9.81))
 }
 
 aim.angle = function(tower, enemy) {

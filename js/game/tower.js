@@ -90,6 +90,7 @@ export class Tower {
   id = Tower._count++ // integer, also increment Tower.create_count
   label = "Tower #" + (this.id).toString(10) // default (string) label for towers, uses base 10
   type = "basic" // default (string) tower type is basic
+  target = null // the enemy target of the tower
   targetrot = 0 // target rotation of tower
   parent = this // Tower
   guns = [ ] // Gun[]

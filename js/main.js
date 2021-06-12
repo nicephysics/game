@@ -70,6 +70,7 @@ var init = function() {
     label: "The Ground",
     render: style.default.ground,
   })
+  ground.gametype = "ground"
   
   Composite.add(world, [ ground ])
     

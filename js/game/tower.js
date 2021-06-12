@@ -42,6 +42,8 @@ export class Tower {
   // reference to all towers
   static allTowers = towers
   static towers = towers
+  // player
+  static player = null
   // a running number for ID and default label
   static _count = 1
   // all tower types (string) in an array
@@ -92,6 +94,7 @@ export class Tower {
   type = "basic" // default (string) tower type is basic
   target = null // the enemy target of the tower
   targetrot = 0 // target rotation of tower
+  targetpos = Vector.create(0, 0) // target position of tower
   parent = this // Tower
   guns = [ ] // Gun[]
   stat = new TowerStat(this) // TowerStat
@@ -224,6 +227,10 @@ export class Tower {
   
   tick() {
     Body.setAngle(this.body, this.targetrot)
+    Body.setPosition(this.body, this.targetpos)
+  }
+  
+  tickTarget() {
     if (this.target && this.target.exists) {
       var angle = aim.angle(this, this.target)
       if (angle === "fail") {
@@ -233,7 +240,7 @@ export class Tower {
     } else {
       this.targetrot += 0.01
       this.getTarget()
-    }
+    }    
   }
   
   getTarget() {
@@ -265,6 +272,10 @@ export class Tower {
   // important! if not, the body will stay at 0, 0
   moveTo(x, y) {
     Body.setPosition(this.body, Vector.create(x, y))
+  }
+  
+  moveBy(x, y) {
+    Body.translate(this.body, Vector.create(x, y))
   }
   
   turnTo(angle) {

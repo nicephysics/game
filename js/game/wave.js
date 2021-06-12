@@ -6,7 +6,7 @@ import { random } from "../util/random.js"
 export var wave = { }
 
 // makes many waves...
-wave.make = function(types, seed, options) {
+wave.make = function(types, seed, options = { }) {
   seed = seed || random.seed()
   var num = options.num || 10, // the base number of enemies
       base = options.base || 1, // the base difficulty of enemies

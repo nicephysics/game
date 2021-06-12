@@ -58,7 +58,7 @@ export class Enemy {
   static wave(wavemaker, num) {
     var w = wavemaker.wave(num)
     if (w.count !== num) {
-      console.log("Wave numbers don't match!", w, wavemaker)
+      console.err("Wave numbers don't match!", w, wavemaker)
     }
     Enemy.sendNumber(w.type, w.number, {
       difficulty: w.difficulty,
@@ -77,7 +77,6 @@ export class Enemy {
   constructor(type, options = { }) {
     this.type = type
     this.stat = options
-    enemies.push(this)
   }
   
   // get
@@ -116,10 +115,17 @@ export class Enemy {
   
   send() {
     this.createBody()
+    enemies.push(this)
   }
   
   remove() {
     this.removeBody()
+    const index = enemies.indexOf(this);
+    if (index > -1) {
+      enemies.splice(index, 1);
+    } else {
+      console.err("Enemy to remove not found in 'enemies' list: ", enemy)
+    }
   }
   
   createBody() {

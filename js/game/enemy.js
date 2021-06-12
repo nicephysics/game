@@ -47,10 +47,12 @@ export class Enemy {
     bounds: getInitialSpawnBounds(),
     random: function() {
       var b = Enemy.spawn.bounds
-      return Vector.create(
+      var ans = Vector.create(
         b.x + random.randreal() * b.w,
         b.y + random.randreal() * b.h
       )
+      console.log(ans)
+      return ans
     }
   }
   

@@ -1,11 +1,14 @@
 // imports
+import { events } from "../util/events.js"
 
 if (true) {
   // 2 space indent!
 }
 
 var Body = Matter.Body,
-    Bodies = Matter.Bodies
+    Bodies = Matter.Bodies,
+    Composite = Matter.Composite,
+    Vector = Matter.Vector
 
 export var collide = { }
 

@@ -145,15 +145,18 @@ export class Enemy {
   }
   
   createBody() {
-    this.body = Bodies.circle(this.start.x, this.start.y, this.stat.size, {
+    var s = this.stat
+    this.body = Bodies.circle(this.start.x, this.start.y, s.size, {
       isStatic: false,
       label: this.label,
       style: style.enemy[this.type],
       collisionFilter: category.badBullet,
-      density: this.stat.mass * 0.001,
-      frictionAir: this.stat.air,
+      density: s.mass * 0.001,
+      frictionAir: s.air,
     })
-    Body.setInertia(this.body, this.body.inertia * (this.stat.inertia || 1))
+    if (s.inertia && s.inertia !== 0) {
+      Body.setInertia(this.body, this.body.inertia * s.inertia)
+    }
     Composite.add(Tower.world, this.body)
   }
   

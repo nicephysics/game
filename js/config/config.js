@@ -44,7 +44,7 @@ export var category = {
   },
   enemy: {
     category: c.enemy,
-    mask: c.default | c.ground | c.you_tower | c.you_bullet    
+    mask: c.default | c.ground | c.you_tower | c.you_bullet | c.enemy
   },
   enemyTower: {
     category: c.enemy_tower,

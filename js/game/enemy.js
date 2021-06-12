@@ -10,6 +10,10 @@ export var enemystats = { }
 
 export var enemies = [ ]
 
+if (true) {
+  // 2 space indent
+}
+
 var Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
@@ -79,6 +83,9 @@ export class Enemy {
   // get
   get position() {
     return this.body.position
+  }
+  get velocity() {
+    return this.body.velocity
   }
   
   // set

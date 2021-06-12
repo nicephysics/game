@@ -223,20 +223,29 @@ export class Tower {
   tick() {
     Body.setAngle(this.body, this.targetrot)
     if (this.target && this.target.exists) {
-      this.targetrot = aim.angle(this, this.target)      
+      var angle = aim.angle(this, this.target)
+      if (angle === "fail") {
+        angle = this.getTarget()
+      }
+      this.targetrot = angle || this.targetrot + 0.01
     } else {
-      this.target = null
       this.targetrot += 0.01
       this.getTarget()
     }
   }
   
   getTarget() {
+    this.target = null
+    if (enemies.length === 0) return false
+    var angle = 0
     for (let enemy of enemies) {
-      if (aim.angle(this, enemy) !== "fail") {
+      angle = aim.angle(this, enemy)
+      if (angle !== "fail") {
         this.target = enemy
+        return angle
       }
     }
+    return false
   }
   
   draw(render) {

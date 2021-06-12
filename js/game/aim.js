@@ -107,13 +107,25 @@ if (canprint) {
 }
 
 aim.angle = function(tower, enemy) {
+  var towerpos = {
+    x: tower.position.x,
+    y: Tower.render.options.height - tower.position.y
+  }
+  var enemypos = {
+    x: enemy.position.x,
+    y: Tower.render.options.height - enemy.position.y    
+  }
+  var enemyvel = {
+    x: enemy.velocity.x,
+    y: Tower.render.options.height - enemy.velocity.y    
+  }
   return aim.aim(
-    tower.position,
+    towerpos,
     tower.projectileSpeed,
-    enemy.position,
-    enemy.velocity,
+    enemypos,
+    enemyvel,
     0,
-    -tower.gravity.y,
+    tower.gravity.y,
   )
 }
 

@@ -154,6 +154,8 @@ export class Enemy {
       density: s.mass * 0.001,
       frictionAir: s.air,
     })
+    this.body.type = "enemy"
+    this.body.enemy = this
     if (s.inertia && s.inertia !== 0) {
       Body.setInertia(this.body, this.body.inertia * s.inertia)
     }

@@ -22,7 +22,7 @@ var Body = Matter.Body,
 
 var getInitialSpawnBounds = function() {
   return {
-    x: 0, y: window.innerHeight,
+    x: 0, y: -window.innerHeight,
     w: window.innerWidth,
     h: window.innerHeight,
   }

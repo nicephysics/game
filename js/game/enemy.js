@@ -73,6 +73,7 @@ export class Enemy {
   type = "ball"
   stat = null // object for options
   start = Enemy.spawn.random()
+  exists = false
   // constructor
   constructor(type, options = { }) {
     this.type = type
@@ -114,11 +115,13 @@ export class Enemy {
   }
   
   send() {
+    this.exists = true
     this.createBody()
     enemies.push(this)
   }
   
   remove() {
+    this.exists = false
     this.removeBody()
     const index = enemies.indexOf(this);
     if (index > -1) {

@@ -1,4 +1,4 @@
-import { Tower } from
+import { Tower } from "./tower.js"
 
 export var aim = {
   // indent is 2 spaces

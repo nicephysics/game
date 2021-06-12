@@ -41,5 +41,5 @@ controls.init = function(engine) {
         move(1, 0)
         break;
     }
-  }
+  })
 }

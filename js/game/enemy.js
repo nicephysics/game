@@ -68,7 +68,7 @@ export class Enemy {
   static wave(wavemaker, num) {
     var w = wavemaker.wave(num)
     if (w.count !== num) {
-      console.err("Wave numbers don't match!", w, wavemaker)
+      console.error("Wave numbers don't match!", w, wavemaker)
     }
     Enemy.sendNumber(w.type, w.number, {
       difficulty: w.difficulty,
@@ -137,7 +137,7 @@ export class Enemy {
     if (index > -1) {
       enemies.splice(index, 1);
     } else {
-      console.err("Enemy to remove not found in 'enemies' list: ", enemy)
+      console.error("Enemy to remove not found in 'enemies' list: ", enemy)
     }
   }
   

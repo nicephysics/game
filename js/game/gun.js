@@ -175,6 +175,8 @@ export class Gun {
       frictionStatic: s.staticFriction,
       frictionAir: s.airResistance,
     })
+    b.type = "projectile"
+    b.gun = this
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(
         Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),

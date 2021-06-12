@@ -88,6 +88,7 @@ export class Enemy {
   constructor(type, options = { }) {
     this.type = type
     this.stat = options
+    this.init()
   }
   
   // get

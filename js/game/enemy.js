@@ -146,7 +146,7 @@ export class Enemy {
   
   createBody() {
     this.body = Bodies.circle(this.start.x, this.start.y, this.stat.size, {
-      isStatic: true,
+      isStatic: false,
       label: this.label,
       style: style.enemy[this.type],
       collisionFilter: category.badBullet,

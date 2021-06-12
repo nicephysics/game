@@ -150,7 +150,7 @@ export class Enemy {
       isStatic: false,
       label: this.label,
       style: style.enemy[this.type],
-      collisionFilter: category.badBullet,
+      collisionFilter: category.enemy,
       density: s.mass * 0.001,
       frictionAir: s.air,
     })

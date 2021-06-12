@@ -2,6 +2,7 @@
 import { TowerStat } from "./towerstat.js"
 import { Gun } from "./gun.js"
 import { aim } from "./aim.js"
+import { enemies, Enemy } from "./enemy.js"
 // config
 import { config, category } from "../config/config.js"
 // display
@@ -145,6 +146,12 @@ export class Tower {
   get canvas() {
     return Tower.render.canvas
   }
+  get gravity() {
+    return Tower.engine.gravity
+  }
+  get projectileSpeed() {
+    return this.guns[0].stat.speed
+  }
   // ##### end of tower getter functions
   
   // ##### tower setter functions
@@ -214,7 +221,21 @@ export class Tower {
   
   tick() {
     Body.setAngle(this.body, this.targetrot)
-    this.targetrot += 0.01
+    if (this.target && this.target.exists) {
+      this.targetrot = aim.angle(this, this.target)      
+    } else {
+      this.target = null
+      this.targetrot += 0.01
+      this.getTarget()
+    }
+  }
+  
+  getTarget() {
+    for (let enemy of enemies) {
+      if (aim.angle(this, enemy) !== "fail") {
+        this.target = enemy
+      }
+    }
   }
   
   draw(render) {

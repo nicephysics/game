@@ -5,6 +5,7 @@ import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
 
 import { Tower } from "./tower.js"
+import { wave } from "./wave.js"
 
 export var enemystats = { }
 
@@ -31,6 +32,15 @@ export class Enemy {
   // static
   static stats = enemystats
   static enemies = enemies
+  
+  static init = function() {
+    document.addEventListener("keydown", function(event) {
+      switch (event.code) {
+        case "Digit1":
+          Enemy.wave(wave.make(["ball"], 1, { }), 1)
+      }
+    })
+  }
   
   static spawn = {
     count: 0,
@@ -168,3 +178,6 @@ enemystats.ball = {
   air: 0.05,
   inertia: 0, // unused?
 }
+
+// finally...
+Enemy.init()

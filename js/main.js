@@ -12,6 +12,7 @@ import { config, category } from "./config/config.js"
 // game
 import { Tower } from "./game/tower.js"
 import { collide } from "./game/collide.js"
+import { controls } from "./game/controls.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -108,11 +109,14 @@ var init = function() {
   
   collide.init(engine)
   
+  controls.init(engine)
+  
   Tower.init(render)
   var tower = new Tower("basic")
   tower.moveTo(_width * 0.5, _height - 100)
-  var tower2 = new Tower("double")
-  tower2.moveTo( _width * 1.5, _height - 100)
+  Tower.player = tower
+  // var tower2 = new Tower("double")
+  // tower2.moveTo( _width * 1.5, _height - 100)
   
   events.afterRender(render, function() {
     Tower.tickAll()

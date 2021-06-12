@@ -33,6 +33,8 @@ import('./game/aim.js').then(m => {
 })
 import('./game/enemy.js').then(m => {
   game.Enemy = m.Enemy
+  game.enemies = m.enemies
+  game.enemystats = m.enemystats
 })
 import('./game/gun.js').then(m => {
   game.Gun = m.Gun

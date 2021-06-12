@@ -41,6 +41,8 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
   }
 }
 
+// matter styles
+
 style.default = {
   ground: style.fillStroke("#bd3900"),
 }
@@ -50,11 +52,17 @@ style.tower = {
   double: style.fillStroke("#bd7500"),
 }
 
+style.projectile = {
+  bullet: style.fillStroke("#a7a7af"),
+}
+
+style.enemy = {
+  ball: style.fillStroke("#b56275"),
+}
+
+// non-matter styles
+
 style.gun = {
   basic: "#62a7b5",
   double: "#c29d61",
-}
-
-style.projectile = {
-  bullet: style.fillStroke("#a7a7af"),
 }

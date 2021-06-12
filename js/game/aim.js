@@ -97,7 +97,7 @@ aim.angle = function(tower, enemy) {
     enemy.position,
     enemy.velocity,
     0,
-    tower.gravity.y,
+    -tower.gravity.y,
   )
 }
 

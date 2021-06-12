@@ -105,18 +105,18 @@ var init = function() {
     }
   })
   
-  display_view.init(render, mouseConstraint)
-  
-  collide.init(engine)
-  
-  controls.init(engine)
-  
   Tower.init(render)
   var tower = new Tower("basic")
   tower.moveTo(_width * 0.5, _height - 100)
   Tower.player = tower
   // var tower2 = new Tower("double")
   // tower2.moveTo( _width * 1.5, _height - 100)
+  
+  display_view.init(render, mouseConstraint)
+  
+  collide.init(engine)
+  
+  controls.init(engine)
   
   events.afterRender(render, function() {
     Tower.tickAll()

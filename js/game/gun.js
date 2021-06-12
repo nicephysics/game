@@ -175,7 +175,7 @@ export class Gun {
       frictionStatic: s.staticFriction,
       frictionAir: s.airResistance,
     })
-    b.type = "projectile"
+    b.gametype = "projectile"
     b.gun = this
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(

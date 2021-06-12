@@ -5,7 +5,7 @@ export var aim = {
 }
 
 var Vector = Matter.Vector,
-    canprint = false
+    canprint = true
 
 // aim! credits: https://math.stackexchange.com/questions/1792507/finding-launch-angle-for-two-projectile-collision
 // IT WORKS

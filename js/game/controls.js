@@ -19,7 +19,7 @@ controls.init = function(engine) {
       body = player.body
   
   function move(x, y) {
-    player.moveBy(Vector.create(x, y))
+    player.moveBy(x, y)
   }
   
   document.addEventListener("keydown", function(event) {

@@ -11,6 +11,7 @@ import { display_view } from "./display/view.js"
 import { config, category } from "./config/config.js"
 // game
 import { Tower } from "./game/tower.js"
+import { Enemy } from "./game/enemy.js"
 import { collide } from "./game/collide.js"
 import { controls } from "./game/controls.js"
 

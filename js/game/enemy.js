@@ -183,7 +183,7 @@ enemystats.base = {
 enemystats.ball = {
   mass: 0.5,
   size: 15,
-  air: 0.05,
+  air: 0.2,
   inertia: 0, // unused?
 }
 

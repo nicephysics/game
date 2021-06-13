@@ -29,7 +29,7 @@ var c = {
 export var category = {
   c: c,
   mouseConstraint: {
-    mask: c.ground | c.you_tower | c.enemy_tower | c.enemy | c.you_bullet | c.enemy_bullet // remove?
+    mask: c.ground
   },
   ground: {
     category: c.ground,
@@ -37,7 +37,7 @@ export var category = {
   },
   yourTower: {
     category: c.you_tower,
-    mask: c.default | c.enemy | c.enemy_bullet
+    mask: c.default | c.enemy | c.enemy_bullet | c.you_bullet
   },
   yourBullet: {
     category: c.you_bullet,
@@ -53,7 +53,7 @@ export var category = {
   },
   enemyBullet: {
     category: c.enemy_bullet,
-    mask: c.default | c.ground | c.you_tower | c.you_bullet
+    mask: c.default | c.ground | c.you_tower | c.you_bullet | c.enemy_bullet
   },
 }
 

@@ -102,6 +102,7 @@ controls.init = function(render) {
   })
   
   window.addEventListener("mouseup", function(event) {
+    console.log(event)
     if ((event.buttons & 1) > 0) {
       c.shoot = false
     }

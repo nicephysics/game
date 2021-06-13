@@ -102,7 +102,6 @@ controls.init = function(render) {
   })
   
   window.addEventListener("mouseup", function(event) {
-    console.log(event)
     c.shoot = false
     c.altshoot = false
     c.midshoot = false

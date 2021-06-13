@@ -27,7 +27,7 @@ controls.init = function(render) {
     down: false,
     left: false,
     right: false,
-    pointer: false,
+    pointer: Vector.create(0, 0), // to avoid the classic NaN
     shoot: false,
     altshoot: false,
     midshoot: false,

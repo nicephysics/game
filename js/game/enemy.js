@@ -156,7 +156,7 @@ export class Enemy {
     })
     this.body.gametype = "enemy"
     this.body.enemy = this
-    if (s.inertia && s.inertia !== 0) {
+    if (s.inertia && s.inertia !== 1) {
       Body.setInertia(this.body, this.body.inertia * s.inertia)
     }
     Composite.add(Tower.world, this.body)
@@ -181,10 +181,9 @@ enemystats.base = {
 }
 
 enemystats.ball = {
-  mass: 0.5,
-  size: 15,
-  air: 0.2,
-  inertia: 0, // unused?
+  mass: 0.1,
+  size: 10,
+  air: 0.05,
 }
 
 // finally...

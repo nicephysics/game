@@ -12,7 +12,11 @@ var Body = Matter.Body,
 
 export var collide = { }
 
-collide.init = function(engine) {
+collide.init = function(render) {
+  var engine = render.engine,
+      mouse = render.mouse,
+      world = engine.world
+  
   // the main function
   function collide(a, b) {
     var ta = a.gametype,

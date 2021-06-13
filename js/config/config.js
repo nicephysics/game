@@ -37,11 +37,11 @@ export var category = {
   },
   yourTower: {
     category: c.you_tower,
-    mask: c.default | c.enemy | c.enemy_bullet | c.you_bullet
+    mask: c.default | c.enemy | c.enemy_bullet
   },
   yourBullet: {
     category: c.you_bullet,
-    mask: c.default | c.ground | c.enemy | c.enemy_tower | c.enemy_bullet
+    mask: c.default | c.ground | c.enemy | c.enemy_tower | c.enemy_bullet | c.you_bullet
   },
   enemy: {
     category: c.enemy,

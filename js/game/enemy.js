@@ -186,6 +186,8 @@ export class Enemy {
     })
     this.body.gametype = "enemy"
     this.body.enemy = this
+    // other stats
+    this.body.gravityScale = s.gravity
     if (s.inertia && s.inertia !== 1) {
       Body.setInertia(this.body, this.body.inertia * s.inertia)
     }
@@ -208,12 +210,14 @@ enemystats.base = {
   size: 1,
   air: 1,
   inertia: 1,
+  gravity: 1,
 }
 
 enemystats.ball = {
   mass: 0.1,
   size: 10,
   air: 0.05,
+  gravity: 0.1,
 }
 
 // finally...

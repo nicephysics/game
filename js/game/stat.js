@@ -67,10 +67,10 @@ export class Stat {
     return "Stat #" + this.id + " " + this.array.toString()
   }
   get reloadFrames() {
-    return this.reload * 60 // 60 fps?
+    return this.reload * config.FPS // 60 fps?
   }
   get timeFrames() {
-    return this.time * 60 // 60 fps?
+    return this.time * config.FPS
   }
   
   // set

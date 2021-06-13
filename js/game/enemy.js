@@ -39,7 +39,9 @@ export class Enemy {
     document.addEventListener("keydown", function(event) {
       switch (event.code) {
         case "Digit1":
+          console.log(wave)
           Enemy.sendwave(wave.make(["ball"], 1, { }), 1)
+          break
       }
     })
   }

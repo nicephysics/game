@@ -103,14 +103,8 @@ controls.init = function(render) {
   
   window.addEventListener("mouseup", function(event) {
     console.log(event)
-    if ((event.buttons & 1) > 0) {
-      c.shoot = false
-    }
-    if ((event.buttons & 2) > 0) {
-      c.altshoot = false
-    }
-    if ((event.buttons & 4) > 0) {
-      c.midshoot = false
-    }
+    c.shoot = false
+    c.altshoot = false
+    c.midshoot = false
   })
 }

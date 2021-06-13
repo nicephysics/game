@@ -28,8 +28,8 @@ wave.make = function(types, seed, options = { }) {
         a = gen() * 0.5 + 0.25,
         t = Math.floor(gen() * typeLength),
         sep_t = Math.floor(gen() * sep.length),
-        separation = sep[sep_t]
-        wave = { // one wave
+        separation = sep[sep_t],
+        w1 = { // one wave
           count: n,
           type: types[t],
           number: num * Math.pow(mult, n - 1) / Math.pow(separation, 0.5),
@@ -37,8 +37,8 @@ wave.make = function(types, seed, options = { }) {
           difficulty: base * Math.pow(diff, n - 1) * Math.pow(separation, 0.8),
           rand: [gen(), gen(), gen(), gen(), gen()], // ok ok ok ok ok enough
         }
-    w.waves.push(wave)
-    return wave
+    w.waves.push(w1)
+    return w1
   }
   w.wave = function(num) { // wave function... no, not THAT wave function...
     while (w.waves.length < num) { // like an if, only better

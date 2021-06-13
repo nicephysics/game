@@ -230,6 +230,7 @@ export class Tower {
     Body.setPosition(this.body, this.targetpos)
   }
   
+  // don't use for now
   tickTarget() {
     if (this.target && this.target.exists) {
       var angle = aim.angle(this, this.target)
@@ -243,6 +244,7 @@ export class Tower {
     }    
   }
   
+  // for tickTarget() above
   getTarget() {
     this.target = null
     if (enemies.length === 0) return false
@@ -271,11 +273,12 @@ export class Tower {
   
   // important! if not, the body will stay at 0, 0
   moveTo(x, y) {
+    this.targetpos = Vector.create(x, y)
     Body.setPosition(this.body, Vector.create(x, y))
   }
   
   moveBy(x, y) {
-    Body.translate(this.body, Vector.create(x, y))
+    this.targetpos = Vector.add(this.targetpos, Vector.create(x, y))
   }
   
   turnTo(angle) {

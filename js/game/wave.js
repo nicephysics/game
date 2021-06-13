@@ -5,8 +5,6 @@ import { random } from "../util/random.js"
 
 export var wave = { }
 
-wave.separation = 
-
 // makes many waves...
 wave.make = function(types, seed, options = { }) {
   seed = seed || random.seed()

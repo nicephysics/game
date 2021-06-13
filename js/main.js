@@ -122,6 +122,7 @@ var init = function() {
   events.afterRender(render, function() {
     Tower.tickAll()
     Tower.drawAll()
+    Enemy.tick()
   })
   
   events.beforeUpdate(engine, function(engine) {

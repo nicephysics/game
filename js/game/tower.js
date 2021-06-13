@@ -5,6 +5,8 @@ import { aim } from "./aim.js"
 import { enemies, Enemy } from "./enemy.js"
 // config
 import { config, category } from "../config/config.js"
+// util
+import { math } from "../util/math.js"
 // display
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
@@ -98,7 +100,9 @@ export class Tower {
   parent = this // Tower
   guns = [ ] // Gun[]
   stat = new TowerStat(this) // TowerStat
-  controlled = false
+  // player stuffs
+  isPlayer = false
+  control = {}
   // matter instances
   body = null // Matter.Body
   // ##### end tower public instance fields
@@ -205,7 +209,9 @@ export class Tower {
     })
     this.body.gametype = "tower"
     this.body.tower = this
-    this.body.canDrag = true
+    if (!this.isPlayer) {
+      this.body.canDrag = true
+    }
     // this.body.gravityScale = 0
     // this.body.disableVelocity = true
     // add to world
@@ -227,7 +233,21 @@ export class Tower {
   
   tick() {
     Body.setAngle(this.body, this.targetrot)
-    Body.setPosition(this.body, this.targetpos)
+    Body.setPosition(this.body, math.lerpV(this.position, this.targetpos, 0.1))
+    // Body.setPosition(this.body, this.targetpos)
+    if (this.isPlayer) {
+      this.doControl()
+    }
+  }
+  
+  doControl() {
+    var c = this.control
+    var movedir = Vector.create(0, 0)
+    if (c.up) movedir.y--
+    if (c.down) movedir.y++
+    if (c.left) movedir.x--
+    if (c.right) movedir.x++
+    this.moveByVector(Vector.mult(Vector.normalise(movedir), this.stat.speed))
   }
   
   // don't use for now
@@ -279,6 +299,10 @@ export class Tower {
   
   moveBy(x, y) {
     this.targetpos = Vector.add(this.targetpos, Vector.create(x, y))
+  }
+  
+  moveByVector(v) {
+    this.targetpos = Vector.add(this.targetpos, v)
   }
   
   turnTo(angle) {

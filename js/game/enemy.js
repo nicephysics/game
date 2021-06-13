@@ -39,7 +39,7 @@ export class Enemy {
     document.addEventListener("keydown", function(event) {
       switch (event.code) {
         case "Digit1":
-          Enemy.wave(wave.make(["ball"], 1, { }), 1)
+          Enemy.sendwave(wave.make(["ball"], 1, { }), 1)
       }
     })
   }
@@ -95,7 +95,7 @@ export class Enemy {
     }
   }
   
-  static wave(wavemaker, num) {
+  static sendwave(wavemaker, num) {
     var w = wavemaker.wave(num)
     if (w.count !== num) {
       console.error("Wave numbers don't match!", w, wavemaker)

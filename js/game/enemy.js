@@ -1,6 +1,8 @@
 import { category, config } from "../config/config.js"
 
 import { random } from "../util/random.js"
+import { PriorityQueue } from "../util/pq.js"
+
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
 
@@ -22,9 +24,9 @@ var Body = Matter.Body,
 
 var getInitialSpawnBounds = function() {
   return {
-    x: 0, y: -window.innerHeight,
+    x: 0, y: -window.innerHeight / 5,
     w: window.innerWidth,
-    h: window.innerHeight,
+    h: window.innerHeight / 5,
   }
 }
 
@@ -44,15 +46,34 @@ export class Enemy {
   
   static spawn = {
     count: 0,
+    queue: new PriorityQueue( // spawn queue
+      // comparison
+      (a, b) => { a.time < b.time }
+    ),
     bounds: getInitialSpawnBounds(),
     random: function() {
-      var b = Enemy.spawn.bounds
-      var ans = Vector.create(
-        b.x + random.randreal() * b.w,
-        b.y + random.randreal() * b.h
-      )
-      console.log(ans)
+      var b = Enemy.spawn.bounds,
+          ans = Vector.create(
+            b.x + random.randreal() * b.w,
+            b.y + random.randreal() * b.h
+          )
       return ans
+    }
+  }
+  
+  static time = 0
+  static tick() {
+    Enemy.time++ // look above
+    // tick all enemies
+    for (let e in enemies) {
+      e.tick()
+    }
+    // check spawn queue
+    var q = Enemy.spawn.queue
+    while (q.size() > 0 && q.peek().time < Enemy.time) {
+      let item = q.peek()
+      Enemy.send(item.type, item.options)
+      q.pop()
     }
   }
   
@@ -61,9 +82,16 @@ export class Enemy {
     e.send()
   }
   
-  static sendNumber(type, number, options) {
+  static sendNumber(type, number, sep, options = { }) {
+    var q = Enemy.spawn.queue,
+        time = Enemy.time
     for (let i = 0; i < number; i++) {
-      Enemy.send(type, options)
+      time += sep * config.FPS
+      q.push({
+        time: time,
+        type: type,
+        options: options,
+      })
     }
   }
   

@@ -112,6 +112,12 @@ export class Gun {
   get gunMiddle() {
     return Vector.add(this.location, Vector.mult(this.gunDifference, 0.5))
   }
+  get towerShoot() {
+    if (!this.tower.isPlayer) {
+      return false
+    }
+    return this.tower.control.shoot
+  }
   
   // set
   
@@ -141,26 +147,33 @@ export class Gun {
     // tick
     this.gunTime++;
     // check whether gun can shoot
-    if (this.tower.controlled) {
+    if (this.dummy) return
+    // get reload from stat
+    var reload = this.stat.reloadFrames
+    // check for player existence
+    if (this.tower.isPlayer) {
       // hmmm controlment
-      if (this.shot <= this.stat.reloadFrames) {
+      if (this.shot < reload) {
         this.shot++
+      } else {
+        if (this.towerShoot) {
+          this.shot++
+          while (this.shot >= reload && this.towerShoot) {
+            this.shot -= reload
+            this.shoot()
+          }
+        }
       }
       // todo
     } else {
       this.shot++
-      while (!this.dummy && this.shot >= this.stat.reloadFrames) {
-        this.shot -= this.stat.reloadFrames
+      while (this.shot >= reload) {
+        this.shot -= reload
         this.shoot()
       }
     }
-    // remove earliest created child, if possible
-    while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
-      this.childrenTime.shift()
-      var b = this.children[0]
-      Composite.remove(Tower.world, b)
-      this.children.shift()
-    }
+    // something very important
+    this.clearChildren()
   }
   
   shoot() {
@@ -190,6 +203,16 @@ export class Gun {
     Composite.add(Tower.world, b)
     this.children.push(b)
     this.childrenTime.push(this.gunTime)
+  }
+  
+  clearChildren() {
+    // remove earliest created child, if possible
+    while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
+      this.childrenTime.shift()
+      var b = this.children[0]
+      Composite.remove(Tower.world, b)
+      this.children.shift()
+    }
   }
   
   setStatString(s) {

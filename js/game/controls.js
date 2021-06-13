@@ -27,6 +27,7 @@ controls.init = function(render) {
     down: false,
     left: false,
     right: false,
+    pointer: false,
     shoot: false,
     altshoot: false,
     midshoot: false,
@@ -84,7 +85,11 @@ controls.init = function(render) {
     }
   })
   
-  document.addEventListener("mousedown", function(event) {
+  window.addEventListener("mousemove", function(event) {
+    c.pointer = mouse.position
+  })
+  
+  window.addEventListener("mousedown", function(event) {
     if ((event.buttons & 1) > 0) {
       c.shoot = true
     }
@@ -96,7 +101,7 @@ controls.init = function(render) {
     }
   })
   
-  document.addEventListener("mouseup", function(event) {
+  window.addEventListener("mouseup", function(event) {
     if ((event.buttons & 1) > 0) {
       c.shoot = false
     }

@@ -48,7 +48,7 @@ export class Enemy {
     count: 0,
     queue: new PriorityQueue( // spawn queue
       // comparison
-      (a, b) => { a.time < b.time }
+      (a, b) => { return a.time < b.time }
     ),
     bounds: getInitialSpawnBounds(),
     random: function() {
@@ -100,7 +100,7 @@ export class Enemy {
     if (w.count !== num) {
       console.error("Wave numbers don't match!", w, wavemaker)
     }
-    Enemy.sendNumber(w.type, w.number, {
+    Enemy.sendNumber(w.type, w.number, w.sep, {
       difficulty: w.difficulty,
       rand: w.rand,
     })

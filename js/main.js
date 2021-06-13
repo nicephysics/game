@@ -115,9 +115,9 @@ var init = function() {
   
   display_view.init(render, mouseConstraint)
   
-  collide.init(engine)
+  collide.init(render)
   
-  controls.init(engine)
+  controls.init(render)
   
   events.afterRender(render, function() {
     Tower.tickAll()

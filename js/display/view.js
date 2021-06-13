@@ -67,9 +67,8 @@ display_view.init = function(
       if (!display_view.leftmousedown) {
         var bodies = Query.point(Composite.allBodies(world), mouse.position)
         pulledBody = null
-        if (bodies.length > 0) {
-          var body = bodies[0]
-          if (body) {
+        for (let body of bodies) {
+          if (body && body.canDrag) {
             pulledBody = body
           }
         }
@@ -176,7 +175,11 @@ display_view.init = function(
     
     if (display_view.pulling() && pulledBody && pulledBody.canDrag) {
       var translate = Vector.neg(Vector.clone(display_view.mousedelta))
-      Body.translate(pulledBody, translate)
+      if (pulledBody.gametype === "tower") {
+        pulledBody.tower.moveByVector(translate)
+      } else {
+        Body.translate(pulledBody, translate)
+      }
     } // end pulling
     
     display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)

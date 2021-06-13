@@ -13,8 +13,10 @@ var Body = Matter.Body,
     Composite = Matter.Composite,
     Vector = Matter.Vector
 
-controls.init = function(engine) {
-  var world = engine.world,
+controls.init = function(render) {
+  var engine = render.engine,
+      mouse = render.mouse,
+      world = engine.world,
       player = Tower.player,
       body = player.body
   

@@ -5,6 +5,8 @@ import { random } from "../util/random.js"
 
 export var wave = { }
 
+wave.separation = 
+
 // makes many waves...
 wave.make = function(types, seed, options = { }) {
   seed = seed || random.seed()
@@ -12,6 +14,8 @@ wave.make = function(types, seed, options = { }) {
       base = options.base || 1, // the base difficulty of enemies
       mult = options.mult || 1.05, // how much number of enemies increase every wave (multiplicative)
       diff = options.diff || 1.05, // how much difficulty of enemies increase every wave (multiplicative)
+      sep = options.sep || [0.5, 0.75, 1.0, 1.4, 1.8], // the separation time of enemies
+      sepmult = options.sepmult || 3, // the separation time of enemies
       gen = random.fun(seed),
       typeLength = types.length,
       w = {
@@ -25,11 +29,14 @@ wave.make = function(types, seed, options = { }) {
     var n = w.num,
         a = gen() * 0.5 + 0.25,
         t = Math.floor(gen() * typeLength),
+        sep_t = Math.floor(gen() * sep.length),
+        separation = sep[sep_t]
         wave = { // one wave
           count: n,
           type: types[t],
-          number: num * Math.pow(mult, n - 1),
-          difficulty: base * Math.pow(diff, n - 1),
+          number: num * Math.pow(mult, n - 1) / Math.pow(separation, 0.5),
+          sep: sepmult * separation,
+          difficulty: base * Math.pow(diff, n - 1) * Math.pow(separation, 0.8),
           rand: [gen(), gen(), gen(), gen(), gen()], // ok ok ok ok ok enough
         }
     w.waves.push(wave)

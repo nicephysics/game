@@ -248,6 +248,7 @@ export class Tower {
     if (c.left) movedir.x--
     if (c.right) movedir.x++
     this.moveByVector(Vector.mult(Vector.normalise(movedir), this.stat.speed))
+    this.targetrot = Vector.angle(this.position, c.pointer)
   }
   
   // don't use for now

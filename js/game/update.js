@@ -32,14 +32,21 @@ gameupdate.init = function(render) {
     var all = Composite.allBodies(engine.world)
     var gravity = engine.gravity
     for (let body of all) {
-      // 1. gravity scale
-      let gravityScale = (body.gravityScale == null) ? 1 : body.gravityScale
-      if (gravityScale === 1) continue;
-      let scale = gravityScale - 1
-      Body.applyForce(body, body.position, {
-        x: gravity.x * scale * gravity.scale * body.mass,
-        y: gravity.y * scale * gravity.scale * body.mass
-      })
+      // 1. gravity scale/off
+      if (body.gravityOff) {
+        Body.applyForce(body, body.position, {
+          x: gravity.x * 1 * gravity.scale * body.mass,
+          y: gravity.y * 1 * gravity.scale * body.mass
+        })
+      } else {
+        let gravityScale = (body.gravityScale == null) ? 1 : body.gravityScale
+        if (gravityScale === 1) continue;
+        let scale = gravityScale - 1
+        Body.applyForce(body, body.position, {
+          x: gravity.x * scale * gravity.scale * body.mass,
+          y: gravity.y * scale * gravity.scale * body.mass
+        })
+      }
       // 2. disabled velocity
       if (body.disableVelocity) {
         Body.setVelocity(body, Vector.create(0, 0))

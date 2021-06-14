@@ -72,4 +72,5 @@ style.enemy = {
 style.gun = {
   basic: "#62a7b5",
   double: "#c29d61",
+  ballgun: "#d47d94",
 }

@@ -160,17 +160,15 @@ export class Enemy {
   }
   
   // set
-  set type(t) {
-    this.stat.refresh()
-  }
   
   // go!
   init() {
-    
+    this.initstats()
   }
   
-  // old function
   initstats() {
+    this.stat.refresh()
+    // old function
     /*
     var s = enemystats[this.type]
     for (let k in s) {

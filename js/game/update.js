@@ -35,8 +35,8 @@ gameupdate.init = function(render) {
       // 1. gravity scale/off
       if (body.gravityOff) {
         Body.applyForce(body, body.position, {
-          x: gravity.x * 1 * gravity.scale * body.mass,
-          y: gravity.y * 1 * gravity.scale * body.mass
+          x: gravity.x * -1 * gravity.scale * body.mass,
+          y: gravity.y * -1 * gravity.scale * body.mass
         })
       } else {
         let gravityScale = (body.gravityScale == null) ? 1 : body.gravityScale

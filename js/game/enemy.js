@@ -1,5 +1,6 @@
 import { category, config } from "../config/config.js"
 
+import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 import { PriorityQueue } from "../util/pq.js"
 
@@ -8,18 +9,19 @@ import { draw } from "../display/draw.js"
 
 import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
-
-export var enemystats = { }
+import { Gun } from "./gun.js"
+import { EnemyStat, enemystats } from "./enemystat.js"
 
 export var enemies = [ ]
 
 if (true) {
-  // 2 space indent
+  // 2 space indent!
 }
 
 var Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
+    Composites = Matter.Composites,
     Vector = Matter.Vector
 
 var getInitialSpawnBounds = function() {
@@ -78,6 +80,15 @@ export class Enemy {
     }
   }
   
+  static draw() {
+    for (let e of enemies) {
+      for (let g of e.guns) {
+        g.draw(Tower.render)
+      }
+      e.draw(Tower.render)
+    }
+  }
+  
   static send(type, options) {
     var e = new Enemy(type, options)
     e.send()
@@ -112,13 +123,16 @@ export class Enemy {
   label = "Enemy #" + this.id
   body = null // Matter.Body
   type = "ball"
-  stat = null // object for options
+  targetrot = 0
+  controlType = "none"
+  control = { }
+  stat = new EnemyStat(this)
+  guns = [ ]
   start = Enemy.spawn.random()
   exists = false
   // constructor
-  constructor(type, options = { }) {
+  constructor(type) {
     this.type = type
-    this.stat = options
     this.init()
   }
   
@@ -129,11 +143,35 @@ export class Enemy {
   get velocity() {
     return this.body.velocity
   }
+  get size() {
+    return this.stat.size
+  }
+  // returns the enemy body's current angle
+  get rotation() {
+    return this.body.angle
+  }
+  // alias for this.rotation
+  get angle() {
+    return this.body.angle
+  }
+  // alias for this.targetrot
+  get direction() {
+    return this.targetrot
+  }
   
   // set
+  set type(t) {
+    this.stat.refresh()
+  }
   
   // go!
   init() {
+    
+  }
+  
+  // old function
+  initstats() {
+    /*
     var s = enemystats[this.type]
     for (let k in s) {
       this.stat[k] = s[k]
@@ -146,13 +184,22 @@ export class Enemy {
       case "ball":    
         this.stat.mass *= this.stat.difficulty || 1
     }
+    */
   }
   
   tick() {
-    
+    this.doControl()
   }
   
-  draw() { // over
+  doControl() {
+    switch (this.controlType) {
+      case "aim_player":
+        Body.setRotation(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot))
+        this.targetrot = Vector.angle(this.position, Tower.player.position)
+    }
+  }
+  
+  draw(render) { // over
     
   }
   
@@ -185,6 +232,15 @@ export class Enemy {
     })
     this.body.gametype = "enemy"
     this.body.enemy = this
+    // launch at a certain speed
+    if (s.speed !== 0) {
+      var tilt = (random.randreal() - 0.5) * 5 // 5 degrees tilt max
+      var down = Math.PI / 180 * (270 + tilt)
+      Body.setVelocity(this.body, Vector.mult(
+        Vector.create( Math.cos(down), Math.sin(down) ),
+        s.speed
+      ))
+    }
     // other stats
     this.body.gravityScale = s.gravity
     if (s.inertia && s.inertia !== 1) {
@@ -199,24 +255,22 @@ export class Enemy {
     this.body = null
   }
   
+  removeAllGuns() {
+    for (let gun of this.guns) {
+      gun.remove(false)
+    }
+    this.guns = [ ]
+  }
+  
+  addGun(guntype) {
+    var gun = Gun.create(this, guntype, "enemy")
+    this.guns.push(gun)
+    return gun
+  }
+  
   contemplationOfMortality() {
     
   }
-}
-
-enemystats.base = {
-  mass: 1,
-  size: 1,
-  air: 1,
-  inertia: 1,
-  gravity: 1,
-}
-
-enemystats.ball = {
-  mass: 0.1,
-  size: 10,
-  air: 0.05,
-  gravity: 0.1,
 }
 
 // finally...

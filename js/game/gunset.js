@@ -41,3 +41,9 @@ gunset.double_right = {
   style: "double",
   stat: ["shooter", "double"],
 }
+
+gunset.ballgun = {
+  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+  style: "ballgun",
+  stat: ["enemy", "enemyshooter", "ballgun"],
+}

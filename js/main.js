@@ -76,7 +76,7 @@ var init = function() {
   })
   ground.gametype = "ground"
   
-  var atmosphere = Bodies.rectangle(_width / 2, _height * 0.8 + 25, _width + 50, _height + 50, {
+  var atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
     isStatic: true,
     isSensor: true,
     label: "The Atmosphere",

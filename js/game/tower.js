@@ -175,6 +175,38 @@ export class Tower {
   // ##### end of tower setter functions
   
   // go!
+  
+  tick() {
+    Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.tower.rot))
+    Body.setPosition(this.body, math.lerpVector(this.position, this.targetpos, config.smooth.tower.pos))
+    if (this.isPlayer) {
+      this.doControl()
+    }
+  }
+  
+  doControl() {
+    var c = this.control
+    var movedir = Vector.create(0, 0)
+    if (c.up) movedir.y--
+    if (c.down) movedir.y++
+    if (c.left) movedir.x--
+    if (c.right) movedir.x++
+    this.moveByVector(Vector.mult(Vector.normalise(movedir), this.stat.speed))
+    this.targetrot = Vector.angle(this.position, c.pointer)
+  }
+  
+  draw(render) {
+    var ctx = render.context
+    switch (this.type) {
+      case "basic":
+        // todo
+        let circleStyle = style.gun.basic
+        draw.setFillDarkenStroke(ctx, circleStyle)
+        draw.circle(render, this.x, this.y, this.guns[0].stat.size)
+        break;
+    }
+  }
+  
   refresh() {
     this.stat.setType(this.type)
     this.refreshBody() // minus attributes
@@ -183,16 +215,6 @@ export class Tower {
   refreshBody() {
     this.removeBody()
     this.createBody()
-  }
-  
-  removeBody() {
-    if (this.body != null) {
-      // remove from world
-      Composite.remove(Tower.world, this.body)
-      return true
-    } else {
-      return false
-    }
   }
   
   createBody(zero = false) {
@@ -218,11 +240,14 @@ export class Tower {
     Composite.add(Tower.world, this.body)
   }
   
-  removeAllGuns() {
-    for (let gun of this.guns) {
-      gun.remove(false)
+  removeBody() {
+    if (this.body != null) {
+      // remove from world
+      Composite.remove(Tower.world, this.body)
+      return true
+    } else {
+      return false
     }
-    this.guns = [ ]
   }
   
   addGun(guntype) {
@@ -231,23 +256,11 @@ export class Tower {
     return gun
   }
   
-  tick() {
-    Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.tower.rot))
-    Body.setPosition(this.body, math.lerpVector(this.position, this.targetpos, config.smooth.tower.pos))
-    if (this.isPlayer) {
-      this.doControl()
+  removeAllGuns() {
+    for (let gun of this.guns) {
+      gun.remove(false)
     }
-  }
-  
-  doControl() {
-    var c = this.control
-    var movedir = Vector.create(0, 0)
-    if (c.up) movedir.y--
-    if (c.down) movedir.y++
-    if (c.left) movedir.x--
-    if (c.right) movedir.x++
-    this.moveByVector(Vector.mult(Vector.normalise(movedir), this.stat.speed))
-    this.targetrot = Vector.angle(this.position, c.pointer)
+    this.guns = [ ]
   }
   
   // don't use for now
@@ -277,18 +290,6 @@ export class Tower {
       }
     }
     return false
-  }
-  
-  draw(render) {
-    var ctx = render.context
-    switch (this.type) {
-      case "basic":
-        // todo
-        let circleStyle = style.gun.basic
-        draw.setFillDarkenStroke(ctx, circleStyle)
-        draw.circle(render, this.x, this.y, this.guns[0].stat.size)
-        break;
-    }
   }
   
   // important! if not, the body will stay at 0, 0

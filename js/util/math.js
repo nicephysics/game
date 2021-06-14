@@ -29,4 +29,5 @@ math.lerpA = function(start, end, factor) {
   )
 }
 
+math.lerpVector = math.lerpV
 math.lerpAngle = math.lerpA

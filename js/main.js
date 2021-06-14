@@ -79,10 +79,11 @@ var init = function() {
   var atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
     isStatic: true,
     isSensor: true,
+    collisionFilter: category.atmosphere,
     label: "The Atmosphere",
     render: style.default.atmosphere,
   })
-  ground.gametype = "atmosphere"
+  atmosphere.gametype = "atmosphere"
   
   Composite.add(world, [ ground, atmosphere ])
     

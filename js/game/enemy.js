@@ -72,6 +72,9 @@ export class Enemy {
     Enemy.time++ // look above
     // tick all enemies
     for (let e of enemies) {
+      for (let g of e.guns) {
+        g.tick()
+      }
       e.tick()
     }
     // check spawn queue

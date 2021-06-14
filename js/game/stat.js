@@ -19,13 +19,24 @@ export var stats = {
     },
   },
   shooter: {
-    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.001, y: "base", o: { }
+    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base", o: { }
   },
   basic: {
     z: 0.6, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   double: {
-    z: 0.5, m: 0.9, s: 1, r: 1.1, t: 0.7, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    // better than basic by a teeny little bit
+    z: 0.5, m: 0.9, s: 0.9, r: 1.1, t: 0.8, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+  },
+  
+  enemy: {
+    z: 1, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+  },
+  enemyshooter: {
+    z: 10, m: 5, s: 5, r: 2, t: 10, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base"
+  },
+  ballgun: {
+    z: 0.5, m: 1, s: 1, r: 1, t: 0.7,
   },
 }
 

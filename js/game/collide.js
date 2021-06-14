@@ -30,10 +30,28 @@ collide.init = function(render) {
         }
         break
         
+      case "atmosphere":
+        if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
+          b.gravityOff = false
+        }
+        
       case "enemy":
         break
         
       default:
+        break
+    }
+  }
+  
+  // end function
+  function collideEnd(a, b) {
+    var ta = a.gametype,
+        tb = b.gametype
+    switch (ta) {
+      case "atmosphere":
+        if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
+          b.gravityOff = true
+        }
         break
     }
   }
@@ -44,6 +62,15 @@ collide.init = function(render) {
       var b = pair.bodyB
       collide(a, b)
       collide(b, a)
+    }
+  })
+  
+  events.collisionEnd(engine, function(pairs) {
+    for (let pair of pairs) {
+      var a = pair.bodyA
+      var b = pair.bodyB
+      collideEnd(a, b)
+      collideEnd(b, a)
     }
   })
 }

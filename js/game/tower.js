@@ -191,7 +191,13 @@ export class Tower {
     if (c.down) movedir.y++
     if (c.left) movedir.x--
     if (c.right) movedir.x++
-    this.moveByVector(Vector.mult(Vector.normalise(movedir), this.stat.speed))
+    var moveVector = Vector.mult(Vector.normalise(movedir), this.stat.speed),
+        moveResult = Vector.add(this.targetpos, moveVector)
+    if (moveResult.x < config.movelimits.min.x) moveResult.x = config.movelimits.min.x
+    if (moveResult.y < config.movelimits.min.y) moveResult.y = config.movelimits.min.y
+    if (moveResult.x > config.movelimits.max.x) moveResult.x = config.movelimits.max.x
+    if (moveResult.y > config.movelimits.max.y) moveResult.y = config.movelimits.max.y
+    this.targetpos = moveResult
     this.targetrot = Vector.angle(this.position, c.pointer)
   }
   

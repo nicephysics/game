@@ -7,6 +7,7 @@ export var enemystats = {
     air: 1, // air resistance of enemy
     inertia: 1, // inertia of enemy
     gravity: 1, // gravity scale of enemy
+    guns: [],
   }, // end of base stats...
   // now for normal enemies
   ball: {
@@ -46,7 +47,7 @@ export class EnemyStat {
   // constructor
   constructor(enemy) {
     this.enemy = enemy
-    this.refresh()
+    // this.refresh()
   }
   
   // get
@@ -64,7 +65,8 @@ export class EnemyStat {
     this.size = s.size || 1
     this.air = s.air || 1
     this.gravity = s.gravity || 1
-    this.guns = s.guns
+      
+    this.guns = s.guns || []
   }
   
   add(s) {
@@ -73,7 +75,8 @@ export class EnemyStat {
     this.size *= s.size || 1
     this.air *= s.air || 1
     this.gravity *= s.gravity || 1
-    this.guns *= s.guns
+    
+    this.guns = s.guns || []
   }
   
   // the real refresh function?

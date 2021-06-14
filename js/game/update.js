@@ -1,9 +1,15 @@
 import { category, config } from "../config/config.js"
 
+import { events } from "../util/events.js"
+
 import { Tower } from "./tower.js"
 import { Enemy } from "./enemy.js"
 
 export var gameupdate = { }
+
+if (true) {
+  // 2 space indent!
+}
 
 var Body = Matter.Body,
     Bodies = Matter.Bodies,

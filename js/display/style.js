@@ -44,7 +44,8 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
 // matter styles
 
 style.default = {
-  ground: style.fillStroke("#bd3900"),
+  ground: style.fillStroke("#003fbd"),
+  wall: style.fillStroke("#bd3900"),
   atmosphere: style.fillStroke("#c87dd4", 0.3, 5),
   /* {
     strokeStyle: "#554fff",

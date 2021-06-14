@@ -16,24 +16,24 @@ var Body = Matter.Body,
     Query = Matter.Query,
     Vector = Matter.Vector
 
-export var display_view = { }
+export var navigation = { }
 
-display_view.mousedown = true
-display_view.rightmousedown = false
-display_view.leftmousedown = false
-display_view.mousepos = Vector.create(0, 0) // Vector
-display_view.mousedelta = Vector.create(0, 0) // Vector
-display_view.dragging = false
-display_view.spacepressed = false
-display_view.panning = function() {
-  return (display_view.rightmousedown && !display_view.dragging) || (display_view.leftmousedown && display_view.spacepressed)
+navigation.mousedown = true
+navigation.rightmousedown = false
+navigation.leftmousedown = false
+navigation.mousepos = Vector.create(0, 0) // Vector
+navigation.mousedelta = Vector.create(0, 0) // Vector
+navigation.dragging = false
+navigation.spacepressed = false
+navigation.panning = function() {
+  return (navigation.rightmousedown && !navigation.dragging) || (navigation.leftmousedown && navigation.spacepressed)
 }
-display_view.pulling = function() {
-  return display_view.leftmousedown && !display_view.spacepressed
+navigation.pulling = function() {
+  return navigation.leftmousedown && !navigation.spacepressed
 }
 
 // needs render and mouse constraint, in that order
-display_view.init = function(
+navigation.init = function(
   render,
   mouseConstraint
 ) {
@@ -60,13 +60,13 @@ display_view.init = function(
     // check which mouse button pressed
     if ((event.buttons & 2) > 0) {
       // right mouse button pressed
-      display_view.rightmousedown = true
-      display_view.leftmousedown = false
+      navigation.rightmousedown = true
+      navigation.leftmousedown = false
       pulledBody = null
       event.preventDefault()
     } else if ((event.buttons & 1) > 0) {
       // left mouse button pressed
-      if (!display_view.leftmousedown) {
+      if (!navigation.leftmousedown) {
         var bodies = Query.point(Composite.allBodies(world), mouse.position)
         pulledBody = null
         for (let body of bodies) {
@@ -75,11 +75,11 @@ display_view.init = function(
           }
         }
       }
-      display_view.leftmousedown = true
-      display_view.rightmousedown = false
+      navigation.leftmousedown = true
+      navigation.rightmousedown = false
     } else {
-      display_view.rightmousedown = false
-      display_view.leftmousedown = false
+      navigation.rightmousedown = false
+      navigation.leftmousedown = false
       pulledBody = null
     }
   })
@@ -87,14 +87,14 @@ display_view.init = function(
   document.addEventListener("keydown", function(event) {
     switch (event.code) {
       case "Space":
-        display_view.spacepressed = true
+        navigation.spacepressed = true
     }
   })
   
   document.addEventListener("keyup", function(event) {
     switch (event.code) {
       case "Space":
-        display_view.spacepressed = false
+        navigation.spacepressed = false
     }
   })
   
@@ -103,17 +103,17 @@ display_view.init = function(
   })
   
   events.mouseup(mouseConstraint, function(mouse) {
-    display_view.rightmousedown = false
-    display_view.leftmousedown = false
+    navigation.rightmousedown = false
+    navigation.leftmousedown = false
     pulledBody = null
   })
   
   events.startdrag(mouseConstraint, function(body) {
-    display_view.dragging = true
+    navigation.dragging = true
   })
   
   events.enddrag(mouseConstraint, function(body) {
-    display_view.dragging = false
+    navigation.dragging = false
   })
   
   // render event listener (main function)
@@ -151,9 +151,9 @@ display_view.init = function(
       Mouse.setOffset(mouse, render.bounds.min)
     } // end zooming
     
-    if (display_view.panning()) {
+    if (navigation.panning()) {
       // get the vector to translate the view      
-      translate = Vector.clone(display_view.mousedelta)
+      translate = Vector.clone(navigation.mousedelta)
       
       // prevent the view moving outside the extents
       if (render.bounds.min.x + translate.x < limits.min.x)
@@ -175,8 +175,8 @@ display_view.init = function(
       Mouse.setOffset(mouse, render.bounds.min)
     } // end panning
     
-    if (display_view.pulling() && pulledBody && pulledBody.canDrag) {
-      var translate = Vector.neg(Vector.clone(display_view.mousedelta))
+    if (navigation.pulling() && pulledBody && pulledBody.canDrag) {
+      var translate = Vector.neg(Vector.clone(navigation.mousedelta))
       if (pulledBody.gametype === "tower") {
         pulledBody.tower.moveByVector(translate)
       } else {
@@ -184,8 +184,8 @@ display_view.init = function(
       }
     } // end pulling
     
-    display_view.mousedelta = Vector.sub(display_view.mousepos, mousepos)
-    display_view.mousepos = Vector.clone(mousepos)
+    navigation.mousedelta = Vector.sub(navigation.mousepos, mousepos)
+    navigation.mousepos = Vector.clone(mousepos)
     
   }) // end events.beforeRender
-} // end display_view.init
+} // end navigation.init

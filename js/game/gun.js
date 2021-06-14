@@ -262,7 +262,7 @@ export class Gun {
   setLocation(set) {
     this.position = Vector.create(set.x, set.y)
     this.size = Vector.create(set.w, set.h)
-    this.angle = set.a || 0
+    this.angle = (set.a / 180 * Math.PI) || 0
     this.delay = set.d || 0
     this.fill = style.gun[set.style] || set.style || "#a7a7af"
     this.stroke = style.gun[set.stroke] || set.stroke || this.fill
@@ -285,4 +285,5 @@ export class Gun {
     }
     this.object = null
   }
+  
 }

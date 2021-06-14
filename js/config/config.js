@@ -10,12 +10,12 @@ export var config = {
   FPS: 60,
   smooth: {
     tower: {
-      rotation: 0.3,
-      position: 0.1,
+      rot: 0.3,
+      pos: 0.1,
     },
     enemy: {
-      rotation: 0.1,
-      position: 1.0, // none yet?
+      rot: 0.1,
+      pos: 1.0, // none yet?
     },
   },
   limits: {

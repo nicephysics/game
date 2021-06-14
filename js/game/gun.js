@@ -35,8 +35,11 @@ export class Gun {
   // counters
   gunTime = 0
   shot = 0 // reload counter
-  // tower
+  // type
+  gametype = ""
+  // object backreferences
   tower = null
+  enemy = null
   // positions
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)
@@ -57,10 +60,15 @@ export class Gun {
   childrenTime = [ ] // queue of int
   
   // constructor
-  constructor(tower, location) {
+  constructor(object, location, gametype) {
     guns.push(this)
     
-    this.tower = tower
+    this.gametype = gametype
+    if (gametype === "tower") {
+      this.tower = object
+    } else if (gametype === "enemy") {
+      this.enemy = object
+    }
     this.setLocation(location)
   }
   
@@ -68,14 +76,14 @@ export class Gun {
   get realPosition() {
     if (this.size.x === 0) {
       let x = this.position.x * this.stat.size * 2 // difference!
-      let y = this.position.y * this.tower.size * Gun.set.scale
+      let y = this.position.y * this.objectSize * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
       )
     } else {
-      let x = this.position.x * this.tower.size * Gun.set.scale
-      let y = this.position.y * this.tower.size * Gun.set.scale
+      let x = this.position.x * this.objectSize * Gun.set.scale
+      let y = this.position.y * this.objectSize * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
@@ -92,13 +100,26 @@ export class Gun {
     return this.location.y
   }
   get width() {
-    return Math.max(this.size.x * this.tower.size * Gun.set.scale, this.stat.size)
+    return Math.max(this.size.x * this.objectSize * Gun.set.scale, this.stat.size)
   }
   get height() {
-    return this.size.y * this.tower.size * Gun.set.scale
+    return this.size.y * this.objectSize * Gun.set.scale
+  }
+  get object() {
+    if (this.gametype === "tower") {
+      return this.tower
+    } else if (this.gametype === "enemy") {
+      return this.enemy
+    }
+  }
+  get objectSize() {
+    return this.object.size
+  }
+  get objectDirection() {
+    return this.object.direction
   }
   get direction() {
-    return this.angle + this.tower.direction
+    return this.angle + this.objectDirection
   }
   get gunDifference() {
     return Vector.create(

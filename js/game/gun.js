@@ -148,7 +148,7 @@ export class Gun {
     if (this.gametype === "tower") {
       // object is a tower, check stuff
       if (!this.tower.isPlayer) {
-        return false
+        return true
       }
       return this.tower.control.shoot
     } else if (this.gametype === "enemy") {
@@ -219,14 +219,14 @@ export class Gun {
     var b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
       isStatic: false,
       label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
-      collisionFilter: category.yourBullet,
+      collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
       render: style.projectile.bullet, // todo
       density: s.mass * 0.001,
       friction: s.kineticFriction,
       frictionStatic: s.staticFriction,
       frictionAir: s.airResistance,
     })
-    b.gametype = "projectile"
+    b.gametype = (this.gametype === "tower") ? "projectile" : "bullet"
     b.gun = this
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(

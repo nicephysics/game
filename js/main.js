@@ -85,7 +85,7 @@ var init = function() {
   })
   atmosphere.gametype = "atmosphere"
   
-  Composite.add(world, [ ground, atmosphere ])
+  Composite.add(world, [ atmosphere, ground ])
     
   mouse = Mouse.create(canvas)
   mouseConstraint = MouseConstraint.create(engine, {

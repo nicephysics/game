@@ -99,7 +99,6 @@ export class Stat {
   }
   
   setString(stat) {
-    console.log(stat)
     this.set_base(stats.base)
     if (stat instanceof Array) {
       for (let s of stat) {

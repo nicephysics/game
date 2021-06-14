@@ -187,6 +187,9 @@ export class Enemy {
   
   tick() {
     this.doControl()
+    if (this.body.gravityOff) {
+      Body.setVelocity(this.body, this.body.enemyVelocity)
+    }
   }
   
   doControl() {
@@ -236,10 +239,13 @@ export class Enemy {
     if (s.speed !== 0) {
       var tilt = (random.randreal() - 0.5) * 5 // 5 degrees tilt max
       var down = Math.PI / 180 * (90 + tilt)
-      Body.setVelocity(this.body, Vector.mult(
+      this.body.enemyVelocity = Vector.mult(
         Vector.create( Math.cos(down), Math.sin(down) ),
         s.speed
-      ))
+      )
+      Body.setVelocity(this.body, this.body.enemyVelocity)
+    } else {
+      this.body.enemyVelocity = Vector.create(0, 0)
     }
     // other stats
     this.body.gravityScale = s.gravity

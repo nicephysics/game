@@ -46,7 +46,7 @@ export class EnemyStat {
   // constructor
   constructor(enemy) {
     this.enemy = enemy
-    // this.refresh()
+    this.refresh()
   }
   
   // get

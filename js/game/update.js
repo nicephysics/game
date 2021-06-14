@@ -26,6 +26,7 @@ gameupdate.init = function(render) {
     Tower.tickAll()
     Tower.drawAll()
     Enemy.tick()
+    Enemy.draw()
   })
   
   events.beforeUpdate(engine, function(engine) {

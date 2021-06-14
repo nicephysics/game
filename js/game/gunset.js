@@ -27,23 +27,19 @@ gunset.default = {
 gunset.basic = {
   x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
   style: "basic",
-  stat: ["shooter", "basic"],
 }
 
 gunset.double_left = {
   x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0,
   style: "double",
-  stat: ["shooter", "double"],
 }
 
 gunset.double_right = {
   x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5,
   style: "double",
-  stat: ["shooter", "double"],
 }
 
 gunset.ballgun = {
   x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
   style: "ballgun",
-  stat: ["enemy", "enemyshooter", "ballgun"],
 }

@@ -231,6 +231,7 @@ export class Enemy {
     })
     this.body.gametype = "enemy"
     this.body.enemy = this
+    this.body.gravityOff = true
     // launch at a certain speed
     if (s.speed !== 0) {
       var tilt = (random.randreal() - 0.5) * 5 // 5 degrees tilt max

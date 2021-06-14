@@ -117,6 +117,9 @@ export class Gun {
   get objectSize() {
     return this.object.size
   }
+  get objectAngle() {
+    return this.object.angle
+  }
   get objectDirection() {
     return this.object.direction
   }
@@ -127,7 +130,7 @@ export class Gun {
     return this.object.guns
   }
   get direction() {
-    return this.angle + this.objectDirection
+    return this.angle + this.objectAngle
   }
   get gunDifference() {
     return Vector.create(

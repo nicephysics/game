@@ -235,7 +235,7 @@ export class Enemy {
     // launch at a certain speed
     if (s.speed !== 0) {
       var tilt = (random.randreal() - 0.5) * 5 // 5 degrees tilt max
-      var down = Math.PI / 180 * (270 + tilt)
+      var down = Math.PI / 180 * (90 + tilt)
       Body.setVelocity(this.body, Vector.mult(
         Vector.create( Math.cos(down), Math.sin(down) ),
         s.speed

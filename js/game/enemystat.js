@@ -26,7 +26,11 @@ export var enemystats = {
     size: 10,
     air: 0.05,
     gravity: 0.1,
-    guns: ["ballgun"],
+    guns: [ { 
+        type: "ballgun",
+        stat: ["enemy", "enemyshooter", "ballgun"],
+        options = { },
+    }, ],
   }
 }
 
@@ -92,8 +96,8 @@ export class EnemyStat {
     }
     // init guns too
     this.enemy.removeAllGuns()
-    for (let guntype of this.guns) {
-      this.enemy.addGun(guntype)
+    for (let g of this.guns) {
+      this.enemy.addGun(g.type, g.stat, g.options)
     }
   }
 }

@@ -1,8 +1,11 @@
+// imports
 import { events } from "../util/events.js"
-import { config } from "../config/config.js"
+import { math } from "../util/math.js"
+
+import { category, config } from "../config/config.js"
 
 if (true) {
-  // 2 spaces!
+  // 2 space indent!
 }
 
 var Body = Matter.Body,

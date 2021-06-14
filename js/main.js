@@ -6,7 +6,7 @@ import { util_world } from "./util/world.js"
 // display
 import { style } from "./display/style.js"
 import { display } from "./display/display.js"
-import { display_view } from "./display/view.js"
+import { navigation } from "./display/navigation.js"
 // config
 import { config, category } from "./config/config.js"
 // game
@@ -122,7 +122,7 @@ var init = function() {
   Tower.player = tower
   tower.isPlayer = true
   
-  display_view.init(render, mouseConstraint)
+  navigation.init(render, mouseConstraint)
   
   collide.init(render)
   

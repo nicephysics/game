@@ -169,6 +169,9 @@ export class Tower {
   set label(label) {
     this.body.label = label
   }
+  set isPlayer(boolean) {
+    this.body.canDrag = !boolean
+  }
   // ##### end of tower setter functions
   
   // go!
@@ -209,11 +212,8 @@ export class Tower {
     })
     this.body.gametype = "tower"
     this.body.tower = this
-    if (!this.isPlayer) {
-      this.body.canDrag = true
-    }
-    // this.body.gravityScale = 0
-    // this.body.disableVelocity = true
+    this.body.canDrag = !this.isPlayer
+    this.body.gravityScale = 1
     // add to world
     Composite.add(Tower.world, this.body)
   }

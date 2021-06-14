@@ -14,6 +14,7 @@ import { Tower } from "./game/tower.js"
 import { Enemy } from "./game/enemy.js"
 import { collide } from "./game/collide.js"
 import { controls } from "./game/controls.js"
+import { gameupdate } from "./game/update.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -111,8 +112,6 @@ var init = function() {
   tower.moveTo(_width * 0.5, _height - 100)
   Tower.player = tower
   tower.isPlayer = true
-  var tower2 = new Tower("double")
-  tower2.moveTo( _width * 1.5, _height - 100)
   
   display_view.init(render, mouseConstraint)
   
@@ -120,30 +119,7 @@ var init = function() {
   
   controls.init(render)
   
-  events.afterRender(render, function() {
-    Tower.tickAll()
-    Tower.drawAll()
-    Enemy.tick()
-  })
-  
-  events.beforeUpdate(engine, function(engine) {
-    var all = Composite.allBodies(engine.world)
-    var gravity = engine.gravity
-    for (let body of all) {
-      // 1. gravity scale
-      let gravityScale = (body.gravityScale == null) ? 1 : body.gravityScale
-      if (gravityScale === 1) continue;
-      let scale = gravityScale - 1
-      Body.applyForce(body, body.position, {
-        x: gravity.x * scale * gravity.scale * body.mass,
-        y: gravity.y * scale * gravity.scale * body.mass
-      })
-      // 2. disabled velocity
-      if (body.disableVelocity) {
-        Body.setVelocity(body, Vector.create(0, 0))
-      }
-    }
-  })
+  gameupdate.init(render)
 
   // run the renderer
   Render.run(render)

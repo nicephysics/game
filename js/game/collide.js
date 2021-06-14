@@ -35,6 +35,9 @@ collide.init = function(render) {
         console.log("Start", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = false
+          if (b.frictionAir === 0) {
+            b.frictionAir = b.frictionAirPrev || 0
+          }
         }
         break
         
@@ -55,6 +58,8 @@ collide.init = function(render) {
         console.log("End", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = true
+          b.frictionAirPrev = b.frictionAir
+          b.frictionAir = 0
         }
         break
     }

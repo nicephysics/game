@@ -22,7 +22,6 @@ collide.init = function(render) {
   function collideStart(a, b) {
     var ta = a.gametype,
         tb = b.gametype
-    console.log("Start", ta)
     // type a switch
     switch (ta) {
       case "ground":
@@ -33,6 +32,7 @@ collide.init = function(render) {
         break
         
       case "atmosphere":
+        console.log("Start", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = false
         }
@@ -50,9 +50,9 @@ collide.init = function(render) {
   function collideEnd(a, b) {
     var ta = a.gametype,
         tb = b.gametype
-    console.log("End", ta)
     switch (ta) {
       case "atmosphere":
+        console.log("End", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = true
         }

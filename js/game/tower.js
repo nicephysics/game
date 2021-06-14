@@ -232,9 +232,8 @@ export class Tower {
   }
   
   tick() {
-    Body.setAngle(this.body, this.targetrot)
-    Body.setPosition(this.body, math.lerpV(this.position, this.targetpos, 0.1))
-    // Body.setPosition(this.body, this.targetpos)
+    Body.setRotation(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.tower.rot))
+    Body.setPosition(this.body, math.lerpVector(this.position, this.targetpos, config.smooth.tower.pos))
     if (this.isPlayer) {
       this.doControl()
     }
@@ -265,7 +264,7 @@ export class Tower {
     }    
   }
   
-  // for tickTarget() above
+  // for tickTarget() above, don't use for now
   getTarget() {
     this.target = null
     if (enemies.length === 0) return false

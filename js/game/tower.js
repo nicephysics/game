@@ -232,7 +232,7 @@ export class Tower {
   }
   
   tick() {
-    Body.setRotation(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.tower.rot))
+    Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.tower.rot))
     Body.setPosition(this.body, math.lerpVector(this.position, this.targetpos, config.smooth.tower.pos))
     if (this.isPlayer) {
       this.doControl()

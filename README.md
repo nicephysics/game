@@ -1,4 +1,4 @@
-## Unnamed Project
+## nicephysics/game
 
 ### [Link](https://nicephysics.github.io/game)
 

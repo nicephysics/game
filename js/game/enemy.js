@@ -268,8 +268,9 @@ export class Enemy {
     this.guns = [ ]
   }
   
-  addGun(guntype) {
+  addGun(guntype, gunstat, options = { }) {
     var gun = Gun.create(this, guntype, "enemy")
+    gun.setStatString(gunstat)
     this.guns.push(gun)
     return gun
   }

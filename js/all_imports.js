@@ -31,13 +31,25 @@ var game = { }
 import('./game/aim.js').then(m => {
   game.aim = m.aim
 })
+import('./game/collide.js').then(m => {
+  game.collide = m.collide
+})
+import('./game/controls.js').then(m => {
+  game.controls = m.controls
+})
 import('./game/enemy.js').then(m => {
   game.Enemy = m.Enemy
   game.enemies = m.enemies
+})
+import('./game/enemystat.js').then(m => {
+  game.EnemyStat = m.EnemyStat
   game.enemystats = m.enemystats
 })
 import('./game/gun.js').then(m => {
   game.Gun = m.Gun
+})
+import('./game/gunset.js').then(m => {
+  game.gunset = m.gunset
 })
 import('./game/stat.js').then(m => {
   game.Stat = m.Stat
@@ -51,6 +63,9 @@ import('./game/towerstat.js').then(m => {
   game.TowerStat = m.TowerStat
   game.towerstats = m.towerstats
 })
+import('./game/update.js').then(m => {
+  game.update = m.update
+})
 import('./game/wave.js').then(m => {
   game.wave = m.wave
 })
@@ -60,14 +75,17 @@ var disp = { }
 import('./display/draw.js').then(m => {
   disp.draw = m.draw
 })
-import('./display/view.js').then(m => {
-  disp.display_view = m.display_view
+import('./display/navigation.js').then(m => {
+  disp.navigation = m.navigation
 })
 import('./display/style.js').then(m => {
   disp.style = m.style
 })
 import('./display/display.js').then(m => {
   disp.display = m.display
+})
+import('./display/ui.js').then(m => {
+  disp.ui = m.ui
 })
 
 // config

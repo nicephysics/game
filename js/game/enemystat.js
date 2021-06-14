@@ -26,7 +26,7 @@ export var enemystats = {
     size: 10,
     air: 0.05,
     gravity: 0.1,
-    guns: ["basic"],
+    guns: ["ballgun"],
   }
 }
 

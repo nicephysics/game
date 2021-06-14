@@ -8,6 +8,7 @@ if (true) {
 var Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
+    Composites = Matter.Composites,
     Vector = Matter.Vector
 
 export var collide = { }
@@ -21,6 +22,7 @@ collide.init = function(render) {
   function collideStart(a, b) {
     var ta = a.gametype,
         tb = b.gametype
+    console.log("Start", ta)
     // type a switch
     switch (ta) {
       case "ground":
@@ -48,6 +50,7 @@ collide.init = function(render) {
   function collideEnd(a, b) {
     var ta = a.gametype,
         tb = b.gametype
+    console.log("End", ta)
     switch (ta) {
       case "atmosphere":
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {

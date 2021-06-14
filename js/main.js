@@ -76,7 +76,15 @@ var init = function() {
   })
   ground.gametype = "ground"
   
-  Composite.add(world, [ ground ])
+  var atmosphere = Bodies.rectangle(_width / 2, _height + 25, _width + 50, _height + 50, {
+    isStatic: true,
+    isSensor: true,
+    label: "The Atmosphere",
+    render: style.default.atmosphere,
+  })
+  ground.gametype = "atmosphere"
+  
+  Composite.add(world, [ ground, atmosphere ])
     
   mouse = Mouse.create(canvas)
   mouseConstraint = MouseConstraint.create(engine, {

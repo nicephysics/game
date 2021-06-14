@@ -32,7 +32,6 @@ collide.init = function(render) {
         break
         
       case "atmosphere":
-        console.log("Start", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = false
           if (b.frictionAir === 0) {
@@ -55,7 +54,6 @@ collide.init = function(render) {
         tb = b.gametype
     switch (ta) {
       case "atmosphere":
-        console.log("End", tb)
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = true
           b.frictionAirPrev = b.frictionAir

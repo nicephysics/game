@@ -2,11 +2,11 @@
 
 export var style = { }
 
-style.fillStroke = function(fillStyle, opacity = 1) {
+style.fillStroke = function(fillStyle, opacity = 1, lineWidth = 3) {
   return {
     fillStyle: fillStyle,
     strokeStyle: chroma(fillStyle).darken().hex(),
-    lineWidth: 3,
+    lineWidth: lineWidth,
     opacity: opacity,
   }
 }
@@ -45,7 +45,7 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
 
 style.default = {
   ground: style.fillStroke("#bd3900"),
-  atmosphere: style.fillStroke("#554fff", 0.2),
+  atmosphere: style.fillStroke("#554fff", 0.2, 5),
 }
 
 style.tower = {

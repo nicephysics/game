@@ -82,7 +82,7 @@ var init = function() {
     label: "The Left Wall",
     render: style.default.wall,
   })
-  ground.gametype = "wall"
+  leftwall.gametype = "wall"
   
   var rightwall = Bodies.rectangle(_width + 30, _height * 0.85 + 25, 60, _height + 50, {
     isStatic: true,
@@ -90,7 +90,7 @@ var init = function() {
     label: "The Right Wall",
     render: style.default.wall,
   })
-  ground.gametype = "wall"
+  rightwall.gametype = "wall"
   
   var atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
     isStatic: true,
@@ -101,7 +101,7 @@ var init = function() {
   })
   atmosphere.gametype = "atmosphere"
   
-  Composite.add(world, [ atmosphere, ground ])
+  Composite.add(world, [ atmosphere, ground, leftwall, rightwall ])
     
   mouse = Mouse.create(canvas)
   mouseConstraint = MouseConstraint.create(engine, {

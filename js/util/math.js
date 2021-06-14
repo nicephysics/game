@@ -19,3 +19,14 @@ math.lerpV = function(start, end, factor) {
     math.lerp(start.y, end.y, factor)
   )
 }
+
+// math lerpA?
+math.lerpA = function(start, end, factor) {
+  return math.lerpV(
+    Vector.create(Math.cos(start), Math.sin(start)),
+    Vector.create(Math.cos(end), Math.sin(end)),
+    factor
+  )
+}
+
+math.lerpAngle = math.lerpA

@@ -194,7 +194,8 @@ export class Enemy {
   doControl() {
     switch (this.controlType) {
       case "aim_player":
-        Body.setRotation(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot))
+        // aim at the player!
+        Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot))
         this.targetrot = Vector.angle(this.position, Tower.player.position)
     }
   }

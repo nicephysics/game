@@ -22,7 +22,7 @@ math.lerpV = function(start, end, factor) {
 
 // math lerpA?
 math.lerpA = function(start, end, factor) {
-  return Vector.angle(math.lerpV(
+  return Vector.angle(Vector.create(0, 0), math.lerpV(
     Vector.create(Math.cos(start), Math.sin(start)),
     Vector.create(Math.cos(end), Math.sin(end)),
     factor

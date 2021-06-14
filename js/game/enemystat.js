@@ -85,7 +85,6 @@ export class EnemyStat {
     this.setBase(enemystats.base)
     // and then add some more stats
     var e = enemystats[type]
-    console.log(e)
     this.enemy.controlType = e.control
     while (e != null) {
       this.add(e)

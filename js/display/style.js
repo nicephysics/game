@@ -45,6 +45,7 @@ style.sprite = function(texturePath, xOffset = 0.5, yOffset = 0.5, xScale = 1.0,
 
 style.default = {
   ground: style.fillStroke("#bd3900"),
+  atmosphere: style.stroke("#4938ff", 5),
 }
 
 style.tower = {

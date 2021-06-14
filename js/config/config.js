@@ -33,7 +33,8 @@ var c = {
   enemy_tower: 0x0010,
   you_bullet: 0x0020,
   enemy_bullet: 0x0040,
-  all: 0x007F, // 5 category types so far, so category.all = (2^5 - 1)
+  atmosphere: 0x0080,
+  all: 0x00FF,
 }
 
 export var category = {
@@ -44,6 +45,10 @@ export var category = {
   ground: {
     category: c.ground,
     mask: c.default | c.enemy | c.enemy_bullet | c.you_bullet
+  },
+  atmosphere: {
+    category: c.atmosphere,
+    mask: c.default | c.ground | c.atmosphere | c.enemy | c.enemy_tower | c.enemy_bullet | c.you_tower | c.you_bullet
   },
   yourTower: {
     category: c.you_tower,

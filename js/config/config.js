@@ -9,8 +9,8 @@ export var config = {
   version: "0.0.0",
   FPS: 60,
   limits: {
-    min: { x: _width * -6.0, y: 0 },
-    max: { x: _width * 6.0, y: _height },
+    min: { x: 0, y: 0 },
+    max: { x: _width, y: _height },
     zoom: { min: 1.0, max: 1.0 },
   }
 }

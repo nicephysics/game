@@ -84,22 +84,27 @@ collide.init = function(render) {
   })
   
   events.afterAdd(engine, function(compositeArray) {
-    // for loop #1
-    for (let composite of compositeArray) {
-      // for loop #2
-      for (let b of Composite.allBodies(composite)) {
-        var tb = b.gametype
-        // switch statement
-        switch (tb) {
-          case "enemy":
-          case "bullet":
-          case "projectile":
-            b.gravityOff = true
-            b.frictionAirPrev = b.frictionAir
-            b.frictionAir = 0
-            break
-        }
+    function doStuff(composite) {
+      var body = composite,
+          tb = body.gametype
+      // switch statement
+      switch (tb) {
+        case "enemy":
+        case "bullet":
+        case "projectile":
+          body.gravityOff = true
+          body.frictionAirPrev = body.frictionAir
+          body.frictionAir = 0
+          break
       }
+    }
+    if (compositeArray instanceof Array) {
+      // for loop #1
+      for (let composite of compositeArray) {
+        doStuff(composite)
+      }
+    } else {
+      doStuff(compositeArray)
     }
   })
 }

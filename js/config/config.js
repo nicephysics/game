@@ -24,7 +24,7 @@ export var config = {
     zoom: { min: 1.0, max: 1.0 },
   },
   movelimits: {
-    min: { x: 0, y: _height * 0.3 },
+    min: { x: 0, y: _height * 0.35 },
     max: { x: _width, y: _height - 20 },
   }
 }

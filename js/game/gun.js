@@ -3,7 +3,9 @@ import { stats, Stat } from "./stat.js"
 import { category, config } from "../config/config.js"
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
+
 import { Tower } from "./tower.js"
+import { gunset } from "./gunset.js"
 // drawing?
 
 if (true) {
@@ -23,9 +25,9 @@ export var guns = [ ] // Gun[]
 export class Gun {
   // static
   static _count = 1
-  static set = { } // to be filled later
-  static create(tower, guntype) {
-    return new Gun(tower, Gun.set[guntype])
+  static set = gunset
+  static create(object, guntype, gametype) {
+    return new Gun(object, Gun.set[guntype], gametype)
   }
   
   // fields
@@ -91,7 +93,7 @@ export class Gun {
     }
   }
   get location() {
-    return Vector.add(this.tower.position, this.realPosition)
+    return Vector.add(this.objectPosition, this.realPosition)
   }
   get x() {
     return this.location.x
@@ -118,6 +120,12 @@ export class Gun {
   get objectDirection() {
     return this.object.direction
   }
+  get objectPosition() {
+    return this.object.position
+  }
+  get objectGuns() {
+    return this.object.guns
+  }
   get direction() {
     return this.angle + this.objectDirection
   }
@@ -133,14 +141,27 @@ export class Gun {
   get gunMiddle() {
     return Vector.add(this.location, Vector.mult(this.gunDifference, 0.5))
   }
-  get towerShoot() {
-    if (!this.tower.isPlayer) {
-      return false
+  get shooting() {
+    if (this.gametype === "tower") {
+      // object is a tower, check stuff
+      if (!this.tower.isPlayer) {
+        return false
+      }
+      return this.tower.control.shoot
+    } else if (this.gametype === "enemy") {
+      // object is an enemy, enemies shoot blindly!
+      return true
     }
-    return this.tower.control.shoot
   }
   
   // set
+  set object(thing) {
+    if (this.gametype === "tower") {
+      this.tower = thing
+    } else if (this.gametype === "enemy") {
+      this.enemy = thing
+    }
+  }
   
   // go!
   refreshStats() {
@@ -172,25 +193,18 @@ export class Gun {
     // get reload from stat
     var reload = this.stat.reloadFrames
     // check for player existence
-    if (this.tower.isPlayer) {
-      // hmmm controlment
-      if (this.shot < reload) {
-        this.shot++
-      } else {
-        if (this.towerShoot) {
-          this.shot++
-          while (this.shot >= reload && this.towerShoot) {
-            this.shot -= reload
-            this.shoot()
-          }
-        }
-      }
-      // todo
-    } else {
+    if (this.gametype === "tower" && this.tower.isPlayer) {
+      // do something here?
+    }
+    if (this.shot < reload) {
       this.shot++
-      while (this.shot >= reload) {
-        this.shot -= reload
-        this.shoot()
+    } else {
+      if (this.shooting) {
+        this.shot++
+        while (this.shot >= reload && this.shooting) {
+          this.shot -= reload
+          this.shoot()
+        }
       }
     }
     // something very important
@@ -258,57 +272,14 @@ export class Gun {
   
   remove(removeFromArray = true) {
     if (removeFromArray) {
-      const index = this.tower.guns.indexOf(this);
+      const index = this.objectGuns.indexOf(this);
       if (index > -1) {
-        this.tower.guns.splice(index, 1);
+        this.objectGuns.splice(index, 1);
       }
     }
     for (let body of this.children) {
       Composite.remove(Tower.world, body)
     }
-    this.tower = null
+    this.object = null
   }
-}
-
-Gun.set = {
-  // overall gun scale
-  scale: 0.1,
-}
-
-Gun.set.some_random_comments = {
-  x: 0, // position.x (*)
-  y: 0, // position.y (*)
-  w: 0, // size.x (*)
-  h: 10, // size.y (*)
-  a: 0, // angle (default: 0)
-  d: 0, // shooting delay (default: 0)
-  style: "#a7a7af", // fill style (default: "#a7a7af")
-  stroke: null, // stroke style (default: same as fill style)
-  lineWidth: 3, // stroke line width (default: 3)
-  shape: "rectangle", // shape (default: rectangle)
-  dummy: false, // dummy gun (default: false)
-  aspects: { } // shape aspects (default: nothing)
-}
-
-Gun.set.default = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
-  shape: "rectangle",
-}
-
-Gun.set.basic = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
-  style: "basic",
-  stat: ["shooter", "basic"],
-}
-
-Gun.set.double_left = {
-  x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0,
-  style: "double",
-  stat: ["shooter", "double"],
-}
-
-Gun.set.double_right = {
-  x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5,
-  style: "double",
-  stat: ["shooter", "double"],
 }

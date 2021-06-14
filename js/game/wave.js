@@ -49,3 +49,11 @@ wave.make = function(types, seed, options = { }) {
   w.fun = w.wave // alias?
   return w // result
 }
+
+wave.repeat = function(type, options = { }) {
+  
+}
+
+wave.get = function(type, number, sep, difficulty) {
+  
+}

@@ -76,6 +76,22 @@ var init = function() {
   })
   ground.gametype = "ground"
   
+  var leftwall = Bodies.rectangle(-30, _height * 0.85 + 25, 60, _height + 50, {
+    isStatic: true,
+    collisionFilter: category.ground,
+    label: "The Left Wall",
+    render: style.default.wall,
+  })
+  ground.gametype = "wall"
+  
+  var rightwall = Bodies.rectangle(_width + 30, _height * 0.85 + 25, 60, _height + 50, {
+    isStatic: true,
+    collisionFilter: category.ground,
+    label: "The Right Wall",
+    render: style.default.wall,
+  })
+  ground.gametype = "wall"
+  
   var atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
     isStatic: true,
     isSensor: true,

@@ -31,7 +31,7 @@ export var enemystats = {
 
 export class EnemyStat {
   // static
-  static stats = towerstats
+  static stats = enemystats
   
   // fields
   level = 0

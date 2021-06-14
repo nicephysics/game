@@ -46,6 +46,7 @@ export class Tower {
   static towers = towers
   // player
   static player = null
+  static xp = 0
   // a running number for ID and default label
   static _count = 1
   // all tower types (string) in an array
@@ -99,6 +100,8 @@ export class Tower {
   targetpos = Vector.create(0, 0) // target position of tower
   parent = this // Tower
   guns = [ ] // Gun[]
+  xp = 0
+  level = 1
   stat = new TowerStat(this) // TowerStat
   // player stuffs
   isPlayer = false
@@ -223,6 +226,10 @@ export class Tower {
     this.createBody()
   }
   
+  refreshLevel() {
+    this.level = math.towerlevel(this.xp)
+  }
+  
   createBody(zero = false) {
     var x, y
     if (zero) {
@@ -314,6 +321,12 @@ export class Tower {
   
   turnTo(angle) {
     this.targetrot = angle
+  }
+  
+  addxp(add) {
+    this.xp += add
+    Tower.xp += add
+    this.refreshLevel()
   }
   
   // WARNING: testing functions below!

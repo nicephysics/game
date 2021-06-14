@@ -34,6 +34,7 @@ collide.init = function(render) {
         if (tb === "enemy" || tb === "bullet" || tb === "projectile") {
           b.gravityOff = false
         }
+        break
         
       case "enemy":
         break

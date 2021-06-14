@@ -18,7 +18,7 @@ collide.init = function(render) {
       world = engine.world
   
   // the main function
-  function collide(a, b) {
+  function collideStart(a, b) {
     var ta = a.gametype,
         tb = b.gametype
     // type a switch
@@ -60,8 +60,8 @@ collide.init = function(render) {
     for (let pair of pairs) {
       var a = pair.bodyA
       var b = pair.bodyB
-      collide(a, b)
-      collide(b, a)
+      collideStart(a, b)
+      collideStart(b, a)
     }
   })
   

@@ -1,11 +1,11 @@
 import { category, config } from "../config/config.js"
 
 import { math } from "../util/math.js"
-import { random } from "../util/random.js"
 import { PriorityQueue } from "../util/pq.js"
+import { random } from "../util/random.js"
 
-import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
+import { style } from "../display/style.js"
 
 import { EnemyStat, enemystats } from "./enemystat.js"
 import { Effect } from "./effect.js"
@@ -88,11 +88,13 @@ export class Enemy {
   }
   
   static draw() {
+    var render = Tower.render
     for (let e of enemies) {
       for (let g of e.guns) {
-        g.draw(Tower.render)
+        g.draw(render)
       }
-      e.draw(Tower.render)
+      e.effect.draw(render)
+      e.draw(render)
     }
   }
   

@@ -150,9 +150,6 @@ export class Tower {
   get y() {
     return this.position.y
   }
-  get level() {
-    return this.stat.level
-  }
   get size() {
     return this.stat.size
   }
@@ -190,20 +187,28 @@ export class Tower {
   }
   
   doControl() {
-    var c = this.control
-    var movedir = Vector.create(0, 0)
+    var c = this.control,
+        movedir = Vector.create(0, 0)
+    // move direction
     if (c.up) movedir.y--
     if (c.down) movedir.y++
     if (c.left) movedir.x--
     if (c.right) movedir.x++
-    var moveVector = Vector.mult(Vector.normalise(movedir), this.stat.speed),
+    // move variables
+    var speed = this.stat.speed * this.effect.speedmult,
+        moveVector = Vector.mult(Vector.normalise(movedir), speed),
         moveResult = Vector.add(this.targetpos, moveVector)
+    // move limits
     if (moveResult.x - this.size < config.movelimits.min.x) moveResult.x = config.movelimits.min.x + this.size
     if (moveResult.y - this.size < config.movelimits.min.y) moveResult.y = config.movelimits.min.y + this.size
     if (moveResult.x + this.size > config.movelimits.max.x) moveResult.x = config.movelimits.max.x - this.size
     if (moveResult.y + this.size > config.movelimits.max.y) moveResult.y = config.movelimits.max.y - this.size
+    // move!
     this.targetpos = moveResult
-    this.targetrot = Vector.angle(this.position, c.pointer)
+    // rotate!
+    if (this.effect.canturn) {
+      this.targetrot = Vector.angle(this.position, c.pointer)
+    }
   }
   
   draw(render) {
@@ -213,7 +218,7 @@ export class Tower {
         // todo
         let circleStyle = style.gun.basic
         draw.setFillDarkenStroke(ctx, circleStyle)
-        draw.circle(render, this.x, this.y, this.guns[0].stat.size)
+        draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2)
         break;
     }
   }

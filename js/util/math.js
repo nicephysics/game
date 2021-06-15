@@ -1,4 +1,3 @@
-
 if (true) {
   // 2 space indent!
 }
@@ -78,9 +77,19 @@ function decimalAdjust(type, value, exp) {
 math.roundBy = function(value, exp) {
   return decimalAdjust('round', value, exp)
 }
+
 math.floorBy = function(value, exp) {
   return decimalAdjust('floor', value, exp)
 }
+
 math.ceilBy = function(value, exp) {
   return decimalAdjust('ceil', value, exp)
+}
+
+math.degToRad = function(degrees) {
+  return (degrees % 360) / 180 * Math.PI
+}
+
+math.radToDeg = function(radians) {
+  return (radians / Math.PI * 180) % 360
 }

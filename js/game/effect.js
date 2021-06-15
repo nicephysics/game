@@ -1,11 +1,11 @@
 // imports
 import { config, category } from "../config/config.js"
 
-import { Tower } from "./tower.js"
 import { Enemy } from "./enemy.js"
+import { Tower } from "./tower.js"
 
-import { random } from "../util/random.js"
 import { math } from "../util/math.js"
+import { random } from "../util/random.js"
 
 import { draw } from "../display/draw.js"
 import { style } from "../display/style.js"
@@ -18,6 +18,13 @@ export class Effect {
   static effects = effects
   
   static time = {}
+  
+  static tick = function() {
+    Effect.time++
+    for (let e of effects) {
+      e.tick()
+    }
+  }
   
   static draw = function(render) {
     // draw effects
@@ -105,7 +112,17 @@ export class Effect {
   
   // go!
   tick() {
-    
+    this.refreshEffects()
+  }
+  
+  refreshEffects() {
+    var i = 0
+    for (let e of this.effects.slice()) {
+      if (e.time >= Effect.time) {
+        this.effects.splice(i, 1)
+      }
+      ++i
+    }
   }
   
   draw(render) {

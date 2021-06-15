@@ -82,4 +82,8 @@ style.effect = {
     freeze: "#59bfff",
     slow: "#733d00",
   },
+  overlay: {
+    stun: "#3321313b",
+    freeze: "#7591d5ff",
+  }
 }

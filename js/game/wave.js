@@ -60,7 +60,7 @@ wave.get = function(type, number, sep, difficulty, options = { }) {
     number: number,
     sep: sep,
     difficulty: difficulty,
-    options = { },
+    options: { },
   }
 }
 

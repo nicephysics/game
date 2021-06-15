@@ -1,15 +1,16 @@
 // game
-import { TowerStat } from "./towerstat.js"
-import { Gun } from "./gun.js"
 import { aim } from "./aim.js"
+import { Effect } from "./effect.js"
 import { enemies, Enemy } from "./enemy.js"
+import { Gun } from "./gun.js"
+import { TowerStat } from "./towerstat.js"
 // config
 import { config, category } from "../config/config.js"
 // util
 import { math } from "../util/math.js"
 // display
-import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
+import { style } from "../display/style.js"
 
 if (true) {
   // 2 spaces indent
@@ -22,7 +23,6 @@ var Bodies = Matter.Bodies,
     Composite = Matter.Composite,
     Composites = Matter.Composites,
     Mouse = Matter.Mouse,
-    MouseConstraint = Matter.MouseConstraint,
     Vector = Matter.Vector
 
 /*
@@ -78,6 +78,7 @@ export class Tower {
         gun.draw(Tower.render)
       })
       tower.draw(Tower.render)
+      tower.effect.draw(Tower.render)
     })
   }
   // tick all guns and towers
@@ -103,6 +104,7 @@ export class Tower {
   xp = 0
   level = 1
   stat = new TowerStat(this) // TowerStat
+  effect = new Effect(this, "tower")
   // player stuffs
   isPlayer = false
   control = {}

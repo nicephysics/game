@@ -16,7 +16,7 @@ export var enemystats = {
     mass: 0.2,
     speed: 1,
     size: 12,
-    air: 0.05,
+    air: 0.02,
     gravity: 0.1,
   },
   // simple shooter enemies
@@ -25,7 +25,7 @@ export var enemystats = {
     mass: 0.15,
     speed: 0.6,
     size: 20,
-    air: 0.04,
+    air: 0.03,
     gravity: 0.12,
     guns: [ { 
         type: "ballgun",

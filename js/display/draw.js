@@ -15,6 +15,14 @@ draw.setStroke = function(ctx, stroke) {
   ctx.strokeStyle = stroke
 }
 
+draw.setLightFill = function(ctx, fill) {
+  draw.setFill(ctx, chroma(fill).lighten().hex())  
+}
+
+draw.setDarkStroke = function(ctx, stroke) {
+  draw.setStroke(ctx, chroma(stroke).darken().hex())  
+}
+
 draw.setFillAndStroke = function(ctx, both) {
   draw.setFill(ctx, both)
   draw.setStroke(ctx, both)
@@ -73,6 +81,21 @@ draw.circle = function(render, x, y, r) {
   y -= render.bounds.min.y
   var ctx = render.context
   draw._circle(ctx, x, y, r)
+}
+
+draw._arc = function(ctx, x, y, r, start, end, counter = false) {
+  ctx = ctx || draw.ctx
+  ctx.beginPath()
+    ctx.arc(x, y, r, start, end, counter)
+  ctx.stroke()
+  ctx.fill()
+}
+
+draw.arc = function(render, x, y, r, start, end, counter = false) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._arc(ctx, x, y, r, start, end, counter)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {

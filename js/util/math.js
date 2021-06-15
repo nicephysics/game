@@ -1,3 +1,5 @@
+// no imports
+
 if (true) {
   // 2 space indent!
 }
@@ -87,9 +89,9 @@ math.ceilBy = function(value, exp) {
 }
 
 math.degToRad = function(degrees) {
-  return (degrees % 360) / 180 * Math.PI
+  return ((degrees + 360) % 360) / 180 * Math.PI
 }
 
 math.radToDeg = function(radians) {
-  return (radians / Math.PI * 180) % 360
+  return ((radians / Math.PI * 180) + 360) % 360
 }

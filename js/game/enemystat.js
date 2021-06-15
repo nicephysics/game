@@ -1,6 +1,7 @@
 
 export var enemystats = {
   base: { // base stats, all stats are multiplied by this
+    control: "none", // controller of enemy...
     mass: 1, // mass of enemy
     speed: 1, // initial velocity of enemy
     size: 1, // size of enemy
@@ -12,20 +13,20 @@ export var enemystats = {
   // now for normal enemies
   ball: {
     control: "none",
-    mass: 0.1,
-    size: 10,
+    mass: 0.2,
     speed: 1,
-    air: 0.02,
-    gravity: 0.1,
+    size: 12,
+    air: 0.04,
+    gravity: 0.4,
   },
   // simple shooter enemies
   ballgun: {
     control: "aim_player",
-    mass: 0.1,
+    mass: 0.15,
     speed: 0.6,
-    size: 10,
-    air: 0.05,
-    gravity: 0.1,
+    size: 20,
+    air: 0.06,
+    gravity: 0.5,
     guns: [ { 
         type: "ballgun",
         stat: ["enemy", "enemyshooter", "ballgun"],

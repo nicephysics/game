@@ -13,13 +13,14 @@ export var stats = {
     kineticFriction: 1, // [kf] kinetic friction of the projectile
     staticFriction: 1, // [sf] static friction of the projectile
     airResistance: 1, // [a]
+    effect: { type: "none", }, // [eff] effect caused by the projectile
     type: "base", // [y] type of the projectile
     other: { // [o] other options, if type !== "base"
       // object
     },
   },
   shooter: {
-    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base", o: { }
+    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
   },
   basic: {
     z: 0.6, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
@@ -33,10 +34,10 @@ export var stats = {
     z: 1, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   enemyshooter: {
-    z: 10, m: 5, s: 5, r: 2, t: 10, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base"
+    z: 10, m: 5, s: 5, r: 2, t: 10, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
   },
   ballgun: {
-    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7,
+    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7, eff: { type: "stun", duration: 2 }
   },
 }
 
@@ -59,6 +60,7 @@ export class Stat {
   kineticFriction = 1
   staticFriction = 1
   airResistance = 1
+  effect = { }
   
   // constructor
   constructor(gun, stat = []) {
@@ -125,6 +127,7 @@ export class Stat {
 
   add(s) {
     this.type = s.y || s.type || "base"
+    this.effect = s.effect
     
     this.size *= s.z || s.size || 1
     this.mass *= s.m || s.mass || 1

@@ -217,6 +217,7 @@ export class Enemy {
   remove() {
     this.exists = false
     this.removeBody()
+    this.removeAllGuns()
     const index = enemies.indexOf(this);
     if (index > -1) {
       enemies.splice(index, 1);

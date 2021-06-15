@@ -4,6 +4,7 @@ import { events } from "../util/events.js"
 
 import { Tower } from "./tower.js"
 import { Enemy } from "./enemy.js"
+import { Effect } from "./effect.js"
 
 export var gameupdate = { }
 
@@ -27,6 +28,8 @@ gameupdate.init = function(render) {
     Tower.drawAll()
     Enemy.tick()
     Enemy.draw()
+    Effect.tick()
+    Effect.draw()
   })
   
   events.beforeUpdate(engine, function(engine) {

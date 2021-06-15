@@ -29,7 +29,7 @@ export var enemystats = {
     guns: [ { 
         type: "ballgun",
         stat: ["enemy", "enemyshooter", "ballgun"],
-        options = { },
+        options: { },
     }, ],
   }
 }

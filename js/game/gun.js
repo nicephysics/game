@@ -1,12 +1,12 @@
 // imports
-import { stats, Stat } from "./stat.js"
 import { category, config } from "../config/config.js"
+
+import { gunset } from "./gunset.js"
+import { stats, Stat } from "./stat.js"
+import { Tower } from "./tower.js"
+
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
-
-import { Tower } from "./tower.js"
-import { gunset } from "./gunset.js"
-// drawing?
 
 if (true) {
   // 2 spaces
@@ -228,6 +228,7 @@ export class Gun {
     })
     b.gametype = (this.gametype === "tower") ? "projectile" : "bullet"
     b.gun = this
+    b.effect = s.effect
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(
         Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),

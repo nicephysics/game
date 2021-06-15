@@ -7,10 +7,11 @@ import { PriorityQueue } from "../util/pq.js"
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
 
+import { EnemyStat, enemystats } from "./enemystat.js"
+import { Effect } from "./effect.js"
+import { Gun } from "./gun.js"
 import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
-import { Gun } from "./gun.js"
-import { EnemyStat, enemystats } from "./enemystat.js"
 
 export var enemies = [ ]
 
@@ -132,10 +133,11 @@ export class Enemy {
   targetrot = 0
   controlType = "none"
   control = { }
-  stat = new EnemyStat(this)
   guns = [ ]
   start = Enemy.spawn.random()
   exists = false
+  stat = new EnemyStat(this)
+  effect = new Effect(this, "enemy")
   // constructor
   constructor(type) {
     this.type = type

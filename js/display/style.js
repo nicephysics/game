@@ -75,3 +75,11 @@ style.gun = {
   double: "#c29d61",
   ballgun: "#d47d94",
 }
+
+style.effect = {
+  barcolor: {
+    stun: "#21313b",
+    freeze: "#59bfff",
+    slow: "#733d00",
+  },
+}

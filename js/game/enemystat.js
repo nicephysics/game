@@ -34,7 +34,10 @@ export var enemystats = {
     reward: 21,
     bonus: 0.9,
     guns: [ { 
-        type: "ballgun",
+        set: {
+          x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+          style: "ballgun",
+        },
         stat: ["enemy", "enemyshooter", "ballgun"],
         options: { },
     }, ],
@@ -110,7 +113,7 @@ export class EnemyStat {
     // init guns too
     this.enemy.removeAllGuns()
     for (let g of this.guns) {
-      this.enemy.addGun(g.type, g.stat, g.options)
+      this.enemy.addGun(g.set, g.stat, g.options)
     }
   }
 }

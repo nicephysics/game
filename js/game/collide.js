@@ -1,5 +1,8 @@
 // imports
-import { events } from "../util/events.js"
+import { events } from "../util/events.js
+
+import { Enemy } from "./enemy.js"
+import { Tower } from "./tower.js"
 
 if (true) {
   // 2 space indent!

@@ -85,7 +85,7 @@ ui.draw = function() {
     draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
     draw._circle(ctx, x, yBall - 2, rBall)
     draw.setLightFill(ctx, color)
-    draw._text(ctx, x, yBall, level + "", "center")
+    draw._text(ctx, x, yBall, level + "", 0, "center")
     // check mouse!
     if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.y < yBall )) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")

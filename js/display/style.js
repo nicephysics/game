@@ -78,12 +78,16 @@ style.gun = {
 
 style.effect = {
   barcolor: {
-    stun: "#21313b",
+    stun: "#5d8096",
     freeze: "#59bfff",
     slow: "#733d00",
+    antistun: "#fcffab",
+    antifreeze: "#d8ff9e",
   },
   overlay: {
-    stun: "#3321313b",
-    freeze: "#7591d5ff",
+    stun: "#79b5db77",
+    freeze: "#91d5ff77",
+    antistun: "transparent",
+    antifreeze: "transparent",
   }
 }

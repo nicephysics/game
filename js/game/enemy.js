@@ -216,11 +216,11 @@ export class Enemy {
   }
   
   tickCheck() {
-    if (this.y < 0 && this.velocity.y < 0) {
+    if (this.y < 0 && this.velocity.y <= 0) {
       this.remove()
-    } else if (this.x < 0 && this.velocity.x <= 0) {
+    } else if (this.x < 0 && this.velocity.y <= 0 && this.velocity.x <= 0) {
       this.remove()
-    } else if (this.x > Tower.render.options.width && this.velocity.x >= 0) {
+    } else if (this.x > Tower.render.options.width && this.velocity.y <= 0 && this.velocity.x >= 0) {
       this.remove()
     }
   }
@@ -274,6 +274,7 @@ export class Enemy {
             Vector.create( Math.cos(down), Math.sin(down) ),
             s.speed
           )
+      this.body.initialVelocity = vel
       Body.setVelocity(this.body, vel)
     }
     // other stats

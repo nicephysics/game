@@ -23,23 +23,3 @@ gunset.default = {
   x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
   shape: "rectangle",
 }
-
-gunset.basic = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
-  style: "basic",
-}
-
-gunset.double_left = {
-  x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0,
-  style: "double",
-}
-
-gunset.double_right = {
-  x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5,
-  style: "double",
-}
-
-gunset.ballgun = {
-  x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
-  style: "ballgun",
-}

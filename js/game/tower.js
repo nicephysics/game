@@ -223,6 +223,11 @@ export class Tower {
     }
   }
   
+  drawOverlay(render) {
+    // assume all towers are circular...
+    draw.circle(render, this.x, this.y, this.size)
+  }
+  
   refresh() {
     this.stat.setType(this.type)
     this.refreshBody() // minus attributes

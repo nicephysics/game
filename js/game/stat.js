@@ -41,7 +41,7 @@ export var stats = {
     eff: { 
       type: "stun", 
       duration: 2,
-      options: { anti: 1.5 },
+      anti: 1.5,
     },
   },
 }

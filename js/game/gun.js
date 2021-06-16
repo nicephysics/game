@@ -150,7 +150,7 @@ export class Gun {
       if (!this.tower.isPlayer) {
         return true
       }
-      return this.tower.control.shoot
+      return this.tower.control.shoot || this.tower.control.autoshoot
     } else if (this.gametype === "enemy") {
       // object is an enemy, enemies shoot blindly!
       return true

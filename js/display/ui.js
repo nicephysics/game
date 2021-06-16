@@ -8,6 +8,10 @@ import { random } from "../util/random.js"
 
 export var ui = { }
 
+ui.vars = {
+  xp_bar_ratio = 0
+}
+
 ui.draw = function() {
   var render = Tower.render,
       ctx = render.context,
@@ -15,16 +19,17 @@ ui.draw = function() {
       _width = render.options.width,
       _height = render.options.height
   
-  // bar
+  // bar var
   var xp = player.xp,
       level = player.level,
       current = xp - math.towerxp(level),
       next = math.towerxpneeded(level),
-      ratio = current / next,
+      ratio = math.lerp(ui.vars.xp_bar_ratio, current / next, 0.05),
       x = _width - 30,
       y1 = _height / 2 - 150,
       y2 = _height / 2 + 150,
       mid = _height / 2 + 150 - ratio * 300
+  ui.vars.xp_bar_ratio = ratio
   // draw!
   ctx.lineCap = 'round'
   draw.setFill(ctx, "transparent")

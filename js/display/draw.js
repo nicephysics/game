@@ -279,9 +279,11 @@ draw.gun = function(render, x, y, length, height, aspect, angle) {
   ctx.fill()
 }
 
+// credits to https://stackoverflow.com/questions/58333678/draw-heart-using-javascript-in-any-postionx-y
 draw._heart = function(ctx, x, y, width, height) {
   // hmmm...
-  y -= height
+  y -= height / 2
+  x -= width / 2
   
   ctx = ctx || draw.ctx
   ctx.save()

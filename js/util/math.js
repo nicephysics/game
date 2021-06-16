@@ -95,3 +95,17 @@ math.degToRad = function(degrees) {
 math.radToDeg = function(radians) {
   return ((radians / Math.PI * 180) + 360) % 360
 }
+
+math.sf = function(number, sf) {
+  return +(number.toPrecision(sf)) // parseFloat(...) or Number(...) should work too!
+}
+
+math.prefixes = ["k", "m", "b", "t", "q", "Q", "s", "S", "o", "n", "d"]
+
+math.number = function(number) {
+  number = Math.round(+number)
+  if (number < 1000) return "" + number
+  if (number < 0) return "-" + math.number(-number)
+  var log = Math.floor(Math.log(number) / 3))
+  return ( math.sf(number, 3) / Math.pow(1000, log) ) + " " + math.prefixes[log]
+}

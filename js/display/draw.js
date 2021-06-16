@@ -46,6 +46,60 @@ draw.setLineWidth = function(ctx, lineWidth) {
   ctx.lineWidth = lineWidth
 }
 
+draw.setFont = function(ctx, fontString) {
+  ctx = ctx || draw.ctx
+  ctx.font = fontString
+}
+
+draw.alignText = function(ctx, alignment) {
+  ctx = ctx || draw.ctx
+  switch (alignment) {
+    case "left":
+    case "leftmiddle":
+      ctx.textBaseline = "middle"
+      ctx.textAlign = "left"
+      break
+    case "top":
+      ctx.textBaseline = "top"
+      ctx.textAlign = "center"
+      break
+    case "normal":
+    case "lefttop":
+      ctx.textBaseline = "top"
+      ctx.textAlign = "left"
+      break
+    case "leftbottom":
+      ctx.textBaseline = "bottom"
+      ctx.textAlign = "left"
+      break
+    case "center":
+    case "centre":
+    case "middle":
+      ctx.textBaseline = "middle"
+      ctx.textAlign = "center"
+      break
+    case "right":
+    case "middleright":
+      ctx.textBaseline = "middle"
+      ctx.textAlign = "right"
+      break
+    case "righttop":
+      ctx.textBaseline = "top"
+      ctx.textAlign = "right"  
+      break
+    case "rightbottom":
+      ctx.textBaseline = "bottom"
+      ctx.textAlign = "right"  
+      break
+    case "bottom":
+      ctx.textBaseline = "bottom"
+      ctx.textAlign = "center"
+      break
+    default:
+      console.error("Invalid alignment in draw.alignText: " + alignment)
+  }
+}
+
 draw._rect = function(ctx, x, y, w, h) {
   ctx = ctx || draw.ctx
   ctx.beginPath()

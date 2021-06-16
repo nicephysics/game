@@ -216,12 +216,20 @@ export class Enemy {
   }
   
   tickCheck() {
+    function remove_addXP() {
+      if (this.body.hitByProjectile) {
+        Tower.player.addxp(this.stat.reward)
+      } else {
+        Tower.player.addxp(this.stat.reward * 2)
+      }
+      this.remove()
+    }
     if (this.y < 0 && this.velocity.y <= 0) {
-      this.remove()
+      remove_addXP()
     } else if (this.x < 0 && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
-      this.remove()
+      remove_addXP()
     } else if (this.x > Tower.render.options.width && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
-      this.remove()
+      remove_addXP()
     }
   }
   
@@ -242,7 +250,6 @@ export class Enemy {
   }
   
   remove() {
-    Tower.player.addxp(10)
     this.exists = false
     this.removeBody()
     this.removeAllGuns()

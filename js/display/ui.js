@@ -26,13 +26,13 @@ ui.draw = function() {
       y2 = _height / 2 + 150,
       mid = _height / 2 + 150 - ratio * 300
   // draw!
-  draw.setFill("transparent")
-  draw.setLineWidth(7)
-  draw.setDarkStroke("#ff801f")
-  draw._line(x, y1, x, y2)
-  draw.setLineWidth(5)
-  draw.setLightStroke("#ff801f")
-  draw._line(x, y1, x, y2)
-  draw.setStroke("#ff801f")
-  draw._line(x, y1, x, mid)
+  draw.setFill(ctx, "transparent")
+  draw.setLineWidth(ctx, 7)
+  draw.setDarkStroke(ctx, "#ff801f")
+  draw._line(ctx, x, y1, x, y2)
+  draw.setLineWidth(ctx, 5)
+  draw.setLightStroke(ctx, "#ff801f")
+  draw._line(ctx, x, y1, x, y2)
+  draw.setStroke(ctx, "#ff801f")
+  draw._line(ctx, x, y1, x, mid)
 }

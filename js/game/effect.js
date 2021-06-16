@@ -117,10 +117,18 @@ export class Effect {
   }
   
   refreshEffects() {
-    var i = 0
+    var i = 0,
+        t = Effect.time
     for (let e of this.effects.slice()) {
-      if (e.time <= Effect.time) {
+      if (e.time <= t) {
         this.effects.splice(i, 1)
+        if (e.antiafter) {
+          var anti = {}
+          anti.type = "anti" + e.type
+          anti.duration = (e.antiafter > 0) ? e.antiafter : e.duration * -e.antiafter
+          anti.time = Effect.time + anti.duration * config.FPS
+          this.effects.push(anti)
+        }
       }
       ++i
     }
@@ -179,7 +187,7 @@ export class Effect {
       if (options.anti) {
         var anti = {}
         anti.type = "anti" + type
-        anti.duration = duration * options.anti
+        anti.duration = (options.anti > 0) ? options.anti : duration * -options.anti
         anti.time = Effect.time + anti.duration * config.FPS
         this.effects.push(anti)
       }

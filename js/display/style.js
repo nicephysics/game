@@ -57,7 +57,9 @@ style.default = {
 
 style.tower = {
   basic: style.fillStroke("#009ebd"),
-  double: style.fillStroke("#bd7500"),
+  double: style.fillStroke("#009ebd"),
+  twin: style.fillStroke("#009ebd"),
+  // double: style.fillStroke("#bd7500"),
 }
 
 style.projectile = {
@@ -78,7 +80,9 @@ style.enemy = {
 
 style.gun = {
   basic: "#62a7b5",
-  double: "#c29d61",
+  double: "#62a7b5",
+  twin: "#62a7b5",
+  // double: "#c29d61",
   ballgun: "#d47d94",
 }
 

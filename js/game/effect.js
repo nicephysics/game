@@ -139,7 +139,7 @@ export class Effect {
         duration = e.duration,
         time = e.time,
         // ratio of time left
-        ratio = (e.time - Effect.time) / duration / config.FPS,
+        ratio = (e.time - Effect.time) / (duration * config.FPS),
         // bar properties
         barcolor = style.effect.barcolor[type],
         bardegrees = 360 * ratio,

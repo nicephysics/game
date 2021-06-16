@@ -229,7 +229,7 @@ export class Enemy {
           y: pos.y,
           text: "x2!", // x2! x2! bonus!
           size: 15, // font size 15
-          fill: "#04b81c",
+          fill: "#00ab17",
           stroke: "transparent",
           lineWidth: 0,
           angle: random.randint(-20, 20),

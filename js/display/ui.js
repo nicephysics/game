@@ -12,9 +12,11 @@ ui.vars = {
   // constants
   xp_ball_radius: 15,
   xp_ball_font_size: 20,
+  xp_text_font_size: 15,
   xp_bar_length: 300,
   xp_bar_side_x: 30,
   xp_bar_side_x_mouse: 60,
+  xp_bar_color: "#ff801f",
   // change
   xp_bar_xp: 0,
   // xp_bar_ratio: 0,
@@ -30,7 +32,8 @@ ui.draw = function() {
       _height = render.options.height
   
   // bar var
-  var xp = math.lerp(v.xp_bar_xp, player.xp, 0.05),
+  var color = v.xp_bar_color,
+      xp = math.lerp(v.xp_bar_xp, player.xp, 0.05),
       smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= 1 ), // whether the UI is currently still smoothing
       level = math.towerlevel(xp),
       current = xp - math.towerxp(level),
@@ -48,22 +51,24 @@ ui.draw = function() {
   ctx.lineCap = 'round'
   draw.setFill(ctx, "transparent")
   draw.setLineWidth(ctx, 10)
-  draw.setDarkStroke(ctx, "#ff801f")
+  draw.setDarkStroke(ctx, color)
   draw._line(ctx, x, y1, x, y2)
   draw.setLineWidth(ctx, 8)
-  draw.setLightStroke(ctx, "#ff801f")
+  draw.setLightStroke(ctx, color)
   draw._line(ctx, x, y1, x, y2)
-  draw.setStroke(ctx, "#ff801f")
+  draw.setStroke(ctx, color)
   draw._line(ctx, x, mid, x, y2)
   // draw ball!
-  draw.setDarkFill(ctx, "#ff801f")
+  draw.setDarkFill(ctx, color)
   draw.setStroke(ctx, "transparent")
   draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto")
   draw._circle(ctx, x, yBall, rBall)
-  draw.setLightFill(ctx, "#ff801f")
+  draw.setLightFill(ctx, color)
   draw._text(ctx, x, yBall, level + "", "center")
   // check mouse!
   if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.x < yBall )) {
+    draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+    draw.setDarkFill(ctx, color)
     draw._text(ctx, x - 5, mid, Math.round(current) + "/" + Math.round(next), "right")
   }
 }

@@ -106,6 +106,6 @@ math.number = function(number) {
   number = Math.round(+number)
   if (number < 1000) return "" + number
   if (number < 0) return "-" + math.number(-number)
-  var log = Math.floor(Math.log(number) / 3))
+  var log = Math.floor(Math.log(number) / 3)
   return ( math.sf(number, 3) / Math.pow(1000, log) ) + " " + math.prefixes[log]
 }

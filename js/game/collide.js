@@ -48,6 +48,7 @@ collide.init = function(render) {
               momentumA = Vector.mult(a.velocity, a.mass),
               momentumB = Vector.mult(b.velocity, b.mass),
               relative = Vector.sub(momentumA, momentumB)
+          console.log(e)
           if (tb === "tower") {
             b.tower.effect.inflict(e.type, e.duration, e.options)
           } else if (tb === "enemy") {

@@ -7,6 +7,7 @@ import { util_world } from "./util/world.js"
 import { style } from "./display/style.js"
 import { display } from "./display/display.js"
 import { navigation } from "./display/navigation.js"
+import { ui } from "./display/ui.js"
 // config
 import { config, category } from "./config/config.js"
 // game
@@ -132,6 +133,9 @@ var init = function() {
     }
   })
   
+  // INITIALIZE EVERYTHING
+  // yes
+  
   Tower.init(render)
   var tower = new Tower("basic")
   tower.moveTo(_width * 0.5, _height - 100)
@@ -145,6 +149,8 @@ var init = function() {
   controls.init(render)
   
   gameupdate.init(render)
+  
+  ui.init(render)
 
   // run the renderer
   Render.run(render)

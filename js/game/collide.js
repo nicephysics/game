@@ -29,6 +29,10 @@ collide.init = function(render) {
           b.enemy.remove()
           console.log("Hit!")
         }
+        if (tb === "bullet") {
+          b.gun.removeChild(tb)
+        }
+        // projectile too?
         break
         
       case "atmosphere":
@@ -54,6 +58,13 @@ collide.init = function(render) {
             b.enemy.effect.inflict(e.type, e.duration, e)
           }
         }
+        break
+        
+      case "space":
+        if (tb === "enemy") {
+          
+        }
+        break
         
       case "enemy":
         break

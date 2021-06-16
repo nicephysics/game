@@ -25,6 +25,8 @@ ui.vars = {
   
   // change
   time: 0,
+  click: false,
+  hover: { x: 0, y: 0 },
   
   xp_bar_xp: 0,
   xp_bar_show: 1,
@@ -32,10 +34,44 @@ ui.vars = {
   enemy_texts: [ ],
 }
 
+ui.init = function(render) {
+  var v = ui.vars,
+      render = Tower.render,
+      mouse = render.mouse,
+      ctx = render.context
+  // basically a click
+  window.addEventListener("mousemove", function(event) {
+    v.hover = mouse.absolute
+  })
+  window.addEventListener("mouseup", function(event) {
+    v.click = mouse.absolute
+  })
+  // .
+}
+
+ui.tick = function() {
+  var v = ui.vars,
+      render = Tower.render,
+      ctx = render.context
+  // tick time!
+  v.time++
+  // that's all?
+}
+
+ui.tickAfter = function() {
+  var v = ui.vars,
+      render = Tower.render,
+      ctx = render.context
+  // clear click
+  v.click = false
+  // how about hover?
+}
+
 ui.draw = function() {
   var v = ui.vars,
       render = Tower.render,
       mousepos = render.mouse.absolute,
+      clickpos = v.click || { x: -1000, y: -1000 },
       ctx = render.context,
       player = Tower.player,
       playerX = player.x,
@@ -47,7 +83,8 @@ ui.draw = function() {
       width, height
       // define common variables first
   
-  v.time++
+  // tick!
+  ui.tick()
   
   // bar vars
   var xp_show = v.xp_bar_show,
@@ -87,10 +124,15 @@ ui.draw = function() {
     draw.setLightFill(ctx, color)
     draw._text(ctx, x, yBall, level + "", 0, "center")
     // check mouse!
-    if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.y < yBall )) {
+    if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
       draw.setDarkFill(ctx, color)
       draw._text(ctx, x - 15, mid, Math.round(current) + "/" + Math.round(next), 0, "right")
+    }
+    if (mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
+      draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+      draw.setDarkFill(ctx, color)
+      draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
     }
   }
   
@@ -116,4 +158,7 @@ ui.draw = function() {
     }
     i++
   }
+  
+  // tick after...
+  ui.tickAfter()
 }

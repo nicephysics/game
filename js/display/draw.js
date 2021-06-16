@@ -234,12 +234,13 @@ draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {
     ctx.save()
     ctx.translate(x, y)
     ctx.rotate(angle)
-  }
-  // draw text!
+    ctx.strokeText(text, 0, 0)
+    ctx.fillText(text, 0, 0)
+    ctx.restore()
+  } else {
+    // draw text!
     ctx.strokeText(text, x, y)
     ctx.fillText(text, x, y)
-  if (angle !== 0) {
-    ctx.restore()
   }
 }
 

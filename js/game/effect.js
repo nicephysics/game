@@ -169,6 +169,7 @@ export class Effect {
       if (e.strength && options.strength) {
         e.strength = Math.max(e.strength, options.strength)
       }
+      return
     }
     options.type = type
     options.duration = duration || 1

@@ -28,6 +28,7 @@ controls.init = function(render) {
     left: false,
     right: false,
     pointer: Vector.create(0, 0), // to avoid the classic NaN
+    paused: false,
     shoot: false,
     altshoot: false,
     midshoot: false,
@@ -81,6 +82,10 @@ controls.init = function(render) {
         break
       case "KeyR":
         c.autorotate = !c.autorotate
+        break
+      case "KeyP":
+        c.paused = !c.paused
+        Tower.engine.timing.timeScale = (c.paused) ? 0 : 1
         break
     }
   })

@@ -139,7 +139,7 @@ export class Effect {
         duration = e.duration,
         time = e.time,
         // ratio of time left
-        ratio = (e.time - Effect.time) / duration * config.FPS,
+        ratio = (e.time - Effect.time) / duration / config.FPS,
         // bar properties
         barcolor = style.effect.barcolor[type],
         bardegrees = 360 * ratio,
@@ -151,7 +151,7 @@ export class Effect {
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, barcolor)
     draw.setLineWidth(ctx, 3)
-    draw.arc(render, x, y, size + 5, math.degToRad(90), math.degToRad(90 + bardegrees), true)
+    draw.arc(render, x, y, size * 1.2, math.degToRad(90), math.degToRad(90 + bardegrees), true)
     // todo
     switch (type) {
       case "stun":
@@ -176,7 +176,7 @@ export class Effect {
       options.duration = duration || 1
       options.time = Effect.time + duration * config.FPS
       this.effects.push(options)
-      if (options.anti && options.anti > 0) {
+      if (options.anti) {
         var anti = {}
         anti.type = "anti" + type
         anti.duration = duration * options.anti

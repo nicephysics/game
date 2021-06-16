@@ -119,7 +119,7 @@ export class Effect {
   refreshEffects() {
     var i = 0
     for (let e of this.effects.slice()) {
-      if (e.time >= Effect.time) {
+      if (e.time <= Effect.time) {
         this.effects.splice(i, 1)
       }
       ++i
@@ -166,6 +166,7 @@ export class Effect {
     var e = this.get(type)
     if (e) {
       e.duration += duration
+      e.time += duration * config.FPS
       if (e.strength && options.strength) {
         e.strength = Math.max(e.strength, options.strength)
       }

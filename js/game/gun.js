@@ -147,6 +147,9 @@ export class Gun {
   get shooting() {
     if (this.gametype === "tower") {
       // object is a tower, check stuff
+      if (!this.tower.effect.canshoot) {
+        return false
+      }
       if (!this.tower.isPlayer) {
         return true
       }

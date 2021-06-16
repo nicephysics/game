@@ -197,6 +197,7 @@ export class Enemy {
   
   tick() {
     this.doControl()
+    this.tickCheck()
   }
   
   doControl() {
@@ -205,6 +206,16 @@ export class Enemy {
         // aim at the player!
         Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot))
         this.targetrot = Vector.angle(this.position, Tower.player.position)
+    }
+  }
+  
+  tickCheck() {
+    if (this.y < 0 && this.velocity.y < 0) {
+      this.remove()
+    } else if (this.x < 0 && this.velocity.x <= 0) {
+      this.remove()
+    } else if (this.x > Tower.render.options.width && this.velocity.x >= 0) {
+      this.remove()
     }
   }
   
@@ -225,12 +236,13 @@ export class Enemy {
   }
   
   remove() {
+    Tower.player.addxp(10)
     this.exists = false
     this.removeBody()
     this.removeAllGuns()
-    const index = enemies.indexOf(this);
+    const index = enemies.indexOf(this)
     if (index > -1) {
-      enemies.splice(index, 1);
+      enemies.splice(index, 1)
     } else {
       console.error("Enemy to remove not found in 'enemies' list: ", enemy)
     }

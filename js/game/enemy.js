@@ -218,9 +218,9 @@ export class Enemy {
   tickCheck() {
     if (this.y < 0 && this.velocity.y <= 0) {
       this.remove()
-    } else if (this.x < 0 && this.velocity.y <= 0 && this.velocity.x <= 0) {
+    } else if (this.x < 0 && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
       this.remove()
-    } else if (this.x > Tower.render.options.width && this.velocity.y <= 0 && this.velocity.x >= 0) {
+    } else if (this.x > Tower.render.options.width && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
       this.remove()
     }
   }

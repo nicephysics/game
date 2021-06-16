@@ -8,6 +8,7 @@ export var enemystats = {
     air: 1, // air resistance of enemy
     inertia: 1, // inertia of enemy
     gravity: 1, // gravity scale of enemy
+    reward: 1,
     guns: [],
   }, // end of base stats...
   // now for normal enemies
@@ -18,6 +19,7 @@ export var enemystats = {
     size: 12,
     air: 0.02,
     gravity: 0.1,
+    reward: 11,
   },
   // simple shooter enemies
   ballgun: {
@@ -27,12 +29,13 @@ export var enemystats = {
     size: 20,
     air: 0.03,
     gravity: 0.12,
+    reward: 21,
     guns: [ { 
         type: "ballgun",
         stat: ["enemy", "enemyshooter", "ballgun"],
         options: { },
     }, ],
-  }
+  },
 }
 
 export class EnemyStat {
@@ -46,6 +49,7 @@ export class EnemyStat {
   size = 1
   air = 1
   gravity = 1
+  reward = 1
   guns = [] // do not modify!
   enemy = null // related enemy
   
@@ -70,6 +74,7 @@ export class EnemyStat {
     this.size = s.size || 1
     this.air = s.air || 1
     this.gravity = s.gravity || 1
+    this.reward = s.reward || 1
       
     this.guns = s.guns || []
   }
@@ -80,6 +85,7 @@ export class EnemyStat {
     this.size *= s.size || 1
     this.air *= s.air || 1
     this.gravity *= s.gravity || 1
+    this.reward *= s.reward || 1
     
     this.guns = s.guns || []
   }

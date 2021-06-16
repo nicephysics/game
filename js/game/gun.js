@@ -218,18 +218,20 @@ export class Gun {
   }
   
   shoot() {
-    var s = this.stat
-    var b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
-      isStatic: false,
-      label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
-      collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
-      render: style.projectile.bullet, // todo
-      density: s.mass * 0.001,
-      friction: s.kineticFriction,
-      frictionStatic: s.staticFriction,
-      frictionAir: s.airResistance,
-    })
-    b.gametype = (this.gametype === "tower") ? "projectile" : "bullet"
+    var s = this.stat,
+        bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
+        objectStyle = style[bodyGametype],
+        b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
+          isStatic: false,
+          label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
+          collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
+          render: objectStyle.bullet, // big todo
+          density: s.mass * 0.001,
+          friction: s.kineticFriction,
+          frictionStatic: s.staticFriction,
+          frictionAir: s.airResistance,
+        });
+    b.gametype = bodyGametype
     b.gun = this
     if (s.effect.type) {
       b.effect = s.effect

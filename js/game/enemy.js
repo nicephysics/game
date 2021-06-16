@@ -241,7 +241,7 @@ export class Enemy {
     this.body = Bodies.circle(this.start.x, this.start.y, s.size, {
       isStatic: false,
       label: this.label,
-      style: style.enemy[this.type],
+      render: style.enemy[this.type],
       collisionFilter: category.enemy,
       density: s.mass * 0.001,
       frictionAir: s.air,

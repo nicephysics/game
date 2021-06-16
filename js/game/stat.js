@@ -7,6 +7,7 @@ export var stats = {
     speed: 1, // [s] speed of projectile, the higher the better
     reload: 1, // [r] reload of the gun, the lower the better
     time: 1, // [t] how long the projectile lasts, the higher the better
+    spread: 1, // [p] the spread of the gun, the lower the better
     inertia: 1, // [i] gravity scale (sort of), the higher the better
     timeScale: 1, // [ts] slow motion, ???
     restitution: 1, // [e] coefficient of restitution of the projectile, the higher the better
@@ -20,24 +21,21 @@ export var stats = {
     },
   },
   shooter: {
-    z: 10, m: 10, s: 10, r: 1, t: 10, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
-  },
-  basic: {
-    z: 0.6, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
-  },
-  double: {
-    // better than basic by a teeny little bit
-    z: 0.5, m: 0.9, s: 0.9, r: 1.1, t: 0.8, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 10, m: 10, s: 10, r: 1, t: 10, p: 1, i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
+  }, basic: { // basic gun
+    z: 0.6,   m: 1,    s: 1,    r: 1,    t: 1,    p: 2,    i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+  }, double: { // better than basic by a teeny little bit when doubled (except spread)
+    z: 0.5,   m: 0.9,  s: 0.9,  r: 1.1,  t: 0.8,  p: 2.5,  i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   
   enemy: {
-    z: 1, m: 1, s: 1, r: 1, t: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 1, m: 1, s: 1, r: 1, t: 1, p: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   enemyshooter: {
-    z: 10, m: 5, s: 5, r: 2, t: 10, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
+    z: 10, m: 5, s: 5, r: 2, t: 10, p: 1, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
   },
   ballgun: {
-    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7,
+    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7, p: 3,
     eff: { 
       type: "stun", 
       duration: 2,
@@ -59,6 +57,7 @@ export class Stat {
   speed = 1
   reload = 1
   time = 1
+  spread = 1
   inertia = 1
   timeScale = 1
   restitution = 1
@@ -77,7 +76,7 @@ export class Stat {
   // get
   get array() {
     return [
-      this.size, this.mass, this.speed, this.reload, this.inertia, this.timeScale, this.restitution, this.kineticFriction, this.staticFriction, this.airResistance
+      this.size, this.mass, this.speed, this.reload, this.time, this.spread, this.inertia, this.timeScale, this.restitution, this.kineticFriction, this.staticFriction, this.airResistance
     ]
   }
   // don't use, just use console.log(this)!
@@ -122,6 +121,7 @@ export class Stat {
     this.speed = s.s || s.speed || 1
     this.reload = s.r || s.reload || 1
     this.time = s.t || s.time || 1
+    this.spread = s.p || s.spread || 1
     this.inertia = s.i || s.inertia || 1
     this.timeScale = s.ts || s.timeScale || 1
     this.restitution = s.e || s.restitution || 1
@@ -139,6 +139,7 @@ export class Stat {
     this.speed *= s.s || s.speed || 1
     this.reload *= s.r || s.reload || 1
     this.time *= s.t || s.time || 1
+    this.spread *= s.p || s.spread || 1
     this.inertia *= s.i || s.inertia || 1
     this.timeScale *= s.ts || s.timeScale || 1
     this.restitution *= s.e || s.restitution || 1

@@ -19,6 +19,14 @@ draw.setLightFill = function(ctx, fill) {
   draw.setFill(ctx, chroma(fill).lighten().hex())  
 }
 
+draw.setDarkFill = function(ctx, fill) {
+  draw.setFill(ctx, chroma(fill).darken().hex())  
+}
+
+draw.setLightStroke = function(ctx, stroke) {
+  draw.setStroke(ctx, chroma(stroke).lighten().hex())  
+}
+
 draw.setDarkStroke = function(ctx, stroke) {
   draw.setStroke(ctx, chroma(stroke).darken().hex())  
 }

@@ -162,7 +162,7 @@ draw.arc = function(render, x, y, r, start, end, counter = false) {
   draw._arc(ctx, x, y, r, start, end, counter)
 }
 
-draw._line = function(ctx, x1, y1, x2, y2) {
+draw._line = function(ctx, x1, y1, x2, y2, xy...) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.moveTo(x1, y1)
@@ -170,13 +170,62 @@ draw._line = function(ctx, x1, y1, x2, y2) {
   ctx.stroke()
 }
 
-draw.line = function(render, x1, y1, x2, y2) {
+draw.line = function(render, x1, y1, x2, y2, xy...) {
   x1 -= render.bounds.min.x
   y1 -= render.bounds.min.y
   x2 -= render.bounds.min.x
   y2 -= render.bounds.min.y
   var ctx = render.context
   draw._line(ctx, x1, y1, x2, y2)
+}
+
+draw._polyline = function(ctx, x, y) {
+  ctx = ctx || draw.ctx
+  ctx.beginPath()
+    ctx.moveTo(x[0], y[0])
+    var len = Math.min(x.length, y.length)
+    for (let i = 1; i < len; ++i) {
+      ctx.lineTo(x[i], y[i])
+    }
+  ctx.stroke()
+}
+
+draw.polyline = function(render, xx, yy) {
+  var new_x = [ ],
+      new_y = [ ]
+  for (let x of xx) {
+    new_x.push(x - render.bounds.min.x)
+  }
+  for (let y of yy) {
+    new_y.push(y - render.bounds.min.y)
+  }
+  var ctx = render.context
+  draw._polyline(ctx, new_x, new_y)
+}
+
+draw._polygon = function(ctx, x, y) {
+  ctx = ctx || draw.ctx
+  ctx.beginPath()
+    ctx.moveTo(x[0], y[0])
+    var len = Math.min(x.length, y.length)
+    for (let i = 1; i < len; ++i) {
+      ctx.lineTo(x[i], y[i])
+    }
+    ctx.lineTo(x[0], y[0])
+  ctx.stroke()
+}
+
+draw.polygon = function(render, xx, yy) {
+  var new_x = [ ],
+      new_y = [ ]
+  for (let x of xx) {
+    new_x.push(x - render.bounds.min.x)
+  }
+  for (let y of yy) {
+    new_y.push(y - render.bounds.min.y)
+  }
+  var ctx = render.context
+  draw._polygon(ctx, new_x, new_y)
 }
 
 draw._text = function(ctx, x, y, text, textAlign = "") {

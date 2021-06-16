@@ -185,6 +185,13 @@ draw._text = function(ctx, x, y, text, textAlign = "") {
   ctx.fillText(x, y, text)
 }
 
+draw.text = function(render, x, y, text, textAlign = "") {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._text(ctx, x, y, text, textAlign)
+}
+
 draw.gun = function(render, x, y, length, height, aspect, angle) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y

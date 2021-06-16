@@ -67,6 +67,9 @@ collide.init = function(render) {
         break
         
       case "enemy":
+        if (tb === "projectile") {
+          a.hitByProjectile = true
+        }
         break
         
       default:

@@ -2,6 +2,9 @@ import { config, category } from "../config/config.js"
 
 import { Tower } from "./tower.js"
 
+import { math } from "../util/math.js"
+import { random } from "../util/random.js"
+
 if (true) {
   // 2 space indent!
 }
@@ -85,7 +88,7 @@ controls.init = function(render) {
         break
       case "KeyP":
         c.paused = !c.paused
-        Tower.engine.timing.timeScale = (c.paused) ? 0 : 1
+        engine.timing.timeScale = (c.paused) ? 0 : 1
         break
     }
   })

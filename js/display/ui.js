@@ -21,18 +21,19 @@ ui.draw = function() {
       current = xp - math.towerxp(level - 1),
       next = math.towerxpneeded(level),
       ratio = current / next,
-      x = _width - 20,
+      x = _width - 30,
       y1 = _height / 2 - 150,
       y2 = _height / 2 + 150,
       mid = _height / 2 + 150 - ratio * 300
   // draw!
+  ctx.lineCap = 'round'
   draw.setFill(ctx, "transparent")
-  draw.setLineWidth(ctx, 7)
+  draw.setLineWidth(ctx, 10)
   draw.setDarkStroke(ctx, "#ff801f")
   draw._line(ctx, x, y1, x, y2)
-  draw.setLineWidth(ctx, 5)
+  draw.setLineWidth(ctx, 8)
   draw.setLightStroke(ctx, "#ff801f")
   draw._line(ctx, x, y1, x, y2)
   draw.setStroke(ctx, "#ff801f")
-  draw._line(ctx, x, y1, x, mid)
+  draw._line(ctx, x, mid, x, y2)
 }

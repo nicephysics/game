@@ -66,6 +66,7 @@ style.projectile = {
 
 style.enemy = {
   ball: style.fillStroke("#b56275"),
+  asteroid: style.fillStroke("#706060"),
 }
 
 // non-matter styles

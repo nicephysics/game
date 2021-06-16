@@ -212,6 +212,12 @@ export class Enemy {
     
   }
   
+  drawOverlay(render) {
+    // todo
+    // circle for now
+    draw.circle(render, this.x, this.y, this.size)    
+  }
+  
   send() {
     this.exists = true
     this.createBody()

@@ -280,6 +280,9 @@ draw.gun = function(render, x, y, length, height, aspect, angle) {
 }
 
 draw._heart = function(ctx, x, y, width, height) {
+  // hmmm...
+  y -= height
+  
   ctx = ctx || draw.ctx
   ctx.save()
   ctx.beginPath()

@@ -26,12 +26,12 @@ gameupdate.init = function(render) {
       world = engine.world
   
   events.afterRender(render, function() {
-    Tower.tickAll()
     Tower.drawAll()
-    Enemy.tick()
+    Tower.tickAll()
     Enemy.draw()
-    Effect.tick()
+    Enemy.tick()
     Effect.draw()
+    Effect.tick()
     ui.draw()
   })
   

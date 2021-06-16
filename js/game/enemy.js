@@ -6,6 +6,7 @@ import { random } from "../util/random.js"
 
 import { draw } from "../display/draw.js"
 import { style } from "../display/style.js"
+import { ui } from "../display/ui.js"
 
 import { EnemyStat, enemystats } from "./enemystat.js"
 import { Effect } from "./effect.js"
@@ -221,6 +222,19 @@ export class Enemy {
         Tower.player.addxp(this.stat.reward)
       } else {
         Tower.player.addxp(this.stat.reward * 2)
+        var pos = Vector.sub(this.position, Vector.mult(this.velocity, 2 * config.FPS)), // 2 seconds
+            time = ui.vars.time + 3 * config.FPS
+        ui.vars.enemy_texts.push({
+          x: pos.x,
+          y: pos.y,
+          text: "x2!", // x2! x2! bonus!
+          size: 15, // font size 15
+          fill: "#04b81c",
+          stroke: "transparent",
+          lineWidth: 0,
+          angle: random.randint(-20, 20)
+          time: time, // 3 seconds
+        })
       }
       this.remove()
     }

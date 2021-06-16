@@ -75,6 +75,6 @@ ui.draw = function() {
   if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.x < yBall )) {
     draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
     draw.setDarkFill(ctx, color)
-    draw._text(ctx, x - 5, mid, Math.round(current) + "/" + Math.round(next), "right")
+    draw._text(ctx, x - 15, mid, Math.round(current) + "/" + Math.round(next), "right")
   }
 }

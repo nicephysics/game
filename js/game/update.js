@@ -36,15 +36,16 @@ gameupdate.init = function(render) {
     Enemy.draw()
     Effect.draw()
     // ui after this
+    ui.draw()
   }
   
   events.afterRender(render, function() {
-    drawALL()
-    ui.draw()
+    // hm
   })
   
   events.beforeUpdate(engine, function(engine) {
     tickALL()
+    drawALL()
     var all = Composite.allBodies(engine.world)
     var gravity = engine.gravity
     for (let body of all) {

@@ -259,6 +259,15 @@ export class Gun {
     }
   }
   
+  removeChild(b) {
+    var index = this.children.indexOf(b)
+    if (index !== -1) {
+      this.children.splice(index, 1)
+      this.childrenTime.splice(index, 1)
+    }
+    Composite.remove(Tower.world, b)
+  }
+  
   setStatString(s) {
     s = s || []
     this.stat.setString(s)

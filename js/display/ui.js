@@ -72,7 +72,7 @@ ui.draw = function() {
   draw.setLightFill(ctx, color)
   draw._text(ctx, x, yBall, level + "", "center")
   // check mouse!
-  if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.x < yBall )) {
+  if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse) && mousepos.y > y1 && mousepos.y < yBall )) {
     draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
     draw.setDarkFill(ctx, color)
     draw._text(ctx, x - 15, mid, Math.round(current) + "/" + Math.round(next), "right")

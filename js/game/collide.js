@@ -40,6 +40,21 @@ collide.init = function(render) {
         }
         break
         
+      case "projectile":
+      case "bullet":
+        // effect
+        if (a.effect && a.effect.type !== "none") {
+          var e = a.effect,
+              momentumA = Vector.mult(a.velocity, a.mass),
+              momentumB = Vector.mult(b.velocity, b.mass),
+              relative = Vector.sub(momentumA, momentumB)
+          if (tb === "tower") {
+            b.tower.effect.inflict(e.type, e.duration, e.options)
+          } else if (tb === "enemy") {
+            b.enemy.effect.inflict(e.type, e.duration, e.options)
+          }
+        }
+        
       case "enemy":
         break
         

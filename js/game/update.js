@@ -25,17 +25,26 @@ gameupdate.init = function(render) {
       mouse = render.mouse,
       world = engine.world
   
-  events.afterRender(render, function() {
-    Tower.drawAll()
+  function tickALL() {
     Tower.tickAll()
-    Enemy.draw()
     Enemy.tick()
+    Effect.tick()    
+  }
+  
+  function drawALL() {
+    Tower.drawAll()
+    Enemy.draw()
     Effect.draw()
-    Effect.tick()
+    // ui after this
+  }
+  
+  events.afterRender(render, function() {
+    drawALL()
     ui.draw()
   })
   
   events.beforeUpdate(engine, function(engine) {
+    tickALL()
     var all = Composite.allBodies(engine.world)
     var gravity = engine.gravity
     for (let body of all) {

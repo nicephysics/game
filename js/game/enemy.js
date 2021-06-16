@@ -220,12 +220,11 @@ export class Enemy {
     var remove_addXP = () => {
       var pos = Vector.sub(this.position, Vector.mult(Vector.normalise(this.velocity), 50)), // 50 pixels of velocity
           bonus = Math.floor(Vector.magnitude(this.velocity)),
-          reward = this.stat.reward + bonus,
+          reward = this.stat.reward + Math.round( (this.stat.bonus || 0) * bonus),
           color = "#b09f1c", // darkish yellow colour
           size = 13, // default font size 13
           time = 2, // default text time = 2 seconds
           mult = 1
-      console.log(Vector.magnitude(this.velocity), Vector.magnitudeSquared(this.velocity))
       if (!this.body.hitByProjectile) {
         mult *= 2
         color = "#00ab17" // darkish green colour

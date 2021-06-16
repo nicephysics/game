@@ -37,6 +37,10 @@ import('./game/collide.js').then(m => {
 import('./game/controls.js').then(m => {
   game.controls = m.controls
 })
+import('./game/effect.js').then(m => {
+  game.Effect = m.Effect
+  game.effects = m.effects
+})
 import('./game/enemy.js').then(m => {
   game.Enemy = m.Enemy
   game.enemies = m.enemies

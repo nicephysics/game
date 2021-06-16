@@ -216,7 +216,7 @@ export class Enemy {
   }
   
   tickCheck() {
-    function remove_addXP() {
+    var remove_addXP = () => {
       if (this.body.hitByProjectile) {
         Tower.player.addxp(this.stat.reward)
       } else {

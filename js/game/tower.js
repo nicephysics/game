@@ -276,8 +276,8 @@ export class Tower {
     }
   }
   
-  addGun(guntype, gunstat, options = { }) {
-    var gun = Gun.create(this, guntype, "tower")
+  addGun(gunset, gunstat, options = { }) {
+    var gun = Gun.create(this, gunset, "tower")
     gun.setStatString(gunstat)
     this.guns.push(gun)
     return gun

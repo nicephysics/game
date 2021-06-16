@@ -9,7 +9,8 @@ export var enemystats = {
     inertia: 1, // inertia of enemy
     gravity: 1, // gravity scale of enemy
     reward: 1,
-    guns: [],
+    bonus: 1,
+    guns: [ ],
   }, // end of base stats...
   // now for normal enemies
   ball: {
@@ -20,6 +21,7 @@ export var enemystats = {
     air: 0.02,
     gravity: 0.1,
     reward: 11,
+    bonus: 0.5,
   },
   // simple shooter enemies
   ballgun: {
@@ -30,6 +32,7 @@ export var enemystats = {
     air: 0.03,
     gravity: 0.12,
     reward: 21,
+    bonus: 0.9,
     guns: [ { 
         type: "ballgun",
         stat: ["enemy", "enemyshooter", "ballgun"],
@@ -50,7 +53,8 @@ export class EnemyStat {
   air = 1
   gravity = 1
   reward = 1
-  guns = [] // do not modify!
+  bonus = 1
+  guns = [ ] // do not set...
   enemy = null // related enemy
   
   // constructor
@@ -75,6 +79,7 @@ export class EnemyStat {
     this.air = s.air || 1
     this.gravity = s.gravity || 1
     this.reward = s.reward || 1
+    this.bonus = s.bonus || 1
       
     this.guns = s.guns || []
   }
@@ -86,6 +91,7 @@ export class EnemyStat {
     this.air *= s.air || 1
     this.gravity *= s.gravity || 1
     this.reward *= s.reward || 1
+    this.bonus *= s.bonus || 1
     
     this.guns = s.guns || []
   }

@@ -10,6 +10,7 @@ export var enemystats = {
     gravity: 1, // gravity scale of enemy
     reward: 1,
     bonus: 1,
+    damage: 1,
     guns: [ ],
   }, // end of base stats...
   // now for normal enemies
@@ -22,6 +23,7 @@ export var enemystats = {
     gravity: 0.1,
     reward: 11,
     bonus: 0.5,
+    damage: 1,
   },
   // simple shooter enemies
   ballgun: {
@@ -33,6 +35,7 @@ export var enemystats = {
     gravity: 0.12,
     reward: 21,
     bonus: 0.9,
+    damage: 1,
     guns: [ { 
         set: {
           x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
@@ -57,6 +60,7 @@ export class EnemyStat {
   gravity = 1
   reward = 1
   bonus = 1
+  damage = 1
   guns = [ ] // do not set...
   enemy = null // related enemy
   
@@ -83,6 +87,7 @@ export class EnemyStat {
     this.gravity = s.gravity || 1
     this.reward = s.reward || 1
     this.bonus = s.bonus || 1
+    this.damage = s.damage || 1
       
     this.guns = s.guns || []
   }
@@ -95,6 +100,7 @@ export class EnemyStat {
     this.gravity *= s.gravity || 1
     this.reward *= s.reward || 1
     this.bonus *= s.bonus || 1
+    this.damage *= s.damage || 1
     
     this.guns = s.guns || []
   }

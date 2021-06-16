@@ -228,17 +228,26 @@ draw.polygon = function(render, xx, yy) {
   draw._polygon(ctx, new_x, new_y)
 }
 
-draw._text = function(ctx, x, y, text, textAlign = "") {
+draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {
   draw.textAlign(ctx, textAlign)
-  ctx.strokeText(text, x, y)
-  ctx.fillText(text, x, y)
+  if (angle !== 0) {
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(angle)
+  }
+  // draw text!
+    ctx.strokeText(text, x, y)
+    ctx.fillText(text, x, y)
+  if (angle !== 0) {
+    ctx.restore()
+  }
 }
 
-draw.text = function(render, x, y, text, textAlign = "") {
+draw.text = function(render, x, y, text, angle = 0, textAlign = "") {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
   var ctx = render.context
-  draw._text(ctx, x, y, text, textAlign)
+  draw._text(ctx, x, y, text, angle, textAlign)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {

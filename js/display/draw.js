@@ -181,8 +181,8 @@ draw.line = function(render, x1, y1, x2, y2) {
 
 draw._text = function(ctx, x, y, text, textAlign = "") {
   draw.textAlign(ctx, textAlign)
-  ctx.strokeText(x, y, text)
-  ctx.fillText(x, y, text)
+  ctx.strokeText(text, x, y)
+  ctx.fillText(text, x, y)
 }
 
 draw.text = function(render, x, y, text, textAlign = "") {

@@ -162,7 +162,7 @@ draw.arc = function(render, x, y, r, start, end, counter = false) {
   draw._arc(ctx, x, y, r, start, end, counter)
 }
 
-draw._line = function(ctx, x1, y1, x2, y2, xy...) {
+draw._line = function(ctx, x1, y1, x2, y2) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.moveTo(x1, y1)
@@ -170,7 +170,7 @@ draw._line = function(ctx, x1, y1, x2, y2, xy...) {
   ctx.stroke()
 }
 
-draw.line = function(render, x1, y1, x2, y2, xy...) {
+draw.line = function(render, x1, y1, x2, y2) {
   x1 -= render.bounds.min.x
   y1 -= render.bounds.min.y
   x2 -= render.bounds.min.x

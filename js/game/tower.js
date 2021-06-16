@@ -46,6 +46,7 @@ export class Tower {
   static towers = towers
   // player
   static player = null
+  static health = 10
   static xp = 0
   // a running number for ID and default label
   static _count = 1

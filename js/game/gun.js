@@ -228,7 +228,9 @@ export class Gun {
     })
     b.gametype = (this.gametype === "tower") ? "projectile" : "bullet"
     b.gun = this
-    b.effect = s.effect
+    if (s.effect.type) {
+      b.effect = s.effect
+    }
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(
         Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),

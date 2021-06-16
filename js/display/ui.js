@@ -23,6 +23,11 @@ ui.vars = {
   xp_text_font_size: 15,
   xp_text_appear_amount: 0.01,
   
+  health_heart_side_x: 25,
+  health_heart_side_y: 20,
+  health_heart_size: 20,
+  health_text_size: 20,
+  
   // change
   time: 0,
   click: false,
@@ -127,7 +132,7 @@ ui.draw = function() {
     if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
       draw.setDarkFill(ctx, color)
-      draw._text(ctx, x - 15, mid, Math.round(current) + "/" + Math.round(next), 0, "right")
+      draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
     }
     if (mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
@@ -135,6 +140,18 @@ ui.draw = function() {
       draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
     }
   }
+  
+  // planet health
+  var health = Tower.health
+  x = _width - v.health_heart_side_x
+  y = _height - 20 - v.health_heart_side_y
+  size = v.health_heart_size
+  draw.setFill(ctx, "#cc0000")
+  draw.setStroke(ctx, "transparent")
+  draw._heart(ctx, x, y, size, size)
+  draw.setFill(ctx, "#662c2c")
+  draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
+  draw._text(ctx, x - 15, y - 2, health + "", "right")
   
   // upgrade buttons
   

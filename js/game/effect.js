@@ -26,10 +26,10 @@ export class Effect {
     }
   }
   
-  static draw = function(render) {
+  static draw = function() {
     // draw effects
     for (let e of effects) {
-      e.draw(render)
+      e.draw(Tower.render)
     }
   }
   
@@ -162,8 +162,16 @@ export class Effect {
   }
   
   inflict(type, duration, options = { }) {
+    if (this.contains("anti" + type)) return
+    var e = this.get(type)
+    if (e) {
+      e.duration += duration
+      if (e.strength && options.strength) {
+        e.strength = Math.max(e.strength, options.strength)
+      }
+    }
     options.type = type
-    options.duration = duration
+    options.duration = duration || 1
     options.time = Effect.time + duration * config.FPS
     this.effects.push(options)
   }

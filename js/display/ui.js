@@ -30,7 +30,7 @@ ui.draw = function() {
       _height = render.options.height
   
   // bar var
-  var xp = math.lerp(player.xp, v.xp_bar_xp, 0.05),
+  var xp = math.lerp(v.xp_bar_xp, player.xp, 0.05),
       smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= 1 ), // whether the UI is currently still smoothing
       level = math.towerlevel(xp),
       current = xp - math.towerxp(level),
@@ -43,7 +43,7 @@ ui.draw = function() {
       y2 = y1 + 300,
       mid = y2 - ratio * 300,
       yBall = y2 + rBall
-  ui.vars.xp_bar_xp = xp
+  v.xp_bar_xp = xp
   // draw! (remember to add ctx)
   ctx.lineCap = 'round'
   draw.setFill(ctx, "transparent")

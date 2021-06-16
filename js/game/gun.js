@@ -29,8 +29,8 @@ export class Gun {
   // static
   static _count = 1
   static set = gunset
-  static create(object, guntype, gametype) {
-    return new Gun(object, Gun.set[guntype], gametype)
+  static create(object, gunset, gametype) {
+    return new Gun(object, gunset, gametype)
   }
   
   // fields

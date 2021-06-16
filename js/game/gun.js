@@ -233,12 +233,13 @@ export class Gun {
         });
     b.gametype = bodyGametype
     b.gun = this
+    b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread))
     if (s.effect.type) {
       b.effect = s.effect
     }
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(
-        Vector.create( Math.cos(this.direction), Math.sin(this.direction) ),
+        Vector.create( Math.cos(b.direction), Math.sin(b.direction) ),
         s.speed
       ))
     }

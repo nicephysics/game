@@ -8,6 +8,9 @@ import { Tower } from "./tower.js"
 import { style } from "../display/style.js"
 import { draw } from "../display/draw.js"
 
+import { math } from "../util/math.js"
+import { random } from "../util/random.js"
+
 if (true) {
   // 2 spaces
 }

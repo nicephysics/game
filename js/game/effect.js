@@ -170,7 +170,8 @@ export class Effect {
   }
   
   inflict(type, duration, options = { }) {
-    if (this.contains("anti" + type)) return
+    if ( this.contains("anti" + type) ) return
+    if ( type === "stun" && this.contains("stun") ) return
     var e = this.get(type)
     if (e) {
       e.duration += duration

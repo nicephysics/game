@@ -18,7 +18,7 @@ ui.draw = function() {
   // bar
   var xp = player.xp,
       level = player.level,
-      current = xp - math.towerxp(level - 1),
+      current = xp - math.towerxp(level),
       next = math.towerxpneeded(level),
       ratio = current / next,
       x = _width - 30,

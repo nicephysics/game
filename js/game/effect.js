@@ -17,7 +17,7 @@ export class Effect {
   // static
   static effects = effects
   
-  static time = {}
+  static time = 0
   
   static tick = function() {
     Effect.time++
@@ -170,11 +170,20 @@ export class Effect {
         e.strength = Math.max(e.strength, options.strength)
       }
       return
+    } else {
+      options.type = type
+      options.duration = duration || 1
+      options.time = Effect.time + duration * config.FPS
+      this.effects.push(options)
+      if (options.anti && options.anti > 0) {
+        var anti = {}
+        anti.type = "anti" + type
+        anti.duration = duration * options.anti
+        anti.time = Effect.time + anti.duration * config.FPS
+        this.effects.push(anti)
+      }
+      return
     }
-    options.type = type
-    options.duration = duration || 1
-    options.time = Effect.time + duration * config.FPS
-    this.effects.push(options)
   }
   
   // contains...

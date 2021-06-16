@@ -155,8 +155,8 @@ export class Effect {
     // todo
     switch (type) {
       case "stun":
-        draw.setFill(style.effect.overlay.stun)
-        draw.setStroke("transparent")
+        draw.setFill(ctx, style.effect.overlay.stun)
+        draw.setStroke(ctx, "transparent")
         this.object.drawOverlay(render)
     }
   }

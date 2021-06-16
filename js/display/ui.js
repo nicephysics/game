@@ -55,5 +55,6 @@ ui.draw = function() {
   draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto")
   draw.textAlign(ctx, "center")
   draw._circle(ctx, x, yBall, rBall)
+  draw.setLightFill(ctx, "#ff801f")
   draw._text(ctx, x, yBall, level + "")
 }

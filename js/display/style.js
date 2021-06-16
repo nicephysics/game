@@ -85,7 +85,7 @@ style.effect = {
     antifreeze: "#d8ff9e",
   },
   overlay: {
-    stun: "#79b5db77",
+    stun: "#38536355",
     freeze: "#91d5ff77",
     antistun: "transparent",
     antifreeze: "transparent",

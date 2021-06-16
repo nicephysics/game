@@ -232,7 +232,7 @@ export class Enemy {
           fill: "#04b81c",
           stroke: "transparent",
           lineWidth: 0,
-          angle: random.randint(-20, 20)
+          angle: random.randint(-20, 20),
           time: time, // 3 seconds
         })
       }

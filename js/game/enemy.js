@@ -218,24 +218,30 @@ export class Enemy {
   
   tickCheck() {
     var remove_addXP = () => {
-      if (this.body.hitByProjectile) {
-        Tower.player.addxp(this.stat.reward)
-      } else {
-        Tower.player.addxp(this.stat.reward * 2)
-        var pos = Vector.sub(this.position, Vector.mult(this.velocity, 0.4 * config.FPS)), // 0.4 seconds ago
-            time = ui.vars.time + 3 * config.FPS // disappear 3 seconds later
-        ui.vars.enemy_texts.push({
-          x: pos.x,
-          y: pos.y,
-          text: "x2!", // x2! x2! bonus!
-          size: 16, // font size 16
-          fill: "#00ab17",
-          stroke: "transparent",
-          lineWidth: 0,
-          angle: math.degToRad(random.randint(-15, 15)),
-          time: time,
-        })
+      var pos = Vector.sub(this.position, Vector.mult(Vector.normalise(this.velocity), 50)), // 50 pixels of velocity
+          reward = this.stat.reward,
+          color = "#b09f1c", // darkish yellow colour
+          size = 13, // default font size 13
+          time = 2, // default text time = 2 seconds
+          mult = 1
+      if (!this.body.hitByProjectile) {
+        mult *= 2
+        color = "#00ab17" // darkish green colour
+        size += 3 // font size 16
+        time += 1 // time = 3 seconds
       }
+      ui.vars.enemy_texts.push({
+        x: pos.x,
+        y: pos.y,
+        text: "+" + math.number(reward * mult),
+        size: size,
+        fill: color,
+        stroke: "transparent",
+        lineWidth: 0,
+        angle: math.degToRad(random.randint(-15, 15)),
+        time: ui.vars.time + time * config.FPS,
+      })
+      Tower.player.addxp(reward * mult)
       this.remove()
     }
     if (this.y < 0 && this.velocity.y <= 0) {

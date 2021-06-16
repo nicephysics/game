@@ -102,7 +102,7 @@ ui.draw = function() {
   
   // enemy texts
   var i = 0
-  for (let t in v.enemy_texts.slice()) {
+  for (let t of v.enemy_texts.slice()) {
     x = t.x
     y = t.y
     size = t.size

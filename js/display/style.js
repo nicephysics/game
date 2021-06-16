@@ -61,7 +61,11 @@ style.tower = {
 }
 
 style.projectile = {
-  bullet: style.fillStroke("#a7a7af"),
+  bullet: style.fillStroke("#a7a7af"), // grey (gun colour)
+}
+
+style.bullet = {
+  bullet: style.fillStroke("#446987"), // dark blue (blast colour)
 }
 
 style.enemy = {

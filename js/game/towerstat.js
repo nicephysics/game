@@ -4,22 +4,31 @@ export var towerstats = {
     size: 30,
     speed: 5,
     guns: [ {
-      type: "basic",
+      set: {
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+        style: "basic",
+      },
       stat: ["shooter", "basic"],
       options: { },
     }, ],
   },
-  double: {
+  twin: {
     size: 25,
     speed: 6,
     guns:  [ {
-      type: "double_left",
-      stat: ["shooter", "double"],
+      set: { 
+        x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0, 
+        style: "twin",
+      },
+      stat: ["shooter", "twin"],
     }, {
-      type: "double_right",
-      stat: ["shooter", "double"],
+      set: {
+        x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5, 
+        style: "twin",
+      },
+      stat: ["shooter", "twin"],
     }, ],
-  }
+  },
 }
 
 export class TowerStat {
@@ -59,7 +68,7 @@ export class TowerStat {
     this.set(towerstats[type])
     this.tower.removeAllGuns()
     for (let g of this.guns) {
-      this.tower.addGun(g.type, g.stat, g.options)
+      this.tower.addGun(g.set, g.stat, g.options)
     }
   }
 }

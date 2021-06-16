@@ -51,7 +51,7 @@ draw.setFont = function(ctx, fontString) {
   ctx.font = fontString
 }
 
-draw.alignText = function(ctx, alignment) {
+draw.textAlign = function(ctx, alignment) {
   ctx = ctx || draw.ctx
   switch (alignment) {
     case "":

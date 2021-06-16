@@ -3,6 +3,9 @@ import { style } from "./style.js"
 
 import { Tower } from "../game/tower.js"
 
+import { math } from "../util/math.js"
+import { random } from "../util/random.js"
+
 export var ui = { }
 
 ui.draw = function() {

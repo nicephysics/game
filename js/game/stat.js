@@ -37,7 +37,12 @@ export var stats = {
     z: 10, m: 5, s: 5, r: 2, t: 10, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
   },
   ballgun: {
-    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7, eff: { type: "stun", duration: 2 }
+    z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7,
+    eff: { 
+      type: "stun", 
+      duration: 2,
+      options: { anti: 1.5 },
+    },
   },
 }
 

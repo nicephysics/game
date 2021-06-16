@@ -34,6 +34,8 @@ ui.draw = function() {
       mousepos = render.mouse.absolute,
       ctx = render.context,
       player = Tower.player,
+      playerX = player.x,
+      playerY = player.y,
       _width = render.options.width,
       _height = render.options.height
   
@@ -67,8 +69,8 @@ ui.draw = function() {
   // draw ball!
   draw.setDarkFill(ctx, color)
   draw.setStroke(ctx, "transparent")
-  draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto")
-  draw._circle(ctx, x, yBall, rBall)
+  draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
+  draw._circle(ctx, x, yBall - 2, rBall)
   draw.setLightFill(ctx, color)
   draw._text(ctx, x, yBall, level + "", "center")
   // check mouse!

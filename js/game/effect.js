@@ -82,6 +82,7 @@ export class Effect {
     if (freeze) {
       return (freeze.strength === -1) ? 0 : (1 / freeze.strength)
     }
+    return 1
   }
   get canturn() {
     var stun = this.get("stun")

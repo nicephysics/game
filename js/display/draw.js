@@ -54,6 +54,8 @@ draw.setFont = function(ctx, fontString) {
 draw.alignText = function(ctx, alignment) {
   ctx = ctx || draw.ctx
   switch (alignment) {
+    case "":
+      break
     case "left":
     case "leftmiddle":
       ctx.textBaseline = "middle"
@@ -175,6 +177,12 @@ draw.line = function(render, x1, y1, x2, y2) {
   y2 -= render.bounds.min.y
   var ctx = render.context
   draw._line(ctx, x1, y1, x2, y2)
+}
+
+draw._text = function(ctx, x, y, text, textAlign = "") {
+  draw.textAlign(ctx, textAlign)
+  ctx.strokeText(x, y, text)
+  ctx.fillText(x, y, text)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {

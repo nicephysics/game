@@ -156,8 +156,8 @@ export class Effect {
       case "stun":
         draw.setFill(style.effect.overlay.stun)
         draw.setStroke("transparent")
-        draw.circle(render, x, y, size)
-    }    
+        this.object.drawOverlay(render)
+    }
   }
   
   inflict(type, duration, options = { }) {

@@ -229,6 +229,7 @@ draw.polygon = function(render, xx, yy) {
 }
 
 draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {
+  ctx = ctx || draw.ctx
   draw.textAlign(ctx, textAlign)
   if (angle !== 0) {
     ctx.save()
@@ -276,4 +277,47 @@ draw.gun = function(render, x, y, length, height, aspect, angle) {
   ctx.closePath()
   ctx.stroke()
   ctx.fill()
+}
+
+draw._heart = function(ctx, x, y, width, height) {
+  ctx = ctx || draw.ctx
+  ctx.save()
+  ctx.beginPath()
+  var topCurveHeight = height * 0.3
+  ctx.moveTo(x, y + topCurveHeight)
+  // top left curve
+  ctx.bezierCurveTo(
+    x, y, 
+    x - width / 2, y, 
+    x - width / 2, y + topCurveHeight
+  )
+  // bottom left curve
+  ctx.bezierCurveTo(
+    x - width / 2, y + (height + topCurveHeight) / 2, 
+    x, y + (height + topCurveHeight) / 2, 
+    x, y + height
+  )
+  // bottom right curve
+  ctx.bezierCurveTo(
+    x, y + (height + topCurveHeight) / 2, 
+    x + width / 2, y + (height + topCurveHeight) / 2, 
+    x + width / 2, y + topCurveHeight
+  )
+  // top right curve
+  ctx.bezierCurveTo(
+    x + width / 2, y, 
+    x, y, 
+    x, y + topCurveHeight
+  )
+  ctx.closePath()
+  ctx.stroke()
+  ctx.fill()
+  ctx.restore()
+}
+
+draw.heart = function(render, x, y, w, h) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  var ctx = render.context
+  draw._heart(ctx, x, y, w, h)  
 }

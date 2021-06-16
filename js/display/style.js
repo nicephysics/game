@@ -70,6 +70,7 @@ style.bullet = {
 
 style.enemy = {
   ball: style.fillStroke("#b56275"),
+  ballgun: style.fillStroke("#822909"),
   asteroid: style.fillStroke("#706060"),
 }
 

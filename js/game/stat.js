@@ -127,7 +127,7 @@ export class Stat {
 
   add(s) {
     this.type = s.y || s.type || "base"
-    this.effect = s.effect
+    this.effect = s.eff || s.effect || { }
     
     this.size *= s.z || s.size || 1
     this.mass *= s.m || s.mass || 1

@@ -2,6 +2,8 @@ import { category, config } from "../config/config.js"
 
 import { events } from "../util/events.js"
 
+import { ui } from "../display/ui.js"
+
 import { Tower } from "./tower.js"
 import { Enemy } from "./enemy.js"
 import { Effect } from "./effect.js"
@@ -30,6 +32,7 @@ gameupdate.init = function(render) {
     Enemy.draw()
     Effect.tick()
     Effect.draw()
+    ui.draw()
   })
   
   events.beforeUpdate(engine, function(engine) {

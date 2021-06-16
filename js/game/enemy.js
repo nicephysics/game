@@ -150,6 +150,12 @@ export class Enemy {
   get position() {
     return this.body.position
   }
+  get x() {
+    return this.position.x
+  }
+  get y() {
+    return this.position.y
+  }
   get velocity() {
     return this.body.velocity
   }

@@ -104,7 +104,6 @@ draw._line = function(ctx, x1, y1, x2, y2) {
     ctx.moveTo(x1, y1)
     ctx.lineTo(x2, y2)
   ctx.stroke()
-  ctx.fill()
 }
 
 draw.line = function(render, x1, y1, x2, y2) {
@@ -113,7 +112,7 @@ draw.line = function(render, x1, y1, x2, y2) {
   x2 -= render.bounds.min.x
   y2 -= render.bounds.min.y
   var ctx = render.context
-  draw._arc(ctx, x1, y1, x2, y2)
+  draw._line(ctx, x1, y1, x2, y2)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {

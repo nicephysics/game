@@ -250,7 +250,7 @@ export class Enemy {
     this.body.enemy = this
     // launch at a certain speed
     if (s.speed !== 0) {
-      var tilt = (random.randreal() - 0.5) * 5, // 5 degrees tilt max
+      var tilt = (random.randreal() - 0.5) * 15, // 15 degrees tilt max
           down = Math.PI / 180 * (90 + tilt),
           vel = Vector.mult(
             Vector.create( Math.cos(down), Math.sin(down) ),

@@ -222,18 +222,18 @@ export class Enemy {
         Tower.player.addxp(this.stat.reward)
       } else {
         Tower.player.addxp(this.stat.reward * 2)
-        var pos = Vector.sub(this.position, Vector.mult(this.velocity, 2 * config.FPS)), // 2 seconds
-            time = ui.vars.time + 3 * config.FPS
+        var pos = Vector.sub(this.position, Vector.mult(this.velocity, 0.4 * config.FPS)), // 0.4 seconds ago
+            time = ui.vars.time + 3 * config.FPS // disappear 3 seconds later
         ui.vars.enemy_texts.push({
           x: pos.x,
           y: pos.y,
           text: "x2!", // x2! x2! bonus!
-          size: 15, // font size 15
+          size: 16, // font size 16
           fill: "#00ab17",
           stroke: "transparent",
           lineWidth: 0,
-          angle: random.randint(-20, 20),
-          time: time, // 3 seconds
+          angle: math.degToRad(random.randint(-15, 15)),
+          time: time,
         })
       }
       this.remove()

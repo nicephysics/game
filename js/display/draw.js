@@ -287,8 +287,8 @@ draw.gun = function(render, x, y, length, height, aspect, angle) {
   ctx.fill()
 }
 
-draw.tower = function(render, x, y, type) {
-  Tower.drawTower(render, x, y, type)
+draw.tower = function(render, x, y, size, type) {
+  Tower.drawTower(render, x, y, size, type)
 }
 
 // credits to https://stackoverflow.com/questions/58333678/draw-heart-using-javascript-in-any-postionx-y

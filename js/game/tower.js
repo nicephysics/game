@@ -129,8 +129,12 @@ export class Tower {
     t.drawOverlay(render) // draw the tower shape! 
     ctx.restore()
     // ok now for the more normal drawing function(s)
+    for (let g in t.guns) {
+      // draw guns
+      g.draw(render)
+    }
+    // draw tower
     t.draw(render)
-    console.log(t)
   }
   // ##### end tower static fields
   

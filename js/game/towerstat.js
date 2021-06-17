@@ -21,13 +21,13 @@ export var towerstats = {
     rotspeed: 0.2,
     guns:  [ {
       set: { 
-        x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0, 
+        x: -0.65, y: 0, w: 0, h: 7, a: 0, d: 0, 
         style: "twin",
       },
       stat: ["shooter", "twin"],
     }, {
       set: {
-        x: 0.54, y: 0, w: 0, h: 10, a: 0, d: 0.5, 
+        x: 0.65, y: 0, w: 0, h: 7, a: 0, d: 0.5, 
         style: "twin",
       },
       stat: ["shooter", "twin"],
@@ -35,18 +35,18 @@ export var towerstats = {
   },
   double: {
     label: "D-1",
-    size: 25,
-    speed: 6,
+    size: 27.5,
+    speed: 5,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
-        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0, 
+        x: 0, y: 2.5, w: 0, h: 10, a: 0, d: 0, 
         style: "double",
       },
       stat: ["shooter", "double"],
     }, {
       set: {
-        x: 0.15, y: 0, w: 0, h: 10, a: 0, d: 0.5,
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0.5,
         style: "double",
       },
       stat: ["shooter", "double"],

@@ -274,16 +274,17 @@ export class Tower {
   }
   
   draw(render) {
-    let ctx = render.context
+    let ctx = render.context,
+        circleStyle
     switch (this.type) {
       case "basic":
       case "double":
-        let circleStyle = style.gun.basic
+        circleStyle = style.gun.basic
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2)
         break
       case "twin":
-        let circleStyle = style.gun.twin
+        circleStyle = style.gun.twin
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2.5)
         draw.rectangle(render, this.x, this.y

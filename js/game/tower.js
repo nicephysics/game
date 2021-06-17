@@ -3,7 +3,7 @@ import { aim } from "./aim.js"
 import { Effect } from "./effect.js"
 import { enemies, Enemy } from "./enemy.js"
 import { Gun } from "./gun.js"
-import { TowerStat } from "./towerstat.js"
+import { TowerStat, towermap } from "./towerstat.js"
 // config
 import { config, category } from "../config/config.js"
 // util
@@ -102,8 +102,13 @@ export class Tower {
     })
   }
   
-  static drawTower(render, x, y, type) {
-    let t = new Tower(type, null, false),
+  static getType(label) {
+    return towermap[label] || console.error("Invalid tower label: " + label)
+  }
+  
+  static drawTower(render, x, y, label) {
+    let type = Tower.getType(label),
+        t = new Tower(type, null, false),
         s = style.tower[type],
         ctx = render.context
     t.body.position = {

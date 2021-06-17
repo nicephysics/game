@@ -23,23 +23,15 @@ ui.vars = {
   xp_bar_side_x: 30,
   xp_bar_side_x_mouse: 60,
   xp_bar_color: "#ff801f",
-  xp_bar_lerp: 0.05,
   
-  xp_ball_radius: 15,
   xp_ball_font_size: 20,
   
   xp_text_font_size: 15,
-  xp_text_appear_amount: 0.01,
   
   health_heart_side_x: 25,
   health_heart_side_y: 20,
   health_heart_size: 20,
   health_text_size: 20,
-  
-  tier_up_button_size: 14,
-  tier_up_button_hover_color: "#0095ff", // normal paint blue
-  
-  tier_up_overlay_color: "#00ffee", // coffee but actually blue (with a bit of green)
   
   // change
   time: 0,
@@ -109,8 +101,9 @@ ui.draw = function() {
   
   // bar vars
   let xp_show = v.xp_bar_show,
-      xp = math.lerp(v.xp_bar_xp, player.xp, v.xp_bar_lerp),
-      smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= v.xp_text_appear_amount ) // whether the UI is currently still smoothing
+      xp = math.lerp(v.xp_bar_xp, player.xp, 0.05), // CONST xp bar lerp
+      // whether the UI is currently still smoothing
+      smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= 0.01 ) // CONST xp bar smooth threshold
   if (xp_show > 0 || smoothing) {
     // more mars bars- no, bar vars
     let color = v.xp_bar_color,
@@ -118,7 +111,7 @@ ui.draw = function() {
         current = xp - math.towerxp(level),
         next = math.towerxpneeded(level),
         ratio = current / next,
-        rBall = v.xp_ball_radius
+        rBall = 15 // CONST xp ball radius
     x = _width - v.xp_bar_side_x * xp_show
     height = v.xp_bar_length_ratio * _height
     let y1 = _height / 2 - height / 2 - rBall * 2,

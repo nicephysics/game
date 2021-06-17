@@ -18,12 +18,12 @@ if (true) {
 
 export var towers = [ ] // Tower[]
 
-var Bodies = Matter.Bodies,
-    Body = Matter.Body,
-    Composite = Matter.Composite,
-    Composites = Matter.Composites,
-    Mouse = Matter.Mouse,
-    Vector = Matter.Vector
+const Bodies = Matter.Bodies,
+      Body = Matter.Body,
+      Composite = Matter.Composite,
+      Composites = Matter.Composites,
+      Mouse = Matter.Mouse,
+      Vector = Matter.Vector
 
 /*
 
@@ -225,7 +225,7 @@ export class Tower {
   }
   
   doControl() {
-    var c = this.control,
+    let c = this.control,
         movedir = Vector.create(0, 0)
     // move direction
     if (c.up) movedir.y--
@@ -254,7 +254,7 @@ export class Tower {
   }
   
   draw(render) {
-    var ctx = render.context
+    let ctx = render.context
     switch (this.type) {
       case "basic":
         let circleStyle = style.gun.basic
@@ -284,7 +284,7 @@ export class Tower {
   }
   
   createBody(zero = false) {
-    var x, y
+    let x, y
     if (zero) {
       x = 0
       y = 0
@@ -317,7 +317,7 @@ export class Tower {
   }
   
   addGun(gunset, gunstat, options = { }) {
-    var gun = Gun.create(this, gunset, "tower")
+    let gun = Gun.create(this, gunset, "tower")
     gun.setStatString(gunstat)
     this.guns.push(gun)
     return gun
@@ -333,7 +333,7 @@ export class Tower {
   // don't use for now
   tickTarget() {
     if (this.target && this.target.exists) {
-      var angle = aim.angle(this, this.target)
+      let angle = aim.angle(this, this.target)
       if (angle === "fail") {
         angle = this.getTarget()
       }
@@ -348,7 +348,7 @@ export class Tower {
   getTarget() {
     this.target = null
     if (enemies.length === 0) return false
-    var angle = 0
+    let angle = 0
     for (let enemy of enemies) {
       angle = aim.angle(this, enemy)
       if (angle !== "fail") {
@@ -381,13 +381,6 @@ export class Tower {
     this.xp += add
     Tower.xp += add
     this.refreshLevel()
-  }
-  
-  // WARNING: testing functions below!
-  
-  test_1() {
-    this.addGun("default")
-    console.log(this)
   }
   
   // contemplationOfMortality

@@ -2,6 +2,7 @@ import { draw } from "./draw.js"
 import { style } from "./style.js"
 
 import { Tower } from "../game/tower.js"
+import { controls } from "../game/controls.js"
 
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
@@ -184,6 +185,7 @@ ui.draw = function() {
     }
     if ( Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.tier_up_show = true
+      controls.setPaused(true)
     }
     draw.setFillDarkenStroke(ctx, color)
     draw.setLineWidth(ctx, 3) // CONST tier up button border width
@@ -202,19 +204,35 @@ ui.draw = function() {
   // tier up overlay
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
-    draw.setFill(ctx, "#00ffee") // CONST tier up overlay rect color
-    draw.setStroke(ctx, "transparent")
+    draw.setFillNoStroke(ctx, "#00ffee") // CONST tier up overlay rect color
     ctx.save()
-    draw.setGlobalAlpha(ctx, 0.5) // CONST tier up overlay rect opacity
-    draw._rect(ctx, 0, 0, _width, _height)
+    draw.setGlobalAlpha(ctx, 0.6) // CONST tier up overlay rect opacity
+    let overlayGap = 50
+      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap, _height - overlayGap)
     ctx.restore()
+    // draw X button
+    x = _width - overlayGap * 2
+    y = overlayGap * 2
+    size = overlayGap / 5
+    draw.setStrokeNoFill(ctx, "#cf0000") // CONST tier up overlay X button color
+    draw.setLineWidth(ctx, 5)
+      draw._line(ctx, x - size, y - size, x + size, y + size)
+      draw._line(ctx, x + size, y - size, x - size, y + size)
+    if ( // check whether the user presses the x button OR clicks the outside
+         ( Math.abs(clickpos.x - x) < size && Math.abs(clickpos.y - y) < size ) ||
+         ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
+       ) {
+      v.tier_up_show = false
+      controls.setPaused(true)
+    }
     // draw title
-    let top_text_angle = math.degToRad(10)         // CONST tier up title text tilt angle
+    let top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle
                            * Math.sin(v.time / 30) // CONST tier up title text tilt speed
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
+    draw.setFont(ctx, "30px Roboto")
     // CONST tier up title text position (x, y)
-      draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade", top_text_angle, "center")
+      draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade!", top_text_angle, "center")
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     size = 50 // CONST tier up circle size
@@ -223,9 +241,10 @@ ui.draw = function() {
         yText = y + size + 20 // CONST tier up circle text gap (y)
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
-      let choice = choices[i]
+      const choice = choices[i],
+            hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * 1.1 // CONST tier up circle mouse box size
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
-      if (Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * 1.1) { // CONST tier up circle mouse box size
+      if (hovering) {
         draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
       } else {
         draw.setFill(ctx, "transparent")
@@ -236,6 +255,7 @@ ui.draw = function() {
         draw.tower(render, x, y, size * 0.7, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#283d00") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
+      draw.setFont(ctx, "20px Roboto")
         draw._text(ctx, x, yText, choice, 0, "center")
     }
   }

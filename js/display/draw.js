@@ -49,6 +49,11 @@ draw.setLineWidth = function(ctx, lineWidth) {
   ctx.lineWidth = lineWidth
 }
 
+draw.setGlobalAlpha = function(ctx, opacity) {
+  ctx = ctx || draw.ctx
+  ctx.globalAlpha = opacity
+}
+
 draw.setFont = function(ctx, fontString) {
   ctx = ctx || draw.ctx
   ctx.font = fontString

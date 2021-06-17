@@ -197,6 +197,9 @@ export class Tower {
   get projectileSpeed() {
     return this.guns[0].stat.speed
   }
+  get canTierUp() {
+    return true // todo
+  }
   // ##### end of tower getter functions
   
   // ##### tower setter functions
@@ -254,7 +257,6 @@ export class Tower {
     var ctx = render.context
     switch (this.type) {
       case "basic":
-        // todo
         let circleStyle = style.gun.basic
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2)

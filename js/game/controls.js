@@ -5,6 +5,8 @@ import { Tower } from "./tower.js"
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 
+import { ui } from "../display/ui.js"
+
 if (true) {
   // 2 space indent!
 }
@@ -89,6 +91,10 @@ controls.init = function(render) {
       case "KeyP":
         c.paused = !c.paused
         Tower.runner.enabled = !c.paused
+        break
+      case "KeyU":
+        // todo if ...
+        ui.vars.tier_up_show = !ui.vars.tier_up_show
         break
     }
   })

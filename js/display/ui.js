@@ -211,7 +211,7 @@ ui.draw = function() {
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     size = 50 // CONST tier up circle size
-    let choices = ["T-1", "D-1"], // temporary FOR NOW todo
+    let choices = ["T-5", "D-1"], // temporary FOR NOW todo
         choiceLength = choices.length,
         yText = y - size - 20 // CONST tier up circle text gap (y)
     // draw circles
@@ -222,7 +222,7 @@ ui.draw = function() {
       draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
       draw.setLineWidth(ctx, 10) // CONST tier up circle line width
         draw.circle(ctx, x, y, size)
-        draw.tower(render, x, y, size * 0.5, "basic") // CONST tier up circle tower size ratio
+        draw.tower(render, x, y, size * 0.5, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#283d00") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x, yText, choice, 0, "center")

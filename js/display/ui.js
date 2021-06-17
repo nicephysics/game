@@ -156,7 +156,7 @@ ui.draw = function() {
   draw.setFill(ctx, "#cc0000")
   draw.setStroke(ctx, "transparent")
   draw._heart(ctx, x, y, size, size)
-  draw.setFill(ctx, "#662c2c")
+  draw.setFill(ctx, "#662c2c") // CONST health heart color
   draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
   draw._text(ctx, x - 15 - size / 2, y + 3, health + "", 0, "right")
   
@@ -166,13 +166,13 @@ ui.draw = function() {
   
   // tier up button
   if (player.canTierUp && !v.tier_up_show) {
-    size = v.tier_up_button_size
+    size = 14 // CONST tier up button size
     x = playerX
-    y = playerY - playerSize - size - 20
-    let color = v.tier_up_overlay_color
+    y = playerY - playerSize - size - 20 // CONST tier up button-body gap
+    let color = "#00ffee" // CONST tier up button color
     if ( Math.abs(mousepos.x - x) < size * 1.1 && Math.abs(mousepos.y - y) < size * 1.1 ) {
-      size *= 1.2
-      color = v.tier_up_button_hover_color
+      size *= 1.0 // CONST tier up button hover size change
+      color = "#ff7700" // CONST tier up button hover color (changed from #0095ff)
     }
     if ( Math.abs(clickpos.x - x) < size * 1.1 && Math.abs(clickpos.y - y) < size * 1.1 ) {
       v.tier_up_show = true
@@ -185,7 +185,7 @@ ui.draw = function() {
         arrowSize = 0.5
     ctx.lineCap = 'round'
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, "#0c9400") // dark green
+    draw.setStroke(ctx, "#0c9400") // CONST tier up button symbol color
     draw.setLineWidth(ctx, 3)
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
@@ -195,20 +195,22 @@ ui.draw = function() {
   // tier up overlay
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
-    draw.setFill(ctx, v.tier_up_overlay_color)
+    draw.setFill(ctx, "#00ffee") // CONST tier up overlay rect color
     draw.setStroke(ctx, "transparent")
     ctx.save()
-    draw.setGlobalAlpha(ctx, 0.5)
+    draw.setGlobalAlpha(ctx, 0.5) // CONST tier up overlay rect opacity
     draw._rect(ctx, 0, 0, _width, _height)
     ctx.restore()
     // draw title
-    let top_text_angle = 10 * Math.sin(v.time / 100)
-    draw.setFill(ctx, "#003d09")
+    let top_text_angle = 10 * Math.sin(v.time / 100) // CONST tier up title text tilt formula
+    draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
       draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade", top_text_angle, "center")
     // some vars
-    let choices = ["T-1", "D-1"] // temporary
+    let choices = ["T-1", "D-1"], // temporary FOR NOW todo
+        choiceLength = choices.length
     // draw circles
+    
     // todo
   }
   

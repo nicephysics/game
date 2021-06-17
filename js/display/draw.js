@@ -18,6 +18,11 @@ draw.setStroke = function(ctx, stroke) {
   ctx.strokeStyle = stroke
 }
 
+draw.setStrokeNoFill = function(ctx, stroke) {
+  draw.setStroke(ctx, stroke)
+  draw.setFill(ctx, "transparent")
+}
+
 draw.setLightFill = function(ctx, fill) {
   draw.setFill(ctx, chroma(fill).brighten().hex())  
 }
@@ -42,6 +47,11 @@ draw.setFillAndStroke = function(ctx, both) {
 draw.setFillDarkenStroke = function(ctx, both) {
   draw.setFill(ctx, both)
   draw.setStroke(ctx, chroma(both).darken().hex())
+}
+
+draw.setFillNoStroke = function(ctx, fill) {
+  draw.setFill(ctx, fill)
+  draw.setStroke(ctx, "transparent")
 }
 
 draw.setLineWidth = function(ctx, lineWidth) {

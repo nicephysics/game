@@ -13,19 +13,17 @@ if (true) {
 
 export var controls = { }
 
-var Body = Matter.Body,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Vector = Matter.Vector
+const Body = Matter.Body,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Vector = Matter.Vector
 
 controls.init = function(render) {
-  var engine = render.engine,
-      mouse = render.mouse,
-      world = engine.world,
-      player = Tower.player,
-      body = player.body
-  
-  var direction = Vector.create(0, 0)
+  const engine = render.engine,
+        mouse = render.mouse,
+        world = engine.world,
+        player = Tower.player,
+        body = player.body
   
   player.control = {
     up: false,

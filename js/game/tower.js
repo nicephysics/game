@@ -126,7 +126,7 @@ export class Tower {
     draw.setLineWidth(ctx, s.lineWidth)
     ctx.save() // for restoration purposes
     draw.setGlobalAlpha(ctx, s.opacity)
-    t.drawOverlay() // draw the tower shape! 
+    t.drawOverlay(render) // draw the tower shape! 
     ctx.restore()
     // ok now for the more normal drawing function(s)
     t.draw(render)

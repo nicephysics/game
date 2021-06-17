@@ -28,7 +28,7 @@ ui.vars = {
   health_heart_size: 20,
   health_text_size: 20,
   
-  tier_up_button_size: 20,
+  tier_up_button_size: 14,
   tier_up_button_hover_color: "#0095ff", // normal paint blue
   
   tier_up_overlay_color: "#00ffee", // coffee but actually blue (with a bit of green)
@@ -178,15 +178,15 @@ ui.draw = function() {
       v.tier_up_show = true
     }
     draw.setFillDarkenStroke(ctx, color)
-    draw.setLineWidth(ctx, 5)
+    draw.setLineWidth(ctx, 3)
     draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
     let upSymbolSize = 0.7,
-        arrowSize = 0.2
+        arrowSize = 0.5
     ctx.lineCap = 'round'
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#0c9400") // dark green
-    draw.setLineWidth(ctx, 5)
+    draw.setLineWidth(ctx, 3)
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
@@ -202,8 +202,10 @@ ui.draw = function() {
     draw._rect(ctx, 0, 0, _width, _height)
     ctx.restore()
     // draw title
+    let top_text_angle = 10 * Math.sin(v.time / 100)
     draw.setFill(ctx, "#003d09")
-    draw._text(ctx, _width / 2, 0, "Choose an upgrade", 0, "center")
+    draw.setStroke(ctx, "transparent")
+      draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade", top_text_angle, "center")
     // some vars
     let choices = ["T-1", "D-1"] // temporary
     // draw circles

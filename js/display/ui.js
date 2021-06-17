@@ -216,6 +216,7 @@ ui.draw = function() {
          ( Math.abs(clickpos.x - x) < size && Math.abs(clickpos.y - y) < size ) ||
          ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
        ) ) {
+      console.log(clickpos)
       v.tier_up_show = false
       controls.setPaused(false)
     }

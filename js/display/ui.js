@@ -28,6 +28,11 @@ ui.vars = {
   health_heart_size: 20,
   health_text_size: 20,
   
+  tier_up_button_size: 20,
+  tier_up_button_hover_color: "#0095ff", // normal paint blue
+  
+  tier_up_overlay_color: "#00ffee", // coffee but actually blue (with a bit of green)
+  
   // change
   time: 0,
   click: false,
@@ -36,11 +41,13 @@ ui.vars = {
   xp_bar_xp: 0,
   xp_bar_show: 1,
   
+  tier_up_show: false, // tier up overlay show
+  
   enemy_texts: [ ],
 }
 
 ui.init = function(render) {
-  var v = ui.vars,
+  let v = ui.vars,
       render = Tower.render,
       mouse = render.mouse,
       ctx = render.context
@@ -55,7 +62,7 @@ ui.init = function(render) {
 }
 
 ui.tick = function() {
-  var v = ui.vars,
+  let v = ui.vars,
       render = Tower.render,
       ctx = render.context
   // tick time!
@@ -64,7 +71,7 @@ ui.tick = function() {
 }
 
 ui.tickAfter = function() {
-  var v = ui.vars,
+  let v = ui.vars,
       render = Tower.render,
       ctx = render.context
   // clear click
@@ -73,7 +80,7 @@ ui.tickAfter = function() {
 }
 
 ui.draw = function() {
-  var v = ui.vars,
+  let v = ui.vars,
       render = Tower.render,
       mousepos = render.mouse.absolute,
       clickpos = v.click || { x: -1000, y: -1000 },
@@ -81,6 +88,7 @@ ui.draw = function() {
       player = Tower.player,
       playerX = player.x,
       playerY = player.y,
+      playerSize = player.size,
       _width = render.options.width,
       _height = render.options.height,
       x, y,
@@ -92,20 +100,20 @@ ui.draw = function() {
   ui.tick()
   
   // bar vars
-  var xp_show = v.xp_bar_show,
+  let xp_show = v.xp_bar_show,
       xp = math.lerp(v.xp_bar_xp, player.xp, v.xp_bar_lerp),
       smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= v.xp_text_appear_amount ) // whether the UI is currently still smoothing
   if (xp_show > 0 || smoothing) {
     // more mars bars- no, bar vars
-    var color = v.xp_bar_color,
+    let color = v.xp_bar_color,
         level = math.towerlevel(xp),
         current = xp - math.towerxp(level),
         next = math.towerxpneeded(level),
         ratio = current / next,
-        rBall = v.xp_ball_radius,
-        x = _width - v.xp_bar_side_x * xp_show
+        rBall = v.xp_ball_radius
+    x = _width - v.xp_bar_side_x * xp_show
     height = v.xp_bar_length_ratio * _height
-    var y1 = _height / 2 - height / 2 - rBall * 2,
+    let y1 = _height / 2 - height / 2 - rBall * 2,
         y2 = y1 + height,
         mid = y2 - ratio * height,
         yBall = y2 + rBall
@@ -142,7 +150,7 @@ ui.draw = function() {
   }
   
   // planet health
-  var health = Tower.health
+  let health = Tower.health
   x = _width - v.health_heart_side_x
   y = _height - 20 - v.health_heart_side_y
   size = v.health_heart_size
@@ -157,7 +165,51 @@ ui.draw = function() {
   
   // upgrade side
   
-  // upgrade overlay
+  // tier up button
+  if (player.canTierUp && !v.tier_up_show) {
+    size = v.tier_up_button_size
+    x = playerX
+    y = playerY - playerSize - size - 20
+    let color = v.tier_up_overlay_color
+    if ( Math.abs(mousepos.x - x) < size * 1.1 && Math.abs(mousepos.y - y) < size * 1.1 ) {
+      size *= 1.2
+      color = v.tier_up_button_hover_color
+    }
+    if ( Math.abs(clickpos.x - x) < size * 1.1 && Math.abs(clickpos.y - y) < size * 1.1 ) {
+      v.tier_up_show = true
+    }
+    draw.setFillDarkenStroke(ctx, color)
+    draw.setLineWidth(ctx, 5)
+    draw._rectangle(ctx, x, y, size * 2, size * 2)
+    // draw up symbol time
+    let upSymbolSize = 0.7,
+        arrowSize = 0.2
+    ctx.lineCap = 'round'
+    draw.setFill(ctx, "transparent")
+    draw.setStroke(ctx, "#0c9400") // dark green
+    draw.setLineWidth(ctx, 10)
+    draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize + arrowSize))
+    draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize + arrowSize))
+    draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
+  }
+  
+  // tier up overlay
+  if (v.tier_up_show) {
+    // draw translucent overlay rectangle
+    draw.setFill(ctx, v.tier_up_overlay_color)
+    draw.setStroke(ctx, "transparent")
+    draw.save()
+    draw.setGlobalAlpha(ctx, 0.5)
+    draw._rect(ctx, 0, 0, _width, _height)
+    draw.restore()
+    // draw title
+    draw.setFill(ctx, "#003d09")
+    draw._text(ctx, _width / 2, 0, "Choose an upgrade", 0, "center")
+    // some vars
+    let choices = ["T-1", "D-1"] // temporary
+    // draw circles
+    // todo
+  }
   
   // enemy texts
   var i = 0

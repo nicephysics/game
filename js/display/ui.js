@@ -169,23 +169,24 @@ ui.draw = function() {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap
-    let color = "#00ffee" // CONST tier up button color
-    if ( Math.abs(mousepos.x - x) < size * 1.1 && Math.abs(mousepos.y - y) < size * 1.1 ) {
+    let color = "#00ffee", // CONST tier up button color
+        mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
+    if ( Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST tier up button hover size change
       color = "#ff7700" // CONST tier up button hover color (changed from #0095ff)
     }
-    if ( Math.abs(clickpos.x - x) < size * 1.1 && Math.abs(clickpos.y - y) < size * 1.1 ) {
+    if ( Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.tier_up_show = true
     }
     draw.setFillDarkenStroke(ctx, color)
-    draw.setLineWidth(ctx, 3)
+    draw.setLineWidth(ctx, 3) // CONST tier up button border width
     draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
-    let upSymbolSize = 0.7,
-        arrowSize = 0.5
+    let upSymbolSize = 0.7, // CONST
+        arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#0c9400") // CONST tier up button symbol color
-    draw.setLineWidth(ctx, 3)
+    draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
@@ -221,11 +222,11 @@ ui.draw = function() {
       draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
       draw.setLineWidth(ctx, 10) // CONST tier up circle line width
         draw.circle(ctx, x, y, size)
+        draw.tower(render, x, y, size * 0.5, "basic") // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#283d00") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x, yText, choice, 0, "center")
     }
-    // todo
   }
   
   // enemy texts

@@ -88,7 +88,7 @@ controls.init = function(render) {
         break
       case "KeyP":
         c.paused = !c.paused
-        engine.timing.timeScale = (c.paused) ? 0 : 1
+        Tower.runner.enabled = !c.paused
         break
     }
   })

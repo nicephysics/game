@@ -108,18 +108,24 @@ export class Tower {
     return towermap[label] || console.error("Invalid tower label: " + label)
   }
   
+  static drawtowers = {}
   static drawTower(render, x, y, size, label) {
     let type = Tower.getType(label),
-        t = new Tower(type, null, false),
+        t = Tower.drawtowers[type],
         s = style.tower[type],
         ctx = render.context,
         mousepos = render.mouse.absolute
+    if (!t) {
+      t = new Tower(type, null, false)
+      Tower.drawtowers[type] = t
+    }
     // set body attributes, fit the draw
     t.body.position = {
       x: x + render.bounds.min.x,
       y: y + render.bounds.min.y,
     }
-    t.body.angle = Vector.angle(Vector.create(x, y), mousepos)
+    t.targetrot = Vector.angle(Vector.create(x, y), mousepos)
+    Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, t.stat.rotspeed))
     t.stat.size = size
     // all this just for drawOverlay?
     // ah yes

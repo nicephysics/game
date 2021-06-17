@@ -65,11 +65,12 @@ export class Tower {
   }
   
   // matter.js stuff (static and global) (useful!)
-  static engine = null
   static render = null
+  static engine = null
   static canvas = null
   static mouse = null
   static world = null
+  static runner = null
   
   // init function, important!
   static init(render) {

@@ -159,7 +159,7 @@ var init = function() {
   var runner = Runner.create()
 
   // run the engine
-  Runner.run(runner, engine)
+  // Runner.run(runner, engine)
   
   Tower.runner = runner
 }

@@ -197,10 +197,10 @@ ui.draw = function() {
     // draw translucent overlay rectangle
     draw.setFill(ctx, v.tier_up_overlay_color)
     draw.setStroke(ctx, "transparent")
-    draw.save()
+    ctx.save()
     draw.setGlobalAlpha(ctx, 0.5)
     draw._rect(ctx, 0, 0, _width, _height)
-    draw.restore()
+    ctx.restore()
     // draw title
     draw.setFill(ctx, "#003d09")
     draw._text(ctx, _width / 2, 0, "Choose an upgrade", 0, "center")
@@ -220,7 +220,10 @@ ui.draw = function() {
     draw.setStroke(ctx, t.stroke || "transparent")
     draw.setLineWidth(ctx, t.lineWidth || 1)
     draw.setFont(ctx, Math.floor(size) + "px Roboto Condensed")
-    draw._text(ctx, x, y, t.text, t.angle, "center")
+    ctx.save()
+    draw.setGlobalAlpha(ctx, t.opacity || 1)
+      draw._text(ctx, x, y, t.text, t.angle, "center")
+    ctx.restore()
     if (t.time < v.time) {
       v.enemy_texts.splice(i, 1)
     }

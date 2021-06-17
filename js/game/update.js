@@ -35,13 +35,18 @@ gameupdate.init = function(render) {
     Tower.drawAll()
     Enemy.draw()
     Effect.draw()
-    // ui.draw() after this
-  }
-  
-  events.afterRender(render, function() {
-    drawALL()
     // then draw GUI overlay
     ui.draw()
+  }
+  
+  let interval = false
+  
+  events.afterRender(render, function() {
+    if (interval) {
+      clearInterval(interval)
+    }
+    drawALL()
+    interval = setInterval(drawALL, 1000 / 60)
   })
   
   events.beforeUpdate(engine, function(engine) {

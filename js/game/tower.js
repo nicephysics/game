@@ -161,9 +161,7 @@ export class Tower {
     this.type = type || "basic"
     this.parent = (parent) ? ( parent.parent || (parent || this) ) : this
     this.stat.setType(this.type)
-    if (add) {
-      this.createBody(true)
-    }
+    this.createBody(true, add)
   }
   
   // ##### tower getter functions
@@ -293,7 +291,7 @@ export class Tower {
     this.level = math.towerlevel(this.xp)
   }
   
-  createBody(zero = false) {
+  createBody(zero = false, addToWorld = true) {
     let x, y
     if (zero) {
       x = 0
@@ -313,7 +311,9 @@ export class Tower {
     this.body.canDrag = !this.isPlayer
     this.body.gravityScale = 1
     // add to world
-    Composite.add(Tower.world, this.body)
+    if (addToWorld) {
+      Composite.add(Tower.world, this.body)
+    }
   }
   
   removeBody() {

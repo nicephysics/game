@@ -20,9 +20,11 @@ export var towers = [ ] // Tower[]
 
 const Bodies = Matter.Bodies,
       Body = Matter.Body,
+      Common = Matter.Common,
       Composite = Matter.Composite,
       Composites = Matter.Composites,
       Mouse = Matter.Mouse,
+      SAT = Matter.SAT,
       Vector = Matter.Vector
 
 /*
@@ -129,7 +131,7 @@ export class Tower {
     t.drawOverlay(render) // draw the tower shape! 
     ctx.restore()
     // ok now for the more normal drawing function(s)
-    for (let g in t.guns) {
+    for (let g of t.guns) {
       // draw guns
       g.draw(render)
     }

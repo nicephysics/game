@@ -22,7 +22,7 @@ export var stats = {
   },
   /*** SIZE      MASS      SPEED     RELOAD    TIME      SPREAD  ***/
   shooter: {
-    z: 10,    m: 10,    s: 10,    r: 1,     t: 10,    p: 1,    i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
+    z: 10,    m: 5,     s: 10,    r: 1,     t: 10,    p: 1,    i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
   }, basic: { // basic gun
     z: 0.6,   m: 1,     s: 1,     r: 1,     t: 1,     p: 2.0,  i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   }, double: { // better than basic by a teeny little bit when doubled (except spread)
@@ -35,7 +35,7 @@ export var stats = {
     z: 1, m: 1, s: 1, r: 1, t: 1, p: 1, i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
   },
   enemyshooter: {
-    z: 10, m: 5, s: 5, r: 2, t: 10, p: 1, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
+    z: 10, m: 3, s: 5, r: 2, t: 10, p: 1, i: 1, ts: 1, e: 0.5, kf: 0, sf: 0, a: 0.01, y: "base", eff: {},
   },
   ballgun: {
     z: 0.5, m: 1, s: 1, r: 1.2, t: 0.7, p: 3,

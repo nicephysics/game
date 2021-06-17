@@ -124,10 +124,10 @@ export class Tower {
     draw.setFill(ctx, s.fillStyle)
     draw.setStroke(ctx, s.strokeStyle)
     draw.setLineWidth(ctx, s.lineWidth)
+    ctx.save() // for restoration purposes
     draw.setGlobalAlpha(ctx, s.opacity)
-    draw.save() // for restoration purposes
     t.drawOverlay() // draw the tower shape! 
-    draw.restore()
+    ctx.restore()
     // ok now for the more normal drawing function(s)
     t.draw(render)
     console.log(t)

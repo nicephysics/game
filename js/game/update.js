@@ -14,16 +14,27 @@ if (true) {
   // 2 space indent!
 }
 
-var Body = Matter.Body,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Vector = Matter.Vector
+const Body = Matter.Body,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Engine = Matter.Engine,
+      Vector = Matter.Vector
 
 gameupdate.init = function(render) {
   
-  var engine = render.engine,
-      mouse = render.mouse,
-      world = engine.world
+  const engine = render.engine,
+        mouse = render.mouse,
+        world = engine.world
+  
+  function loop() {
+    if (Tower.runner.enabled) {
+      Engine.update(engine, 1000 / 60)
+    } else {
+      Engine.update(engine, 0)
+    }
+  }
+  
+  let interval = setInterval(loop, 1000 / 60)
   
   function tickALL() {
     Tower.tickAll()
@@ -39,14 +50,8 @@ gameupdate.init = function(render) {
     ui.draw()
   }
   
-  let interval = false
-  
   events.afterRender(render, function() {
-    if (interval) {
-      clearInterval(interval)
-    }
     drawALL()
-    interval = setInterval(drawALL, 1000 / 60)
   })
   
   events.beforeUpdate(engine, function(engine) {

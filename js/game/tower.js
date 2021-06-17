@@ -106,15 +106,19 @@ export class Tower {
     return towermap[label] || console.error("Invalid tower label: " + label)
   }
   
-  static drawTower(render, x, y, label) {
+  static drawTower(render, x, y, size, label) {
     let type = Tower.getType(label),
         t = new Tower(type, null, false),
         s = style.tower[type],
-        ctx = render.context
+        ctx = render.context,
+        mousepos = render.mouse.absolute
+    // set body attributes, fit the draw
     t.body.position = {
       x: x + render.bounds.min.x,
       y: y + render.bounds.min.y,
     }
+    t.body.angle = Vector.angle(Vector.create(x, y), mousepos)
+    t.stat.size = size
     // all this just for drawOverlay?
     // ah yes
     draw.setFill(ctx, s.fillStyle)
@@ -126,6 +130,7 @@ export class Tower {
     draw.restore()
     // ok now for the more normal drawing function(s)
     t.draw(render)
+    console.log(t)
   }
   // ##### end tower static fields
   

@@ -16,11 +16,11 @@ export var enemystats = {
   // now for normal enemies
   ball: {
     control: "none",
-    mass: 0.2,
+    mass: 0.3,
     speed: 1,
-    size: 12,
-    air: 0.02,
-    gravity: 0.1,
+    size: 13,
+    air: 0.015,
+    gravity: 0.05,
     reward: 11,
     bonus: 0.5,
     damage: 1,
@@ -28,14 +28,14 @@ export var enemystats = {
   // simple shooter enemies
   ballgun: {
     control: "aim_player",
-    mass: 0.15,
+    mass: 0.2,
     speed: 0.6,
-    size: 20,
+    size: 21,
     air: 0.03,
-    gravity: 0.12,
+    gravity: 0.05,
     reward: 21,
     bonus: 0.9,
-    damage: 1,
+    damage: 1.5,
     guns: [ { 
         set: {
           x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,

@@ -41,29 +41,36 @@ var tower = new Tower(type, parent); // parent's parent will be taken, if any
 */
 export class Tower {
   // ##### tower static fields
+  
   // reference to all towers
   static allTowers = towers
   static towers = towers
+  
   // player
   static player = null
   static health = 10
   static xp = 0
+  
   // a running number for ID and default label
   static _count = 1
+  
   // all tower types (string) in an array
   static types = [
     "basic",
   ]
+  
   // map from type to kind
   static kinds = {
     basic: "shooter",
   }
+  
   // matter.js stuff (static and global) (useful!)
   static engine = null
   static render = null
   static canvas = null
   static mouse = null
   static world = null
+  
   // init function, important!
   static init(render) {
     Tower.render = render
@@ -72,6 +79,7 @@ export class Tower {
     Tower.mouse = render.mouse
     Tower.world = render.engine.world
   }
+  
   // draw all guns (and other stuff related to towers not already drawn by matter renderer)
   static drawAll() {
     towers.forEach((tower) => {
@@ -82,6 +90,7 @@ export class Tower {
       tower.effect.draw(Tower.render)
     })
   }
+  
   // tick all guns and towers
   static tickAll() {
     towers.forEach((tower) => {
@@ -90,6 +99,27 @@ export class Tower {
       })
       tower.tick()
     })
+  }
+  
+  static drawTower(render, x, y, type) {
+    let t = new Tower(type, null, false),
+        s = style.tower[type],
+        ctx = render.context
+    t.body.position = {
+      x: x + render.bounds.min.x,
+      y: y + render.bounds.min.y,
+    }
+    // all this just for drawOverlay?
+    // ah yes
+    draw.setFill(ctx, s.fillStyle)
+    draw.setStroke(ctx, s.strokeStyle)
+    draw.setLineWidth(ctx, s.lineWidth)
+    draw.setGlobalAlpha(ctx, s.opacity)
+    draw.save() // for restoration purposes
+    t.drawOverlay() // draw the tower shape! 
+    draw.restore()
+    // ok now for the more normal drawing function(s)
+    t.draw(render)
   }
   // ##### end tower static fields
   
@@ -113,13 +143,16 @@ export class Tower {
   body = null // Matter.Body
   // ##### end tower public instance fields
   
-  constructor(type = "basic", parent = this) {
-    towers.push(this)
-    
+  constructor(type = "basic", parent = this, add = true) {
+    if (add) {
+      towers.push(this)
+    }
     this.type = type || "basic"
-    this.parent = parent.parent || (parent || this)
+    this.parent = (parent) ? ( parent.parent || (parent || this) ) : this
     this.stat.setType(this.type)
-    this.createBody(true)
+    if (add) {
+      this.createBody(true)
+    }
   }
   
   // ##### tower getter functions
@@ -208,7 +241,11 @@ export class Tower {
     this.targetpos = moveResult
     // rotate!
     if (this.effect.canturn) {
-      this.targetrot = Vector.angle(this.position, c.pointer)
+      if (c.autorotate) {
+        this.targetrot += 0.015
+      } else {
+        this.targetrot = Vector.angle(this.position, c.pointer)
+      }
     }
   }
   

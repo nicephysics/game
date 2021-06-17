@@ -222,7 +222,7 @@ ui.draw = function() {
       draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
       draw.setLineWidth(ctx, 10) // CONST tier up circle line width
         draw._circle(ctx, x, y, size)
-        draw.tower(render, x, y, size * 0.5, choice) // CONST tier up circle tower size ratio
+        draw.tower(render, x, y, size * 0.7, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#283d00") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x, yText, choice, 0, "center")
@@ -232,6 +232,7 @@ ui.draw = function() {
   // enemy texts
   var i = 0
   for (let t of v.enemy_texts.slice()) {
+    // lots of default values ahead!
     x = t.x
     y = t.y
     size = t.size

@@ -287,7 +287,7 @@ export class Tower {
         circleStyle = style.gun.twin
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2.5)
-        draw.rectangle(render, this.x, this.y
+        // draw.rectangle(render, this.x, this.y, this.size... todo
         break
     }
   }

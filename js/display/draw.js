@@ -135,19 +135,30 @@ draw.rect = function(render, x, y, w, h) {
   draw._rect(ctx, x, y, w, h)
 }
 
-draw._rectangle = function(ctx, x, y, w, h) {
+draw._rectangle = function(ctx, x, y, w, h, a = 0) {
   ctx = ctx || draw.ctx
-  ctx.beginPath()
-    ctx.rect(x - w / 2, y - h / 2, w, h)
-  ctx.stroke()
-  ctx.fill()
+  if (a !== 0) {
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.rotate(a)
+      ctx.beginPath()
+        ctx.rect(x - w / 2, y - h / 2, w, h)
+      ctx.stroke()
+      ctx.fill()
+    ctx.restore()
+  } else {
+    ctx.beginPath()
+      ctx.rect(x - w / 2, y - h / 2, w, h)
+    ctx.stroke()
+    ctx.fill()
+  }
 }
 
-draw.rectangle = function(render, x, y, w, h) {
+draw.rectangle = function(render, x, y, w, h, a = 0) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
   var ctx = render.context
-  draw._rectangle(ctx, x, y, w, h)
+  draw._rectangle(ctx, x, y, w, h, a)
 }
 
 draw._circle = function(ctx, x, y, r) {

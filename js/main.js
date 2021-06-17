@@ -160,6 +160,8 @@ var init = function() {
 
   // run the engine
   Runner.run(runner, engine)
+  
+  Tower.runner = runner
 }
 
 window.addEventListener("load", function() {

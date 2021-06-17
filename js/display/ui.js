@@ -8,6 +8,13 @@ import { random } from "../util/random.js"
 
 export var ui = { }
 
+if (true) {
+  // 2 space indent!
+}
+
+const Common = Matter.Common,
+      Vector = Matter.Vector
+
 ui.vars = {
   // constants
   

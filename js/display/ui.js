@@ -202,7 +202,7 @@ ui.draw = function() {
     draw._rect(ctx, 0, 0, _width, _height)
     ctx.restore()
     // draw title
-    let top_text_angle = 10 * Math.sin(v.time / 100) // CONST tier up title text tilt formula
+    let top_text_angle = Math.degToRad(10) * Math.sin(v.time / 30) // CONST tier up title text tilt formula
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
       draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade", top_text_angle, "center")

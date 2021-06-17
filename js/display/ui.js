@@ -186,9 +186,9 @@ ui.draw = function() {
     ctx.lineCap = 'round'
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#0c9400") // dark green
-    draw.setLineWidth(ctx, 10)
-    draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize + arrowSize))
-    draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize + arrowSize))
+    draw.setLineWidth(ctx, 5)
+    draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
+    draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
   }
   

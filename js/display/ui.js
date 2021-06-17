@@ -50,6 +50,7 @@ ui.init = function(render) {
   let v = ui.vars,
       mouse = render.mouse,
       ctx = render.context
+  ctx.lineCap = 'round'
   // basically a click
   window.addEventListener("mousemove", function(event) {
     v.hover = mouse.absolute
@@ -118,7 +119,6 @@ ui.draw = function() {
         yBall = y2 + rBall
     v.xp_bar_xp = xp
     // draw! (remember to add ctx)
-    ctx.lineCap = 'round'
     draw.setFill(ctx, "transparent")
     draw.setLineWidth(ctx, 10)
     draw.setDarkStroke(ctx, color)
@@ -183,7 +183,6 @@ ui.draw = function() {
     // draw up symbol time
     let upSymbolSize = 0.7,
         arrowSize = 0.5
-    ctx.lineCap = 'round'
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#0c9400") // CONST tier up button symbol color
     draw.setLineWidth(ctx, 3)
@@ -202,15 +201,30 @@ ui.draw = function() {
     draw._rect(ctx, 0, 0, _width, _height)
     ctx.restore()
     // draw title
-    let top_text_angle = Math.degToRad(10) * Math.sin(v.time / 30) // CONST tier up title text tilt formula
+    let top_text_angle = math.degToRad(10)         // CONST tier up title text tilt angle
+                           * Math.sin(v.time / 30) // CONST tier up title text tilt speed
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
+    // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade", top_text_angle, "center")
     // some vars
+    y = _height / 2 // CONST tier up circle y-position
+    size = 50 // CONST tier up circle size
     let choices = ["T-1", "D-1"], // temporary FOR NOW todo
-        choiceLength = choices.length
+        choiceLength = choices.length,
+        yText = y - size - 20 // CONST tier up circle text gap (y)
     // draw circles
-    
+    for (let i = 0; i < choiceLength; ++i) {
+      let choice = choices[i]
+      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size + 20) // CONST tier up circles gap (x)
+      draw.setFill(ctx, "#7547ff55") // CONST tier up circle fill color
+      draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
+      draw.setLineWidth(ctx, 10) // CONST tier up circle line width
+        draw.circle(ctx, x, y, size)
+      draw.setFill(ctx, "#283d00") // CONST tier up circle text
+      draw.setStroke(ctx, "transparent")
+        draw._text(ctx, x, yText, choice, 0, "center")
+    }
     // todo
   }
   

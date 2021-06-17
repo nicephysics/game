@@ -18,6 +18,12 @@ const Body = Matter.Body,
       Composite = Matter.Composite,
       Vector = Matter.Vector
 
+controls.setPaused = function(paused) {
+  const player = Tower.player
+  player.control.paused = paused
+  Tower.runner.enabled = !paused
+}
+
 controls.init = function(render) {
   const engine = render.engine,
         mouse = render.mouse,
@@ -87,8 +93,7 @@ controls.init = function(render) {
         c.autorotate = !c.autorotate
         break
       case "KeyP":
-        c.paused = !c.paused
-        Tower.runner.enabled = !c.paused
+        controls.setPaused(!c.paused)
         break
       case "KeyU":
         // todo if ...

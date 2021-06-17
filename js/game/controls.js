@@ -98,6 +98,7 @@ controls.init = function(render) {
       case "KeyU":
         // todo if ...
         ui.vars.tier_up_show = !ui.vars.tier_up_show
+        controls.setPaused(ui.vars.tier_up_show)
         break
     }
   })

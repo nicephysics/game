@@ -213,10 +213,9 @@ ui.draw = function() {
       draw._line(ctx, x + size, y - size, x - size, y + size)
     if ( // check whether the user presses the x button OR clicks the outside
          clickpos && (
-         ( Math.abs(clickpos.x - x) < size && Math.abs(clickpos.y - y) < size ) ||
+         ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
          ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
        ) ) {
-      console.log(clickpos)
       v.tier_up_show = false
       controls.setPaused(false)
     }

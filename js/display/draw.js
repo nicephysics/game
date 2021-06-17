@@ -1,6 +1,9 @@
 // imports
 import { style } from "./style.js"
 
+import { Enemy } from "../game/enemy.js"
+import { Tower } from "../game/tower.js"
+
 export var draw = { }
 
 draw.ctx = document.getElementById("canvas").getContext("2d") // not actually needed?
@@ -277,6 +280,10 @@ draw.gun = function(render, x, y, length, height, aspect, angle) {
   ctx.closePath()
   ctx.stroke()
   ctx.fill()
+}
+
+draw.tower = function(render, x, y, type) {
+  Tower.drawTower(render, x, y, type)
 }
 
 // credits to https://stackoverflow.com/questions/58333678/draw-heart-using-javascript-in-any-postionx-y

@@ -151,7 +151,7 @@ ui.draw = function() {
   draw._heart(ctx, x, y, size, size)
   draw.setFill(ctx, "#662c2c")
   draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
-  draw._text(ctx, x - 15 - size / 2, y + 5, health + "", 0, "right")
+  draw._text(ctx, x - 15 - size / 2, y + 3, health + "", 0, "right")
   
   // upgrade buttons
   

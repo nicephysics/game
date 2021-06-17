@@ -48,7 +48,6 @@ ui.vars = {
 
 ui.init = function(render) {
   let v = ui.vars,
-      render = Tower.render,
       mouse = render.mouse,
       ctx = render.context
   // basically a click

@@ -213,14 +213,18 @@ ui.draw = function() {
     size = 50 // CONST tier up circle size
     let choices = ["T-5", "D-1"], // temporary FOR NOW todo
         choiceLength = choices.length,
-        yText = y - size - 20 // CONST tier up circle text gap (y)
+        yText = y + size + 20 // CONST tier up circle text gap (y)
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
       let choice = choices[i]
-      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size + 20) // CONST tier up circles gap (x)
-      draw.setFill(ctx, "#7547ff55") // CONST tier up circle fill color
+      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
+      if (Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * 1.1) { // CONST tier up circle mouse box size
+        draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
+      } else {
+        draw.setFill(ctx, "transparent")
+      }
       draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
-      draw.setLineWidth(ctx, 10) // CONST tier up circle line width
+      draw.setLineWidth(ctx, 5) // CONST tier up circle line width
         draw._circle(ctx, x, y, size)
         draw.tower(render, x, y, size * 0.7, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#283d00") // CONST tier up circle text

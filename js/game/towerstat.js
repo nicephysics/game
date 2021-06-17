@@ -3,6 +3,7 @@ export var towerstats = {
   basic: {
     size: 30,
     speed: 5,
+    rotspeed: 0.2,
     guns: [ {
       set: {
         x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
@@ -15,6 +16,7 @@ export var towerstats = {
   twin: {
     size: 25,
     speed: 6,
+    rotspeed: 0.2,
     guns:  [ {
       set: { 
         x: -0.54, y: 0, w: 0, h: 10, a: 0, d: 0, 
@@ -39,6 +41,7 @@ export class TowerStat {
   level = 0
   size = 1
   speed = 1
+  rotspeed = 1
   guns = [] // do not modify!
   tower = null // tower
   
@@ -60,6 +63,7 @@ export class TowerStat {
   set(s) {
     this.size = s.size || 10
     this.speed = s.speed || 1
+    this.rotspeed = s.rotspeed || 1
     this.guns = s.guns
   }
   

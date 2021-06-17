@@ -26,6 +26,7 @@ gameupdate.init = function(render) {
         mouse = render.mouse,
         world = engine.world
   
+  /*
   function loop() {
     if (Tower.runner.enabled) {
       Engine.update(engine, 1000 / 60)
@@ -35,6 +36,7 @@ gameupdate.init = function(render) {
   }
   
   let interval = setInterval(loop, 1000 / 60)
+  */
   
   function tickALL() {
     Tower.tickAll()

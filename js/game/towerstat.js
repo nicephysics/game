@@ -1,6 +1,7 @@
 
 export var towerstats = {
   basic: {
+    label: "G-0",
     size: 30,
     speed: 5,
     rotspeed: 0.2,
@@ -14,6 +15,7 @@ export var towerstats = {
     }, ],
   },
   twin: {
+    label: "T-5",
     size: 25,
     speed: 6,
     rotspeed: 0.2,
@@ -31,11 +33,37 @@ export var towerstats = {
       stat: ["shooter", "twin"],
     }, ],
   },
+  double: {
+    label: "D-1",
+    size: 25,
+    speed: 6,
+    rotspeed: 0.2,
+    guns:  [ {
+      set: { 
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0, 
+        style: "double",
+      },
+      stat: ["shooter", "double"],
+    }, {
+      set: {
+        x: 0.15, y: 0, w: 0, h: 10, a: 0, d: 0.5,
+        style: "double",
+      },
+      stat: ["shooter", "double"],
+    }, ],
+  },
+}
+
+export var towermap = { }
+
+for (let k in towerstats) {
+  towermap[towerstats[k].label] = k
 }
 
 export class TowerStat {
   // STATic
   static stats = towerstats
+  static map = towermap
   
   // fields
   level = 0

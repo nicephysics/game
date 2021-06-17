@@ -201,7 +201,7 @@ ui.draw = function() {
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.6) // CONST tier up overlay rect opacity
     let overlayGap = 50
-      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap, _height - overlayGap)
+      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore()
     // draw X button
     x = _width - overlayGap * 2
@@ -212,11 +212,12 @@ ui.draw = function() {
       draw._line(ctx, x - size, y - size, x + size, y + size)
       draw._line(ctx, x + size, y - size, x - size, y + size)
     if ( // check whether the user presses the x button OR clicks the outside
+         clickpos && (
          ( Math.abs(clickpos.x - x) < size && Math.abs(clickpos.y - y) < size ) ||
          ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
-       ) {
+       ) ) {
       v.tier_up_show = false
-      controls.setPaused(true)
+      controls.setPaused(false)
     }
     // draw title
     let top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle

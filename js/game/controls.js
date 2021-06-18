@@ -102,7 +102,7 @@ controls.init = function(render) {
         }
         break
       case "KeyN":
-        player.addxp(50)
+        player.addxp(50 * (player.level + 1))
         break
     }
   })

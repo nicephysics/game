@@ -29,7 +29,7 @@ export var towerstats = {
     label: "T-5",
     description: "Two weaker shooters side-by-side, like twins.",
     size: 24,
-    speed: 5.4,
+    speed: 5.2,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
@@ -111,7 +111,7 @@ export var towerstats = {
     label: "F-2",
     description: "Faster rate of fire and smaller projectiles.",
     size: 23,
-    speed: 5.7,
+    speed: 5.4,
     rotspeed: 0.22,
     guns: [ {
       set: {

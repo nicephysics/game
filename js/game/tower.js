@@ -3,7 +3,7 @@ import { aim } from "./aim.js"
 import { Effect } from "./effect.js"
 import { enemies, Enemy } from "./enemy.js"
 import { Gun } from "./gun.js"
-import { TowerStat, towermap } from "./towerstat.js"
+import { TowerStat, towermap, towerstats, towerlevels } from "./towerstat.js"
 // config
 import { config, category } from "../config/config.js"
 // util
@@ -205,6 +205,9 @@ export class Tower {
   get y() {
     return this.position.y
   }
+  get tier() {
+    return this.stat.tier
+  }
   get size() {
     return this.stat.size
   }
@@ -218,7 +221,12 @@ export class Tower {
     return this.guns[0].stat.speed
   }
   get canTierUp() {
-    return true // todo
+    if (this.tier <= 0) {
+      console.error("Tower's tier is " + this.tier + "!")
+      return true
+    } else {
+      return towerlevels[this.tier - 1] <= this.level // todo
+    }
   }
   // ##### end of tower getter functions
   
@@ -282,7 +290,7 @@ export class Tower {
       case "big":
       case "strong":
       case "fast":
-        circleStyle = style.gun.basic
+        circleStyle = style.gun[this.type]
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2)
         break

@@ -240,13 +240,13 @@ ui.draw = function() {
     for (let i = 0; i < choiceLength; ++i) {
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       const choice = choices[i],
-            mouseBoxSize = 1.1, // CONST tier up circle mouse box size
+            mouseBoxSize = 1.05, // CONST tier up circle mouse box size
             hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize, 
-            clicking = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
+            clicking = Vector.magnitudeSquared(Vector.sub(clickpos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
+      if (clicking) {
+        clicked = i
+      }
       if (hovering) {
-        if (clicking) {
-          clicked = i
-        }
         hovered = i
         draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
       } else {

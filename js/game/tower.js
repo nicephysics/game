@@ -231,9 +231,6 @@ export class Tower {
   // ##### end of tower getter functions
   
   // ##### tower setter functions
-  set type(t) {
-    this.refresh()
-  }
   set label(label) {
     this.body.label = label
   }
@@ -333,7 +330,7 @@ export class Tower {
     }
     this.body = Bodies.circle(x, y, this.size, {
       isStatic: true,
-      label: "Tower Body #" + this.id.toString(10) + " (" + this.type + ")",
+      label: "Tower Body #" + this.id + " (" + this.type + ")",
       collisionFilter: category.yourTower,
       render: style.tower[this.type],
     })

@@ -2,6 +2,7 @@ import { draw } from "./draw.js"
 import { style } from "./style.js"
 
 import { Tower } from "../game/tower.js"
+import { towerstats, towermap } from "../game/towerstat.js"
 import { controls } from "../game/controls.js"
 
 import { math } from "../util/math.js"
@@ -230,16 +231,22 @@ ui.draw = function() {
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     size = 50 // CONST tier up circle size
-    let choices = ["T-5", "D-1"], // temporary FOR NOW todo
+    let choices = towerstats[player.type].displayUpgrades || ["G-0"], // ?
         choiceLength = choices.length,
         hovered = -1,
+        clicked = -1,
         yText = y + size + 20 // CONST tier up circle text gap (y)
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       const choice = choices[i],
-            hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * 1.1 // CONST tier up circle mouse box size
+            mouseBoxSize = 1.1, // CONST tier up circle mouse box size
+            hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize, 
+            clicking = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
       if (hovering) {
+        if (clicking) {
+          clicked = i
+        }
         hovered = i
         draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
       } else {
@@ -255,18 +262,29 @@ ui.draw = function() {
         draw._text(ctx, x, yText, choice, 0, "center")
     }
     if (hovered >= 0) {
-      let choice = choices[hovered],
-          text = "Description for " + choice
+      const choice = choices[hovered],
+            text = "Description for " + choice,
+            fontSize = 20,
+            fontGap = 24
       draw.setFillNoStroke(ctx, "#003d09") // CONST tier up description text
-      draw.setFont(ctx, "20px Roboto")
-        draw._text(ctx, _width / 2, 3 * _height / 4, text, 0, "center")
-      // draw.splitText(ctx, text, _width - overlayGap * 6)
+      draw.setFont(ctx, fontSize + "px Roboto")
+      const lines = draw.splitText(ctx, text, _width - overlayGap * 6),
+            y = 3 * _height / 4 - (lines.length - 1) / 2 * fontGap
+      let i = 0
+      for (let line in lines) {
+        draw._text(ctx, _width / 2, y + fontGap * i, line, 0, "center")
+        ++i
+      }
     }
-    
+    if (clicked >= 0) {
+      Tower.player.type = towermap[choices[clicked]]
+      v.tier_up_show = false
+      controls.setPaused(false)
+    }
   }
   
   // enemy texts
-  var i = 0
+  let i = 0
   for (let t of v.enemy_texts.slice()) {
     // lots of default values ahead!
     x = t.x
@@ -283,7 +301,7 @@ ui.draw = function() {
     if (t.time < v.time) {
       v.enemy_texts.splice(i, 1)
     }
-    i++
+    ++i
   }
   
   // tick after...

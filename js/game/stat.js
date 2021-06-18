@@ -22,13 +22,19 @@ export var stats = {
   },
   /*** SIZE      MASS      SPEED     RELOAD    TIME      SPREAD  ***/
   shooter: {
-    z: 10,    m: 5,     s: 10,    r: 1,     t: 10,    p: 1,    i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
+    z: 10,    m: 5,     s: 10,    r: 1,     t: 10,    p: 1,     i: 1, ts: 1, e: 0.4, kf: 0, sf: 0, a: 0.005, y: "base",
   }, basic: { // basic gun
-    z: 0.6,   m: 1,     s: 1,     r: 1,     t: 1,     p: 2.0,  i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.6,   m: 1,     s: 1,     r: 1,     t: 1,     p: 2.0,   a: 1.1, // goodness: 0.36
   }, double: { // better than basic by a teeny little bit when doubled (except spread)
-    z: 0.5,   m: 0.9,   s: 0.9,   r: 1.1,   t: 0.8,   p: 2.4,  i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.5,   m: 1,     s: 0.95,  r: 1.1,   t: 0.8,   p: 2.4,           // goodness: 0.410
   }, twin: { // better than double, of course
-    z: 0.55,  m: 0.95,  s: 0.85,  r: 1.05,  t: 0.9,   p: 2.8,  i: 1, ts: 1, e: 1, kf: 1, sf: 1, a: 1,
+    z: 0.55,  m: 1,     s: 0.9,   r: 1.05,  t: 0.9,   p: 2.8,           // goodness: 0.467
+  }, big: { // slower but heavier, slower rate of fire
+    z: 0.85,  m: 1.2,   s: 0.8,   r: 1.3,   t: 1,     p: 2.0,           // goodness: 0.427
+  }, strong: { // faster and stronger, slow rate of fire
+    z: 0.65,  m: 1,     s: 1.2,   r: 1.5,   t: 1,     p: 1.5,   a: 0.9, // goodness: 0.428
+  }, fast: { // faster rate of fire, pew pew
+    z: 0.45,  m: 0.8,   s: 1.05,  r: 0.5,   t: 1,     p: 1.5,           // goodness: 0.424
   },
   
   enemy: {

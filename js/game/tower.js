@@ -279,6 +279,9 @@ export class Tower {
     switch (this.type) {
       case "basic":
       case "double":
+      case "big":
+      case "strong":
+      case "fast":
         circleStyle = style.gun.basic
         draw.setFillDarkenStroke(ctx, circleStyle)
         draw.circle(render, this.x, this.y, this.guns[0].stat.size * 2)

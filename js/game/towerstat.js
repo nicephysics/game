@@ -4,6 +4,7 @@ export var towerstats = {
   
   // BASIC
   basic: {
+    tier: 1,
     label: "G-0",
     description: "A simple tower with a simple gun.",
     size: 30,
@@ -24,6 +25,7 @@ export var towerstats = {
   
   // TWIN
   twin: {
+    tier: 2,
     label: "T-5",
     description: "Two weaker shooters side-by-side, like twins.",
     size: 27.5,
@@ -46,6 +48,7 @@ export var towerstats = {
   
   // DOUBLE
   double: {
+    tier: 2,
     label: "D-1",
     description: "Double the gun, double the fun!",
     size: 30,
@@ -68,6 +71,7 @@ export var towerstats = {
   
   // BIG
   big: {
+    tier: 2,
     label: "B-4",
     description: "Slower and bigger projectiles.",
     size: 33,
@@ -85,6 +89,7 @@ export var towerstats = {
   
   // STRONG
   strong: {
+    tier: 2,
     label: "S-3",
     description: "Faster and heavier projectiles.",
     size: 30,
@@ -102,6 +107,7 @@ export var towerstats = {
   
   // FAST
   fast: {
+    tier: 2,
     label: "F-2",
     description: "Faster rate of fire and smaller projectiles.",
     size: 25,
@@ -137,7 +143,7 @@ export class TowerStat {
   static map = towermap
   
   // fields
-  level = 0
+  tier = 0
   size = 1
   speed = 1
   rotspeed = 1
@@ -160,6 +166,7 @@ export class TowerStat {
   }
   
   set(s) {
+    this.tier = s.tier || 0
     this.size = s.size || 10
     this.speed = s.speed || 1
     this.rotspeed = s.rotspeed || 1

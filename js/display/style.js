@@ -56,9 +56,12 @@ style.default = {
 }
 
 style.tower = {
-  basic: style.fillStroke("#009ebd"),
+  basic: style.fillStroke("#00bd8e"),
   double: style.fillStroke("#009ebd"),
   twin: style.fillStroke("#009ebd"),
+  big: style.fillStroke("#009ebd"),
+  strong: style.fillStroke("#009ebd"),
+  fast: style.fillStroke("#009ebd"),
   // double: style.fillStroke("#bd7500"),
 }
 
@@ -79,9 +82,12 @@ style.enemy = {
 // non-matter styles
 
 style.gun = {
-  basic: "#62a7b5",
+  basic: "#62b59d",
   double: "#62a7b5",
   twin: "#62a7b5",
+  big: "#62a7b5",
+  strong: "#62a7b5",
+  fast: "#62a7b5",
   // double: "#c29d61",
   ballgun: "#d47d94",
 }

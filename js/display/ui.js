@@ -232,13 +232,15 @@ ui.draw = function() {
     size = 50 // CONST tier up circle size
     let choices = ["T-5", "D-1"], // temporary FOR NOW todo
         choiceLength = choices.length,
+        hovered = -1,
         yText = y + size + 20 // CONST tier up circle text gap (y)
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
+      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       const choice = choices[i],
             hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * 1.1 // CONST tier up circle mouse box size
-      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       if (hovering) {
+        hovered = i
         draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
       } else {
         draw.setFill(ctx, "transparent")
@@ -247,11 +249,20 @@ ui.draw = function() {
       draw.setLineWidth(ctx, 5) // CONST tier up circle line width
         draw._circle(ctx, x, y, size)
         draw.tower(render, x, y, size * 0.7, choice) // CONST tier up circle tower size ratio
-      draw.setFill(ctx, "#283d00") // CONST tier up circle text
+      draw.setFill(ctx, "#4b00ad") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
       draw.setFont(ctx, "20px Roboto")
         draw._text(ctx, x, yText, choice, 0, "center")
     }
+    if (hovered >= 0) {
+      let choice = choices[hovered],
+          text = "Description for " + choice
+      draw.setFillNoStroke(ctx, "#003d09") // CONST tier up description text
+      draw.setFont(ctx, "20px Roboto")
+        draw._text(ctx, _width / 2, 3 * _height / 4, text, 0, "center")
+      // draw.splitText(ctx, text, _width - overlayGap * 6)
+    }
+    
   }
   
   // enemy texts

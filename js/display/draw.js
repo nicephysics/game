@@ -359,3 +359,30 @@ draw.heart = function(render, x, y, w, h) {
   var ctx = render.context
   draw._heart(ctx, x, y, w, h)  
 }
+
+// math
+// from https://stackoverflow.com/questions/2936112/text-wrap-in-a-canvas-element
+draw._splitText = function(ctx, text, maxWidth) {
+  let words = text.split(" "),
+      lines = [],
+      currentLine = words[0]
+
+  for (var i = 1; i < words.length; i++) {
+    let word = words[i],
+        width = ctx.measureText(currentLine + " " + word).width
+    if (width < maxWidth) {
+        currentLine += " " + word
+    } else {
+        lines.push(currentLine)
+        currentLine = word
+    }
+  }
+  lines.push(currentLine)
+  return lines
+}
+
+draw.splitText = function(ctx, text, maxWidth) {
+  return text.split("\n")
+    .map(para => draw._splitText(ctx, para, maxWidth))
+    .reduce([], (a, b) => a.concat(b))
+}

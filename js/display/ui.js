@@ -138,12 +138,12 @@ ui.draw = function() {
     draw.setLightFill(ctx, color)
     draw._text(ctx, x, yBall, level + "", 0, "center")
     // check mouse!
-    if (smoothing || ( mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
+    if (smoothing || ( mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
       draw.setDarkFill(ctx, color)
       draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
     }
-    if (mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
+    if (mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
       draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
       draw.setDarkFill(ctx, color)
       draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
@@ -171,15 +171,16 @@ ui.draw = function() {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap
-    const color = "#00ffee", // CONST tier up button color
-          mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
-    if ( Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
+    let color = "#00ffee" // CONST tier up button color
+    const mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
+    if ( mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST tier up button hover size change
       color = "#ff7700" // CONST tier up button hover color (changed from #0095ff)
     }
-    if ( Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
+    if ( clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.tier_up_show = true
       controls.setPaused(true)
+      clickpos = false
     }
     draw.setFillDarkenStroke(ctx, color)
     draw.setLineWidth(ctx, 3) // CONST tier up button border width
@@ -219,6 +220,7 @@ ui.draw = function() {
        ) ) {
       v.tier_up_show = false
       controls.setPaused(false)
+      clickpos = false
     }
     // draw title
     const top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle
@@ -241,8 +243,8 @@ ui.draw = function() {
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       const choice = choices[i],
             mouseBoxSize = 1.05, // CONST tier up circle mouse box size
-            hovering = Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize, 
-            clicking = Vector.magnitudeSquared(Vector.sub(clickpos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
+            hovering = mousepos && Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize, 
+            clicking = clickpos && Vector.magnitudeSquared(Vector.sub(clickpos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
       if (clicking) {
         clicked = i
       }
@@ -281,6 +283,7 @@ ui.draw = function() {
       player.refresh()
       v.tier_up_show = false
       controls.setPaused(false)
+      clickpos = false
     }
   }
   

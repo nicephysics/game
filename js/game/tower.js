@@ -225,7 +225,7 @@ export class Tower {
       console.error("Tower's tier is " + this.tier + "!")
       return true
     } else {
-      return towerlevels[this.tier - 1] <= this.level // todo
+      return towerlevels.tier[this.tier - 1] <= this.level // todo
     }
   }
   // ##### end of tower getter functions

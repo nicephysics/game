@@ -126,7 +126,9 @@ for (key in towerstats) {
 }
 for (key in towerstats) {
   let ts = towerstats[key]
-  ts.displayUpgrades = ts.upgrades.map(upgrade => towerstats[upgrade].label)
+  if (ts.hasOwnProperty("upgrades")) {
+    ts.displayUpgrades = ts.upgrades.map(upgrade => towerstats[upgrade].label)
+  }
 }
 
 export class TowerStat {

@@ -273,7 +273,7 @@ ui.draw = function() {
       const lines = draw.splitText(ctx, text, _width - overlayGap * 6),
             y = 3 * _height / 4 - (lines.length - 1) / 2 * fontGap
       let i = 0
-      for (let line in lines) {
+      for (let line of lines) {
         draw._text(ctx, _width / 2, y + fontGap * i, line, 0, "center")
         ++i
       }

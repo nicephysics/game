@@ -2,9 +2,11 @@
 export var towerstats = {
   basic: {
     label: "G-0",
+    description: "A simple tower with a simple gun.",
     size: 30,
     speed: 5,
     rotspeed: 0.2,
+    upgrades: ["twin", "double", "big", "fast", "strong"],
     guns: [ {
       set: {
         x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
@@ -16,18 +18,19 @@ export var towerstats = {
   },
   twin: {
     label: "T-5",
-    size: 25,
+    description: "Two weaker shooters side-by-side, like twins.",
+    size: 27.5,
     speed: 6,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
-        x: -0.65, y: 0, w: 0, h: 7, a: 0, d: 0, 
+        x: -0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0, 
         style: "twin",
       },
       stat: ["shooter", "twin"],
     }, {
       set: {
-        x: 0.65, y: 0, w: 0, h: 7, a: 0, d: 0.5, 
+        x: 0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0.5,
         style: "twin",
       },
       stat: ["shooter", "twin"],
@@ -35,29 +38,80 @@ export var towerstats = {
   },
   double: {
     label: "D-1",
-    size: 27.5,
+    description: "Double the gun, double the fun!",
+    size: 30,
     speed: 5,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
-        x: 0, y: 2.5, w: 0, h: 10, a: 0, d: 0, 
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0, 
         style: "double",
       },
       stat: ["shooter", "double"],
     }, {
       set: {
-        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0.5,
+        x: 0, y: 0, w: 0, h: 8, a: 0, d: 0.5,
         style: "double",
       },
       stat: ["shooter", "double"],
+    }, ],
+  },
+  big: {
+    label: "B-4",
+    description: "Slower and bigger projectiles.",
+    size: 33,
+    speed: 4.5,
+    rotspeed: 0.15,
+    guns: [ {
+      set: {
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+        style: "big",
+      },
+      stat: ["shooter", "big"],
+      options: { },
+    }, ],
+  },
+  strong: {
+    label: "S-3",
+    description: "Faster and heavier projectiles.",
+    size: 30,
+    speed: 4.5,
+    rotspeed: 0.15,
+    guns: [ {
+      set: {
+        x: 0, y: 0, w: 0, h: 11, a: 0, d: 0,
+        style: "strong",
+      },
+      stat: ["shooter", "strong"],
+      options: { },
+    }, ],
+  },
+  strong: {
+    label: "F-2",
+    description: "Faster rate of fire and smaller projectiles.",
+    size: 25,
+    speed: 6,
+    rotspeed: 0.25,
+    guns: [ {
+      set: {
+        x: 0, y: 0, w: 0, h: 7, a: 0, d: 0,
+        style: "fast",
+      },
+      stat: ["shooter", "fast"],
+      options: { },
     }, ],
   },
 }
 
 export var towermap = { }
 
-for (let k in towerstats) {
-  towermap[towerstats[k].label] = k
+let key = ""
+for (key in towerstats) {
+  towermap[towerstats[key].label] = key
+}
+for (key in towerstats) {
+  let ts = towerstats[key]
+  ts.displayUpgrades = ts.upgrades.map(upgrade => towerstats[upgrade].label)
 }
 
 export class TowerStat {

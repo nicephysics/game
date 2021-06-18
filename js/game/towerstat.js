@@ -1,5 +1,8 @@
 
 export var towerstats = {
+  /* -------------------------------------- TIER 1 -------------------------------------- */
+  
+  // BASIC
   basic: {
     label: "G-0",
     description: "A simple tower with a simple gun.",
@@ -16,6 +19,10 @@ export var towerstats = {
       options: { },
     }, ],
   },
+  
+  /* -------------------------------------- TIER 2 -------------------------------------- */
+  
+  // TWIN
   twin: {
     label: "T-5",
     description: "Two weaker shooters side-by-side, like twins.",
@@ -36,6 +43,8 @@ export var towerstats = {
       stat: ["shooter", "twin"],
     }, ],
   },
+  
+  // DOUBLE
   double: {
     label: "D-1",
     description: "Double the gun, double the fun!",
@@ -56,6 +65,8 @@ export var towerstats = {
       stat: ["shooter", "double"],
     }, ],
   },
+  
+  // BIG
   big: {
     label: "B-4",
     description: "Slower and bigger projectiles.",
@@ -71,6 +82,8 @@ export var towerstats = {
       options: { },
     }, ],
   },
+  
+  // STRONG
   strong: {
     label: "S-3",
     description: "Faster and heavier projectiles.",
@@ -86,7 +99,9 @@ export var towerstats = {
       options: { },
     }, ],
   },
-  strong: {
+  
+  // FAST
+  fast: {
     label: "F-2",
     description: "Faster rate of fire and smaller projectiles.",
     size: 25,

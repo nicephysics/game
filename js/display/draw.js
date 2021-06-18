@@ -382,7 +382,10 @@ draw._splitText = function(ctx, text, maxWidth) {
 }
 
 draw.splitText = function(ctx, text, maxWidth) {
-  return text.split("\n")
-    .map(para => draw._splitText(ctx, para, maxWidth))
-    .reduce([], (a, b) => a.concat(b))
+  let lines = text.split("\n"),
+      newlines = []
+  for (let line of lines) {
+    newlines.concat(draw._splitText(ctx, line, maxWidth))
+  }
+  return newlines
 }

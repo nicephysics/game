@@ -137,6 +137,11 @@ for (key in towerstats) {
   }
 }
 
+export var towerlevels = {
+  tier: [5, 15, 25], // to be confirmed
+  ability: [], // ?
+}
+
 export class TowerStat {
   // STATic
   static stats = towerstats

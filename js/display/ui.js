@@ -263,7 +263,7 @@ ui.draw = function() {
     }
     if (hovered >= 0) {
       const choice = choices[hovered],
-            text = "Description for " + choice,
+            text = towerstats[towermap[choice]].description, // "Description for " + choice,
             fontSize = 20,
             fontGap = 24
       draw.setFillNoStroke(ctx, "#003d09") // CONST tier up description text

@@ -385,7 +385,7 @@ draw.splitText = function(ctx, text, maxWidth) {
   let lines = text.split("\n"),
       newlines = []
   for (let line of lines) {
-    newlines.concat(draw._splitText(ctx, line, maxWidth))
+    newlines = newlines.concat(draw._splitText(ctx, line, maxWidth))
   }
   return newlines
 }

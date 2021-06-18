@@ -96,9 +96,13 @@ controls.init = function(render) {
         controls.setPaused(!c.paused)
         break
       case "KeyU":
-        // todo if ...
-        ui.vars.tier_up_show = !ui.vars.tier_up_show
-        controls.setPaused(ui.vars.tier_up_show)
+        if (player.canTierUp) {
+          ui.vars.tier_up_show = !ui.vars.tier_up_show
+          controls.setPaused(ui.vars.tier_up_show)
+        }
+        break
+      case "KeyN":
+        player.addxp(50)
         break
     }
   })

@@ -151,7 +151,7 @@ ui.draw = function() {
   }
   
   // planet health
-  let health = Tower.health
+  const tower_health = Tower.health
   x = _width - v.health_heart_side_x
   y = _height - 20 - v.health_heart_side_y
   size = v.health_heart_size
@@ -160,7 +160,7 @@ ui.draw = function() {
   draw._heart(ctx, x, y, size, size)
   draw.setFill(ctx, "#662c2c") // CONST health heart color
   draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
-  draw._text(ctx, x - 15 - size / 2, y + 3, health + "", 0, "right")
+  draw._text(ctx, x - 15 - size / 2, y + 3, tower_health + "", 0, "right")
   
   // upgrade buttons
   
@@ -171,8 +171,8 @@ ui.draw = function() {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap
-    let color = "#00ffee", // CONST tier up button color
-        mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
+    const color = "#00ffee", // CONST tier up button color
+          mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
     if ( Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST tier up button hover size change
       color = "#ff7700" // CONST tier up button hover color (changed from #0095ff)
@@ -185,8 +185,8 @@ ui.draw = function() {
     draw.setLineWidth(ctx, 3) // CONST tier up button border width
     draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
-    let upSymbolSize = 0.7, // CONST
-        arrowSize = 0.5 // CONST
+    const upSymbolSize = 0.7, // CONST
+          arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#0c9400") // CONST tier up button symbol color
     draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
@@ -201,7 +201,7 @@ ui.draw = function() {
     draw.setFillNoStroke(ctx, "#00ffee") // CONST tier up overlay rect color
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.6) // CONST tier up overlay rect opacity
-    let overlayGap = 50
+    const overlayGap = 50
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore()
     // draw X button
@@ -221,8 +221,8 @@ ui.draw = function() {
       controls.setPaused(false)
     }
     // draw title
-    let top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle
-                           * Math.sin(v.time / 30) // CONST tier up title text tilt speed
+    const top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle
+                             * Math.sin(v.time / 30) // CONST tier up title text tilt speed
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
     draw.setFont(ctx, "30px Roboto")
@@ -231,11 +231,11 @@ ui.draw = function() {
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     size = 50 // CONST tier up circle size
-    let choices = towerstats[player.type].displayUpgrades || ["G-0"], // ?
-        choiceLength = choices.length,
-        hovered = -1,
-        clicked = -1,
-        yText = y + size + 20 // CONST tier up circle text gap (y)
+    const choices = towerstats[player.type].displayUpgrades || ["G-0"], // ?
+          choiceLength = choices.length,
+          yText = y + size + 20 // CONST tier up circle text gap (y)
+    let hovered = -1,
+        clicked = -1
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
@@ -277,7 +277,8 @@ ui.draw = function() {
       }
     }
     if (clicked >= 0) {
-      Tower.player.type = towermap[choices[clicked]]
+      player.type = towermap[choices[clicked]]
+      player.refresh()
       v.tier_up_show = false
       controls.setPaused(false)
     }

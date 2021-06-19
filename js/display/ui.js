@@ -245,14 +245,14 @@ ui.draw = function() {
     draw.setLineWidth(ctx, 3) // CONST tier up button border width
       draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
-    const statSymbolSize = 0.7 // CONST upgrade button symbol size
+    const statSymbolSize = 0.6 // CONST upgrade button symbol size
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, "#1d007a") // CONST upgrade button symbol color
-    draw.setLineWidth(ctx, 3) // CONST upgrade button symbol line width
-    y -= size * statSymbolSize
-    draw._line( ctx, x, y, x, y + size * 1.3 )
-    draw._line( ctx, x - size / 4, y, x - size / 4, y + size * 0.5 )
-    draw._line( ctx, x + size / 4, y, x + size / 4, y + size * 0.9 )
+    draw.setLineWidth(ctx, 5) // CONST upgrade button symbol line width
+    y += size * statSymbolSize
+    draw._line( ctx, x, y, x, y - size * 1.2 )
+    draw._line( ctx, x - size * 0.4, y, x - size * 0.4, y - size * 0.45 )
+    draw._line( ctx, x + size * 0.4, y, x + size * 0.4, y - size * 0.85 )
   }
   
   

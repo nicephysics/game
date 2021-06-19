@@ -107,3 +107,12 @@ style.effect = {
     antifreeze: "transparent",
   }
 }
+
+style.upgradetext = [
+  "#d674ba", // projectile size
+  "#d67474", // projectile mass
+  "#d6b974", // projectile speed
+  "#a5d674", // projectile launch rate
+  "#74d6ce", // tower movement speed
+  // some more...
+]

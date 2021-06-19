@@ -10,6 +10,8 @@ import { wave } from "../game/wave.js"
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 
+import { config, category } from "../config/config.js"
+
 export var ui = { }
 
 if (true) {
@@ -44,6 +46,7 @@ ui.vars = {
   xp_bar_xp: 0,
   xp_bar_show: 1,
   
+  upgrade_show: false, // upgrade overlay show
   tier_up_show: false, // tier up overlay show
   
   enemy_texts: [ ],
@@ -83,92 +86,220 @@ ui.tickAfter = function() {
 }
 
 ui.draw = function() {
-  let v = ui.vars,
-      render = Tower.render,
-      mousepos = render.mouse.absolute,
+  
+  // define common variables first
+  
+  const v = ui.vars,
+        render = Tower.render,
+        ctx = render.context,
+        player = Tower.player,
+        playerX = player.x,
+        playerY = player.y,
+        playerSize = player.size,
+        playerType = player.type,
+        playerStat = player.stat,
+        _width = render.options.width,
+        _height = render.options.height
+  
+  let mousepos = render.mouse.absolute,
       clickpos = v.click,
-      ctx = render.context,
-      player = Tower.player,
-      playerX = player.x,
-      playerY = player.y,
-      playerSize = player.size,
-      _width = render.options.width,
-      _height = render.options.height,
+      stat = towerstats[playerType],
       x, y,
       size,
       width, height
-      // define common variables first
+  
   
   // tick!
   ui.tick()
   
-  // bar vars
-  let xp_show = v.xp_bar_show,
-      xp = math.lerp(v.xp_bar_xp, player.xp, 0.05), // CONST xp bar lerp
-      // whether the UI is currently still smoothing
-      smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= 0.01 ) // CONST xp bar smooth threshold
-  if (xp_show > 0 || smoothing) {
-    // more mars bars- no, bar vars
-    let color = v.xp_bar_color,
-        level = math.towerlevel(Math.round(xp)),
-        current = Math.round(xp) - math.towerxp(level),
-        next = math.towerxpneeded(level),
-        ratio = current / next,
-        rBall = 15 // CONST xp ball radius
-    x = _width - v.xp_bar_side_x * xp_show
-    height = v.xp_bar_length_ratio * _height
-    let y1 = _height / 2 - height / 2 - rBall * 2,
-        y2 = y1 + height,
-        mid = y2 - ratio * height,
-        yBall = y2 + rBall
-    v.xp_bar_xp = xp
-    // draw! (remember to add ctx)
-    draw.setFill(ctx, "transparent")
-    draw.setLineWidth(ctx, 10)
-    draw.setDarkStroke(ctx, color)
-    draw._line(ctx, x, y1, x, y2)
-    draw.setLineWidth(ctx, 8)
-    draw.setLightStroke(ctx, color)
-    draw._line(ctx, x, y1, x, y2)
-    draw.setStroke(ctx, color)
-    draw._line(ctx, x, mid, x, y2)
-    // draw ball!
-    draw.setDarkFill(ctx, color)
-    draw.setStroke(ctx, "transparent")
-    draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
-    draw._circle(ctx, x, yBall - 2, rBall)
-    draw.setLightFill(ctx, color)
-    draw._text(ctx, x, yBall, level + "", 0, "center")
-    // check mouse!
-    if (smoothing || ( mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
-      draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+  // there will be 5 spaces after every major section in this function
+  
+  
+  
+  
+  
+  // draw the xp bar
+  
+  if (true) {
+    // bar vars
+    let xp_show = v.xp_bar_show,
+        xp = math.lerp(v.xp_bar_xp, player.xp, 0.05), // CONST xp bar lerp
+        // whether the UI is currently still smoothing
+        smoothing = ( Math.abs(player.xp - v.xp_bar_xp) >= 0.01 ) // CONST xp bar smooth threshold
+    if (xp_show > 0 || smoothing) {
+      // more mars bars- no, bar vars
+      let color = v.xp_bar_color,
+          level = math.towerlevel(Math.round(xp)),
+          current = xp - math.towerxp(level),
+          next = math.towerxpneeded(level),
+          ratio = current / next,
+          rBall = 15 // CONST xp ball radius
+      x = _width - v.xp_bar_side_x * xp_show
+      height = v.xp_bar_length_ratio * _height
+      let y1 = _height / 2 - height / 2 - rBall * 2,
+          y2 = y1 + height,
+          mid = y2 - ratio * height,
+          yBall = y2 + rBall
+      v.xp_bar_xp = xp
+      // draw! (remember to add ctx)
+      draw.setFill(ctx, "transparent")
+      draw.setLineWidth(ctx, 10)
+      draw.setDarkStroke(ctx, color)
+      draw._line(ctx, x, y1, x, y2)
+      draw.setLineWidth(ctx, 8)
+      draw.setLightStroke(ctx, color)
+      draw._line(ctx, x, y1, x, y2)
+      draw.setStroke(ctx, color)
+      draw._line(ctx, x, mid, x, y2)
+      // draw ball!
       draw.setDarkFill(ctx, color)
-      draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
-    }
-    if (mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
-      draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
-      draw.setDarkFill(ctx, color)
-      draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
+      draw.setStroke(ctx, "transparent")
+      draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
+      draw._circle(ctx, x, yBall - 2, rBall)
+      draw.setLightFill(ctx, color)
+      draw._text(ctx, x, yBall, level + "", 0, "center")
+      // check mouse!
+      if (smoothing || ( mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
+        draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+        draw.setDarkFill(ctx, color)
+        draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
+      }
+      if (mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
+        draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+        draw.setDarkFill(ctx, color)
+        draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
+      }
     }
   }
   
-  // planet health
-  const tower_health = Tower.health
-  x = _width - v.health_heart_side_x
-  y = _height - 20 - v.health_heart_side_y
-  size = v.health_heart_size
-  draw.setFill(ctx, "#cc0000")
-  draw.setStroke(ctx, "transparent")
-  draw._heart(ctx, x, y, size, size)
-  draw.setFill(ctx, "#662c2c") // CONST health heart color
-  draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
-  draw._text(ctx, x - 15 - size / 2, y + 3, tower_health + "", 0, "right")
   
-  // upgrade buttons
   
-  // upgrade side
+  
+  
+  // draw planet health
+  
+  if (true) {
+    const towerHealth = Tower.health
+    x = _width - v.health_heart_side_x
+    y = _height - 20 - v.health_heart_side_y
+    size = v.health_heart_size
+    draw.setFill(ctx, "#cc0000")
+    draw.setStroke(ctx, "transparent")
+    draw._heart(ctx, x, y, size, size)
+    draw.setFill(ctx, "#662c2c") // CONST health heart color
+    draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
+    draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
+  }
+  
+  // draw upgrade buttons
+  
+  
+  
+  // draw upgrade overlay
+  
+  if (v.upgrade_show) {
+    // draw translucent overlay rectangle
+    draw.setFillNoStroke(ctx, "#ffa200") // CONST upgrade overlay rect color
+    ctx.save() // save the canvas
+    draw.setGlobalAlpha(ctx, 0.65) // CONST upgrade overlay rect opacity
+    const overlayGap = 40 // CONST upgrade overlay gap
+      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
+    ctx.restore() // restore the canvas to last save (above)
+    // draw X button
+    x = _width - overlayGap * 2.4
+    y = overlayGap * 2.4
+    size = 10 // CONST upgrade overlay X button size
+    draw.setStrokeNoFill(ctx, "#cf0000") // CONST upgrade overlay X button color
+    draw.setLineWidth(ctx, 5)
+      draw._line(ctx, x - size, y - size, x + size, y + size)
+      draw._line(ctx, x + size, y - size, x - size, y + size)
+    if ( // check whether the user presses the x button OR clicks the outside (hee)
+         clickpos && (
+         ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
+         ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
+       ) ) {
+      v.upgrade_show = false
+      controls.setPaused(false)
+      clickpos = false
+    }
+    // draw title
+    const top_text_angle = math.degToRad(1)           // CONST upgrade overlay title text tilt angle
+                             * Math.sin(v.time / 100) // CONST upgrade overlay title text tilt speed
+    draw.setFill(ctx, "#3d2200") // CONST upgrade overlay title text color
+    draw.setStroke(ctx, "transparent")
+    draw.setFont(ctx, "30px Roboto")
+    // CONST tier up title text position (x, y)
+      draw._text(ctx, _width / 2, _height / 4, "Upgrade Stats", top_text_angle, "center")
+    // finally!
+    // upgrade constant vars (mostly arrays)
+    const upgradeList = config.upgradetext[playerStat.upgradetext],
+          upgradeNumbers = playerStat.upgradeArray,
+          upgradeColors = style.upgradetext,
+          upgradeLength = upgradeList.length,
+          upgradeMax = upgradeNumbers.reduce((a, b) => Math.max(a, b))
+    // vars that change each loop
+    let utext = "default stat name",
+        unumber = 0,
+        ucolor = "#888888",
+        ratio = 0,
+        percentText = "0%",
+        ygap = 6 // gap between rows
+    
+    x = _width / 3 - 50
+    width = _width / 3
+    height = 20 // height of each one
+    ygap += height
+    y = _height / 2 - (upgradeLength - 1) / 2
+    for (let i = 0; i < upgradeLength, ++i) {
+      utext = upgradeList[i]
+      ucolor = upgradeColors[i]
+      ratio = upgradeNumbers[i] / upgradeMax
+      size = 10
+      const percentText = Math.round(ratio * 100) + "%"
+      // draw upgrade bar title
+      draw.setDarkFill(ctx, ucolor)
+      draw.setStroke(ctx, "transparent")
+      draw.setFont(ctx, "16px Roboto Condensed") // CONST upgrade bar text font
+        draw._text(ctx, x - 20, y, utext, 0, "right")
+      // draw upgrade plus/minus button circles
+      draw.setFillDarkenStroke(ctx, ucolor)
+      draw.setLineWidth(ctx, 3)
+        draw._circle(ctx, x, y, size)
+        draw._circle(ctx, x + 30, y, size)
+      // draw upgrade plus/minus signs
+      size *= 0.6 // CONST upgrade bar plus/minus sign size ratio
+      draw.setStrokeNoFill(ctx, "#006b07") // CONST upgrade bar plus color
+        draw._line(ctx, x - size, y, x + size, y)
+        draw._line(ctx, x, y - size, x, y + size)
+      draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
+        draw._line(ctx, x + 25 - size, y, x + 25 + size, y)
+      // TODO upgrade bar button click detection
+      // draw bar
+      x += 50 // CONST upgrade bar x-translate of bar
+      draw.setFill(ctx, "transparent")
+      draw.setDarkStroke(ctx, ucolor)
+      draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
+        draw._line(ctx, x, y, x + width, y)
+      draw.setLightStroke(ctx, ucolor)
+      draw.setLineWidth(ctx, 8) // CONST upgrade bar thinner line width
+        draw._line(ctx, x, y, x + width, y)
+      draw.setStroke(ctx, ucolor)
+        draw._line(ctx, x, y, x + width * ratio, y)
+      // draw % text
+      draw.setDarkFill(ctx, ucolor)
+      draw.setStroke(ctx, "transparent")
+        draw._text(ctx, x + width + 15, y, percentText, 0, "left")
+      x -= 50 // same as above
+      y += ygap
+    }
+  }
+  
+  
+  
+  
   
   // tier up button
+  
   if (player.canTierUp && !v.tier_up_show) {
     size = 14 // CONST tier up button size
     x = playerX
@@ -198,7 +329,12 @@ ui.draw = function() {
     draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
   }
   
+  
+  
+  
+  
   // tier up overlay
+  
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
     draw.setFillNoStroke(ctx, "#00ffee") // CONST tier up overlay rect color
@@ -210,7 +346,7 @@ ui.draw = function() {
     // draw X button
     x = _width - overlayGap * 2
     y = overlayGap * 2
-    size = overlayGap / 5
+    size = 10 // CONST tier up overlay X button size
     draw.setStrokeNoFill(ctx, "#cf0000") // CONST tier up overlay X button color
     draw.setLineWidth(ctx, 5)
       draw._line(ctx, x - size, y - size, x + size, y + size)
@@ -235,7 +371,7 @@ ui.draw = function() {
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     size = 50 // CONST tier up circle size
-    const choices = towerstats[player.type].displayUpgrades || ["G-0"], // ?
+    const choices = stat.displayUpgrades || ["G-0"], // ?
           choiceLength = choices.length,
           yText = y + size + 20 // CONST tier up circle text gap (y)
     let hovered = -1,
@@ -289,7 +425,12 @@ ui.draw = function() {
     }
   }
   
+  
+  
+  
+  
   // enemy texts
+  
   let i = 0
   for (let t of v.enemy_texts.slice()) {
     // lots of default values ahead!
@@ -310,6 +451,12 @@ ui.draw = function() {
     ++i
   }
   
+  
+  
+  
+  
   // tick after...
   ui.tickAfter()
+  
+  // end of function
 }

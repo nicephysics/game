@@ -79,7 +79,7 @@ export class Gun {
   
   // get
   get statSize() {
-    return this.stat.size * this.object.stat.mult.size
+    return this.stat.size * this.statMult.size
   }
   get realPosition() {
     if (this.size.x === 0) {
@@ -135,6 +135,9 @@ export class Gun {
   get objectGuns() {
     return this.object.guns
   }
+  get statMult() {
+    return this.object.stat.mult
+  }
   get direction() {
     return this.angle + this.objectAngle
   }
@@ -177,7 +180,7 @@ export class Gun {
   
   // go!
   refreshStats() {
-    this.shot = this.delay * this.stat.reloadFrames
+    this.shot = this.delay * this.stat.reloadFrames * this.statMult.reload
   }
   
   draw(render) {
@@ -203,7 +206,7 @@ export class Gun {
     // check whether gun can shoot
     if (this.dummy) return
     // get reload from stat
-    var reload = this.stat.reloadFrames * this.object.stat.mult.reload
+    var reload = this.stat.reloadFrames * this.statMult.reload
     // check for player existence
     if (this.gametype === "tower" && this.tower.isPlayer) {
       // do something here?
@@ -225,7 +228,7 @@ export class Gun {
   
   shoot() {
     var s = this.stat,
-        m = this.object.stat.mult,
+        m = this.statMult,
         bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
         objectStyle = style[bodyGametype],
         b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {

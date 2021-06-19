@@ -187,7 +187,9 @@ export class Gun {
   }
   
   refreshShot() {
-    this.shot = -this.delay * this.reloadFrames
+    if (this.shot > (1 - this.delay) * this.reloadFrames) {
+      this.shot = (1 - this.delay) * this.reloadFrames
+    }
   }
   
   draw(render) {

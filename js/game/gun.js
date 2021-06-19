@@ -78,9 +78,12 @@ export class Gun {
   }
   
   // get
+  get statSize() {
+    return this.stat.size * this.object.stat.mult.size
+  }
   get realPosition() {
     if (this.size.x === 0) {
-      let x = this.position.x * this.stat.size * 2 // difference!
+      let x = this.position.x * this.statSize * 2 // difference!
       let y = this.position.y * this.objectSize * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
@@ -105,7 +108,7 @@ export class Gun {
     return this.location.y
   }
   get width() {
-    return Math.max(this.size.x * this.objectSize * Gun.set.scale, this.stat.size)
+    return Math.max(this.size.x * this.objectSize * Gun.set.scale, this.statSize)
   }
   get height() {
     return this.size.y * this.objectSize * Gun.set.scale
@@ -200,7 +203,7 @@ export class Gun {
     // check whether gun can shoot
     if (this.dummy) return
     // get reload from stat
-    var reload = this.stat.reloadFrames
+    var reload = this.stat.reloadFrames * this.object.stat.mult.reload
     // check for player existence
     if (this.gametype === "tower" && this.tower.isPlayer) {
       // do something here?
@@ -222,28 +225,29 @@ export class Gun {
   
   shoot() {
     var s = this.stat,
+        m = this.object.stat.mult,
         bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
         objectStyle = style[bodyGametype],
-        b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size, {
+        b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
           isStatic: false,
           label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
           collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
           render: objectStyle.bullet, // big todo
-          density: s.mass * 0.001,
+          density: s.mass * m.mass * 0.001,
           friction: s.kineticFriction,
           frictionStatic: s.staticFriction,
-          frictionAir: s.airResistance,
+          frictionAir: s.airResistance * m.air,
         });
     b.gametype = bodyGametype
     b.gun = this
-    b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread))
+    b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
     if (s.effect.type) {
       b.effect = s.effect
     }
     if (s.speed !== 0) {
       Body.setVelocity(b, Vector.mult(
         Vector.create( Math.cos(b.direction), Math.sin(b.direction) ),
-        s.speed
+        s.speed * m.speed
       ))
     }
     if (s.inertia !== 1) {

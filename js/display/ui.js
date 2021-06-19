@@ -220,7 +220,42 @@ ui.draw = function() {
     draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
   
-  // draw upgrade buttons
+  
+  
+  
+  
+  // draw upgrade button at the side...
+  
+  if (!v.upgrade_show) {
+    size = 18 // CONST upgrade button size
+    x = _width - size - 15 // CONST upgrade button right side gap
+    y = _height - size - 100 // CONST upgrade button 
+    let color = "#ff7700" // CONST upgrade button color
+    const mouseBoxSize = size * 1.1 // CONST upgrade button mouse box ratio
+    if ( !v.something_show() && mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
+      size *= 1.0 // CONST upgrade button hover size change
+      color = "#00ffee" // CONST upgrade button hover color
+    }
+    if ( !v.something_show() && clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
+      v.upgrade_show = true
+      controls.setPaused(true)
+      clickpos = false
+    }
+    draw.setFillDarkenStroke(ctx, color)
+    draw.setLineWidth(ctx, 3) // CONST tier up button border width
+      draw._rectangle(ctx, x, y, size * 2, size * 2)
+    // draw up symbol time
+    const statSymbolSize = 0.7 // CONST upgrade button symbol size
+    draw.setFill(ctx, "transparent")
+    draw.setStroke(ctx, "#1d007a") // CONST upgrade button symbol color
+    draw.setLineWidth(ctx, 3) // CONST upgrade button symbol line width
+    y -= size * statSymbolSize
+    draw._line( ctx, x, y, x, y + size * 1.3 )
+    draw._line( ctx, x - size / 4, y, x - size / 4, y + size * 0.5 )
+    draw._line( ctx, x + size / 4, y, x + size / 4, y + size * 0.9 )
+  }
+  
+  
   
   
   

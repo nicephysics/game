@@ -161,11 +161,12 @@ export class TowerStat {
   upgrade = { }
   upgradeMax = {
     // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
-    size: 50,
-    reload: 50,
-    towerspeed: 30,
-    spread: 20,
-    air: 20,
+    size: 19,
+    speed: 49,
+    reload: 49,
+    towerspeed: 19,
+    spread: 19,
+    air: 19,
   }
   
   constructor(tower) {
@@ -185,6 +186,29 @@ export class TowerStat {
       ans.push(this.upgrade[k])
     }
     return ans
+  }
+  
+  get mult() {
+    const u = this.upgrade,
+          ans = { }
+    // 1. size (add 4%)
+    ans.size = 1 + u.size * 0.04
+    // 2. mass (add 7%)
+    ans.mass = 1 + u.mass * 0.07
+    // 3. speed (add 3%)
+    ans.speed = 1 + u.speed * 0.03
+    // 4. reload (add 6%)
+    ans.reload = 1 / (1 + u.reload * 0.03)
+    // 5. towerspeed (add 3%)
+    ans.towerspeed = 1 + u.towerspeed * 0.03
+    // 6. spread (multiply by 97%)
+    ans.spread = Math.pow(0.97, u.spread)
+    // 7. air (multiply by 96%)
+    ans.air = Math.pow(0.96, u.air)
+  }
+  
+  get realspeed() {
+    return this.speed * this.mult.towerspeed
   }
   
   // set

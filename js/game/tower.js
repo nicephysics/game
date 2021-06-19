@@ -419,6 +419,7 @@ export class Tower {
     this.xp += add
     Tower.xp += add
     this.refreshLevel()
+    this.stat.refreshPoints()
   }
   
   // contemplationOfMortality

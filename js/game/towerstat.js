@@ -205,6 +205,7 @@ export class TowerStat {
     ans.spread = Math.pow(0.97, u.spread)
     // 7. air (multiply by 96%)
     ans.air = Math.pow(0.96, u.air)
+    return ans
   }
   
   get realspeed() {

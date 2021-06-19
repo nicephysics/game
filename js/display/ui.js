@@ -46,6 +46,10 @@ ui.vars = {
   xp_bar_xp: 0,
   xp_bar_show: 1,
   
+  upgrade_ratios: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+  
+  // show (overlay)
   upgrade_show: false, // upgrade overlay show
   tier_up_show: false, // tier up overlay show
   something_show: function() {
@@ -253,7 +257,7 @@ ui.draw = function() {
                              * Math.sin(v.time / 100) // CONST upgrade overlay title text tilt speed
     draw.setFill(ctx, "#3d2200") // CONST upgrade overlay title text color
     draw.setStroke(ctx, "transparent")
-    draw.setFont(ctx, "30px Roboto")
+    draw.setFont(ctx, "30px Roboto Mono") // CONST upgrade overlay title text font
     // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Upgrade Stats", top_text_angle, "center")
     // finally!
@@ -262,12 +266,14 @@ ui.draw = function() {
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
-          upgradeMax = 1 + upgradeNumbers.reduce((a, b) => Math.max(a, b))
+          upgradeMax = upgradeNumbers.reduce((a, b) => a + b + 1),
+          oldratios = v.upgrade_ratios
     // vars that (can) change each loop (rather, *let*s that change every loop)
     let utext = "default stat name",
         unumber = 0,
         ucolor = "#888888",
         ratio = 0,
+        dispratio = 0,
         percentText = "0%",
         ygap = 6, // gap between rows
         hovering = false,
@@ -292,12 +298,16 @@ ui.draw = function() {
       unumber = upgradeNumbers[i] + 1
       ratio = unumber / upgradeMax
       size = 10
+      dispratio = math.lerp(oldratios[i] || 0, ratio, 0.2)
+      oldratios[i] = dispratio
       const percentText = Math.round(ratio * 100) + "%"
+      
       // draw upgrade bar title
       draw.setDarkFill(ctx, ucolor)
       draw.setStroke(ctx, "transparent")
       draw.setFont(ctx, "16px Roboto Condensed") // CONST upgrade bar text font
         draw._text(ctx, x - 20, y, utext, 0, "right")
+      
       // upgrade bar button hover/click detection
       hovering = ui.hitcircle(mousepos, x, y, size + 2)
       hovering_ = ui.hitcircle(mousepos, x + 60, y, size + 3)
@@ -310,15 +320,19 @@ ui.draw = function() {
         clicked = i
         clicksign = -1
       }
+      
       // draw upgrade plus/minus button circles
       draw.setLineWidth(ctx, 3)
       draw.setFillDarkenStroke(ctx, (hovering) ? "#46bf00" : ucolor)
         draw._circle(ctx, x, y, size)
       draw.setFillDarkenStroke(ctx, (hovering_) ? "#bf3600" : ucolor)
         draw._circle(ctx, x + 60, y, size)
+      
+      // draw upgrade number
       draw.setDarkFill(ctx, ucolor)
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x + 30, y, unumber + "", 0, "center")
+      
       // draw upgrade plus/minus signs
       size *= 0.6 // CONST upgrade bar plus/minus sign size ratio
       draw.setStrokeNoFill(ctx, "#006b07") // CONST upgrade bar plus color
@@ -326,8 +340,10 @@ ui.draw = function() {
         draw._line(ctx, x, y - size, x, y + size)
       draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
         draw._line(ctx, x + 60 - size, y, x + 60 + size, y)
+      
       // draw bar
       x += 85 // CONST upgrade bar x-translate of bar
+      
       draw.setFill(ctx, "transparent")
       draw.setDarkStroke(ctx, ucolor)
       draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
@@ -336,12 +352,15 @@ ui.draw = function() {
       draw.setLineWidth(ctx, 8) // CONST upgrade bar thinner line width
         draw._line(ctx, x, y, x + width, y)
       draw.setStroke(ctx, ucolor)
-        draw._line(ctx, x, y, x + width * ratio, y)
+        draw._line(ctx, x, y, x + width * dispratio, y)
+      
       // draw % text
       draw.setDarkFill(ctx, ucolor)
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x + width + 15, y, percentText, 0, "left")
+      
       x -= 85 // same as above
+      
       y += ygap
     }
     
@@ -429,7 +448,7 @@ ui.draw = function() {
                              * Math.sin(v.time / 30) // CONST tier up title text tilt speed
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
-    draw.setFont(ctx, "30px Roboto Condensed")
+    draw.setFont(ctx, "30px Roboto Mono") // CONST tier up title text font
     // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade!", top_text_angle, "center")
     // some vars

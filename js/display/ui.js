@@ -259,14 +259,14 @@ ui.draw = function() {
     draw.setStroke(ctx, "transparent")
     draw.setFont(ctx, "30px Roboto Mono") // CONST upgrade overlay title text font
     // CONST tier up title text position (x, y)
-      draw._text(ctx, _width / 2, _height / 4, "Upgrade Stats", top_text_angle, "center")
+      draw._text(ctx, _width / 2, _height / 4, "Upgrade Yourself!", top_text_angle, "center")
     // finally!
     // upgrade constant vars (mostly arrays)
     const upgradeList = config.upgradetext[playerStat.upgradetext],
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
-          upgradeMax = upgradeNumbers.reduce((a, b) => a + b + 1),
+          upgradeMax = 0,
           oldratios = v.upgrade_ratios
     // vars that (can) change each loop (rather, *let*s that change every loop)
     let utext = "default stat name",
@@ -288,6 +288,12 @@ ui.draw = function() {
     height = 20 // height of each one
     ygap += height
     y = _height / 2 - (upgradeLength - 1) / 2
+    // a SMALL loop
+    for (let i = 0; i < upgradeLength; ++i) {
+      if (upgradeList[i] !== "") {
+        upgradeMax += upgradeNumbers[i] + 1
+      }
+    }
     // a HUGE loop
     for (let i = 0; i < upgradeLength; ++i) {
       if (upgradeList[i] === "") {
@@ -298,7 +304,7 @@ ui.draw = function() {
       unumber = upgradeNumbers[i] + 1
       ratio = unumber / upgradeMax
       size = 10
-      dispratio = math.lerp(oldratios[i] || 0, ratio, 0.2)
+      dispratio = math.lerp(oldratios[i] || 0, ratio, 0.07)
       oldratios[i] = dispratio
       const percentText = Math.round(ratio * 100) + "%"
       

@@ -232,16 +232,16 @@ ui.draw = function() {
     ctx.restore() // restore the canvas to last save (above)
     // draw X button
     if (true) {
-      x = _width - overlayGap * 2.4
-      y = overlayGap * 2.4
+      const crossX = _width - overlayGap * 2.4,
+            crossY = overlayGap * 2.4
       size = 10 // CONST upgrade overlay X button size
       draw.setStrokeNoFill(ctx, "#cf0000") // CONST upgrade overlay X button color
       draw.setLineWidth(ctx, 5)
-        draw._line(ctx, x - size, y - size, x + size, y + size)
-        draw._line(ctx, x + size, y - size, x - size, y + size)
+        draw._line(ctx, crossX - size, crossY - size, crossX + size, crossY + size)
+        draw._line(ctx, crossX + size, crossY - size, crossX - size, crossY + size)
       if ( // check whether the user presses the x button OR clicks the outside (hee)
            clickpos && (
-           ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
+           ( Math.abs(clickpos.x - crossX) < size * 2.5 && Math.abs(clickpos.y - crossY) < size * 2.5 ) ||
            ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
          ) ) {
         ui.closeOverlay()

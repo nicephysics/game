@@ -28,8 +28,8 @@ export var towerstats = {
     tier: 2,
     label: "T-5",
     description: "Two weaker shooters side-by-side, like twins.",
-    size: 24,
-    speed: 5.2,
+    size: 25,
+    speed: 5.05,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
@@ -51,8 +51,8 @@ export var towerstats = {
     tier: 2,
     label: "D-1",
     description: "Double the gun, double the fun!",
-    size: 26,
-    speed: 5.1,
+    size: 25,
+    speed: 5.16,
     rotspeed: 0.2,
     guns:  [ {
       set: { 
@@ -74,8 +74,8 @@ export var towerstats = {
     tier: 2,
     label: "B-4",
     description: "Slower and bigger projectiles.",
-    size: 30,
-    speed: 4.5,
+    size: 28,
+    speed: 5,
     rotspeed: 0.18,
     guns: [ {
       set: {
@@ -92,8 +92,8 @@ export var towerstats = {
     tier: 2,
     label: "S-3",
     description: "Faster and heavier projectiles.",
-    size: 28,
-    speed: 4.5,
+    size: 27,
+    speed: 4.6,
     rotspeed: 0.175,
     guns: [ {
       set: {
@@ -110,8 +110,8 @@ export var towerstats = {
     tier: 2,
     label: "F-2",
     description: "Faster rate of fire and smaller projectiles.",
-    size: 23,
-    speed: 5.4,
+    size: 24,
+    speed: 5.3,
     rotspeed: 0.22,
     guns: [ {
       set: {

@@ -51,7 +51,7 @@ ui.vars = {
   something_show: function() {
     const v = ui.vars
     return v.upgrade_show || v.tier_up_show
-  }
+  },
   
   enemy_texts: [ ],
 }

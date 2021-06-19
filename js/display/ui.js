@@ -261,16 +261,16 @@ ui.draw = function() {
     // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Upgrade Yourself!", top_text_angle, "center")
     // finally!
-    // upgrade constant vars (mostly arrays)
+    // upgrade constant vars (all arrays)
     const upgradeList = config.upgradetext[playerStat.upgradetext],
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
-          upgradeMax = 0,
           oldratios = v.upgrade_ratios
     // vars that (can) change each loop (rather, *let*s that change every loop)
     let utext = "default stat name",
         unumber = 0,
+        upgradeMax = 0,
         ucolor = "#888888",
         ratio = 0,
         dispratio = 0,
@@ -281,7 +281,7 @@ ui.draw = function() {
         hovering_ = false,
         clicking_ = false,
         clicked = -1,
-        clicksign = 0,
+        clicksign = 0
     
     x = _width / 3 - 10
     width = _width / 3 - 50

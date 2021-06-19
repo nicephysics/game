@@ -26,7 +26,10 @@ export var config = {
   movelimits: {
     min: { x: 0, y: _height * 0.35 },
     max: { x: _width, y: _height - 20 },
-  }
+  },
+  upgradetext: {
+    normal: ["projectile size", "projectile mass", "projectile launch speed", "projectile launch rate", "tower movement speed"],
+  },
 }
 
 var c = {

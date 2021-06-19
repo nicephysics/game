@@ -273,6 +273,8 @@ ui.draw = function() {
     let utext = "default stat name",
         unumber = 0,
         upgradeMax = 0,
+        maxratio = 1,
+        realLength = 0,
         ucolor = "#888888",
         ratio = 0,
         dispratio = 0,
@@ -290,10 +292,18 @@ ui.draw = function() {
     height = 20 // height of each one
     ygap += height
     y = _height / 2 - (upgradeLength - 1) / 2
-    // a SMALL loop
+    // some SMALL loops
     for (let i = 0; i < upgradeLength; ++i) {
       if (upgradeList[i] !== "") {
         upgradeMax += upgradeNumbers[i] + 1
+        ++realLength
+      }
+    }
+    maxratio = Math.min(1, 2 / realLength)
+    for (let i = 0; i < upgradeLength; ++i) {
+      if (upgradeList[i] !== "") {
+        ratio = (upgradeNumbers[i] + 1) / upgradeMax
+        maxratio = Math.max(maxratio, ratio)
       }
     }
     // a HUGE loop
@@ -305,6 +315,7 @@ ui.draw = function() {
       ucolor = upgradeColors[i]
       unumber = upgradeNumbers[i] + 1
       ratio = unumber / upgradeMax
+      ratio = ratio / maxratio
       size = 10
       dispratio = math.lerp(oldratios[i] || 0, ratio, 0.07)
       oldratios[i] = dispratio

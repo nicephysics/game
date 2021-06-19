@@ -159,12 +159,21 @@ export class TowerStat {
   upgradetext = "normal"
   upgradekeys = ["size", "mass", "speed", "reload", "towerspeed", "spread", "air"]
   upgrade = { }
+  upgradeMax = {
+    // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
+    size: 50,
+    reload: 50,
+    towerspeed: 30,
+    spread: 20,
+    air: 20,
+  }
   
   constructor(tower) {
     // empty constructor for now
     this.tower = tower
     for (let k of this.upgradekeys) {
       this.upgrade[k] = 0
+      this.upgradeMax[k] = this.upgradeMax[k] || -1
     }
     this.refresh()
   }

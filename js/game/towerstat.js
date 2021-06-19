@@ -154,16 +154,37 @@ export class TowerStat {
   rotspeed = 1
   guns = [] // do not modify!
   tower = null // tower
+  // points and upgrade stuff
+  points = 0
+  upgradetext = "normal"
+  upgradekeys = ["size", "mass", "speed", "reload", "towerspeed", "spread", "air"]
+  upgrade = { }
   
   constructor(tower) {
     // empty constructor for now
     this.tower = tower
+    for (let k of this.upgradekeys) {
+      this.upgrade[k] = 0
+    }
     this.refresh()
   }
   
   // get
+  get upgradeArray() {
+    const ans = []
+    for (let k of this.upgradekeys) {
+      ans.push(this.upgrade[k])
+    }
+    return ans
+  }
   
   // set
+  set upgradeArray(arr) {
+    const u = this.upgrade
+    for (let i = 0; i < this.upgradekeys.length; i++) {
+      u[this.upgradekeys[i]] = arr[i]
+    }
+  }
   
   // go!
   refresh() {
@@ -175,6 +196,7 @@ export class TowerStat {
     this.size = s.size || 10
     this.speed = s.speed || 1
     this.rotspeed = s.rotspeed || 1
+    this.upgradetext = s.upgradetext || "normal"
     this.guns = s.guns
   }
   

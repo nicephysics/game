@@ -258,7 +258,7 @@ export class Tower {
     if (c.left) movedir.x--
     if (c.right) movedir.x++
     // move variables
-    var speed = this.stat.speed * (this.effect.speedmult || 0),
+    var speed = this.stat.realspeed * (this.effect.speedmult || 0),
         moveVector = Vector.mult(Vector.normalise(movedir), speed),
         moveResult = Vector.add(this.targetpos, moveVector)
     // move limits

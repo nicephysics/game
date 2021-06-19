@@ -256,7 +256,7 @@ ui.draw = function() {
     y -= size * statSymbolSize
     // draw text
     if (playerStat.points > 0) {
-      draw.setFillNoStroke("#27007a")
+      draw.setFillNoStroke(ctx, "#27007a")
       draw.setFont(ctx, "16px Roboto Condensed")
         draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, -10, "right" )
     }

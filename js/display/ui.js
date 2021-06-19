@@ -1,9 +1,11 @@
 import { draw } from "./draw.js"
 import { style } from "./style.js"
 
+import { controls } from "../game/controls.js"
+import { Enemy } from "../game/enemy.js"
 import { Tower } from "../game/tower.js"
 import { towerstats, towermap } from "../game/towerstat.js"
-import { controls } from "../game/controls.js"
+import { wave } from "../game/wave.js"
 
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
@@ -108,8 +110,8 @@ ui.draw = function() {
   if (xp_show > 0 || smoothing) {
     // more mars bars- no, bar vars
     let color = v.xp_bar_color,
-        level = math.towerlevel(xp),
-        current = xp - math.towerxp(level),
+        level = math.towerlevel(Math.round(xp)),
+        current = Math.round(xp) - math.towerxp(level),
         next = math.towerxpneeded(level),
         ratio = current / next,
         rBall = 15 // CONST xp ball radius

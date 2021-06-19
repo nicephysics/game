@@ -63,6 +63,16 @@ export class EnemyStat {
   damage = 1
   guns = [ ] // do not set...
   enemy = null // related enemy
+  // create a fake "mult"
+  mult = {
+    size: 1,
+    mass: 1,
+    speed: 1,
+    reload: 1,
+    enemyspeed: 1,
+    spread: 1,
+    air: 1,
+  }
   
   // constructor
   constructor(enemy) {

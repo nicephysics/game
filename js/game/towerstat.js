@@ -198,6 +198,17 @@ export class TowerStat {
   // go!
   refresh() {
     this.setType(this.tower.type)
+    this.refreshPoints()
+  }
+  
+  refreshPoints() {
+    this.tower.refreshLevel()
+    
+    let points = this.tower.level
+    for (let k of this.upgradekeys) {
+      points -= this.upgrade[k]
+    }
+    this.points = points
   }
   
   set(s) {

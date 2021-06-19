@@ -136,7 +136,7 @@ export class Gun {
     return this.object.guns
   }
   get statMult() {
-    return this.object.stat.mult
+    return (this.object.stat) ? this.object.stat.mult : false
   }
   get reloadFrames() {
     return this.stat.reloadFrames * ( (this.statMult) ? this.statMult.reload : 1 )
@@ -187,7 +187,7 @@ export class Gun {
   }
   
   refreshShot() {
-    this.shot = this.delay * this.reloadFrames
+    this.shot = (this.delay - 1) * this.reloadFrames
   }
   
   draw(render) {

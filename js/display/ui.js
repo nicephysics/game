@@ -127,9 +127,11 @@ ui.draw = function() {
   let mousepos = render.mouse.absolute,
       clickpos = v.click,
       stat = towerstats[playerType],
-      x, y,
-      size,
-      width, height
+      x = 0,
+      y = 0,
+      size = 0,
+      width = 0,
+      height = 0
   
   
   // tick!

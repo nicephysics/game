@@ -230,11 +230,11 @@ ui.draw = function() {
     size = 18 // CONST upgrade button size
     x = _width - size - 15 // CONST upgrade button right side gap
     y = _height - size - 100 // CONST upgrade button 
-    let color = "#ff7700" // CONST upgrade button color
+    let color = "#00ffee" // CONST upgrade button color
     const mouseBoxSize = size * 1.1 // CONST upgrade button mouse box ratio
     if ( !v.something_show() && mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST upgrade button hover size change
-      color = "#00ffee" // CONST upgrade button hover color
+      color = "#ff7700" // CONST upgrade button hover color
     }
     if ( !v.something_show() && clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.upgrade_show = true
@@ -247,7 +247,7 @@ ui.draw = function() {
     // draw up symbol time
     const statSymbolSize = 0.6 // CONST upgrade button symbol size
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, "#1d007a") // CONST upgrade button symbol color
+    draw.setStroke(ctx, "#7a4300") // CONST upgrade button symbol color
     draw.setLineWidth(ctx, 5) // CONST upgrade button symbol line width
     y += size * statSymbolSize
     draw._line( ctx, x, y, x, y - size * 1.2 )

@@ -250,15 +250,15 @@ ui.draw = function() {
     draw.setStrokeNoFill(ctx, "#27007a") // CONST upgrade button symbol color
     draw.setLineWidth(ctx, 4) // CONST upgrade button symbol line width
     y += size * statSymbolSize
-      draw._line( ctx, x, y, x, y - size * 1.2 )
-      draw._line( ctx, x - size * 0.4, y, x - size * 0.4, y - size * 0.45 )
-      draw._line( ctx, x + size * 0.4, y, x + size * 0.4, y - size * 0.85 )
+      draw._line(ctx, x, y, x, y - size * 1.2)
+      draw._line(ctx, x - size * 0.4, y, x - size * 0.4, y - size * 0.45)
+      draw._line(ctx, x + size * 0.4, y, x + size * 0.4, y - size * 0.85)
     y -= size * statSymbolSize
     // draw text
     if (playerStat.points > 0) {
-      draw.setFillNoStroke(ctx, "#27007a")
-      draw.setFont(ctx, "16px Roboto Condensed")
-        draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, Math.degToRad(-10), "right" )
+      draw.setFillNoStroke(ctx, "#27007a") // CONST upgrade button text color
+      draw.setFont(ctx, "16px Roboto Condensed")  // CONST upgrade button text font
+        draw._text(ctx, x - size - 10, y - size, "x" + playerStat.points, math.degToRad(-10), "right")
     }
   }
   
@@ -286,7 +286,7 @@ ui.draw = function() {
         draw._line(ctx, crossX - size, crossY - size, crossX + size, crossY + size)
         draw._line(ctx, crossX + size, crossY - size, crossX - size, crossY + size)
       if ( // check whether the user presses the x button OR clicks the outside (hee)
-           clickpos && (
+           clickpos && ( 
            ( Math.abs(clickpos.x - crossX) < size * 2.5 && Math.abs(clickpos.y - crossY) < size * 2.5 ) ||
            ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
          ) ) {

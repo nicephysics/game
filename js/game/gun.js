@@ -138,6 +138,9 @@ export class Gun {
   get statMult() {
     return this.object.stat.mult
   }
+  get reloadFrames() {
+    return this.stat.reloadFrames * ( (this.statMult) ? this.statMult.reload : 1 )
+  }
   get direction() {
     return this.angle + this.objectAngle
   }
@@ -180,7 +183,11 @@ export class Gun {
   
   // go!
   refreshStats() {
-    this.shot = this.delay * this.stat.reloadFrames * this.statMult.reload
+    this.refreshShot()
+  }
+  
+  refreshShot() {
+    this.shot = this.delay * this.reloadFrames
   }
   
   draw(render) {
@@ -206,7 +213,7 @@ export class Gun {
     // check whether gun can shoot
     if (this.dummy) return
     // get reload from stat
-    var reload = this.stat.reloadFrames * this.statMult.reload
+    var reload = this.reloadFrames
     // check for player existence
     if (this.gametype === "tower" && this.tower.isPlayer) {
       // do something here?

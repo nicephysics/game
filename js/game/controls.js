@@ -97,14 +97,34 @@ controls.init = function(render) {
         break
       case "KeyY":
         if (player.canTierUp) {
-          ui.vars.tier_up_show = !ui.vars.tier_up_show
-          controls.setPaused(ui.vars.tier_up_show)
+          function showOverlay() {
+            ui.vars.tier_up_show = true
+            controls.setPaused(true)            
+          }
+          if (ui.vars.something_show()) {
+            ui.closeOverlay()
+            if (!ui.vars.tier_up_show) {
+              showOverlay()
+            }
+          } else {
+            showOverlay()
+          }
         }
         break
       case "KeyU":
-        if (true) { // todo
-          ui.vars.upgrade_show = !ui.vars.upgrade_show
-          controls.setPaused(ui.vars.upgrade_show)
+        if (true) { // accessible all the time!
+          function showOverlay() {
+            ui.vars.upgrade_show = true
+            controls.setPaused(true)            
+          }
+          if (ui.vars.something_show()) {
+            ui.closeOverlay()
+            if (!ui.vars.upgrade_show) {
+              showOverlay()
+            }
+          } else {
+            showOverlay()
+          }
         }
         break
       case "KeyN":

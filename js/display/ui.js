@@ -262,7 +262,7 @@ ui.draw = function() {
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
-          upgradeMax = ( upgradeNumbers.reduce((a, b) => Math.max(a, b)) ) || 1
+          upgradeMax = 1 + upgradeNumbers.reduce((a, b) => Math.max(a, b))
     // vars that (can) change each loop (rather, *let*s that change every loop)
     let utext = "default stat name",
         unumber = 0,
@@ -277,8 +277,8 @@ ui.draw = function() {
         clicked = -1,
         clicksign = 0,
     
-    x = _width / 3
-    width = _width / 3
+    x = _width / 3 - 30
+    width = _width / 3 - 50
     height = 20 // height of each one
     ygap += height
     y = _height / 2 - (upgradeLength - 1) / 2
@@ -289,7 +289,8 @@ ui.draw = function() {
       }
       utext = upgradeList[i]
       ucolor = upgradeColors[i]
-      ratio = upgradeNumbers[i] / upgradeMax
+      unumber = upgradeNumbers[i] + 1
+      ratio = unumber / upgradeMax
       size = 10
       const percentText = Math.round(ratio * 100) + "%"
       // draw upgrade bar title
@@ -314,16 +315,19 @@ ui.draw = function() {
       draw.setFillDarkenStroke(ctx, (hovering) ? "#46bf00" : ucolor)
         draw._circle(ctx, x, y, size)
       draw.setFillDarkenStroke(ctx, (hovering_) ? "#bf3600" : ucolor)
-        draw._circle(ctx, x + 30, y, size)
+        draw._circle(ctx, x + 60, y, size)
+      draw.setDarkFill(ctx, ucolor)
+      draw.setStroke(ctx, "transparent")
+        draw._text(ctx, x + 30, y, unumber + "", 0, "center")
       // draw upgrade plus/minus signs
       size *= 0.6 // CONST upgrade bar plus/minus sign size ratio
       draw.setStrokeNoFill(ctx, "#006b07") // CONST upgrade bar plus color
         draw._line(ctx, x - size, y, x + size, y)
         draw._line(ctx, x, y - size, x, y + size)
       draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
-        draw._line(ctx, x + 30 - size, y, x + 30 + size, y)
+        draw._line(ctx, x + 60 - size, y, x + 60 + size, y)
       // draw bar
-      x += 55 // CONST upgrade bar x-translate of bar
+      x += 85 // CONST upgrade bar x-translate of bar
       draw.setFill(ctx, "transparent")
       draw.setDarkStroke(ctx, ucolor)
       draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
@@ -337,7 +341,7 @@ ui.draw = function() {
       draw.setDarkFill(ctx, ucolor)
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x + width + 15, y, percentText, 0, "left")
-      x -= 55 // same as above
+      x -= 85 // same as above
       y += ygap
     }
     
@@ -346,7 +350,7 @@ ui.draw = function() {
             key = playerStat.upgradekeys[index],
             maxstat = playerStat.upgradeMax[key],
             newstat = playerStat.upgrade[key] + clicksign
-      if (newstat <= maxstat && newstat > 0) {
+      if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0) {
         playerStat.upgrade[key] = newstat
       } else {
         // todo invalid
@@ -425,7 +429,7 @@ ui.draw = function() {
                              * Math.sin(v.time / 30) // CONST tier up title text tilt speed
     draw.setFill(ctx, "#003d09") // CONST tier up title text color
     draw.setStroke(ctx, "transparent")
-    draw.setFont(ctx, "30px Roboto")
+    draw.setFont(ctx, "30px Roboto Condensed")
     // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Choose an upgrade!", top_text_angle, "center")
     // some vars
@@ -458,7 +462,7 @@ ui.draw = function() {
         draw.tower(render, x, y, size * 0.7, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#4b00ad") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
-      draw.setFont(ctx, "20px Roboto")
+      draw.setFont(ctx, "20px Roboto Mono")
         draw._text(ctx, x, yText, choice, 0, "center")
     }
     if (hovered >= 0) {
@@ -467,7 +471,7 @@ ui.draw = function() {
             fontSize = 20,
             fontGap = 24
       draw.setFillNoStroke(ctx, "#003d09") // CONST tier up description text
-      draw.setFont(ctx, fontSize + "px Roboto")
+      draw.setFont(ctx, fontSize + "px Roboto Condensed")
       const lines = draw.splitText(ctx, text, _width - overlayGap * 6),
             y = 3 * _height / 4 - (lines.length - 1) / 2 * fontGap
       let i = 0

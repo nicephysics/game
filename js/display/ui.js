@@ -277,7 +277,7 @@ ui.draw = function() {
         clicked = -1,
         clicksign = 0,
     
-    x = _width / 3 - 30
+    x = _width / 3 - 10
     width = _width / 3 - 50
     height = 20 // height of each one
     ygap += height
@@ -300,9 +300,9 @@ ui.draw = function() {
         draw._text(ctx, x - 20, y, utext, 0, "right")
       // upgrade bar button hover/click detection
       hovering = ui.hitcircle(mousepos, x, y, size + 2)
-      hovering_ = ui.hitcircle(mousepos, x + 30, y, size + 3)
+      hovering_ = ui.hitcircle(mousepos, x + 60, y, size + 3)
       clicking = ui.hitcircle(clickpos, x, y, size + 2)
-      clicking_ = ui.hitcircle(clickpos, x + 30, y, size + 3)
+      clicking_ = ui.hitcircle(clickpos, x + 60, y, size + 3)
       if (clicking) {
         clicked = i
         clicksign = 1

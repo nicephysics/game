@@ -260,6 +260,8 @@ ui.draw = function() {
     draw.setFont(ctx, "30px Roboto Mono") // CONST upgrade overlay title text font
     // CONST tier up title text position (x, y)
       draw._text(ctx, _width / 2, _height / 4, "Upgrade Yourself!", top_text_angle, "center")
+    draw.setFont(ctx, "20px Roboto Condensed") // CONST upgrade overlay title text font
+      draw._text(ctx, _width / 2, _height * 0.375, "Points remaining: " + playerStat.points, 0, "")
     // finally!
     // upgrade constant vars (all arrays)
     const upgradeList = config.upgradetext[playerStat.upgradetext],
@@ -322,9 +324,11 @@ ui.draw = function() {
       if (clicking) {
         clicked = i
         clicksign = 1
+        clickpos = false
       } else if (clicking_) {
         clicked = i
         clicksign = -1
+        clickpos = false
       }
       
       // draw upgrade plus/minus button circles
@@ -375,8 +379,9 @@ ui.draw = function() {
             key = playerStat.upgradekeys[index],
             maxstat = playerStat.upgradeMax[key],
             newstat = playerStat.upgrade[key] + clicksign
-      if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0) {
+      if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && playerStat.points >= clicksign) {
         playerStat.upgrade[key] = newstat
+        playerStat.refreshPoints()
       } else {
         // todo invalid
       }
@@ -390,7 +395,7 @@ ui.draw = function() {
   
   // tier up button
   
-  if (player.canTierUp && !v.tier_up_show) {
+  if (player.canTierUp && !v.something_show()) {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap

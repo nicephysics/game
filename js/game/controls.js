@@ -95,10 +95,16 @@ controls.init = function(render) {
       case "KeyP":
         controls.setPaused(!c.paused)
         break
-      case "KeyU":
+      case "KeyY":
         if (player.canTierUp) {
           ui.vars.tier_up_show = !ui.vars.tier_up_show
           controls.setPaused(ui.vars.tier_up_show)
+        }
+        break
+      case "KeyU":
+        if (true) { // todo
+          ui.vars.upgrade_show = !ui.vars.upgrade_show
+          controls.setPaused(ui.vars.upgrade_show)
         }
         break
       case "KeyN":

@@ -183,7 +183,7 @@ export class Gun {
   
   // go!
   refreshStats() {
-    this.refreshShot()
+    // empty for now
   }
   
   refreshShot() {

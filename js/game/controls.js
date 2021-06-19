@@ -107,7 +107,11 @@ controls.init = function(render) {
               showOverlay()
             }
           } else {
-            showOverlay()
+            if (!ui.vars.tier_up_show) {
+              showOverlay()
+            } else {
+              ui.closeOverlay()
+            }
           }
         }
         break
@@ -123,7 +127,11 @@ controls.init = function(render) {
               showOverlay()
             }
           } else {
-            showOverlay()
+            if (!ui.vars.upgrade_show) {
+              showOverlay()
+            } else {
+              ui.closeOverlay()              
+            }
           }
         }
         break

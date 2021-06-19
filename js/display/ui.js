@@ -231,20 +231,22 @@ ui.draw = function() {
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore() // restore the canvas to last save (above)
     // draw X button
-    x = _width - overlayGap * 2.4
-    y = overlayGap * 2.4
-    size = 10 // CONST upgrade overlay X button size
-    draw.setStrokeNoFill(ctx, "#cf0000") // CONST upgrade overlay X button color
-    draw.setLineWidth(ctx, 5)
-      draw._line(ctx, x - size, y - size, x + size, y + size)
-      draw._line(ctx, x + size, y - size, x - size, y + size)
-    if ( // check whether the user presses the x button OR clicks the outside (hee)
-         clickpos && (
-         ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
-         ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
-       ) ) {
-      ui.closeOverlay()
-      clickpos = false
+    if (true) {
+      x = _width - overlayGap * 2.4
+      y = overlayGap * 2.4
+      size = 10 // CONST upgrade overlay X button size
+      draw.setStrokeNoFill(ctx, "#cf0000") // CONST upgrade overlay X button color
+      draw.setLineWidth(ctx, 5)
+        draw._line(ctx, x - size, y - size, x + size, y + size)
+        draw._line(ctx, x + size, y - size, x - size, y + size)
+      if ( // check whether the user presses the x button OR clicks the outside (hee)
+           clickpos && (
+           ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
+           ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
+         ) ) {
+        ui.closeOverlay()
+        clickpos = false
+      }
     }
     // draw title
     const top_text_angle = math.degToRad(1)           // CONST upgrade overlay title text tilt angle

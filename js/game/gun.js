@@ -227,6 +227,8 @@ export class Gun {
           this.shot -= reload
           this.shoot()
         }
+      } else {
+        this.refreshShot()
       }
     }
     // something very important

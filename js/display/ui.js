@@ -235,6 +235,7 @@ ui.draw = function() {
     if ( !v.something_show() && mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST upgrade button hover size change
       color = "#ff7700" // CONST upgrade button hover color
+      mousepos = false
     }
     if ( !v.something_show() && clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.upgrade_show = true
@@ -249,15 +250,15 @@ ui.draw = function() {
     draw.setStrokeNoFill(ctx, "#27007a") // CONST upgrade button symbol color
     draw.setLineWidth(ctx, 4) // CONST upgrade button symbol line width
     y += size * statSymbolSize
-    draw._line( ctx, x, y, x, y - size * 1.2 )
-    draw._line( ctx, x - size * 0.4, y, x - size * 0.4, y - size * 0.45 )
-    draw._line( ctx, x + size * 0.4, y, x + size * 0.4, y - size * 0.85 )
+      draw._line( ctx, x, y, x, y - size * 1.2 )
+      draw._line( ctx, x - size * 0.4, y, x - size * 0.4, y - size * 0.45 )
+      draw._line( ctx, x + size * 0.4, y, x + size * 0.4, y - size * 0.85 )
     y -= size * statSymbolSize
     // draw text
     if (playerStat.points > 0) {
       draw.setFillNoStroke("#27007a")
       draw.setFont(ctx, "16px Roboto Condensed")
-      draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, -10, "right" )
+        draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, -10, "right" )
     }
   }
   

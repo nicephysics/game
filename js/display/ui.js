@@ -48,8 +48,31 @@ ui.vars = {
   
   upgrade_show: false, // upgrade overlay show
   tier_up_show: false, // tier up overlay show
+  something_show: function() {
+    const v = ui.vars
+    return v.upgrade_show || v.tier_up_show
+  }
   
   enemy_texts: [ ],
+}
+
+ui.closeOverlay = function() {
+  const v = ui.vars
+  v.upgrade_show = false
+  v.tier_up_show = false
+  controls.setPaused(false)
+}
+
+ui.hitrect = function(pos, x, y, w, h) {
+  return pos && ( pos.x >= x && pos.y >= y && pos.x <= x + w && pos.y <= y + h )
+}
+
+ui.hitrectpoints = function(pos, x1, y1, x2, y2) {
+  return pos && ( pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2 )
+}
+
+ui.hitcircle = function(pos, x, y, size) {
+  return pos && Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y))) < size * size
 }
 
 ui.init = function(render) {
@@ -218,8 +241,7 @@ ui.draw = function() {
          ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
          ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
        ) ) {
-      v.upgrade_show = false
-      controls.setPaused(false)
+      ui.closeOverlay()
       clickpos = false
     }
     // draw title
@@ -236,21 +258,31 @@ ui.draw = function() {
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
-          upgradeMax = upgradeNumbers.reduce((a, b) => Math.max(a, b))
-    // vars that change each loop
+          upgradeMax = ( upgradeNumbers.reduce((a, b) => Math.max(a, b)) ) || 1
+    // vars that (can) change each loop (rather, *let*s that change every loop)
     let utext = "default stat name",
         unumber = 0,
         ucolor = "#888888",
         ratio = 0,
         percentText = "0%",
-        ygap = 6 // gap between rows
+        ygap = 6, // gap between rows
+        hovering = false,
+        clicking = false,
+        hovering_ = false,
+        clicking_ = false,
+        clicked = -1,
+        clicksign = 0,
     
-    x = _width / 3 - 50
+    x = _width / 3
     width = _width / 3
     height = 20 // height of each one
     ygap += height
     y = _height / 2 - (upgradeLength - 1) / 2
+    // a HUGE loop
     for (let i = 0; i < upgradeLength; ++i) {
+      if (upgradeList[i] === "") {
+        continue
+      }
       utext = upgradeList[i]
       ucolor = upgradeColors[i]
       ratio = upgradeNumbers[i] / upgradeMax
@@ -261,10 +293,23 @@ ui.draw = function() {
       draw.setStroke(ctx, "transparent")
       draw.setFont(ctx, "16px Roboto Condensed") // CONST upgrade bar text font
         draw._text(ctx, x - 20, y, utext, 0, "right")
+      // upgrade bar button hover/click detection
+      hovering = ui.hitcircle(mousepos, x, y, size + 2)
+      hovering_ = ui.hitcircle(mousepos, x + 30, y, size + 3)
+      clicking = ui.hitcircle(clickpos, x, y, size + 2)
+      clicking_ = ui.hitcircle(clickpos, x + 30, y, size + 3)
+      if (clicking) {
+        clicked = i
+        clicksign = 1
+      } else if (clicking_) {
+        clicked = i
+        clicksign = -1
+      }
       // draw upgrade plus/minus button circles
-      draw.setFillDarkenStroke(ctx, ucolor)
       draw.setLineWidth(ctx, 3)
+      draw.setFillDarkenStroke(ctx, (hovering) ? "#46bf00" : ucolor)
         draw._circle(ctx, x, y, size)
+      draw.setFillDarkenStroke(ctx, (hovering_) ? "#bf3600" : ucolor)
         draw._circle(ctx, x + 30, y, size)
       // draw upgrade plus/minus signs
       size *= 0.6 // CONST upgrade bar plus/minus sign size ratio
@@ -272,10 +317,9 @@ ui.draw = function() {
         draw._line(ctx, x - size, y, x + size, y)
         draw._line(ctx, x, y - size, x, y + size)
       draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
-        draw._line(ctx, x + 25 - size, y, x + 25 + size, y)
-      // TODO upgrade bar button click detection
+        draw._line(ctx, x + 30 - size, y, x + 30 + size, y)
       // draw bar
-      x += 50 // CONST upgrade bar x-translate of bar
+      x += 55 // CONST upgrade bar x-translate of bar
       draw.setFill(ctx, "transparent")
       draw.setDarkStroke(ctx, ucolor)
       draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
@@ -289,9 +333,22 @@ ui.draw = function() {
       draw.setDarkFill(ctx, ucolor)
       draw.setStroke(ctx, "transparent")
         draw._text(ctx, x + width + 15, y, percentText, 0, "left")
-      x -= 50 // same as above
+      x -= 55 // same as above
       y += ygap
     }
+    
+    if (clicked !== -1 && clicksign !== 0) {
+      const index = clicked,
+            key = playerStat.upgradekeys[index],
+            maxstat = playerStat.upgradeMax[key],
+            newstat = playerStat.upgrade[key] + clicksign
+      if (newstat <= maxstat && newstat > 0) {
+        playerStat.upgrade[key] = newstat
+      } else {
+        // todo invalid
+      }
+    }
+    
   }
   
   
@@ -356,8 +413,7 @@ ui.draw = function() {
          ( Math.abs(clickpos.x - x) < size * 2.5 && Math.abs(clickpos.y - y) < size * 2.5 ) ||
          ( clickpos.x < overlayGap || clickpos.y < overlayGap || clickpos.x > _width - overlayGap || clickpos.y > _height - overlayGap )
        ) ) {
-      v.tier_up_show = false
-      controls.setPaused(false)
+      ui.closeOverlay()
       clickpos = false
     }
     // draw title
@@ -381,8 +437,8 @@ ui.draw = function() {
       x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
       const choice = choices[i],
             mouseBoxSize = 1.05, // CONST tier up circle mouse box size
-            hovering = mousepos && Vector.magnitudeSquared(Vector.sub(mousepos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize, 
-            clicking = clickpos && Vector.magnitudeSquared(Vector.sub(clickpos, Vector.create(x, y))) < size * size * mouseBoxSize * mouseBoxSize
+            hovering = ui.hitcircle(mousepos, x, y, size * mouseBoxSize),
+            clicking = ui.hitcircle(clickpos, x, y, size * mouseBoxSize)
       if (clicking) {
         clicked = i
       }
@@ -419,8 +475,7 @@ ui.draw = function() {
     if (clicked >= 0) {
       player.type = towermap[choices[clicked]]
       player.refresh()
-      v.tier_up_show = false
-      controls.setPaused(false)
+      ui.closeOverlay()
       clickpos = false
     }
   }

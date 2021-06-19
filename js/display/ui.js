@@ -258,7 +258,7 @@ ui.draw = function() {
     if (playerStat.points > 0) {
       draw.setFillNoStroke(ctx, "#27007a")
       draw.setFont(ctx, "16px Roboto Condensed")
-        draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, -10, "right" )
+        draw._text( ctx, x - size - 10, y - size, "x" + playerStat.points, Math.degToRad(-10), "right" )
     }
   }
   

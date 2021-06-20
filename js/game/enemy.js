@@ -264,7 +264,13 @@ export class Enemy {
         draw.circle(render, this.x, this.y, this.size)
       case "asteroid":
         // draw stored vertices
-        draw.polygon(render, this.x, this.y, this.vertices)
+        const vertices = [],
+              X = this.x,
+              Y = this.y
+        for (let v of this.vertices) {
+          vertices.push(Vector.create(v.x + X, v.y + Y))
+        }
+        draw.polygon(render, vertices)
     }
   }
   

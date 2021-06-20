@@ -4,7 +4,13 @@ import { style } from "./style.js"
 import { Enemy } from "../game/enemy.js"
 import { Tower } from "../game/tower.js"
 
+if (true) {
+  // 2 space indent!
+}
+
 export var draw = { }
+
+const Vector = Matter.Vector
 
 draw.ctx = document.getElementById("canvas").getContext("2d") // not actually needed?
 
@@ -131,7 +137,7 @@ draw._rect = function(ctx, x, y, w, h) {
 draw.rect = function(render, x, y, w, h) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._rect(ctx, x, y, w, h)
 }
 
@@ -157,7 +163,7 @@ draw._rectangle = function(ctx, x, y, w, h, a = 0) {
 draw.rectangle = function(render, x, y, w, h, a = 0) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._rectangle(ctx, x, y, w, h, a)
 }
 
@@ -172,7 +178,7 @@ draw._circle = function(ctx, x, y, r) {
 draw.circle = function(render, x, y, r) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._circle(ctx, x, y, r)
 }
 
@@ -187,7 +193,7 @@ draw._arc = function(ctx, x, y, r, start, end, counter = false) {
 draw.arc = function(render, x, y, r, start, end, counter = false) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._arc(ctx, x, y, r, start, end, counter)
 }
 
@@ -204,7 +210,7 @@ draw.line = function(render, x1, y1, x2, y2) {
   y1 -= render.bounds.min.y
   x2 -= render.bounds.min.x
   y2 -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._line(ctx, x1, y1, x2, y2)
 }
 
@@ -212,7 +218,7 @@ draw._polyline = function(ctx, x, y) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.moveTo(x[0], y[0])
-    var len = Math.min(x.length, y.length)
+    const len = Math.min(x.length, y.length)
     for (let i = 1; i < len; ++i) {
       ctx.lineTo(x[i], y[i])
     }
@@ -220,41 +226,37 @@ draw._polyline = function(ctx, x, y) {
 }
 
 draw.polyline = function(render, xx, yy) {
-  var new_x = [ ],
-      new_y = [ ]
+  const new_x = [ ],
+        new_y = [ ]
   for (let x of xx) {
     new_x.push(x - render.bounds.min.x)
   }
   for (let y of yy) {
     new_y.push(y - render.bounds.min.y)
   }
-  var ctx = render.context
+  const ctx = render.context
   draw._polyline(ctx, new_x, new_y)
 }
 
-draw._polygon = function(ctx, x, y) {
+draw._polygon = function(ctx, vs) {
   ctx = ctx || draw.ctx
   ctx.beginPath()
-    ctx.moveTo(x[0], y[0])
-    var len = Math.min(x.length, y.length)
+    ctx.moveTo(vs[0].x, vs[0].y)
+    const len = Math.min(vs.length, vs.length)
     for (let i = 1; i < len; ++i) {
-      ctx.lineTo(x[i], y[i])
+      ctx.lineTo(vs[i].x, vs[i].y)
     }
-    ctx.lineTo(x[0], y[0])
+    ctx.lineTo(vs[0].x, vs[0].y)
   ctx.stroke()
 }
 
-draw.polygon = function(render, xx, yy) {
-  var new_x = [ ],
-      new_y = [ ]
-  for (let x of xx) {
-    new_x.push(x - render.bounds.min.x)
+draw.polygon = function(render, vs) {
+  const new_v = [ ]
+  for (let v of vs) {
+    new_v.push(Vector.create(v.x - render.bounds.min.x, v.y - render.bounds.min.y))
   }
-  for (let y of yy) {
-    new_y.push(y - render.bounds.min.y)
-  }
-  var ctx = render.context
-  draw._polygon(ctx, new_x, new_y)
+  const ctx = render.context
+  draw._polygon(ctx, new_v)
 }
 
 draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {
@@ -277,14 +279,14 @@ draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {
 draw.text = function(render, x, y, text, angle = 0, textAlign = "") {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._text(ctx, x, y, text, angle, textAlign)
 }
 
 draw.gun = function(render, x, y, length, height, aspect, angle) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   let h = []
   h = (aspect > 0) ?
     [ height * aspect, height ] :
@@ -321,7 +323,7 @@ draw._heart = function(ctx, x, y, width, height) {
   ctx = ctx || draw.ctx
   ctx.save()
   ctx.beginPath()
-  var topCurveHeight = height * 0.3
+  const topCurveHeight = height * 0.3
   ctx.moveTo(x, y + topCurveHeight)
   // top left curve
   ctx.bezierCurveTo(
@@ -356,7 +358,7 @@ draw._heart = function(ctx, x, y, width, height) {
 draw.heart = function(render, x, y, w, h) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y
-  var ctx = render.context
+  const ctx = render.context
   draw._heart(ctx, x, y, w, h)  
 }
 
@@ -367,7 +369,7 @@ draw._splitText = function(ctx, text, maxWidth) {
       lines = [],
       currentLine = words[0]
 
-  for (var i = 1; i < words.length; i++) {
+  for (let i = 1; i < words.length; i++) {
     let word = words[i],
         width = ctx.measureText(currentLine + " " + word).width
     if (width < maxWidth) {

@@ -40,7 +40,7 @@ math.angleVector = function(angle, magnitude) {
 math.pow = Math.pow
 math.floor = Math.floor
 math.ceil = Math.ceil
-math.rand = Math.rand
+math.rand = Math.random
 math.pi = Math.PI // not a function!
 math.powersum = function(power, n, mult = 1) {
   return mult * ( (Math.pow(n + 1, power) - 1) / (power - 1) )
@@ -64,7 +64,7 @@ math.towerlevel = function(xp) {
 math.asteroid = function(sides) {
   const ans = []
   for (let i = 0; i < sides; i++) {
-    let angle = (360 / sides * i) + ( (Math.rand() - 0.5) * 360 / 3 / sides ),
+    let angle = (360 / sides * i) + ( (Math.random() - 0.5) * 360 / 3 / sides ),
         dist = (Math.rand() + 4) / 4,
         v = Vector.mult(math.angleVector((angles + 360) % 360), dist)
     ans.push(v)

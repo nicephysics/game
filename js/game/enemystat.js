@@ -2,6 +2,7 @@
 export var enemystats = {
   base: { // base stats, all stats are multiplied by this
     control: "none", // controller of enemy...
+    shape: "circle", // default simple shape...
     mass: 1, // mass of enemy
     speed: 1, // initial velocity of enemy
     size: 1, // size of enemy
@@ -16,6 +17,7 @@ export var enemystats = {
   // now for normal enemies
   ball: {
     control: "none",
+    shape: "circle",
     mass: 0.3,
     speed: 1,
     size: 13,
@@ -28,6 +30,7 @@ export var enemystats = {
   // now for normal enemies
   asteroid: {
     control: "none",
+    shape: "asteroid",
     mass: 1,
     speed: 1,
     size: 14,
@@ -40,6 +43,7 @@ export var enemystats = {
   // simple shooter enemies
   ballgun: {
     control: "aim_player",
+    shape: "circle",
     mass: 0.2,
     speed: 0.6,
     size: 21,
@@ -85,6 +89,7 @@ export class EnemyStat {
     enemyspeed: 1,
     spread: 1,
     air: 1,
+    enemyrot: 1,
   }
   
   // constructor
@@ -100,22 +105,24 @@ export class EnemyStat {
   // go!
   setOptions(options) {
     const o = options
-    this.difficulty = o.difficulty
-    this.mass *= o.difficulty * o.mass || 1
-    this.speed *= o.speed || 1
-    this.size *= o.size || 1
-    this.air *= o.air || 1
-    this.gravity *= o.gravity || 1
-    this.reward *= o.reward || 1
-    this.bonus *= o.bonus || 1
-    this.damage *= o.damage || 1
-    if (o.bullet) {
-      this.mult.size *= o.bullet.size || 1
-      this.mult.mass *= o.bullet.mass || 1
-      this.mult.speed *= o.bullet.speed || 1
-      this.mult.reload *= o.bullet.reload || 1
-      this.mult.spread *= o.bullet.spread || 1
-      this.mult.air *= o.bullet.air || 1
+    this.difficulty = o.difficulty || 1
+    this.mass *= this.difficulty * (o.mass || o.m || 1)
+    this.speed *= o.speed || o.s || 1
+    this.size *= o.size || o.z || 1
+    this.air *= o.air || o.a || 1
+    this.gravity *= o.gravity || o.g || 1
+    this.reward *= o.reward || o.r || 1
+    this.bonus *= o.bonus || o.b || 1
+    this.damage *= o.damage || o.d || 1
+    const b = o.bullet || o.bu
+    if (b) { // bullet stats
+      this.mult.size *= b.size || b.z || 1
+      this.mult.mass *= b.mass || b.m || 1
+      this.mult.speed *= b.speed || b.s || 1
+      this.mult.reload *= b.reload || b.r || 1
+      this.mult.spread *= b.spread || b.p || 1
+      this.mult.air *= b.air || b.a || 1
+      this.mult.rot *= b.rot || b.ro || 1
     }
   }
   

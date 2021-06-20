@@ -43,10 +43,10 @@ export class Enemy {
     document.addEventListener("keydown", function(event) {
       switch (event.code) {
         case "Digit1":
-          Enemy.sendwave(wave.make(["ball"], 1, { }), 1)
+          Enemy.sendwavemaker(wave.make(["ball"], 1, { }), 1)
           break
         case "Digit2":
-          Enemy.sendwave(wave.make(["ballgun"], 1, { }), 1)
+          Enemy.sendwavemaker(wave.make(["ballgun"], 1, { }), 1)
           break
       }
     })
@@ -117,7 +117,15 @@ export class Enemy {
     }
   }
   
-  static sendwave(wavemaker, num) {
+  static sendwave(w) {
+    const type = w.type || w.t || "ball",
+          num = w.number || w.n || 1,
+          sep = w.sep || w.s || 1
+    w.difficulty = w.difficulty || w.d || w.diff || 1
+    Enemy.sendNumber(type, num, sep, w) // options
+  }
+  
+  static sendwavemaker(wavemaker, num) {
     var w = wavemaker.wave(num)
     if (w.count !== num) {
       console.error("Wave numbers don't match!", w, wavemaker)
@@ -133,18 +141,19 @@ export class Enemy {
   label = "Enemy #" + this.id
   body = null // Matter.Body
   type = "ball"
-  targetrot = 0
-  controlType = "none"
+  targetrot = 0 // target rotation...
+  controlType = "none" // controller (class IO, remember?)
   control = { }
-  guns = [ ]
+  guns = [ ] // Gun[]
   start = Enemy.spawn.random()
   exists = false
+  vertices = [ ] // Matter.Vector[]
   stat = new EnemyStat(this)
   effect = new Effect(this, "enemy")
   // constructor
-  constructor(type) {
+  constructor(type, options) {
     this.type = type
-    this.init()
+    this.init(options)
   }
   
   // get
@@ -179,27 +188,13 @@ export class Enemy {
   // set
   
   // go!
-  init() {
-    this.initstats()
+  init(options) {
+    this.initstats(options)
   }
   
-  initstats() {
+  initstats(options) {
     this.stat.refresh()
-    // old function
-    /*
-    var s = enemystats[this.type]
-    for (let k in s) {
-      this.stat[k] = s[k]
-    }
-    var base = enemystats.base
-    for (let k in base) {
-      this.stat[k] = (this.stat[k] || 1) * base[k]
-    }
-    switch (this.type) {
-      case "ball":    
-        this.stat.mass *= this.stat.difficulty || 1
-    }
-    */
+    this.stat.setOptions(options)
   }
   
   tick() {
@@ -211,7 +206,7 @@ export class Enemy {
     switch (this.controlType) {
       case "aim_player":
         // aim at the player!
-        Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot))
+        Body.setAngle(this.body, math.lerpAngle(this.angle, this.targetrot, config.smooth.enemy.rot * this.stat.mult.enemyrot))
         this.targetrot = Vector.angle(this.position, Tower.player.position)
     }
   }
@@ -261,7 +256,8 @@ export class Enemy {
   drawOverlay(render) {
     // todo
     // circle for now
-    draw.circle(render, this.x, this.y, this.size)    
+    draw.circle(render, this.x, this.y, this.size)
+    // draw stored vertices
   }
   
   send() {
@@ -283,15 +279,22 @@ export class Enemy {
   }
   
   createBody() {
-    var s = this.stat
-    this.body = Bodies.circle(this.start.x, this.start.y, s.size, {
-      isStatic: false,
-      label: this.label,
-      render: style.enemy[this.type],
-      collisionFilter: category.enemy,
-      density: s.mass * 0.001,
-      frictionAir: s.air,
-    })
+    var s = this.stat,
+        bodyOptions = {
+          isStatic: false,
+          label: this.label,
+          render: style.enemy[this.type],
+          collisionFilter: category.enemy,
+          density: s.mass * 0.001,
+          frictionAir: s.air,
+        }
+    // check for shape
+    if (s.shape === "circle") {
+      this.body = Bodies.circle(this.start.x, this.start.y, s.size, bodyOptions)
+    } else if (s.shape === "asteroid") {
+      // CONST how many sides the asteroid has
+      this.body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10), bodyOptions)
+    }
     this.body.gametype = "enemy"
     this.body.enemy = this
     // launch at a certain speed

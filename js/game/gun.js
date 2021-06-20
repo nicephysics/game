@@ -244,6 +244,7 @@ export class Gun {
         objectStyle = style[bodyGametype],
         b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
           isStatic: false,
+          isBullet: true,
           label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
           collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
           render: objectStyle.bullet, // big todo

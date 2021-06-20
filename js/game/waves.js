@@ -2,8 +2,8 @@ import { category, config } from "../config/config.js"
 
 import { Enemy } from "./enemy.js"
 import { Tower } from "./tower.js"
-import { wave } from "./wave.js"-
-  
+import { wave } from "./wave.js"
+
 // display stuff here?
 
 import { random } from "../util/random.js"

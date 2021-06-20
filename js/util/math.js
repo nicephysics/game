@@ -62,8 +62,7 @@ math.towerlevel = function(xp) {
 }
 
 math.asteroid = function(sides) {
-  const ans = [],
-        angles = [],
+  const ans = []
   for (let i = 0; i < sides; i++) {
     let angle = (360 / sides * i) + ( (Math.rand() - 0.5) * 360 / 3 / sides ),
         dist = (Math.rand() + 4) / 4,

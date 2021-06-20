@@ -24,35 +24,40 @@ draw.setStroke = function(ctx, stroke) {
   ctx.strokeStyle = stroke
 }
 
+draw.setFillNoStroke = function(ctx, fill) {
+  draw.setFill(ctx, fill)
+  draw.setStroke(ctx, "transparent")
+}
+
 draw.setStrokeNoFill = function(ctx, stroke) {
   draw.setStroke(ctx, stroke)
   draw.setFill(ctx, "transparent")
-}
-
-draw.setLightFill = function(ctx, fill, bright = 1) {
-  draw.setFill(ctx, chroma(fill).brighten(bright).hex())  
 }
 
 draw.setDarkFill = function(ctx, fill, dark = 1) {
   draw.setFill(ctx, chroma(fill).darken(dark).hex())  
 }
 
-draw.setTextDarkFill = function(ctx, fill, dark = 2) {
-  draw.setDarkFill(ctx, fill, dark)
-  draw.setStroke("transparent")
+draw.setLightFill = function(ctx, fill, bright = 1) {
+  draw.setFill(ctx, chroma(fill).brighten(bright).hex())  
 }
 
-draw.setTextLightFill = function(ctx, fill, bright = 2) {
-  draw.setLightFill(ctx, fill, bright)
-  draw.setStroke("transparent")
+draw.setDarkStroke = function(ctx, stroke, dark = 1) {
+  draw.setStroke(ctx, chroma(stroke).darken(dark).hex())  
 }
 
 draw.setLightStroke = function(ctx, stroke, bright = 1) {
   draw.setStroke(ctx, chroma(stroke).brighten(bright).hex())  
 }
 
-draw.setDarkStroke = function(ctx, stroke, dark = 1) {
-  draw.setStroke(ctx, chroma(stroke).darken(dark).hex())  
+draw.setTextDarkFill = function(ctx, fill, dark = 2) {
+  draw.setDarkFill(ctx, fill, dark)
+  draw.setStroke(ctx, "transparent")
+}
+
+draw.setTextLightFill = function(ctx, fill, bright = 2) {
+  draw.setLightFill(ctx, fill, bright)
+  draw.setStroke(ctx, "transparent")
 }
 
 draw.setFillAndStroke = function(ctx, both) {
@@ -65,9 +70,19 @@ draw.setFillDarkenStroke = function(ctx, both, dark = 1) {
   draw.setStroke(ctx, chroma(both).darken(dark).hex())
 }
 
-draw.setFillNoStroke = function(ctx, fill) {
-  draw.setFill(ctx, fill)
-  draw.setStroke(ctx, "transparent")
+draw.setFillLightenStroke = function(ctx, both, bright = 1) {
+  draw.setFill(ctx, both)
+  draw.setStroke(ctx, chroma(both).brighten(bright).hex())
+}
+
+draw.setStrokeDarkenFill = function(ctx, both, dark = 1) {
+  draw.setStroke(ctx, both)
+  draw.setFill(ctx, chroma(both).darken(dark).hex())
+}
+
+draw.setStrokeLightenFill = function(ctx, both, bright = 1) {
+  draw.setStroke(ctx, both)
+  draw.setFill(ctx, chroma(both).brighten(bright).hex())
 }
 
 draw.setLineWidth = function(ctx, lineWidth) {

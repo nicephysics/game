@@ -6,6 +6,7 @@ import { Enemy } from "../game/enemy.js"
 import { Tower } from "../game/tower.js"
 import { towerstats, towermap } from "../game/towerstat.js"
 import { wave } from "../game/wave.js"
+import { waves } from "../game/waves.js"
 
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
@@ -258,7 +259,7 @@ ui.draw = function() {
     if (playerStat.points > 0) {
       draw.setFillNoStroke(ctx, "#27007a") // CONST upgrade button text color
       draw.setFont(ctx, "16px Roboto Condensed")  // CONST upgrade button text font
-        draw._text(ctx, x - size - 10, y - size, "x" + playerStat.points, math.degToRad(-10), "right")
+        draw._text(ctx, x - size - 8, y - size + 4, "x" + playerStat.points, math.degToRad(-10), "right")
     }
   }
   
@@ -578,7 +579,8 @@ ui.draw = function() {
   // enemy waves (top)
   
   if (true) {
-    
+    // wave vars
+    const current = waves.current
   }
   
   

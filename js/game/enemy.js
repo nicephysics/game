@@ -257,10 +257,15 @@ export class Enemy {
   }
   
   drawOverlay(render) {
-    // todo
-    // circle for now
-    draw.circle(render, this.x, this.y, this.size)
-    // draw stored vertices
+    // todo shape
+    switch (this.stat.shape) {
+      case "circle":
+        // circle for now
+        draw.circle(render, this.x, this.y, this.size)
+      case "asteroid":
+        // draw stored vertices
+        draw.polygon(render, this.x, this.y, this.vertices)
+    }
   }
   
   send() {
@@ -304,7 +309,6 @@ export class Enemy {
         console.error("Body is bad!")
         console.log(this.vertices)
         body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)        
-        return
       }
     } else {
       console.error("Invalid enemy shape: " + s.shape + "!")
@@ -328,8 +332,8 @@ export class Enemy {
     if (s.inertia && s.inertia !== 1) {
       Body.setInertia(body, body.inertia * s.inertia)
     }
+    Composite.add(Tower.world, body)
     this.body = body
-    Composite.add(Tower.world, this.body)
   }
   
   removeBody() {

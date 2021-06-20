@@ -127,7 +127,7 @@ var init = function() {
       height: _height,
       hasBounds: true,
       pixelRatio: 1, // for now... TODO
-      background: '#FAFAFA', // ok
+      background: '#292929', // ok
       wireframes: false, // yes
       showMousePosition: false, // to display the mouse coords, see Mouse.create(canvas) above // disabled
     }

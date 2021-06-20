@@ -174,30 +174,30 @@ ui.draw = function() {
       // draw! (remember to add ctx)
       draw.setFill(ctx, "transparent")
       draw.setLineWidth(ctx, 10)
-      draw.setDarkStroke(ctx, color)
-      draw._line(ctx, x, y1, x, y2)
-      draw.setLineWidth(ctx, 8)
       draw.setLightStroke(ctx, color)
-      draw._line(ctx, x, y1, x, y2)
+        draw._line(ctx, x, y1, x, y2)
+      draw.setLineWidth(ctx, 8)
+      draw.setDarkStroke(ctx, color)
+        draw._line(ctx, x, y1, x, y2)
       draw.setStroke(ctx, color)
-      draw._line(ctx, x, mid, x, y2)
+        draw._line(ctx, x, mid, x, y2)
       // draw ball!
-      draw.setDarkFill(ctx, color)
-      draw.setStroke(ctx, "transparent")
-      draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
-      draw._circle(ctx, x, yBall - 2, rBall)
       draw.setLightFill(ctx, color)
-      draw._text(ctx, x, yBall, level + "", 0, "center")
+      draw.setStroke(ctx, "transparent")
+        draw._circle(ctx, x, yBall - 2, rBall)
+      draw.setDarkFill(ctx, color)
+      draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
+        draw._text(ctx, x, yBall, level + "", 0, "center")
       // check mouse!
       if (smoothing || ( mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
+        draw.setLightFill(ctx, color)
         draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
-        draw.setDarkFill(ctx, color)
-        draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
+          draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
       }
       if (mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
+        draw.setLightFill(ctx, color)
         draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
-        draw.setDarkFill(ctx, color)
-        draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
+          draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")
       }
     }
   }
@@ -213,12 +213,11 @@ ui.draw = function() {
     x = _width - v.health_heart_side_x
     y = _height - 20 - v.health_heart_side_y
     size = v.health_heart_size
-    draw.setFill(ctx, "#cc0000")
-    draw.setStroke(ctx, "transparent")
-    draw._heart(ctx, x, y, size, size)
-    draw.setFill(ctx, "#662c2c") // CONST health heart color
-    draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto")
-    draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
+    draw.setFillNoStroke(ctx, "#e88484")
+      draw._heart(ctx, x, y, size, size)
+    draw.setFillNoStroke(ctx, "#d41111") // CONST health heart color (was #662c2c)
+    draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto Condensed")
+      draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
   
   

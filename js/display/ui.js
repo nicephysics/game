@@ -297,7 +297,7 @@ ui.draw = function() {
     // draw title
     const top_text_angle = math.degToRad(1)           // CONST upgrade overlay title text tilt angle
                              * Math.sin(v.time / 100) // CONST upgrade overlay title text tilt speed
-    draw.setFill(ctx, "#3d2200") // CONST upgrade overlay title text color
+    draw.setFill(ctx, "#004708") // CONST upgrade overlay title text color (was #3d2200)
     draw.setStroke(ctx, "transparent")
     draw.setFont(ctx, "30px Roboto Mono") // CONST upgrade overlay title text font
     // CONST tier up title text position (x, y)
@@ -364,8 +364,7 @@ ui.draw = function() {
       oldratios[i] = dispratio
       
       // draw upgrade bar title
-      draw.setDarkFill(ctx, ucolor)
-      draw.setStroke(ctx, "transparent")
+      draw.setTextDarkFill(ctx, ucolor)
       draw.setFont(ctx, "16px Roboto Condensed") // CONST upgrade bar text font
         draw._text(ctx, x - 20, y, utext, 0, "right")
       
@@ -392,8 +391,7 @@ ui.draw = function() {
         draw._circle(ctx, x + 60, y, size)
       
       // draw upgrade number
-      draw.setDarkFill(ctx, ucolor)
-      draw.setStroke(ctx, "transparent")
+      draw.setTextDarkFill(ctx, ucolor)
         draw._text(ctx, x + 30, y, unumber + "", 0, "center")
       
       // draw upgrade plus/minus signs
@@ -418,8 +416,7 @@ ui.draw = function() {
         draw._line(ctx, x, y, x + width * dispratio, y)
       
       // draw % text
-      draw.setDarkFill(ctx, ucolor)
-      draw.setStroke(ctx, "transparent")
+      draw.setTextDarkFill(ctx, ucolor)
         draw._text(ctx, x + width + 15, y, percentText, 0, "left")
       
       x -= 85 // same as above

@@ -213,9 +213,9 @@ ui.draw = function() {
     x = _width - v.health_heart_side_x
     y = _height - 20 - v.health_heart_side_y
     size = v.health_heart_size
-    draw.setFillNoStroke(ctx, "#e88484")
+    draw.setFillNoStroke(ctx, "#d41111")
       draw._heart(ctx, x, y, size, size)
-    draw.setFillNoStroke(ctx, "#d41111") // CONST health heart color (was #662c2c)
+    draw.setFillNoStroke(ctx, "#e88484") // CONST health heart color (was #662c2c)
     draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto Condensed")
       draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
@@ -270,9 +270,9 @@ ui.draw = function() {
   
   if (v.upgrade_show) {
     // draw translucent overlay rectangle
-    draw.setFillNoStroke(ctx, "#ffa200") // CONST upgrade overlay rect color
+    draw.setFillNoStroke(ctx, "#99ff00") // CONST upgrade overlay rect color
     ctx.save() // save the canvas
-    draw.setGlobalAlpha(ctx, 0.65) // CONST upgrade overlay rect opacity
+    draw.setGlobalAlpha(ctx, 0.75) // CONST upgrade overlay rect opacity
     const overlayGap = 40 // CONST upgrade overlay gap
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore() // restore the canvas to last save (above)
@@ -281,7 +281,7 @@ ui.draw = function() {
       const crossX = _width - overlayGap * 2.4,
             crossY = overlayGap * 2.4
       size = 10 // CONST upgrade overlay X button size
-      draw.setStrokeNoFill(ctx, "#cf0000") // CONST upgrade overlay X button color
+      draw.setStrokeNoFill(ctx, "#ff3333") // CONST upgrade overlay X button color
       draw.setLineWidth(ctx, 5)
         draw._line(ctx, crossX - size, crossY - size, crossX + size, crossY + size)
         draw._line(ctx, crossX + size, crossY - size, crossX - size, crossY + size)
@@ -485,9 +485,9 @@ ui.draw = function() {
   
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
-    draw.setFillNoStroke(ctx, "#00ffee") // CONST tier up overlay rect color
+    draw.setFillNoStroke(ctx, "#13f2d8") // CONST tier up overlay rect color (was #00ffee)
     ctx.save()
-    draw.setGlobalAlpha(ctx, 0.6) // CONST tier up overlay rect opacity
+    draw.setGlobalAlpha(ctx, 0.75) // CONST tier up overlay rect opacity (was 0.6)
     const overlayGap = 50
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore()
@@ -495,7 +495,7 @@ ui.draw = function() {
     x = _width - overlayGap * 2
     y = overlayGap * 2
     size = 10 // CONST tier up overlay X button size
-    draw.setStrokeNoFill(ctx, "#cf0000") // CONST tier up overlay X button color
+    draw.setStrokeNoFill(ctx, "#ff3333") // CONST tier up overlay X button color (was #cf0000)
     draw.setLineWidth(ctx, 5)
       draw._line(ctx, x - size, y - size, x + size, y + size)
       draw._line(ctx, x + size, y - size, x - size, y + size)
@@ -510,7 +510,7 @@ ui.draw = function() {
     // draw title
     const top_text_angle = math.degToRad(4)         // CONST tier up title text tilt angle
                              * Math.sin(v.time / 30) // CONST tier up title text tilt speed
-    draw.setFill(ctx, "#003d09") // CONST tier up title text color
+    draw.setFill(ctx, "#002620") // CONST tier up title text color (was #003d09)
     draw.setStroke(ctx, "transparent")
     draw.setFont(ctx, "30px Roboto Mono") // CONST tier up title text font
     // CONST tier up title text position (x, y)
@@ -553,7 +553,7 @@ ui.draw = function() {
             text = towerstats[towermap[choice]].description, // "Description for " + choice,
             fontSize = 20,
             fontGap = 24
-      draw.setFillNoStroke(ctx, "#003d09") // CONST tier up description text
+      draw.setFillNoStroke(ctx, "#002620") // CONST tier up description heading text (#003d09)
       draw.setFont(ctx, fontSize + "px Roboto Condensed")
       const lines = draw.splitText(ctx, text, _width - overlayGap * 6),
             y = 3 * _height / 4 - (lines.length - 1) / 2 * fontGap

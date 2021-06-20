@@ -297,7 +297,6 @@ export class Enemy {
           size = s.size,
           bodyOptions = {
             isStatic: false,
-            isBullet: true,
             label: this.label,
             render: style.enemy[this.type],
             collisionFilter: category.enemy,

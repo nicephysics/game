@@ -33,17 +33,28 @@ math.lerpA = function(start, end, factor) {
 math.lerpVector = math.lerpV
 math.lerpAngle = math.lerpA
 
-math.angleVector = function(angle, magnitude) {
+math.angleVector = function(angle = 0, magnitude = 1) {
   return Vector.create(magnitude * Math.cos(angle), magnitude * Math.sin(angle))
 }
 
 math.pow = Math.pow
 math.floor = Math.floor
 math.ceil = Math.ceil
-math.rand = Math.random
 math.pi = Math.PI // not a function!
 math.powersum = function(power, n, mult = 1) {
   return mult * ( (Math.pow(n + 1, power) - 1) / (power - 1) )
+}
+
+math.rand = Math.random
+
+math.randreal = function(low, high) {
+  return Math.random() * (high - low) + low;
+}
+
+math.randint = function(low, high) {
+  low = Math.ceil(low);
+  high = Math.floor(high);
+  return Math.floor(Math.random() * (high - low) + low);
 }
 
 // towerxp(2) = total xp needed to reach level 2
@@ -64,9 +75,9 @@ math.towerlevel = function(xp) {
 math.asteroid = function(sides) {
   const ans = []
   for (let i = 0; i < sides; i++) {
-    let angle = (360 / sides * i) + ( (Math.random() - 0.5) * 360 / 3 / sides ),
-        dist = (Math.random() + 4) / 4,
-        v = Vector.mult(math.angleVector((angle + 360) % 360), dist)
+    let angle = (360 / sides * i) + ( math.randreal(-0.5, 0.5) * 180 / sides ),
+        dist = math.randreal(0.75, 1.15),
+        v = math.angleVector((angle + 360) % 360, dist)
     ans.push(v)
   }
   return ans

@@ -65,7 +65,7 @@ math.asteroid = function(sides) {
   const ans = []
   for (let i = 0; i < sides; i++) {
     let angle = (360 / sides * i) + ( (Math.random() - 0.5) * 360 / 3 / sides ),
-        dist = (Math.rand() + 4) / 4,
+        dist = (Math.random() + 4) / 4,
         v = Vector.mult(math.angleVector((angles + 360) % 360), dist)
     ans.push(v)
   }

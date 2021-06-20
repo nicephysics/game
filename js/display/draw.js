@@ -37,8 +37,13 @@ draw.setDarkFill = function(ctx, fill, dark = 1) {
   draw.setFill(ctx, chroma(fill).darken(dark).hex())  
 }
 
-draw.setTextFill = function(ctx, fill, dark = 2) {
+draw.setTextDarkFill = function(ctx, fill, dark = 2) {
   draw.setDarkFill(ctx, fill, dark)
+  draw.setStroke("transparent")
+}
+
+draw.setTextLightFill = function(ctx, fill, bright = 2) {
+  draw.setLightFill(ctx, fill, bright)
   draw.setStroke("transparent")
 }
 

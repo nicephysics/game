@@ -69,6 +69,7 @@ export class EnemyStat {
   
   // fields
   level = 0
+  shape = "circle"
   mass = 1
   speed = 1
   size = 1
@@ -139,8 +140,9 @@ export class EnemyStat {
     this.reward = s.reward || 1
     this.bonus = s.bonus || 1
     this.damage = s.damage || 1
+    this.shape = s.shape || this.shape || "circle"
       
-    this.guns = s.guns || []
+    this.guns = s.guns || this.guns || [ ]
   }
   
   add(s) {
@@ -153,7 +155,8 @@ export class EnemyStat {
     this.bonus *= s.bonus || 1
     this.damage *= s.damage || 1
     
-    this.guns = s.guns || []
+    this.shape = s.shape || this.shape || "circle"
+    this.guns = s.guns || this.guns || [ ]
   }
   
   // the real refresh function?

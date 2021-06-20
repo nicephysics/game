@@ -33,6 +33,14 @@ math.lerpA = function(start, end, factor) {
 math.lerpVector = math.lerpV
 math.lerpAngle = math.lerpA
 
+math.degToRad = function(degrees) {
+  return ((degrees + 360) % 360) / 180 * Math.PI
+}
+
+math.radToDeg = function(radians) {
+  return ((radians / Math.PI * 180) + 360) % 360
+}
+
 math.angleVector = function(angle = 0, magnitude = 1) {
   return Vector.create(magnitude * Math.cos(angle), magnitude * Math.sin(angle))
 }
@@ -77,7 +85,7 @@ math.asteroid = function(sides, size) {
   for (let i = 0; i < sides; i++) {
     let angle = (360 / sides * i) + ( math.randreal(-0.5, 0.5) * 180 / sides ),
         dist = math.randreal(0.75, 1.15) * size,
-        v = math.angleVector((angle + 360) % 360, dist)
+        v = math.angleVector(math.degToRad((angle + 360) % 360), dist)
     ans.push(v)
   }
   return ans
@@ -113,14 +121,6 @@ math.floorBy = function(value, exp) {
 
 math.ceilBy = function(value, exp) {
   return decimalAdjust('ceil', value, exp)
-}
-
-math.degToRad = function(degrees) {
-  return ((degrees + 360) % 360) / 180 * Math.PI
-}
-
-math.radToDeg = function(radians) {
-  return ((radians / Math.PI * 180) + 360) % 360
 }
 
 math.sf = function(number, sf) {

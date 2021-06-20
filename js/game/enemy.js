@@ -48,6 +48,9 @@ export class Enemy {
         case "Digit2":
           Enemy.sendwavemaker(wave.make(["ballgun"], 1, { }), 1)
           break
+        case "Digit3":
+          Enemy.sendwavemaker(wave.make(["asteroid"], 1, { }), 1)
+          break
       }
     })
   }

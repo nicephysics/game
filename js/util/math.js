@@ -72,11 +72,11 @@ math.towerlevel = function(xp) {
   return Math.floor( (Math.sqrt(225 + xp * 4) - 5) / 10 )
 }
 
-math.asteroid = function(sides) {
+math.asteroid = function(sides, size) {
   const ans = []
   for (let i = 0; i < sides; i++) {
     let angle = (360 / sides * i) + ( math.randreal(-0.5, 0.5) * 180 / sides ),
-        dist = math.randreal(0.75, 1.15),
+        dist = math.randreal(0.75, 1.15) * size,
         v = math.angleVector((angle + 360) % 360, dist)
     ans.push(v)
   }

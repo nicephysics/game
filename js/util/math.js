@@ -81,12 +81,17 @@ math.towerlevel = function(xp) {
 }
 
 math.asteroid = function(sides, size) {
-  const ans = []
+  const pointset = [],
+        ans = []
   for (let i = 0; i < sides; i++) {
     let angle = (360 / sides * i) + ( math.randreal(-0.5, 0.5) * 180 / sides ),
         dist = math.randreal(0.75, 1.15) * size,
         v = math.angleVector(math.degToRad((angle + 360) % 360), dist)
-    ans.push(v)
+    pointset.push([v.x, v.y])
+  }
+  const pts = hull(pointset, 0)
+  for (let xy of pts) {
+    ans.push(Vector.create(xy[0], xy[1]))
   }
   return ans
 }

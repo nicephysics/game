@@ -298,7 +298,7 @@ export class Enemy {
       body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)
     } else if (s.shape === "asteroid") {
       // CONST how many sides the asteroid has
-      body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10, size), bodyOptions)
+      body = Bodies.fromVertices(this.start.x, this.start.y, [math.asteroid(10, size)], bodyOptions)
       if (body == null) {
         console.error("Body is bad!")
         console.log(math.asteroid(10))

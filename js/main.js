@@ -177,4 +177,6 @@ window.addEventListener("resize", function() {
   render.canvas.style.height = _height
   render.canvas.width = _width
   render.canvas.height = _height
+  render.bounds.max.x = _width
+  render.bounds.max.y = _height
 })

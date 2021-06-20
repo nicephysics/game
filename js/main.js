@@ -167,3 +167,14 @@ var init = function() {
 window.addEventListener("load", function() {
     init()
 })
+
+window.addEventListener("resize", function() {
+  _width = window.innerWidth
+  _height = window.innerHeight
+  render.options.width = _width
+  render.options.height = _height
+  render.canvas.style.width = _width
+  render.canvas.style.height = _height
+  render.canvas.width = _width
+  render.canvas.height = _height
+})

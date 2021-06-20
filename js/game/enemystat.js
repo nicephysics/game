@@ -22,7 +22,19 @@ export var enemystats = {
     air: 0.015,
     gravity: 0.05,
     reward: 11,
-    bonus: 0.5,
+    bonus: 0.2,
+    damage: 1,
+  },
+  // now for normal enemies
+  asteroid: {
+    control: "none",
+    mass: 1,
+    speed: 1,
+    size: 14,
+    air: 0.01,
+    gravity: 0.1,
+    reward: 10,
+    bonus: 0.3,
     damage: 1,
   },
   // simple shooter enemies
@@ -34,7 +46,7 @@ export var enemystats = {
     air: 0.03,
     gravity: 0.05,
     reward: 21,
-    bonus: 0.9,
+    bonus: 0.5,
     damage: 1.5,
     guns: [ { 
         set: {
@@ -61,6 +73,7 @@ export class EnemyStat {
   reward = 1
   bonus = 1
   damage = 1
+  difficulty = 1
   guns = [ ] // do not set...
   enemy = null // related enemy
   // create a fake "mult"
@@ -85,6 +98,27 @@ export class EnemyStat {
   // set
   
   // go!
+  setOptions(options) {
+    const o = options
+    this.difficulty = o.difficulty
+    this.mass *= o.difficulty * o.mass || 1
+    this.speed *= o.speed || 1
+    this.size *= o.size || 1
+    this.air *= o.air || 1
+    this.gravity *= o.gravity || 1
+    this.reward *= o.reward || 1
+    this.bonus *= o.bonus || 1
+    this.damage *= o.damage || 1
+    if (o.bullet) {
+      this.mult.size *= o.bullet.size || 1
+      this.mult.mass *= o.bullet.mass || 1
+      this.mult.speed *= o.bullet.speed || 1
+      this.mult.reload *= o.bullet.reload || 1
+      this.mult.spread *= o.bullet.spread || 1
+      this.mult.air *= o.bullet.air || 1
+    }
+  }
+  
   refresh() {
     this.setType(this.enemy.type)
   }

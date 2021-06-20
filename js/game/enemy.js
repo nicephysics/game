@@ -282,24 +282,30 @@ export class Enemy {
   }
   
   createBody() {
-    var s = this.stat,
-        bodyOptions = {
-          isStatic: false,
-          label: this.label,
-          render: style.enemy[this.type],
-          collisionFilter: category.enemy,
-          density: s.mass * 0.001,
-          frictionAir: s.air,
-        }
+    const s = this.stat,
+          bodyOptions = {
+            isStatic: false,
+            label: this.label,
+            render: style.enemy[this.type],
+            collisionFilter: category.enemy,
+            density: s.mass * 0.001,
+            frictionAir: s.air,
+          }
+    let body = null
     // check for shape
     if (s.shape === "circle") {
-      this.body = Bodies.circle(this.start.x, this.start.y, s.size, bodyOptions)
+      body = Bodies.circle(this.start.x, this.start.y, s.size, bodyOptions)
     } else if (s.shape === "asteroid") {
       // CONST how many sides the asteroid has
-      this.body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10), bodyOptions)
+      body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10), bodyOptions)
+      if (body == null) {
+        console.error("Body is bad!")
+        console.log(math.asteroid(10))
+        return
+      }
     }
-    this.body.gametype = "enemy"
-    this.body.enemy = this
+    body.gametype = "enemy"
+    body.enemy = this
     // launch at a certain speed
     if (s.speed !== 0) {
       var tilt = (random.randreal() - 0.5) * 15, // 15 degrees tilt max
@@ -308,14 +314,15 @@ export class Enemy {
             Vector.create( Math.cos(down), Math.sin(down) ),
             s.speed
           )
-      this.body.initialVelocity = vel
-      Body.setVelocity(this.body, vel)
+      body.initialVelocity = vel
+      Body.setVelocity(body, vel)
     }
     // other stats
-    this.body.gravityScale = s.gravity
+    body.gravityScale = s.gravity
     if (s.inertia && s.inertia !== 1) {
-      Body.setInertia(this.body, this.body.inertia * s.inertia)
+      Body.setInertia(body, body.inertia * s.inertia)
     }
+    this.body = body
     Composite.add(Tower.world, this.body)
   }
   

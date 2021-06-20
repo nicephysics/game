@@ -90,6 +90,10 @@ math.asteroid = function(sides, size) {
     pointset.push([v.x, v.y])
   }
   const pts = hull(pointset, 0)
+  console.log(pts)
+  if (pts[0][0] === pts[pts.length - 1][0] && pts[0][1] === pts[pts.length - 1][1]) {
+    pts.splice(0, 1)
+  }
   for (let xy of pts) {
     ans.push(Vector.create(xy[0], xy[1]))
   }

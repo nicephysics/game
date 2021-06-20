@@ -111,8 +111,11 @@ style.effect = {
 style.upgradetext = [
   "#d674ba", // projectile size
   "#d67474", // projectile mass
-  "#d6b974", // projectile speed
+  "#d6b974", // projectile launch speed
   "#a5d674", // projectile launch rate
   "#74d6ce", // tower movement speed
+  "#ad74d6", // projectile launch spread
+  "#748bd6", // projectile drag
+  "#ac74d6", // tower rotation speed
   // some more...
 ]

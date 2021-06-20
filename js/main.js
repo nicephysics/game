@@ -43,9 +43,47 @@ var Engine = Matter.Engine,
     render, // default render
     mouse, // default mouse created from canvas
     mouseConstraint, // the mouse constraint
+    ground, atmosphere, leftwall, rightwall,
     _width = 0, // window width
     _height = 0, // window height
     _end_of_global_variables_ // the end
+
+var addStuff = function() {
+  ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
+    isStatic: true,
+    collisionFilter: category.ground,
+    label: "The Ground",
+    render: style.default.ground,
+  })
+  ground.gametype = "ground"
+  
+  leftwall = Bodies.rectangle(-30, _height * 0.85 + 25, 60, _height + 50, {
+    isStatic: true,
+    collisionFilter: category.ground,
+    label: "The Left Wall",
+    render: style.default.wall,
+  })
+  leftwall.gametype = "wall"
+  
+  rightwall = Bodies.rectangle(_width + 30, _height * 0.85 + 25, 60, _height + 50, {
+    isStatic: true,
+    collisionFilter: category.ground,
+    label: "The Right Wall",
+    render: style.default.wall,
+  })
+  rightwall.gametype = "wall"
+  
+  atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
+    isStatic: true,
+    isSensor: true,
+    // collisionFilter: category.atmosphere,
+    label: "The Atmosphere",
+    render: style.default.atmosphere,
+  })
+  atmosphere.gametype = "atmosphere"
+  
+  Composite.add(world, [ atmosphere, ground, leftwall, rightwall ])
+}
 
 // called on window load
 var init = function() {
@@ -69,40 +107,7 @@ var init = function() {
   //     console.log("Added: ", compositeArray)
   // })
   
-  var ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
-    isStatic: true,
-    collisionFilter: category.ground,
-    label: "The Ground",
-    render: style.default.ground,
-  })
-  ground.gametype = "ground"
-  
-  var leftwall = Bodies.rectangle(-30, _height * 0.85 + 25, 60, _height + 50, {
-    isStatic: true,
-    collisionFilter: category.ground,
-    label: "The Left Wall",
-    render: style.default.wall,
-  })
-  leftwall.gametype = "wall"
-  
-  var rightwall = Bodies.rectangle(_width + 30, _height * 0.85 + 25, 60, _height + 50, {
-    isStatic: true,
-    collisionFilter: category.ground,
-    label: "The Right Wall",
-    render: style.default.wall,
-  })
-  rightwall.gametype = "wall"
-  
-  var atmosphere = Bodies.rectangle(_width / 2, _height * 0.85 + 25, _width + 50, _height + 50, {
-    isStatic: true,
-    isSensor: true,
-    // collisionFilter: category.atmosphere,
-    label: "The Atmosphere",
-    render: style.default.atmosphere,
-  })
-  atmosphere.gametype = "atmosphere"
-  
-  Composite.add(world, [ atmosphere, ground, leftwall, rightwall ])
+  addStuff()
     
   mouse = Mouse.create(canvas)
   mouseConstraint = MouseConstraint.create(engine, {
@@ -179,4 +184,20 @@ window.addEventListener("resize", function() {
   render.canvas.height = _height
   render.bounds.max.x = _width
   render.bounds.max.y = _height
+  
+  Composite.remove(world, [ atmosphere, ground, leftwall, rightwall ])
+  
+  addStuff()
+  
+  /*
+  leftwall.position.x = -30
+  leftwall.position.y = _height * 0.85 + 25
+  
+  rightwall.position.x = _width + 30
+  rightwall.position.y = _height * 0.85 + 25
+  
+  atmosphere.position.x = _width / 2
+  atmosphere.position.y = _height * 0.85 + 25
+  // do something to atmosphere's vertices? _width + 50, _height + 50
+  */
 })

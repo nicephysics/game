@@ -357,11 +357,11 @@ ui.draw = function() {
       ucolor = upgradeColors[i]
       unumber = upgradeNumbers[i] + 1
       ratio = unumber / upgradeMax
+      const percentText = Math.round(ratio * 100) + "%"
       ratio = ratio / maxratio
       size = 10
       dispratio = math.lerp(oldratios[i] || 0, ratio, 0.07)
       oldratios[i] = dispratio
-      const percentText = Math.round(ratio * 100) + "%"
       
       // draw upgrade bar title
       draw.setDarkFill(ctx, ucolor)

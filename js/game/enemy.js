@@ -28,9 +28,9 @@ var Body = Matter.Body,
 
 var getInitialSpawnBounds = function() {
   return {
-    x: 0, y: -window.innerHeight / 5,
+    x: 0, y: -window.innerHeight / 10,
     w: window.innerWidth,
-    h: window.innerHeight / 5,
+    h: window.innerHeight / 10,
   }
 }
 
@@ -298,13 +298,17 @@ export class Enemy {
       body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)
     } else if (s.shape === "asteroid") {
       // CONST how many sides the asteroid has
-      body = Bodies.fromVertices(this.start.x, this.start.y, [math.asteroid(10, size)], bodyOptions)
+      this.vertices = math.asteroid(10, size)
+      body = Bodies.fromVertices(this.start.x, this.start.y, [this.vertices], bodyOptions)
       if (body == null) {
         console.error("Body is bad!")
-        console.log(math.asteroid(10))
+        console.log(this.vertices)
         body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)        
         return
       }
+    } else {
+      console.error("Invalid enemy shape: " + s.shape + "!")
+      body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)
     }
     body.gametype = "enemy"
     body.enemy = this

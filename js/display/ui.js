@@ -575,6 +575,16 @@ ui.draw = function() {
   
   
   
+  // enemy waves (top)
+  
+  if (true) {
+    
+  }
+  
+  
+  
+  
+  
   // enemy texts
   
   let i = 0

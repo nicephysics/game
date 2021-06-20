@@ -283,6 +283,7 @@ export class Enemy {
   
   createBody() {
     const s = this.stat,
+          size = s.size,
           bodyOptions = {
             isStatic: false,
             label: this.label,
@@ -294,13 +295,14 @@ export class Enemy {
     let body = null
     // check for shape
     if (s.shape === "circle") {
-      body = Bodies.circle(this.start.x, this.start.y, s.size, bodyOptions)
+      body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)
     } else if (s.shape === "asteroid") {
       // CONST how many sides the asteroid has
-      body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10), bodyOptions)
+      body = Bodies.fromVertices(this.start.x, this.start.y, math.asteroid(10, size), bodyOptions)
       if (body == null) {
         console.error("Body is bad!")
         console.log(math.asteroid(10))
+        body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)        
         return
       }
     }

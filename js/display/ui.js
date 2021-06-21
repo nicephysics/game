@@ -475,7 +475,7 @@ ui.draw = function() {
     const upSymbolSize = 0.7, // CONST
           arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, "#0c9400") // CONST tier up button symbol color
+    draw.setStroke(ctx, "#ff7700") // CONST tier up button symbol color (was #0c9400)
     draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))

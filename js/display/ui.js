@@ -520,19 +520,25 @@ ui.draw = function() {
           circleSizes = []
     let hovered = -1,
         clicked = -1,
-        maxSize = 0
+        maxSize = 0,
+        sumSize = 0
     for (let i = 0; i < choiceLength; ++i) {
       const choice = choices[i],
             statSize = towerstats[towermap[choice]].size,
             circleSize = statSize / towerSizeRatio
       circleSizes.push(circleSize)
+      sumSize += circleSize * 2 + 25 // CONST tier up circles gap (x)
       maxSize = Math.max(maxSize, circleSize)
     }
+    x = _width / 2 - sumSize / 2 - 25
+    size = 0
     const yText = y + maxSize + 20 // CONST tier up circle text gap (y)
     // draw circles
     for (let i = 0; i < choiceLength; ++i) {
-      x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25) // CONST tier up circles gap (x)
+      // x = _width / 2 + (i - (choiceLength - 1) / 2) * (size * 2 + 25)
+      x += size + 25
       size = circleSizes[i]
+      x += size
       const choice = choices[i],
             mouseBoxSize = 1.05, // CONST tier up circle mouse box size
             hovering = ui.hitcircle(mousepos, x, y, size * mouseBoxSize),
@@ -548,8 +554,8 @@ ui.draw = function() {
       }
       draw.setStroke(ctx, "#3f00de") // CONST tier up circle border color
       draw.setLineWidth(ctx, 5) // CONST tier up circle line width
-        draw._circle(ctx, x, y, size / towerSizeRatio)
-        draw.tower(render, x, y, size, choice) // CONST tier up circle tower size ratio
+        draw._circle(ctx, x, y, size)
+        draw.tower(render, x, y, size * towerSizeRatio, choice) // CONST tier up circle tower size ratio
       draw.setFill(ctx, "#4b00ad") // CONST tier up circle text
       draw.setStroke(ctx, "transparent")
       draw.setFont(ctx, "20px Roboto Mono")

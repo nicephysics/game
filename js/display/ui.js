@@ -39,6 +39,9 @@ ui.vars = {
   health_heart_size: 20,
   health_text_size: 20,
   
+  c_button: "#00ffee",
+  c_button_hover: "#00ada2", // (was #ff7700)
+  
   // change
   time: 0,
   click: false,
@@ -48,7 +51,10 @@ ui.vars = {
   xp_bar_show: 1,
   
   upgrade_ratios: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+  
+  wave_show: 0,
+  target_wave_show: 1,
   
   // show (overlay)
   upgrade_show: false, // upgrade overlay show
@@ -102,6 +108,8 @@ ui.tick = function() {
   // tick time!
   v.time++
   // that's all?
+  // no!
+  v.wave_show = math.lerp(v.wave_show, v.target_wave_show, 0.1)
 }
 
 ui.tickAfter = function() {
@@ -230,11 +238,11 @@ ui.draw = function() {
     size = 16 // CONST upgrade button size
     x = _width - size - 11 // CONST upgrade button right side gap
     y = _height - size - 100 // CONST upgrade button 
-    let color = "#00ffee" // CONST upgrade button color
+    let color = v.c_button
     const mouseBoxSize = size * 1.1 // CONST upgrade button mouse box ratio
     if ( !v.something_show() && mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST upgrade button hover size change
-      color = "#ff7700" // CONST upgrade button hover color
+      color = v.c_button_hover
       mousepos = false
     }
     if ( !v.something_show() && clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
@@ -449,11 +457,11 @@ ui.draw = function() {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap
-    let color = "#00ffee" // CONST tier up button color
+    let color = v.c_button // CONST tier up button color
     const mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
     if ( mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST tier up button hover size change
-      color = "#ff7700" // CONST tier up button hover color (changed from #0095ff)
+      color = v.c_button_hover // CONST tier up button hover color (changed from #0095ff)
     }
     if ( clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.tier_up_show = true
@@ -588,11 +596,107 @@ ui.draw = function() {
   
   
   
-  // enemy waves (top)
+  // enemy wave small button (top)
   
   if (true) {
+    const waveshow = v.wave_show,
+          buttoncolor = v.c_button
+    x = _width / 2
+    y = 0
+    size = 50
+    
+    if (ui.hitrectangle(mousepos, x, y, size, size)) {
+      buttoncolor = v.c_button_hover
+      mousepos = false
+    }
+    if (ui.hitrectangle(clickpos, x, y, size, size)) {
+      v.target_wave_show = 1 - v.target_wave_show
+      clickpos = false
+    }
+    // draw button rectangle
+    draw.setFillDarkenStroke(ctx, buttoncolor)
+      draw._rectangle(ctx, x, y, size, size)
+    // draw symbol
+    y += 2.5
+    height = waveshow * 20
+    draw.setStrokeNoFill(ctx, "#0c9400")
+      draw._line(ctx, x - 20, y + height, x, y + 20 - height)
+      draw._line(ctx, x, y + 20 - height, x + 20, y + height)
+  }
+  
+  
+  
+  
+  
+  // enemy waves (top)
+  
+  if (v.wave_show > 0) {
     // wave vars
-    const current = waves.current
+    const waves = waves.waves,
+          nextwave = waves.current + 1,
+          waverashow = v.wave_show, // ray-show? get it?
+          waveshow = waverashow * 50, // the real constant I will use...
+          wavecount = 5,
+          playsize = 15,
+          playgap = 20,
+          playcolor = "#009c1d",
+          barwidth = 100,
+          totalwidth = barwidth + playsize * 2 + playgap,
+          startX = (_width - totalwidth) / 2,
+          other_constants = "?" // rEMoVe
+    // draw wave stufff
+    y = waveshow - 10
+    x = startX
+    // draw the LONG LINE
+    draw.setLineWidth(ctx, 6)
+    draw._line(ctx, x, y, x + barwidth, y)
+    // draw wave circles and wave number
+    for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
+      const num = nextwave + offset,
+            wave = waves.wave[num]
+      // if wave exists, draw the circle!
+      if (wave != null) {
+        size = (offset == 0) ? 16 : 6
+        draw.setFillLightenStroke(ctx, "#cf0034") // todo
+        draw.setLineWidth(ctx, 3)
+        if (offset == 0) {
+            draw.circle(ctx, x, y, size)
+          draw.setFillNoStroke(ctx, "#69ff69") // todo text color?
+            draw._text(ctx, x, y, nextwave + "", 0, "center")
+        } else {
+          draw.circle(ctx, x, y, size / 2)
+        }
+        if (ui.hitcircle(mousepos, x, y, size)) {
+          const rectextra = 10,
+                rectheight = 50
+          draw.setFillNoStroke(ctx, "#ff3d74")
+          ctx.save()
+          draw.setGlobalAlpha(ctx, 0.8)
+            draw._rect(ctx, startX - rectextra, y + 20, barwidth + playsize + playgap + rectextra * 2, rectheight)
+          ctx.restore()
+          mousepos = false
+        }
+        if (ui.hitcircle(clickpos, x, y, size)) {
+          // CLICKED! do something? I think not (for now).
+          clickpos = false
+        }
+      }
+      // remember to increment x
+      x += width / (wavecount - 1)      
+    }
+    // draw the PLAY BUTTON
+    x = (_width + barwidth - playsize * 2 + playgap) / 2
+    draw.setFillLightenStroke(ctx, playcolor)
+    draw.setLineWidth(3)
+      draw._circle(ctx, x, y, playsize)
+    draw.setLightStroke(ctx, playcolor)
+    draw.setFill(ctx, "transparent")
+      draw._polygon(ctx, [
+        { x: x - playsize * 0.2, y: y - playsize * 0.3 },
+        { x: x + playsize * 0.3, y: y },
+        { x: x - playsize * 0.2, y: y + playsize * 0.3 },
+      ])
+    // done with drawing enemy wave stuff?
   }
   
   

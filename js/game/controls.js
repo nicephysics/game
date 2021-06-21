@@ -1,5 +1,6 @@
 import { config, category } from "../config/config.js"
 
+import { Enemy } from "./enemy.js"
 import { Tower } from "./tower.js"
 import { waves } from "./waves.js"
 

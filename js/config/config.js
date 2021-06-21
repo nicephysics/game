@@ -1,9 +1,8 @@
+// no imports
+
 if (true) {
   // 2 space indent
 }
-
-var _width = window.innerWidth,
-    _height = window.innerHeight
 
 export var config = {
   version: "0.0.0",
@@ -18,20 +17,31 @@ export var config = {
       pos: 1.0, // none yet?
     },
   },
-  limits: {
-    min: { x: 0, y: 0 },
-    max: { x: _width, y: _height },
-    zoom: { min: 1.0, max: 1.0 },
-  },
-  movelimits: {
-    min: { x: 0, y: _height * 0.35 },
-    max: { x: _width, y: _height - 20 },
-  },
   upgradetext: {
     normal: ["projectile size", "projectile mass", "projectile launch speed", "projectile launch rate", "tower movement speed"],
   },
 }
 
+config.updateBounds = function() {
+  const width = window.innerWidth,
+        height = window.innerHeight
+  
+  config.limits = {
+    min: { x: 0, y: 0 },
+    max: { x: width, y: height },
+    zoom: { min: 1.0, max: 1.0 },
+  }
+  
+  config.movelimits = {
+    min: { x: 0, y: height * 0.35 },
+    max: { x: width, y: height - 20 },
+  }
+}
+// and then call the function
+config.updateBounds()
+
+// for use in category
+// don't need to export
 var c = {
   default: 0x0001,
   ground: 0x0002,
@@ -53,12 +63,6 @@ export var category = {
     category: c.ground,
     mask: c.default | c.enemy | c.enemy_bullet | c.you_bullet
   },
-  /*
-  atmosphere: {
-    category: c.atmosphere,
-    mask: c.default | c.ground | c.atmosphere | c.enemy | c.enemy_tower | c.enemy_bullet | c.you_tower | c.you_bullet
-  },
-  */
   yourTower: {
     category: c.you_tower,
     mask: c.default | c.enemy_bullet

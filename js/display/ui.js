@@ -666,6 +666,9 @@ ui.draw = function() {
           draw.setFillNoStroke(ctx, "#69ff69") // todo text color?
           draw.setFont(ctx, "16px Roboto Condensed")
             draw._text(ctx, x, y + 2, nextwave + "", 0, "center")
+          draw.setTextLightFill(ctx, "#cf0034")
+          draw.setFont(ctx, "12px Roboto Condensed")
+            draw._text(ctx, x, y - size - 3, "next", 0, "bottom")
         } else {
           draw._circle(ctx, x, y, size / 2)
         }
@@ -706,6 +709,7 @@ ui.draw = function() {
     if (ui.hitcircle(clickpos, x, y, playsize)) {
       // start wave!
       waves.start()
+      v.wave_show = 0
       clickpos = false
     }
     // done with drawing enemy wave stuff?

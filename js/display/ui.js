@@ -103,14 +103,18 @@ ui.init = function(render) {
 }
 
 ui.tick = function() {
-  let v = ui.vars,
-      render = Tower.render,
-      ctx = render.context
+  const v = ui.vars,
+        render = Tower.render,
+        ctx = render.context
   // tick time!
   v.time++
   // that's all?
   // no!
-  v.wave_show = math.lerp(v.wave_show, v.target_wave_show, 0.1)
+  let target_ws = v.target_wave_show
+  if (v.something_show()) {
+    target_ws = 0
+  }
+  v.wave_show = math.lerp(v.wave_show, target_ws, 0.1)
   if (v.enemy_wave_done == false && !Enemy.waveOn()) {
     v.enemy_wave_done = true
     v.target_wave_show = 1

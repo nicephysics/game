@@ -1,4 +1,22 @@
 
+/*
+HOW TOWER RATING WORKS
+["velocity", "reload", "agility", "power", "accuracy", "special"]
+{ vel, rel, agi, pwr, acc, spc }
+1. Velocity
+Based on projectile launch speed.
+2. Reload
+Based on projectile launch rate.
+3. Agility
+Based on tower size, tower movement speed, tower rotation speed.
+4. Power
+Based on projectile mass and projectile size.
+5. Accuracy
+Based on projectile spread (and partly projectile launch speed also).
+6. Special
+Based on how special the tower is...
+*/
+
 export var towerstats = {
   /* -------------------------------------- TIER 1 -------------------------------------- */
   
@@ -7,6 +25,7 @@ export var towerstats = {
     tier: 1,
     label: "G-0",
     description: "A simple tower with a simple gun.",
+    rating: { vel: 1, rel: 1, agi: 1.2, pwr: 1, acc: 1, spc: 0 },
     size: 25,
     speed: 5,
     rotspeed: 0.2,
@@ -28,6 +47,7 @@ export var towerstats = {
     tier: 2,
     label: "T-5",
     description: "Two weaker shooters side-by-side, like twins.",
+    rating: { vel: 0.9, rel: 1.5, agi: 1.23, pwr: 0.9, acc: 0.7, spc: 0 },
     size: 25,
     speed: 5.05,
     rotspeed: 0.2,
@@ -51,6 +71,7 @@ export var towerstats = {
     tier: 2,
     label: "D-1",
     description: "Double the gun, double the fun!",
+    rating: { vel: 0.95, rel: 1.5, agi: 1.25, pwr: 0.9, acc: 0.85, spc: 0 },
     size: 25,
     speed: 5.16,
     rotspeed: 0.2,
@@ -74,6 +95,7 @@ export var towerstats = {
     tier: 2,
     label: "B-4",
     description: "Slower and bigger projectiles.",
+    rating: { vel: 0.95, rel: 0.8, agi: 1, pwr: 1.4, acc: 1, spc: 0 },
     size: 28,
     speed: 5,
     rotspeed: 0.18,
@@ -92,6 +114,7 @@ export var towerstats = {
     tier: 2,
     label: "S-3",
     description: "Faster and heavier projectiles.",
+    rating: { vel: 1.5, rel: 0.7, agi: 0.9, pwr: 1.25, acc: 1.3, spc: 0 },
     size: 27,
     speed: 4.6,
     rotspeed: 0.175,
@@ -110,6 +133,7 @@ export var towerstats = {
     tier: 2,
     label: "F-2",
     description: "Faster rate of fire and smaller projectiles.",
+    rating: { vel: 1.05, rel: 1.65, agi: 1.25, pwr: 0.65, acc: 0.75, spc: 0 },
     size: 24,
     speed: 5.3,
     rotspeed: 0.22,

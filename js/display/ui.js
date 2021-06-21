@@ -642,13 +642,13 @@ ui.draw = function() {
   if (v.wave_show * 65 > 0.4) {
     // wave vars
     const W = waves.waves,
-          waveon = Enemy.waveOn(),
+          waveoff = !Enemy.waveOn(),
           nextwave = waves.current + 1,
           waverashow = v.wave_show, // ray-show? get it?
           waveshow = waverashow * 65, // the real constant I will use (for y)
           wavecount = 5,
-          playsize = waveon ? 18 : 0,
-          playgap = waveon ? 25 : 0,
+          playsize = waveoff ? 18 : 0,
+          playgap = waveoff ? 25 : 0,
           playcolor = "#009c1d",
           barwidth = 250,
           totalwidth = barwidth + playsize * 2 + playgap,
@@ -699,7 +699,7 @@ ui.draw = function() {
       x += barwidth / (wavecount - 1)
     }
     // draw the PLAY BUTTON
-    if (waveon) {
+    if (waveoff) {
       x = startX + barwidth + playgap + playsize
       draw.setFillLightenStroke(ctx, playcolor)
       if (ui.hitcircle(mousepos, x, y, playsize)) {

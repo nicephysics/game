@@ -28,9 +28,9 @@ waves.init = function(name) {
 }
 
 waves.start = function() {
-  if (waves.waves) {
+  if (waves.waves && !Enemy.waveOn()) {
     ++waves.current
-    Enemy.sendwave(waves.waves.wave[waves.current])
+    Enemy.sendwave(waves.waves.wave[waves.current - 1])
   }
 }
 
@@ -43,14 +43,26 @@ waves.tut1.wave.push(
     type: "asteroid",
     rating: 1,
     number: 2,
-    sep: 10,
+    sep: 7,
     m: 0.1, s: 0.5, g: 0.2, // MSG!
   }, { // 2
     type: "asteroid",
     rating: 1,
     number: 5,
-    sep: 8,
-    m: 0.1, s: 0.5, g: 0.2, // MSG!    
+    sep: 5,
+    m: 0.1, s: 0.5, g: 0.2,
+  }, { // 3
+    type: "asteroid",
+    rating: 1,
+    number: 6,
+    sep: 4,
+    m: 0.1, s: 0.5, g: 0.2,
+  }, { // 4
+    type: "asteroid",
+    rating: 1,
+    number: 4,
+    sep: 0.1,
+    m: 0.1, s: 0.5, g: 0.2,
   }
 )
 waves.tut1.text = {
@@ -61,6 +73,7 @@ waves.tut1.text = {
   [2]: ["Did you hit the 2 asteroids away? More of them will come this time..."],
   [3]: ["The points you gain from hitting asteroids can be used for upgrading!",
         "Press the statistics button in the bottom right (or press U) to enter the upgrade screen.",
-        "From there, you can press the upgrade button!",
+        "From there, you can press the plus button to improve your [thing]!",
         ],
+  [4]: ["Many asteroids can come at once! Get ready!",],
 }

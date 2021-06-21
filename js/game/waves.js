@@ -21,9 +21,17 @@ const Vector = Matter.Vector,
 export var waves = { }
 
 waves.current = 0
+waves.waves = null
 waves.init = function(name) {
   waves.current = 0
   waves.waves = waves[name]
+}
+
+waves.start = function() {
+  if (waves.waves) {
+    ++waves.current
+    Enemy.sendwave(waves.waves.wave[waves.current])
+  }
 }
 
 

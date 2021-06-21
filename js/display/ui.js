@@ -530,7 +530,7 @@ ui.draw = function() {
       sumSize += circleSize * 2 + 25 // CONST tier up circles gap (x)
       maxSize = Math.max(maxSize, circleSize)
     }
-    x = _width / 2 - sumSize / 2 - 25
+    x = _width / 2 - sumSize / 2 - 12.5
     size = 0
     const yText = y + maxSize + 20 // CONST tier up circle text gap (y)
     // draw circles

@@ -16,6 +16,7 @@ import { Enemy } from "./game/enemy.js"
 import { collide } from "./game/collide.js"
 import { controls } from "./game/controls.js"
 import { gameupdate } from "./game/update.js"
+import { waves } from "./game/waves.js"
 
 if (true) {
   // realise that this file has two spaces as a tab
@@ -167,6 +168,9 @@ var init = function() {
   Runner.run(runner, engine)
   
   Tower.runner = runner
+  
+  // run waves
+  waves.init("tut1")
 }
 
 window.addEventListener("load", function() {

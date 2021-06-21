@@ -102,9 +102,11 @@ controls.init = function(render) {
             controls.setPaused(true)            
           }
           if (ui.vars.something_show()) {
-            ui.closeOverlay()
             if (!ui.vars.tier_up_show) {
+              ui.closeOverlay()
               showOverlay()
+            } else {
+              ui.closeOverlay()
             }
           } else {
             if (!ui.vars.tier_up_show) {
@@ -122,9 +124,11 @@ controls.init = function(render) {
             controls.setPaused(true)            
           }
           if (ui.vars.something_show()) {
-            ui.closeOverlay()
             if (!ui.vars.upgrade_show) {
+              ui.closeOverlay()
               showOverlay()
+            } else {
+              ui.closeOverlay()
             }
           } else {
             if (!ui.vars.upgrade_show) {

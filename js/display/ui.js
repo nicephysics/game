@@ -55,6 +55,7 @@ ui.vars = {
   
   wave_show: 0,
   target_wave_show: 1,
+  enemy_wave_done: true,
   
   // show (overlay)
   upgrade_show: false, // upgrade overlay show
@@ -110,6 +111,12 @@ ui.tick = function() {
   // that's all?
   // no!
   v.wave_show = math.lerp(v.wave_show, v.target_wave_show, 0.1)
+  if (v.enemy_wave_done == false && !Enemy.waveOn()) {
+    v.enemy_wave_done = true
+    v.target_wave_show = 1
+  } else if (Enemy.waveOn()) {
+    v.enemy_wave_done = false
+  }
 }
 
 ui.tickAfter = function() {
@@ -709,7 +716,7 @@ ui.draw = function() {
     if (ui.hitcircle(clickpos, x, y, playsize)) {
       // start wave!
       waves.start()
-      v.wave_show = 0
+      v.target_wave_show = 0
       clickpos = false
     }
     // done with drawing enemy wave stuff?

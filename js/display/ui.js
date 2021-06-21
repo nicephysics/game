@@ -639,10 +639,10 @@ ui.draw = function() {
           waverashow = v.wave_show, // ray-show? get it?
           waveshow = waverashow * 70, // the real constant I will use (for y)
           wavecount = 5,
-          playsize = 15,
-          playgap = 20,
+          playsize = 20,
+          playgap = 25,
           playcolor = "#009c1d",
-          barwidth = 100,
+          barwidth = 250,
           totalwidth = barwidth + playsize * 2 + playgap,
           startX = (_width - totalwidth) / 2
     // draw wave stuff
@@ -663,7 +663,8 @@ ui.draw = function() {
         if (offset == 0) {
             draw._circle(ctx, x, y, size)
           draw.setFillNoStroke(ctx, "#69ff69") // todo text color?
-            draw._text(ctx, x, y, nextwave + "", 0, "center")
+          draw.setFont(ctx, "16px Roboto Condensed")
+            draw._text(ctx, x, y + 2, nextwave + "", 0, "center")
         } else {
           draw._circle(ctx, x, y, size / 2)
         }
@@ -686,7 +687,7 @@ ui.draw = function() {
       x += width / (wavecount - 1)      
     }
     // draw the PLAY BUTTON
-    x = (_width + barwidth - playsize * 2 + playgap) / 2
+    x = startX + barwidth + playgap + playsize
     draw.setFillLightenStroke(ctx, playcolor)
     draw.setLineWidth(ctx, 3)
       draw._circle(ctx, x, y, playsize)

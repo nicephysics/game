@@ -688,7 +688,7 @@ ui.draw = function() {
     // draw the PLAY BUTTON
     x = (_width + barwidth - playsize * 2 + playgap) / 2
     draw.setFillLightenStroke(ctx, playcolor)
-    draw.setLineWidth(3)
+    draw.setLineWidth(ctx, 3)
       draw._circle(ctx, x, y, playsize)
     draw.setLightStroke(ctx, playcolor)
     draw.setFill(ctx, "transparent")

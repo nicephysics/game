@@ -72,7 +72,7 @@ export class Enemy {
   }
   
   static waveOn = function() {
-    return enemies.length > 0
+    return (enemies.length > 0 || spawn.queue.size() > 0)
   }
   
   static time = 0

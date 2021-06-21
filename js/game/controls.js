@@ -1,6 +1,7 @@
 import { config, category } from "../config/config.js"
 
 import { Tower } from "./tower.js"
+import { waves } from "./waves.js"
 
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
@@ -92,8 +93,17 @@ controls.init = function(render) {
       case "KeyR":
         c.autorotate = !c.autorotate
         break
+      case "KeyQ":
+        if (Enemy.waveOn()) {
+          ui.vars.target_wave_show = 1 - ui.vars.target_wave_show
+        } else {
+          waves.start()
+        }
+        break
       case "KeyP":
-        controls.setPaused(!c.paused)
+        if (!ui.vars.something_show()) {
+          controls.setPaused(!c.paused)
+        }
         break
       case "KeyY":
         if (player.canTierUp) {

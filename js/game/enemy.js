@@ -61,9 +61,8 @@ export class Enemy {
       // comparison
       (a, b) => { return a.time < b.time }
     ),
-    bounds: getInitialSpawnBounds(),
     random: function() {
-      var b = Enemy.spawn.bounds,
+      var b = getInitialSpawnBounds(), // bounds
           ans = Vector.create(
             b.x + random.randreal() * b.w,
             b.y + random.randreal() * b.h

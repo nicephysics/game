@@ -661,11 +661,11 @@ ui.draw = function() {
         draw.setFillLightenStroke(ctx, "#cf0034") // todo
         draw.setLineWidth(ctx, 3)
         if (offset == 0) {
-            draw.circle(ctx, x, y, size)
+            draw._circle(ctx, x, y, size)
           draw.setFillNoStroke(ctx, "#69ff69") // todo text color?
             draw._text(ctx, x, y, nextwave + "", 0, "center")
         } else {
-          draw.circle(ctx, x, y, size / 2)
+          draw._circle(ctx, x, y, size / 2)
         }
         if (ui.hitcircle(mousepos, x, y, size)) {
           const rectextra = 10,

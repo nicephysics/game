@@ -5,6 +5,7 @@ import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
 
 // display stuff here?
+import { ui } from "../display/ui.js"
 
 import { random } from "../util/random.js"
 import { math } from "../util/math.js"
@@ -28,9 +29,16 @@ waves.init = function(name) {
 }
 
 waves.start = function() {
-  if (waves.waves && !Enemy.waveOn()) {
+  const W = waves.waves
+  if (W && !Enemy.waveOn()) {
     ++waves.current
-    Enemy.sendwave(waves.waves.wave[waves.current - 1])
+    const curr = waves.current,
+          currwave = W.wave[curr - 1]
+    if (currwave == null) {
+      ui.vars.waves_all_clear = true
+    } else {
+      Enemy.sendwave(currwave)
+    }
   }
 }
 

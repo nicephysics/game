@@ -603,7 +603,7 @@ ui.draw = function() {
           buttoncolor = v.c_button
     x = _width / 2
     y = 0
-    size = 50
+    size = 30
     
     if (ui.hitrect(mousepos, x, y, size, size)) {
       buttoncolor = v.c_button_hover
@@ -615,13 +615,15 @@ ui.draw = function() {
     }
     // draw button rectangle
     draw.setFillDarkenStroke(ctx, buttoncolor)
+    draw.setLineWidth(ctx, 2)
       draw._rectangle(ctx, x, y, size, size)
     // draw symbol
     y += 2.5
-    height = waveshow * 20
+    height = waveshow * 10
     draw.setStrokeNoFill(ctx, "#0c9400")
-      draw._line(ctx, x - 20, y + height, x, y + 20 - height)
-      draw._line(ctx, x, y + 20 - height, x + 20, y + height)
+    draw.setLineWidth(ctx, 2)
+      draw._line(ctx, x - 10, y + height, x, y + 10 - height)
+      draw._line(ctx, x, y + 10 - height, x + 10, y + height)
   }
   
   
@@ -653,7 +655,7 @@ ui.draw = function() {
     // draw wave circles and wave number
     for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
       const num = nextwave + offset,
-            wave = W.wave[num]
+            wave = W ? W.wave[num] : null
       // if wave exists, draw the circle!
       if (wave != null) {
         size = (offset == 0) ? 16 : 6

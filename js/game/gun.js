@@ -222,6 +222,7 @@ export class Gun {
     }
     if (this.shot < reload) {
       this.shot++
+      this.refreshShot()
     } else {
       if (this.shooting) {
         this.shot++

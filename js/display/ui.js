@@ -632,7 +632,7 @@ ui.draw = function() {
   
   // enemy waves (top)
   
-  if (v.wave_show > 0) {
+  if (v.wave_show * 65 > 0.4) {
     // wave vars
     const W = waves.waves,
           nextwave = waves.current + 1,
@@ -655,10 +655,10 @@ ui.draw = function() {
     // draw wave circles and wave number
     for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
       const num = nextwave + offset,
-            wave = W ? W.wave[num] : null
+            wave = W ? W.wave[num - 1] : null
       // if wave exists, draw the circle!
       if (wave != null) {
-        size = (offset == 0) ? 16 : 6
+        size = (offset == 0) ? 16 : 10
         draw.setFillLightenStroke(ctx, "#cf0034") // todo
         draw.setLineWidth(ctx, 3)
         if (offset == 0) {

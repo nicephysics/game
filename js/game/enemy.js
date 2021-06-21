@@ -71,6 +71,10 @@ export class Enemy {
     }
   }
   
+  static waveOn = function() {
+    return enemies.length > 0
+  }
+  
   static time = 0
   static tick() {
     Enemy.time++ // look above

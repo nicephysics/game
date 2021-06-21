@@ -1,1 +1,3 @@
-theme: jekyll-theme-architect
+theme: alembic-jekyll-theme
+remote_theme: daviddarnes/alembic
+# just trying out something

@@ -612,11 +612,11 @@ ui.draw = function() {
     y = 0
     size = 30
     
-    if (ui.hitrect(mousepos, x, y, size, size)) {
+    if (ui.hitrect(mousepos, x - size / 2, y - size / 2, size, size)) {
       buttoncolor = v.c_button_hover
       mousepos = false
     }
-    if (ui.hitrect(clickpos, x, y, size, size)) {
+    if (ui.hitrect(clickpos, x - size / 2, y - size / 2, size, size)) {
       v.target_wave_show = 1 - v.target_wave_show
       clickpos = false
     }

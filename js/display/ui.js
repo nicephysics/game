@@ -213,9 +213,9 @@ ui.draw = function() {
     x = _width - v.health_heart_side_x
     y = _height - 20 - v.health_heart_side_y
     size = v.health_heart_size
-    draw.setFillNoStroke(ctx, "#d41111")
+    draw.setFillNoStroke(ctx, "#d41111") // CONST health heart color (was #662c2c)
       draw._heart(ctx, x, y, size, size)
-    draw.setFillNoStroke(ctx, "#e88484") // CONST health heart color (was #662c2c)
+    draw.setTextLightFill(ctx, "#d41111") // CONST health heart text color (was #e88484 without lightening)
     draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto Condensed")
       draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
@@ -256,7 +256,7 @@ ui.draw = function() {
     y -= size * statSymbolSize
     // draw text
     if (playerStat.points > 0) {
-      draw.setFillNoStroke(ctx, "#27007a") // CONST upgrade button text color
+      draw.setTextLightFill(ctx, "#5100ff") // CONST upgrade button text color (was #27007a without lightening)
       draw.setFont(ctx, "16px Roboto Condensed")  // CONST upgrade button text font
         draw._text(ctx, x - size - 8, y - size + 4, "x" + playerStat.points, math.degToRad(-10), "right")
     }

@@ -114,12 +114,12 @@ export class Enemy {
     var q = Enemy.spawn.queue,
         time = Enemy.time
     for (let i = 0; i < number; i++) {
-      time += sep * config.FPS
       q.push({
         time: time,
         type: type,
         options: options,
       })
+      time += sep * config.FPS
     }
   }
   
@@ -127,7 +127,8 @@ export class Enemy {
     const type = w.type || w.t || "ball",
           num = w.number || w.n || 1,
           sep = w.sep || w.s || 1
-    w.difficulty = w.difficulty || w.d || w.diff || 1
+    // w.difficulty = w.difficulty || w.d || w.diff || 1
+    // um
     Enemy.sendNumber(type, num, sep, w) // options
   }
   

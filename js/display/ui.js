@@ -599,7 +599,7 @@ ui.draw = function() {
   // enemy wave small button (top)
   
   if (true) {
-    const waveshow = v.wave_show,
+    const waveshow = v.wave_show
     let buttoncolor = v.c_button
     x = _width / 2
     y = 0
@@ -637,17 +637,16 @@ ui.draw = function() {
     const W = waves.waves,
           nextwave = waves.current + 1,
           waverashow = v.wave_show, // ray-show? get it?
-          waveshow = waverashow * 50, // the real constant I will use...
+          waveshow = waverashow * 70, // the real constant I will use (for y)
           wavecount = 5,
           playsize = 15,
           playgap = 20,
           playcolor = "#009c1d",
           barwidth = 100,
           totalwidth = barwidth + playsize * 2 + playgap,
-          startX = (_width - totalwidth) / 2,
-          other_constants = "?" // rEMoVe
-    // draw wave stufff
-    y = waveshow - 10
+          startX = (_width - totalwidth) / 2
+    // draw wave stuff
+    y = waveshow - 20
     x = startX
     // draw the LONG LINE
     draw.setLineWidth(ctx, 6)

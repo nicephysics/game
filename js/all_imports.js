@@ -73,6 +73,9 @@ import('./game/update.js').then(m => {
 import('./game/wave.js').then(m => {
   game.wave = m.wave
 })
+import('./game/waves.js').then(m => {
+  game.waves = m.waves
+})
 
 // display
 var disp = { }

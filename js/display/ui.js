@@ -637,20 +637,21 @@ ui.draw = function() {
     const W = waves.waves,
           nextwave = waves.current + 1,
           waverashow = v.wave_show, // ray-show? get it?
-          waveshow = waverashow * 70, // the real constant I will use (for y)
+          waveshow = waverashow * 65, // the real constant I will use (for y)
           wavecount = 5,
-          playsize = 20,
+          playsize = 18,
           playgap = 25,
           playcolor = "#009c1d",
           barwidth = 250,
           totalwidth = barwidth + playsize * 2 + playgap,
           startX = (_width - totalwidth) / 2
     // draw wave stuff
-    y = waveshow - 20
+    y = waveshow - 30
     x = startX
     // draw the LONG LINE
+    draw.setStrokeNoFill(ctx, "#536150")
     draw.setLineWidth(ctx, 6)
-    draw._line(ctx, x, y, x + barwidth, y)
+      draw._line(ctx, x, y, x + barwidth, y)
     // draw wave circles and wave number
     for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
       const num = nextwave + offset,
@@ -674,7 +675,7 @@ ui.draw = function() {
           draw.setFillNoStroke(ctx, "#ff3d74")
           ctx.save()
           draw.setGlobalAlpha(ctx, 0.8)
-            draw._rect(ctx, startX - rectextra, y + 20, barwidth + playsize + playgap + rectextra * 2, rectheight)
+            draw._rect(ctx, startX - rectextra, y + 25, barwidth + playsize + playgap + rectextra * 2, rectheight)
           ctx.restore()
           mousepos = false
         }
@@ -683,12 +684,16 @@ ui.draw = function() {
           clickpos = false
         }
       }
-      // remember to increment x
-      x += width / (wavecount - 1)      
+      // remember to increment x too!
+      x += barwidth / (wavecount - 1)
     }
     // draw the PLAY BUTTON
     x = startX + barwidth + playgap + playsize
     draw.setFillLightenStroke(ctx, playcolor)
+    if (ui.hitcircle(mousepos, x, y, playsize)) {
+      draw.setDarkFill(ctx, playcolor)
+      mousepos = false
+    }
     draw.setLineWidth(ctx, 3)
       draw._circle(ctx, x, y, playsize)
     draw.setLightStroke(ctx, playcolor)
@@ -698,6 +703,11 @@ ui.draw = function() {
         { x: x + playsize * 0.3, y: y },
         { x: x - playsize * 0.2, y: y + playsize * 0.3 },
       ])
+    if (ui.hitcircle(clickpos, x, y, playsize)) {
+      // start wave!
+      waves.start()
+      clickpos = false
+    }
     // done with drawing enemy wave stuff?
   }
   

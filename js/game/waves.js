@@ -33,11 +33,13 @@ waves.tut1 = {
 waves.tut1.wave.push(
   { // 1
     type: "asteroid",
+    rating: 1,
     number: 2,
     sep: 10,
     m: 0.1, s: 0.5, g: 0.2, // MSG!
   }, { // 2
     type: "asteroid",
+    rating: 1,
     number: 5,
     sep: 8,
     m: 0.1, s: 0.5, g: 0.2, // MSG!    

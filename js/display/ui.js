@@ -600,7 +600,7 @@ ui.draw = function() {
   
   if (true) {
     const waveshow = v.wave_show,
-          buttoncolor = v.c_button
+    let buttoncolor = v.c_button
     x = _width / 2
     y = 0
     size = 30

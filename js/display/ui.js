@@ -605,11 +605,11 @@ ui.draw = function() {
     y = 0
     size = 50
     
-    if (ui.hitrectangle(mousepos, x, y, size, size)) {
+    if (ui.hitrect(mousepos, x, y, size, size)) {
       buttoncolor = v.c_button_hover
       mousepos = false
     }
-    if (ui.hitrectangle(clickpos, x, y, size, size)) {
+    if (ui.hitrect(clickpos, x, y, size, size)) {
       v.target_wave_show = 1 - v.target_wave_show
       clickpos = false
     }

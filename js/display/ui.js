@@ -642,12 +642,13 @@ ui.draw = function() {
   if (v.wave_show * 65 > 0.4) {
     // wave vars
     const W = waves.waves,
+          waveon = Enemy.waveOn(),
           nextwave = waves.current + 1,
           waverashow = v.wave_show, // ray-show? get it?
           waveshow = waverashow * 65, // the real constant I will use (for y)
           wavecount = 5,
-          playsize = 18,
-          playgap = 25,
+          playsize = waveon ? 18 : 0,
+          playgap = waveon ? 25 : 0,
           playcolor = "#009c1d",
           barwidth = 250,
           totalwidth = barwidth + playsize * 2 + playgap,
@@ -698,27 +699,29 @@ ui.draw = function() {
       x += barwidth / (wavecount - 1)
     }
     // draw the PLAY BUTTON
-    x = startX + barwidth + playgap + playsize
-    draw.setFillLightenStroke(ctx, playcolor)
-    if (ui.hitcircle(mousepos, x, y, playsize)) {
-      draw.setDarkFill(ctx, playcolor)
-      mousepos = false
-    }
-    draw.setLineWidth(ctx, 3)
-      draw._circle(ctx, x, y, playsize)
-    draw.setLightStroke(ctx, playcolor)
-    draw.setFill(ctx, "transparent")
-      draw._polygon(ctx, [
-        { x: x - playsize * 0.2, y: y - playsize * 0.3 },
-        { x: x + playsize * 0.3, y: y },
-        { x: x - playsize * 0.2, y: y + playsize * 0.3 },
-      ])
-    if (ui.hitcircle(clickpos, x, y, playsize)) {
-      // start wave!
-      waves.start()
-      v.target_wave_show = 0
-      clickpos = false
-    }
+    if (waveon) {
+      x = startX + barwidth + playgap + playsize
+      draw.setFillLightenStroke(ctx, playcolor)
+      if (ui.hitcircle(mousepos, x, y, playsize)) {
+        draw.setDarkFill(ctx, playcolor)
+        mousepos = false
+      }
+      draw.setLineWidth(ctx, 3)
+        draw._circle(ctx, x, y, playsize)
+      draw.setLightStroke(ctx, playcolor)
+      draw.setFill(ctx, "transparent")
+        draw._polygon(ctx, [
+          { x: x - playsize * 0.2, y: y - playsize * 0.3 },
+          { x: x + playsize * 0.3, y: y },
+          { x: x - playsize * 0.2, y: y + playsize * 0.3 },
+        ])
+      if (ui.hitcircle(clickpos, x, y, playsize)) {
+        // start wave!
+        waves.start()
+        v.target_wave_show = 0
+        clickpos = false
+      }
+    } // end draw the PLAY BUTTON
     // done with drawing enemy wave stuff?
   }
   

@@ -632,7 +632,7 @@ ui.draw = function() {
   
   if (v.wave_show > 0) {
     // wave vars
-    const waves = waves.waves,
+    const W = waves.waves,
           nextwave = waves.current + 1,
           waverashow = v.wave_show, // ray-show? get it?
           waveshow = waverashow * 50, // the real constant I will use...
@@ -653,7 +653,7 @@ ui.draw = function() {
     // draw wave circles and wave number
     for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
       const num = nextwave + offset,
-            wave = waves.wave[num]
+            wave = W.wave[num]
       // if wave exists, draw the circle!
       if (wave != null) {
         size = (offset == 0) ? 16 : 6

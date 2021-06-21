@@ -176,6 +176,7 @@ window.addEventListener("load", function() {
 window.addEventListener("resize", function() {
   _width = window.innerWidth
   _height = window.innerHeight
+  // change render/canvas/bounds options
   render.options.width = _width
   render.options.height = _height
   render.canvas.style.width = _width
@@ -185,19 +186,12 @@ window.addEventListener("resize", function() {
   render.bounds.max.x = _width
   render.bounds.max.y = _height
   
+  // remove all stuff
   Composite.remove(world, [ atmosphere, ground, leftwall, rightwall ])
-  
+  // and then add them back
   addStuff()
+  // basically an initialization again
   
-  /*
-  leftwall.position.x = -30
-  leftwall.position.y = _height * 0.85 + 25
-  
-  rightwall.position.x = _width + 30
-  rightwall.position.y = _height * 0.85 + 25
-  
-  atmosphere.position.x = _width / 2
-  atmosphere.position.y = _height * 0.85 + 25
-  // do something to atmosphere's vertices? _width + 50, _height + 50
-  */
+  // also update config stuff
+  config.updateBounds()  
 })

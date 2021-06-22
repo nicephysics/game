@@ -101,9 +101,9 @@ waves.tut1.starttext = {
 }
 waves.tut1.endtext = {
   [1]: ["Did you hit the 2 asteroids away? More of them will come this time..."],
-  [2]: ["The asteroids will start to come at a higher rate after this!Try to keep up!"],
+  [2]: ["The asteroids will start to come at a higher rate after this! Try to keep up!"],
   [3]: ["The points you gain from hitting asteroids can be used for upgrading!",
         "Press the statistics button in the bottom right (or press U) to enter the upgrade screen.",
-        "From there, you can press the plus button to improve your [thing]!",
-        ],  
+        "In the upgrade screen, you can improve your [thing] by pressing the plus button on any one of the improvements!",
+        ],
 }

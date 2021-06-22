@@ -20,6 +20,8 @@ const Body = Matter.Body,
       Composite = Matter.Composite,
       Vector = Matter.Vector
 
+let ON_N = false
+
 controls.setPaused = function(paused) {
   const player = Tower.player
   player.control.paused = paused
@@ -28,7 +30,18 @@ controls.setPaused = function(paused) {
 
 controls.isPaused = function() {
   const player = Tower.player
-  return player.control.paused  
+  return player.control.paused
+}
+
+controls.toggleN = function() {
+  ON_N = !ON_N
+}
+
+controls.levelup = function(level) {
+  // to level up one level
+  // player.addxp(50 * (player.level + 1))
+  // to level up to a certain level
+  player.addxp(math.towerxp(level) - player.xp)
 }
 
 controls.init = function(render) {
@@ -158,7 +171,9 @@ controls.init = function(render) {
         }
         break
       case "KeyN":
-        player.addxp(50 * (player.level + 1))
+        if (ON_N) {
+          player.addxp(50 * (player.level + 1))
+        }
         break
     }
   })

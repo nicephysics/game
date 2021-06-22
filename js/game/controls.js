@@ -26,6 +26,11 @@ controls.setPaused = function(paused) {
   Tower.runner.enabled = !paused
 }
 
+controls.isPaused = function() {
+  const player = Tower.player
+  return player.control.paused  
+}
+
 controls.init = function(render) {
   const engine = render.engine,
         mouse = render.mouse,

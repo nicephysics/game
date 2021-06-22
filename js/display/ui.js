@@ -840,7 +840,7 @@ ui.draw = function() {
     draw.setFillNoStroke(ctx, "#cccccc") // white grey
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.8)
-      draw.rect(ctx, 0, 0, _width, _height)
+      draw._rect(ctx, 0, 0, _width, _height)
     ctx.restore()
     draw.setFillNoStroke(ctx, "#444444") // black grey
     draw.setFont(ctx, "30px Roboto Mono")

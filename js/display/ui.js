@@ -758,7 +758,7 @@ ui.draw = function() {
       let measured = ctx.measureText(texts[0])
       rectwidth = measured.width
     }
-    rectwidth += border * 2 + circleSize * 2 
+    rectwidth += border * 2 + circleSize
     // draw translucent pop-up rectangle
     draw.setFillNoStroke(ctx, "#9e87ff") // CONST text popup overlay rect color
     draw.setGlobalAlpha(ctx, 0.8) // CONST text popup rect opacity

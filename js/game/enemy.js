@@ -105,8 +105,32 @@ export class Enemy {
     }
   }
   
-  static drawEnemy() {
-    
+  static drawEnemies = {}
+  static drawEnemy(render, x, y, size, type, options) {
+    let e = Enemy.drawEnemies[type],
+        s = style.enemy[type],
+    const ctx = render.context,
+          mousepos = render.mouse.absolute,
+          time = ui.vars.time
+    if (!e) {
+      e = new Enemy(type, {})
+      Enemy.drawEnemies[type] = e
+    }
+    e.init(options)
+    e.send()
+    e.body.position = {
+      x: x + render.bounds.min.x,
+      y: y + render.bounds.min.y
+    }
+    e.targetrot = math.degToRad( (ui.vars.time * 1) % 360 )
+    e.stat.size = size
+    draw.setFill(ctx, s.fillStyle)
+    draw.setStroke(ctx, s.strokeStyle)
+    draw.setLineWidth(ctx, s.lineWidth)
+    ctx.save() // ctx.restore()
+    draw.setGlobalAlpha(ctx, s.opacity)
+    e.drawOverlay(render) // enemy shape!
+    ctx.restore()
   }
   
   static send(type, options) {
@@ -340,6 +364,7 @@ export class Enemy {
             )
       body.initialVelocity = vel
       Body.setVelocity(body, vel)
+      Body.setAngularVelocity(body, Math.degToRad(Math.min(s.speed, 10))
     }
     // other stats
     body.gravityScale = s.gravity

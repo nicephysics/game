@@ -122,6 +122,7 @@ ui.tick = function() {
   if (v.enemy_wave_done == false && !Enemy.waveOn()) {
     v.enemy_wave_done = true
     v.target_wave_show = 1
+    waves.end()
   } else if (Enemy.waveOn()) {
     v.enemy_wave_done = false
   }

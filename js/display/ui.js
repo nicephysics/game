@@ -786,10 +786,10 @@ ui.draw = function() {
       draw.setTextDarkFill(ctx, "#002620")
         draw._text(ctx, x, y + 2, "OK", 0, "center")
     } else {
-      draw.setStrokeNoFill(ctx, "")
+      draw.setStrokeNoFill(ctx, "#27007a")
       draw.setLineWidth(ctx, 3)
-        draw._line(ctx, x + circleSize * 0.2, y, x - circleSize * 0.2, y - circleSize * 0.17)
-        draw._line(ctx, x + circleSize * 0.2, y, x - circleSize * 0.2, y + circleSize * 0.17)
+        draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
+        draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
     }
     if (ui.hitcircle(clickpos, x, y, circleSize * 0.4)) {
       v.waves_popup_text.splice(0, 1)

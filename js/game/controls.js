@@ -38,6 +38,7 @@ controls.toggleN = function() {
 }
 
 controls.levelup = function(level) {
+  const player = Tower.player
   // to level up one level
   // player.addxp(50 * (player.level + 1))
   // to level up to a certain level

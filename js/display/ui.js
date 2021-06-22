@@ -765,8 +765,8 @@ ui.draw = function() {
       // draw a centered rect
       draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
     draw.setGlobalAlpha(ctx, 1)
-    x = _width / 2 - circleSize
-    y = (_height - rectheight + textSize) / 2 + border + 2
+    x = (_width  - circleSize) / 2
+    y = (_height - rectheight + textSize) / 2 + border
     for (let text of texts) {
       // draw text!
       draw.setTextDarkFill(ctx, "#002620")

@@ -364,7 +364,7 @@ export class Enemy {
             )
       body.initialVelocity = vel
       Body.setVelocity(body, vel)
-      Body.setAngularVelocity(body, Math.degToRad(Math.min(s.speed, 10)))
+      Body.setAngularVelocity(body, math.degToRad(Math.min(s.speed, 10)))
     }
     // other stats
     body.gravityScale = s.gravity

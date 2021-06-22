@@ -57,6 +57,9 @@ ui.vars = {
   target_wave_show: 1,
   enemy_wave_done: true,
   
+  waves_popup_text: [],
+  waves_all_clear: false,
+  
   // show (overlay)
   upgrade_show: false, // upgrade overlay show
   tier_up_show: false, // tier up overlay show
@@ -575,8 +578,7 @@ ui.draw = function() {
       draw.setLineWidth(ctx, 5) // CONST tier up circle line width
         draw._circle(ctx, x, y, size)
         draw.tower(render, x, y, size * towerSizeRatio, choice) // CONST tier up circle tower size ratio
-      draw.setFill(ctx, "#4b00ad") // CONST tier up circle text
-      draw.setStroke(ctx, "transparent")
+      draw.setFillNoStroke(ctx, "#4b00ad") // CONST tier up circle text
       draw.setFont(ctx, "20px Roboto Mono")
         draw._text(ctx, x, yText, choice, 0, "center")
     }
@@ -727,6 +729,42 @@ ui.draw = function() {
       }
     } // end draw the PLAY BUTTON
     // done with drawing enemy wave stuff?
+  }
+  
+  
+  
+  
+  
+  // pre-wave texts
+  
+  if (v.waves_popup_text.length > 0) {
+    const originalText = v.waves_popup_text[0],
+          maxWidth = 500,
+          texts = draw.splitText(ctx, originalText, maxWidth),
+          textSize = 16,
+          textGap = 9,
+          border = 20,
+    width = maxWidth
+    height = border * 2 + texts.length * (textSize + textGap) - textGap
+    draw.setFont(ctx, "16px Roboto Condensed")
+    if (texts.length == 1) {
+      width = ctx.measureText(texts[0])
+    }
+    // draw translucent pop-up rectangle
+    draw.setFillNoStroke(ctx, "#9e87ff") // CONST text popup overlay rect color
+    ctx.save()
+    draw.setGlobalAlpha(ctx, 0.8) // CONST text popup rect opacity
+      // draw a centered rect
+      draw._rectangle(ctx, _width / 2, _height / 2, width + border * 2, height)
+    ctx.restore()
+    x = _width / 2
+    y = (_height - height + textSize) / 2 + border
+    for (let text of texts) {
+      // draw text!
+      draw.setTextDarkFill(ctx, "#002620")
+        draw._text(ctx, x, y, text, 0, "center")
+      y += textSize + textGap
+    }
   }
   
   

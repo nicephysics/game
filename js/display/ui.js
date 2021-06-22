@@ -58,6 +58,7 @@ ui.vars = {
   enemy_wave_done: true,
   
   waves_popup_text: [],
+  waves_popup_text_show: false,
   waves_all_clear: false,
   
   // show (overlay)
@@ -738,6 +739,10 @@ ui.draw = function() {
   // pre-wave texts
   
   if (v.waves_popup_text.length > 0) {
+    if (!v.waves_popup_text_show) {
+      v.waves_popup_text_show = true
+      controls.setPaused(true)
+    }
     const originalText = v.waves_popup_text[0],
           maxWidth = 500,
           texts = draw.splitText(ctx, originalText, maxWidth),
@@ -764,6 +769,14 @@ ui.draw = function() {
       draw.setTextDarkFill(ctx, "#002620")
         draw._text(ctx, x, y, text, 0, "center")
       y += textSize + textGap
+    }
+    if (clickpos && !ui.hitrect(clickpos, _width / 2, _height / 2, width + border * 2, height)) {
+      v.waves_popup_text.splice(0, 1)
+      if (v.waves_popup_text.length <= 0) {
+        controls.setPaused(false)
+        v.waves_popup_text_show = false
+      }
+      clickpos = false
     }
   }
   

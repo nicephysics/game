@@ -66,7 +66,7 @@ ui.vars = {
   tier_up_show: false, // tier up overlay show
   something_show: function() {
     const v = ui.vars
-    return v.upgrade_show || v.tier_up_show
+    return v.upgrade_show || v.tier_up_show || (v.waves_popup_text.length > 0)
   },
   
   enemy_texts: [ ],
@@ -745,7 +745,7 @@ ui.draw = function() {
       controls.setPaused(true)
     }
     const originalText = v.waves_popup_text[0],
-          maxWidth = 300,
+          maxWidth = Math.min(300, _width * 0.75),
           texts = draw.splitText(ctx, originalText, maxWidth),
           textSize = 16,
           textGap = 9,
@@ -766,7 +766,7 @@ ui.draw = function() {
       draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
     draw.setGlobalAlpha(ctx, 1)
     x = _width / 2 - circleSize
-    y = (_height - rectheight + textSize - (textSize + textGap) * texts.length) / 2 + border
+    y = (_height - rectheight + textSize - (textSize + textGap) * (texts.length - 1)) / 2 + border
     for (let text of texts) {
       // draw text!
       draw.setTextDarkFill(ctx, "#002620")
@@ -775,13 +775,13 @@ ui.draw = function() {
     }
     x = (_width + rectwidth) / 2 - circleSize / 2
     let buttonColor = v.c_button
-    if (ui.hitcircle(mousepos, x, _height / 2, circleSize * 0.7)) {
+    if (ui.hitcircle(mousepos, x, _height / 2, circleSize * 0.4)) {
       buttonColor = v.c_button_hover
       mousepos = false
     }
     draw.setFillDarkenStroke(ctx, buttonColor)
-      draw._circle(ctx, x, _height / 2, circleSize * 0.6)
-    if (ui.hitcircle(clickpos, x, _height / 2, circleSize * 0.7)) {
+      draw._circle(ctx, x, _height / 2, circleSize * 0.375)
+    if (ui.hitcircle(clickpos, x, _height / 2, circleSize * 0.4)) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {
         v.waves_popup_text_show = false
@@ -815,6 +815,16 @@ ui.draw = function() {
       v.enemy_texts.splice(i, 1)
     }
     ++i
+  }
+  
+  
+  
+  
+  
+  // huge pause symbol
+  
+  if (controls.isPaused() && !v.something_show()) {
+    // draw huge pause symbol
   }
   
   

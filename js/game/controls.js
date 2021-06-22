@@ -114,8 +114,10 @@ controls.init = function(render) {
       case "KeyY":
         if (player.canTierUp) {
           function showOverlay() {
-            ui.vars.tier_up_show = true
-            controls.setPaused(true)            
+            if (ui.vars.waves_popup_text.length == 0) {
+              ui.vars.tier_up_show = true
+              controls.setPaused(true)
+            }
           }
           if (ui.vars.something_show()) {
             if (!ui.vars.tier_up_show) {
@@ -136,8 +138,10 @@ controls.init = function(render) {
       case "KeyU":
         if (true) { // accessible all the time!
           function showOverlay() {
-            ui.vars.upgrade_show = true
-            controls.setPaused(true)            
+            if (ui.vars.waves_popup_text.length == 0) {
+              ui.vars.upgrade_show = true
+              controls.setPaused(true)
+            }
           }
           if (ui.vars.something_show()) {
             if (!ui.vars.upgrade_show) {

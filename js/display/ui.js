@@ -749,7 +749,7 @@ ui.draw = function() {
           texts = draw.splitText(ctx, originalText, maxWidth),
           textSize = 16,
           textGap = 9,
-          border = 20,
+          border = 20
     let rectwidth = maxWidth,
         rectheight = border * 2 + texts.length * (textSize + textGap) - textGap
     draw.setFont(ctx, "16px Roboto Condensed")

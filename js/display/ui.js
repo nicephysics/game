@@ -745,7 +745,7 @@ ui.draw = function() {
       controls.setPaused(true)
     }
     const originalText = v.waves_popup_text[0],
-          maxWidth = 500,
+          maxWidth = 300,
           texts = draw.splitText(ctx, originalText, maxWidth),
           textSize = 16,
           textGap = 9,
@@ -755,7 +755,8 @@ ui.draw = function() {
         rectheight = border * 2 + texts.length * (textSize + textGap) - textGap
     draw.setFont(ctx, "16px Roboto Condensed")
     if (texts.length == 1) {
-      rectwidth = ctx.measureText(texts[0])
+      let measured = ctx.measureText(texts[0])
+      rectwidth = measured.width
     }
     rectwidth += border * 2 + circleSize * 2 
     // draw translucent pop-up rectangle
@@ -765,7 +766,7 @@ ui.draw = function() {
       draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
     draw.setGlobalAlpha(ctx, 1)
     x = _width / 2 - circleSize
-    y = (_height - rectheight + textSize) / 2 + border
+    y = (_height - rectheight + textSize - (textSize + textGap) * texts.length) / 2 + border
     for (let text of texts) {
       // draw text!
       draw.setTextDarkFill(ctx, "#002620")

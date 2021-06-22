@@ -414,7 +414,9 @@ draw.splitText = function(ctx, text, maxWidth) {
       arr = []
   for (let line of lines) {
     arr = draw._splitText(ctx, line, maxWidth)
-    newlines = newlines.push(...arr)
+    for (let ar of arr) {
+      newlines.push(ar)
+    }
   }
   return newlines
 }

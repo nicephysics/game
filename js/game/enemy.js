@@ -20,13 +20,13 @@ if (true) {
   // 2 space indent!
 }
 
-var Body = Matter.Body,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Composites = Matter.Composites,
-    Vector = Matter.Vector
+const Body = Matter.Body,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Composites = Matter.Composites,
+      Vector = Matter.Vector
 
-var getInitialSpawnBounds = function() {
+const getInitialSpawnBounds = function() {
   return {
     x: 0, y: -window.innerHeight / 10,
     w: window.innerWidth,
@@ -62,11 +62,11 @@ export class Enemy {
       (a, b) => { return a.time < b.time }
     ),
     random: function() {
-      var b = getInitialSpawnBounds(), // bounds
-          ans = Vector.create(
-            b.x + random.randreal() * b.w,
-            b.y + random.randreal() * b.h
-          )
+      const b = getInitialSpawnBounds(), // bounds
+            ans = Vector.create(
+              b.x + random.randreal() * b.w,
+              b.y + random.randreal() * b.h
+            )
       return ans
     }
   }
@@ -86,7 +86,7 @@ export class Enemy {
       e.tick()
     }
     // check spawn queue
-    var q = Enemy.spawn.queue
+    const q = Enemy.spawn.queue
     while (q.size() > 0 && q.peek().time < Enemy.time) {
       let item = q.peek()
       Enemy.send(item.type, item.options)
@@ -95,7 +95,7 @@ export class Enemy {
   }
   
   static draw() {
-    var render = Tower.render
+    const render = Tower.render
     for (let e of enemies) {
       for (let g of e.guns) {
         g.draw(render)
@@ -103,6 +103,10 @@ export class Enemy {
       e.effect.draw(render)
       e.draw(render)
     }
+  }
+  
+  static drawEnemy() {
+    
   }
   
   static send(type, options) {
@@ -219,8 +223,8 @@ export class Enemy {
   }
   
   tickCheck() {
-    var remove_addXP = () => {
-      var pos = Vector.sub(this.position, Vector.mult(Vector.normalise(this.velocity), 50)), // 50 pixels of velocity
+    const remove_addXP = () => {
+      let pos = Vector.sub(this.position, Vector.mult(Vector.normalise(this.velocity), 50)), // 50 pixels of velocity
           bonus = Math.floor(Vector.magnitude(this.velocity)),
           reward = this.stat.reward + Math.round( (this.stat.bonus || 0) * bonus),
           color = "#b09f1c", // darkish yellow colour
@@ -328,12 +332,12 @@ export class Enemy {
     body.enemy = this
     // launch at a certain speed
     if (s.speed !== 0) {
-      var tilt = (random.randreal() - 0.5) * 15, // 15 degrees tilt max
-          down = Math.PI / 180 * (90 + tilt),
-          vel = Vector.mult(
-            Vector.create( Math.cos(down), Math.sin(down) ),
-            s.speed
-          )
+      const tilt = (random.randreal() - 0.5) * 15, // 15 degrees tilt max
+            down = Math.PI / 180 * (90 + tilt),
+            vel = Vector.mult(
+              Vector.create( Math.cos(down), Math.sin(down) ),
+              s.speed
+            )
       body.initialVelocity = vel
       Body.setVelocity(body, vel)
     }
@@ -360,7 +364,7 @@ export class Enemy {
   }
   
   addGun(gunset, gunstat, options = { }) {
-    var gun = Gun.create(this, gunset, "enemy")
+    const gun = Gun.create(this, gunset, "enemy")
     gun.setStatString(gunstat)
     this.guns.push(gun)
     return gun

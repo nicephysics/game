@@ -744,6 +744,8 @@ ui.draw = function() {
       v.waves_popup_text_show = true
       controls.setPaused(true)
     }
+    // set font early
+    draw.setFont(ctx, "16px Roboto Condensed")
     const originalText = v.waves_popup_text[0],
           maxWidth = Math.min(300, _width * 0.75),
           texts = draw.splitText(ctx, originalText, maxWidth),
@@ -753,9 +755,8 @@ ui.draw = function() {
           circleSize = 40
     let rectwidth = maxWidth,
         rectheight = border * 2 + texts.length * (textSize + textGap) - textGap
-    draw.setFont(ctx, "16px Roboto Condensed")
     if (texts.length == 1) {
-      let measured = ctx.measureText(texts[0])
+      const measured = ctx.measureText(texts[0])
       rectwidth = measured.width
     }
     rectwidth += border * 2 + circleSize
@@ -784,6 +785,7 @@ ui.draw = function() {
       draw._circle(ctx, x, y, circleSize * 0.375)
     if (v.waves_popup_text.length == 1) {
       draw.setTextDarkFill(ctx, "#002620")
+      draw.setFont(ctx, "16px Roboto Condensed") // same
         draw._text(ctx, x, y + 2, "OK", 0, "center")
     } else {
       draw.setStrokeNoFill(ctx, "#27007a")
@@ -831,10 +833,24 @@ ui.draw = function() {
   
   
   
-  // huge pause symbol
+  // huge pause overlay... (when the user actually pauses)
   
   if (controls.isPaused() && !v.something_show()) {
-    // draw huge pause symbol
+    // draw huge pause overlay
+    draw.setFillNoStroke(ctx, "#cccccc") // white grey
+    ctx.save()
+    draw.setGlobalAlpha(ctx, 0.8)
+      draw.rect(ctx, 0, 0, _width, _height)
+    ctx.restore()
+    draw.setFillNoStroke(ctx, "#444444") // black grey
+    draw.setFont(ctx, "30px Roboto Mono")
+      draw._text(ctx, _width / 2, _height / 3, "PAUSED", 0, "center")
+    draw.setFont(ctx, "20px Roboto Mono")
+      draw._text(ctx, _width / 2, _height / 2, "Click anywhere to play again", 0, "center")
+    if (ui.hitrect(clickpos, 0, 0, _width, _height)) {
+      controls.setPaused(false)
+      clickpos = false
+    }
   }
   
   

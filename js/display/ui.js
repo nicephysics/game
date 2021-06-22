@@ -750,28 +750,28 @@ ui.draw = function() {
           textSize = 16,
           textGap = 9,
           border = 20,
-    width = maxWidth
-    height = border * 2 + texts.length * (textSize + textGap) - textGap
+    let rectwidth = maxWidth,
+        rectheight = border * 2 + texts.length * (textSize + textGap) - textGap
     draw.setFont(ctx, "16px Roboto Condensed")
     if (texts.length == 1) {
-      width = ctx.measureText(texts[0])
+      rectwidth = ctx.measureText(texts[0])
     }
     // draw translucent pop-up rectangle
     draw.setFillNoStroke(ctx, "#9e87ff") // CONST text popup overlay rect color
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.8) // CONST text popup rect opacity
       // draw a centered rect
-      draw._rectangle(ctx, _width / 2, _height / 2, width + border * 2, height)
+      draw._rectangle(ctx, _width / 2, _height / 2, rectwidth + border * 2, rectheight)
     ctx.restore()
     x = _width / 2
-    y = (_height - height + textSize) / 2 + border
+    y = (_height - rectheight + textSize) / 2 + border
     for (let text of texts) {
       // draw text!
       draw.setTextDarkFill(ctx, "#002620")
         draw._text(ctx, x, y, text, 0, "center")
       y += textSize + textGap
     }
-    if (clickpos && !ui.hitrect(clickpos, _width / 2, _height / 2, width + border * 2, height)) {
+    if (clickpos && !ui.hitrect(clickpos, _width / 2, _height / 2, rectwidth + border * 2, rectheight)) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {
         controls.setPaused(false)

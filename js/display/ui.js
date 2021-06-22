@@ -766,7 +766,7 @@ ui.draw = function() {
       draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
     draw.setGlobalAlpha(ctx, 1)
     x = _width / 2 - circleSize
-    y = (_height - rectheight + textSize - (textSize + textGap) * (texts.length - 1)) / 2 + border
+    y = (_height - rectheight + textSize) / 2 + border + 2
     for (let text of texts) {
       // draw text!
       draw.setTextDarkFill(ctx, "#002620")
@@ -774,14 +774,24 @@ ui.draw = function() {
       y += textSize + textGap
     }
     x = (_width + rectwidth) / 2 - circleSize / 2
+    y = _height / 2
     let buttonColor = v.c_button
-    if (ui.hitcircle(mousepos, x, _height / 2, circleSize * 0.4)) {
+    if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
       buttonColor = v.c_button_hover
       mousepos = false
     }
     draw.setFillDarkenStroke(ctx, buttonColor)
-      draw._circle(ctx, x, _height / 2, circleSize * 0.375)
-    if (ui.hitcircle(clickpos, x, _height / 2, circleSize * 0.4)) {
+      draw._circle(ctx, x, y, circleSize * 0.375)
+    if (v.waves_popup_text.length == 1) {
+      draw.setTextDarkFill(ctx, "#002620")
+        draw._text(ctx, x, y + 2, "OK", 0, "center")
+    } else {
+      draw.setStrokeNoFill(ctx, "")
+      draw.setLineWidth(ctx, 3)
+        draw._line(ctx, x + circleSize * 0.2, y, x - circleSize * 0.2, y - circleSize * 0.17)
+        draw._line(ctx, x + circleSize * 0.2, y, x - circleSize * 0.2, y + circleSize * 0.17)
+    }
+    if (ui.hitcircle(clickpos, x, y, circleSize * 0.4)) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {
         v.waves_popup_text_show = false

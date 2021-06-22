@@ -112,7 +112,7 @@ controls.init = function(render) {
         }
         break
       case "KeyY":
-        if (player.canTierUp) {
+        if (player.canTierUp && ui.vars.waves_popup_text.length == 0) {
           function showOverlay() {
             if (ui.vars.waves_popup_text.length == 0) {
               ui.vars.tier_up_show = true
@@ -136,12 +136,10 @@ controls.init = function(render) {
         }
         break
       case "KeyU":
-        if (true) { // accessible all the time!
+        if (ui.vars.waves_popup_text.length == 0) {
           function showOverlay() {
-            if (ui.vars.waves_popup_text.length == 0) {
-              ui.vars.upgrade_show = true
-              controls.setPaused(true)
-            }
+            ui.vars.upgrade_show = true
+            controls.setPaused(true)
           }
           if (ui.vars.something_show()) {
             if (!ui.vars.upgrade_show) {

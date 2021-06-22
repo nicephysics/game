@@ -108,12 +108,12 @@ export class Enemy {
   static drawEnemies = {}
   static drawEnemy(render, x, y, size, type, options) {
     let e = Enemy.drawEnemies[type],
-        s = style.enemy[type],
+        s = style.enemy[type]
     const ctx = render.context,
           mousepos = render.mouse.absolute,
           time = ui.vars.time
     if (!e) {
-      e = new Enemy(type, {})
+      e = new Enemy(type)
       Enemy.drawEnemies[type] = e
     }
     e.init(options)
@@ -186,7 +186,7 @@ export class Enemy {
   stat = new EnemyStat(this)
   effect = new Effect(this, "enemy")
   // constructor
-  constructor(type, options) {
+  constructor(type, options = { }) {
     this.type = type
     this.init(options)
   }

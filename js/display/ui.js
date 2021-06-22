@@ -747,7 +747,7 @@ ui.draw = function() {
     // set font early
     draw.setFont(ctx, "16px Roboto Condensed")
     const originalText = v.waves_popup_text[0],
-          maxWidth = Math.min(300, _width * 0.75),
+          maxWidth = Math.min(500, _width * 0.75),
           texts = draw.splitText(ctx, originalText, maxWidth),
           textSize = 16,
           textGap = 9,

@@ -94,14 +94,14 @@ waves.tut1.wave.push(
 waves.tut1.starttext = {
   [0]: ["Welcome to the tutorial! You are a [thing] trying to protect the planet from incoming asteroids.",
         "Use ↑↓→← keys to move and click (and hold) to launch a projectile.",
-        "Press the start button to begin! Asteroids will begin to appear after a while."
+        "Press the play button at the top of the screen to begin!"
         ],
   [1]: ["The first asteroids should start to appear now."],
   [4]: ["Many asteroids can come at once! Get ready!",],
 }
 waves.tut1.endtext = {
   [1]: ["Did you hit the 2 asteroids away? More of them will come this time..."],
-  [2]: ["The asteroids will start to come at a higher rate after this!\nTry to keep up!"],
+  [2]: ["The asteroids will start to come at a higher rate after this!Try to keep up!"],
   [3]: ["The points you gain from hitting asteroids can be used for upgrading!",
         "Press the statistics button in the bottom right (or press U) to enter the upgrade screen.",
         "From there, you can press the plus button to improve your [thing]!",

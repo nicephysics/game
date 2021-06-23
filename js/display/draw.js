@@ -266,14 +266,13 @@ draw.polyline = function(render, xx, yy) {
 }
 
 draw._polygon = function(ctx, vs, angle = 0) {
-  if (angle != 0) {
-    console.log(vs)
-    const vertices = Vertices.create(vs, Body.create()),
-          point = Vertices.centre(vertices)
+  if (angle !== 0) {
+    console.dir(vs)
+    const point = Vertices.centre(vs)
     for (let i = 0; i < vs.length; ++i) {
       vs[i] = Vector.rotate(vs[i], angle, point)
     }
-    console.log(vs)
+    console.dir(vs)
   }
   ctx = ctx || draw.ctx
   ctx.beginPath()

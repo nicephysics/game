@@ -41,6 +41,7 @@ ui.vars = {
   
   c_button: "#00ffee",
   c_button_hover: "#00ada2", // (was #ff7700)
+  c_icon_purple: "#27007a",
   
   // change
   time: 0,
@@ -271,7 +272,7 @@ ui.draw = function() {
       draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
     const statSymbolSize = 0.6 // CONST upgrade button symbol size
-    draw.setStrokeNoFill(ctx, "#27007a") // CONST upgrade button symbol color
+    draw.setStrokeNoFill(ctx, v.c_icon_purple)
     draw.setLineWidth(ctx, 4) // CONST upgrade button symbol line width
     y += size * statSymbolSize
       draw._line(ctx, x, y, x, y - size * 1.2)
@@ -491,7 +492,7 @@ ui.draw = function() {
     const upSymbolSize = 0.7, // CONST
           arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, "#ff7700") // CONST tier up button symbol color (was #0c9400)
+    draw.setStroke(ctx, v.c_icon_purple) // CONST tier up button symbol color (was #0c9400 and #ff7700)
     draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
@@ -788,7 +789,7 @@ ui.draw = function() {
       draw.setFont(ctx, "16px Roboto Condensed") // same
         draw._text(ctx, x, y + 2, "OK", 0, "center")
     } else {
-      draw.setStrokeNoFill(ctx, "#27007a")
+      draw.setStrokeNoFill(ctx, v.c_icon_purple)
       draw.setLineWidth(ctx, 3)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)

@@ -614,7 +614,7 @@ ui.draw = function() {
   
   // enemy wave small button (top)
   
-  if (true) {
+  if (!v.something_show()) {
     const waveshow = v.wave_show
     let buttoncolor = v.c_button
     x = _width / 2

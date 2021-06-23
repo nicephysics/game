@@ -26,11 +26,12 @@ const Body = Matter.Body,
       Composites = Matter.Composites,
       Vector = Matter.Vector
 
-const getInitialSpawnBounds = function() {
+const getSpawnBounds = function(size) {
   return {
-    x: 0, y: -window.innerHeight / 10,
-    w: window.innerWidth,
-    h: window.innerHeight / 10,
+    x: size * 1.2,
+    y: -size * 2,
+    w: window.innerWidth - size * 1.2,
+    h: size,
   }
 }
 
@@ -61,8 +62,8 @@ export class Enemy {
       // comparison
       (a, b) => { return a.time < b.time }
     ),
-    random: function() {
-      const b = getInitialSpawnBounds(), // bounds
+    random: function(size) {
+      const b = getSpawnBounds(size), // bounds
             ans = Vector.create(
               b.x + random.randreal() * b.w,
               b.y + random.randreal() * b.h
@@ -180,7 +181,7 @@ export class Enemy {
   controlType = "none" // controller (class IO, remember?)
   control = { }
   guns = [ ] // Gun[]
-  start = Enemy.spawn.random()
+  start = Vector.create(0, 0)
   exists = false
   vertices = [ ] // Matter.Vector[]
   stat = new EnemyStat(this)
@@ -225,6 +226,7 @@ export class Enemy {
   // go!
   init(options) {
     this.initstats(options)
+    this.start = Enemy.spawn.random(this.size)
   }
   
   initstats(options) {

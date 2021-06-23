@@ -115,11 +115,11 @@ export class Enemy {
           time = ui.vars.time
     if (!e) {
       e = new Enemy(type)
+      e.createShape()
       Enemy.drawEnemies[type] = e
     }
     e.init(options)
     e.stat.size = size
-    e.createShape()
     const X = x + render.bounds.min.x,
           Y = y + render.bounds.min.y
     e.body = Bodies.circle(X, Y, size, { isStatic: true })

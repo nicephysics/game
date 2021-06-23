@@ -125,11 +125,11 @@ export class Enemy {
     e.body = Bodies.circle(X, Y, size, { isStatic: true })
     e.targetrot = math.degToRad( (ui.vars.time * 0.5) % 360 )
     Body.setAngle(e.body, e.targetrot)
-    draw.setFill(ctx, s.fillStyle)
-    draw.setStroke(ctx, s.strokeStyle)
-    draw.setLineWidth(ctx, s.lineWidth)
+    draw.setFill(ctx, s.fillStyle || "transparent")
+    draw.setStroke(ctx, s.strokeStyle || "transparent")
+    draw.setLineWidth(ctx, s.lineWidth || 3)
     ctx.save() // ctx.restore()
-    draw.setGlobalAlpha(ctx, s.opacity)
+    draw.setGlobalAlpha(ctx, s.opacity || 1)
     e.drawOverlay(render, X, Y) // enemy shape!
     ctx.restore()
     for (let g of e.guns) {

@@ -10,7 +10,9 @@ if (true) {
 
 export var draw = { }
 
-const Vector = Matter.Vector
+const Body = Matter.Body,
+      Vector = Matter.Vector,
+      Vertices = Matter.Vertices
 
 draw.ctx = document.getElementById("canvas").getContext("2d") // not actually needed?
 
@@ -263,25 +265,31 @@ draw.polyline = function(render, xx, yy) {
   draw._polyline(ctx, new_x, new_y)
 }
 
-draw._polygon = function(ctx, vs) {
+draw._polygon = function(ctx, vs, angle = 0) {
+  if (angle != 0) {
+    const vertices = Vertices.create(vs, Body.create()),
+          point = Vertices.center(vertices)
+    for (let i = 0; i < vs.length; ++i) {
+      vs[i] = Vector.rotate(vs[i], angle, point)
+    }
+  }
   ctx = ctx || draw.ctx
   ctx.beginPath()
     ctx.moveTo(vs[0].x, vs[0].y)
-    const len = Math.min(vs.length, vs.length)
-    for (let i = 1; i < len; ++i) {
+    for (let i = 1; i < vs.length; ++i) {
       ctx.lineTo(vs[i].x, vs[i].y)
     }
     ctx.lineTo(vs[0].x, vs[0].y)
   ctx.stroke()
 }
 
-draw.polygon = function(render, vs) {
+draw.polygon = function(render, vs, angle = 0) {
   const new_v = [ ]
   for (let v of vs) {
     new_v.push(Vector.create(v.x - render.bounds.min.x, v.y - render.bounds.min.y))
   }
   const ctx = render.context
-  draw._polygon(ctx, new_v)
+  draw._polygon(ctx, new_v, angle)
 }
 
 draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {

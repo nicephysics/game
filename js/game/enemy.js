@@ -118,21 +118,26 @@ export class Enemy {
       Enemy.drawEnemies[type] = e
     }
     e.init(options)
-    e.send(false)
-    e.body.position = {
-      x: x + render.bounds.min.x,
-      y: y + render.bounds.min.y
-    }
+    e.stat.size = size
+    e.createShape()
+    const X = x + render.bounds.min.x,
+          Y = y + render.bounds.min.y
+    e.body = Bodies.circle(X, Y, size, { isStatic: true })
     e.targetrot = math.degToRad( (ui.vars.time * 0.5) % 360 )
     Body.setAngle(e.body, e.targetrot)
-    e.stat.size = size
     draw.setFill(ctx, s.fillStyle)
     draw.setStroke(ctx, s.strokeStyle)
     draw.setLineWidth(ctx, s.lineWidth)
     ctx.save() // ctx.restore()
     draw.setGlobalAlpha(ctx, s.opacity)
-    e.drawOverlay(render) // enemy shape!
+    e.drawOverlay(render, X, Y) // enemy shape!
     ctx.restore()
+    for (let g of e.guns) {
+      // draw guns
+      g.draw(render)
+    }
+    // draw enemy
+    e.draw(render)
   }
   
   static send(type, options) {
@@ -290,32 +295,31 @@ export class Enemy {
   }
   
   draw(render) { // over
-    
+    // nothing for now
+    // todo
   }
   
-  drawOverlay(render) {
+  drawOverlay(render, x, y) {
     // todo shape
+    x = x || this.x
+    y = y || this.y
     switch (this.stat.shape) {
       case "circle":
         // circle for now
-        draw.circle(render, this.x, this.y, this.size)
+        draw.circle(render, x, y, this.size)
       case "asteroid":
         // draw stored vertices
-        const vertices = [],
-              X = this.x,
-              Y = this.y
+        const vertices = []
         for (let v of this.vertices) {
-          vertices.push(Vector.create(v.x + X, v.y + Y))
+          vertices.push(Vector.create(v.x + x, v.y + y))
         }
         draw.polygon(render, vertices)
     }
   }
   
-  send(add = true) {
-    if (add) {
-      this.exists = true
-      enemies.push(this)
-    }
+  send() {
+    this.exists = true
+    enemies.push(this)
     this.createBody()
   }
   
@@ -328,6 +332,16 @@ export class Enemy {
       enemies.splice(index, 1)
     } else {
       console.error("Enemy to remove not found in 'enemies' list: ", enemy)
+    }
+  }
+  
+  createShape() {
+    switch (this.stat.shape) {
+      case "circle":
+        // do nothing
+      case "asteroid":
+        // CONST how many sides the asteroid has
+        this.vertices = math.asteroid(10, size)
     }
   }
   
@@ -347,8 +361,6 @@ export class Enemy {
     if (s.shape === "circle") {
       body = Bodies.circle(this.start.x, this.start.y, size, bodyOptions)
     } else if (s.shape === "asteroid") {
-      // CONST how many sides the asteroid has
-      this.vertices = math.asteroid(10, size)
       body = Bodies.fromVertices(this.start.x, this.start.y, [this.vertices], bodyOptions)
       if (body == null) {
         console.error("Body is bad!")

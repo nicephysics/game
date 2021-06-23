@@ -106,7 +106,9 @@ export class Enemy {
     }
   }
   
+  // for drawEnemy and redrawEnemy
   static drawEnemies = {}
+  
   static drawEnemy(render, x, y, size, type, options) {
     let e = Enemy.drawEnemies[type],
         s = style.enemy[type]
@@ -138,6 +140,20 @@ export class Enemy {
     }
     // draw enemy
     e.draw(render)
+    return e
+  }
+  
+  static redrawEnemy(type, options = null) {
+    let e = Enemy.drawEnemies[type]
+    if (e) {
+      e.createShape()
+      if (options) {
+        e.init(options)
+      }
+      return e
+    } else {
+      return null
+    }
   }
   
   static send(type, options) {

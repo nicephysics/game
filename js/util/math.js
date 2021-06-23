@@ -89,7 +89,7 @@ math.asteroid = function(sides, size) {
         v = math.angleVector(math.degToRad((angle + 360) % 360), dist)
     pointset.push([v.x, v.y])
   }
-  const pts = hull(pointset, 0)
+  const pts = hull(pointset, 10000000000000000000)
   if (pts[0][0] === pts[pts.length - 1][0] && pts[0][1] === pts[pts.length - 1][1]) {
     // always true, in fact
     pts.splice(0, 1)

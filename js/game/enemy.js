@@ -299,21 +299,23 @@ export class Enemy {
     // todo
   }
   
-  drawOverlay(render, x, y) {
+  drawOverlay(render, x, y, angle) {
     // todo shape
     x = x || this.x
     y = y || this.y
+    angle = angle || this.angle
     switch (this.stat.shape) {
       case "circle":
         // circle for now
         draw.circle(render, x, y, this.size)
+        // haha rotate circle
       case "asteroid":
         // draw stored vertices
         const vertices = []
         for (let v of this.vertices) {
           vertices.push(Vector.create(v.x + x, v.y + y))
         }
-        draw.polygon(render, vertices)
+        draw.polygon(render, vertices, angle)
     }
   }
   

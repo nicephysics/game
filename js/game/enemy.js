@@ -118,12 +118,13 @@ export class Enemy {
       Enemy.drawEnemies[type] = e
     }
     e.init(options)
-    e.send()
+    e.send(false)
     e.body.position = {
       x: x + render.bounds.min.x,
       y: y + render.bounds.min.y
     }
-    e.targetrot = math.degToRad( (ui.vars.time * 1) % 360 )
+    e.targetrot = math.degToRad( (ui.vars.time * 0.5) % 360 )
+    Body.setAngle(e.body, e.targetrot)
     e.stat.size = size
     draw.setFill(ctx, s.fillStyle)
     draw.setStroke(ctx, s.strokeStyle)
@@ -186,8 +187,10 @@ export class Enemy {
   vertices = [ ] // Matter.Vector[]
   stat = new EnemyStat(this)
   effect = new Effect(this, "enemy")
+  
   // constructor
-  constructor(type, options = { }) {
+  constructor(type, options, add = true) {
+    options = options || { }
     this.type = type
     this.init(options)
   }
@@ -308,10 +311,12 @@ export class Enemy {
     }
   }
   
-  send() {
-    this.exists = true
+  send(add = true) {
+    if (add) {
+      this.exists = true
+      enemies.push(this)
+    }
     this.createBody()
-    enemies.push(this)
   }
   
   remove() {

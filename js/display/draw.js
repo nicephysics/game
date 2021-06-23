@@ -280,6 +280,7 @@ draw._polygon = function(ctx, vs, angle = 0) {
     }
     ctx.lineTo(vs[0].x, vs[0].y)
   ctx.stroke()
+  ctx.fill()
 }
 
 draw.polygon = function(render, vs, angle = 0) {

@@ -268,7 +268,7 @@ draw.polyline = function(render, xx, yy) {
 draw._polygon = function(ctx, vs, angle = 0) {
   if (angle != 0) {
     const vertices = Vertices.create(vs, Body.create()),
-          point = Vertices.center(vertices)
+          point = Vertices.centre(vertices)
     for (let i = 0; i < vs.length; ++i) {
       vs[i] = Vector.rotate(vs[i], angle, point)
     }

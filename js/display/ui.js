@@ -61,6 +61,7 @@ ui.vars = {
   waves_popup_text: [],
   waves_popup_text_show: false,
   waves_all_clear: false,
+  waves_hover: -1,
   
   // show (overlay)
   upgrade_show: false, // upgrade overlay show
@@ -670,6 +671,7 @@ ui.draw = function() {
     draw.setLineWidth(ctx, 6)
       draw._line(ctx, x, y, x + barwidth, y)
     // draw wave circles and wave number
+    // THE LARGE FOR LOOP
     for (let offset = -1; offset <= wavecount - 2; ++offset) { // only show current wave (-1) up to 3 waves after [next] (<= 3)
       const num = nextwave + offset,
             wave = W ? W.wave[num - 1] : null
@@ -678,6 +680,50 @@ ui.draw = function() {
         size = (offset == 0) ? 16 : 10
         draw.setFillLightenStroke(ctx, "#cf0034") // todo
         draw.setLineWidth(ctx, 3)
+        // check for hover
+        if (ui.hitcircle(mousepos, x, y, size)) { // big if
+          const rectextra = 10,
+                rectheight = 50,
+                rectgap = 25,
+                enemySize = 15,
+                enemyType = wave.type,
+                enemyOptions = wave
+          let xx = startX - rectextra,
+              yy = y + rectgap,
+              recttext = ""
+          draw.setFillNoStroke(ctx, "#ff8d5c") // was #ff3d74
+          ctx.save()
+          draw.setGlobalAlpha(ctx, 0.8)
+            draw._rect(ctx, xx, yy, barwidth + playsize + playgap + rectextra * 2, rectheight)
+          ctx.restore()
+          xx += enemySize + 10
+          yy += rectheight / 2
+          if (v.waves_hover !== num) {
+            v.waves_hover = num
+            Enemy.redrawEnemy(enemyType) // , enemyOptions ???
+          }
+          let rectenemy = Enemy.drawEnemy(render, xx, yy, enemySize, enemyType, enemyOptions)
+          xx += enemySize + 10
+          yy += 10
+          recttext = "x" + wave.number
+          draw.setFillNoStroke(ctx, "#73003b")
+          draw.setFont(ctx, "16px Roboto Condensed")
+            draw._text(ctx, xx, yy, recttext, 0, "left")
+          xx += ctx.measureText(recttext).width + 10
+          yy = y + rectgap + rectheight / 2
+          recttext = wave.sep + " s apart"
+          draw.setFillNoStroke(ctx, v.c_icon_purple)
+          draw._text(ctx, xx, yy, recttext, 0, "left")
+          
+          // TODO here
+          
+          // set mousepos to false (in case (for whatever reason) 2 mouseboxes overlap)
+          mousepos = false
+          // and reset those stuff
+          draw.setFillLightenStroke(ctx, "#cf00b3")
+          draw.setLineWidth(ctx, 3)
+        } // end of check for hover
+        // anyway, draw the actual circle!
         if (offset == 0) {
             draw._circle(ctx, x, y, size)
           draw.setFillNoStroke(ctx, "#69ff69") // todo text color?
@@ -689,21 +735,7 @@ ui.draw = function() {
         } else {
           draw._circle(ctx, x, y, size / 2)
         }
-        if (ui.hitcircle(mousepos, x, y, size)) {
-          const rectextra = 10,
-                rectheight = 50,
-                rectgap = 25,
-                enemySize = 15,
-                enemyType = wave.type,
-                enemyOptions = wave
-          draw.setFillNoStroke(ctx, "#ff3d74")
-          ctx.save()
-          draw.setGlobalAlpha(ctx, 0.8)
-            draw._rect(ctx, startX - rectextra, y + rectgap, barwidth + playsize + playgap + rectextra * 2, rectheight)
-          Enemy.drawEnemy(render, startX - rectextra + enemySize + 10, y + rectgap + rectheight / 2, enemySize, enemyType, enemyOptions)
-          ctx.restore()
-          mousepos = false
-        }
+        // check for click
         if (ui.hitcircle(clickpos, x, y, size)) {
           // CLICKED! do something? I think not (for now).
           clickpos = false
@@ -711,7 +743,7 @@ ui.draw = function() {
       }
       // remember to increment x too!
       x += barwidth / (wavecount - 1)
-    }
+    } // end of the LARGE FOR LOOP
     // draw the PLAY BUTTON
     if (waveoff) {
       x = startX + barwidth + playgap + playsize

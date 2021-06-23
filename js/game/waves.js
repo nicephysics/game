@@ -94,7 +94,7 @@ waves.tut1.wave.push(
     rating: 3,
     number: 10,
     sep: 10,
-    m: 0.1, s: 20, g: 0.1,
+    m: 0.1, s: 1, z: 20, g: 0.1,
   }
 )
 waves.tut1.starttext = {

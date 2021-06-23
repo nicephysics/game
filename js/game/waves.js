@@ -105,7 +105,7 @@ waves.tut1.wave.push(
 )
 waves.tut1.starttext = {
   [0]: ["Welcome to the tutorial! You are a [thing] trying to protect the planet from incoming asteroids.",
-        "Use ↑↓→← keys to move and click (and hold) to launch a projectile.",
+        "Use ↑↓→← or wasd keys to move and click (and hold) to launch a projectile.",
         "The lighter area of the screen is the atmosphere of the planet. Everything inside the atmosphere falls due to gravity and everything above it floats in space!",
         "Ready? Press the play button at the top of the screen to begin!",
         ],

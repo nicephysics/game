@@ -93,7 +93,13 @@ waves.tut1.wave.push(
     type: "asteroid",
     rating: 3,
     number: 10,
-    sep: 10,
+    sep: 5,
+    m: 0.1, s: 1, z: 10, g: 0.1,
+  }, { // 6
+    type: "ball",
+    rating: 3,
+    number: 10,
+    sep: 5,
     m: 0.1, s: 1, z: 10, g: 0.1,
   }
 )

@@ -336,7 +336,9 @@ export class Enemy {
   }
   
   createShape() {
-    switch (this.stat.shape) {
+    const shape = this.stat.shape,
+          size = this.size
+    switch (shape) {
       case "circle":
         // do nothing
       case "asteroid":

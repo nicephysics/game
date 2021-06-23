@@ -691,11 +691,16 @@ ui.draw = function() {
         }
         if (ui.hitcircle(mousepos, x, y, size)) {
           const rectextra = 10,
-                rectheight = 50
+                rectheight = 50,
+                rectgap = 25,
+                enemySize = 15,
+                enemyType = wave.type,
+                enemyOptions = wave
           draw.setFillNoStroke(ctx, "#ff3d74")
           ctx.save()
           draw.setGlobalAlpha(ctx, 0.8)
-            draw._rect(ctx, startX - rectextra, y + 25, barwidth + playsize + playgap + rectextra * 2, rectheight)
+            draw._rect(ctx, startX - rectextra, y + rectgap, barwidth + playsize + playgap + rectextra * 2, rectheight)
+          Enemy.drawEnemy(render, startX - rectextra + enemySize + 10, y + rectgap + rectheight / 2, enemySize, enemyType, enemyOptions)
           ctx.restore()
           mousepos = false
         }

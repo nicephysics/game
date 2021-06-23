@@ -20,7 +20,8 @@ const Body = Matter.Body,
       Composite = Matter.Composite,
       Vector = Matter.Vector
 
-let ON_N = false
+let ON_N = false,
+    ON_M = false
 
 controls.setPaused = function(paused) {
   const player = Tower.player
@@ -35,6 +36,10 @@ controls.isPaused = function() {
 
 controls.toggleN = function() {
   ON_N = !ON_N
+}
+
+controls.toggleM = function() {
+  ON_M = !ON_M
 }
 
 controls.levelup = function(level) {
@@ -174,6 +179,11 @@ controls.init = function(render) {
       case "KeyN":
         if (ON_N) {
           player.addxp(50 * (player.level + 1))
+        }
+        break
+      case "KeyM":
+        if (ON_M) {
+          waves.current++
         }
         break
     }

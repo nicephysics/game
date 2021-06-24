@@ -42,7 +42,7 @@ config.updateBounds()
 
 // for use in category
 // don't need to export
-var c = {
+const c = {
   default: 0x0001,
   ground: 0x0002,
   enemy: 0x0004,

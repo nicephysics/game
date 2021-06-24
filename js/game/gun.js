@@ -12,16 +12,16 @@ import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 
 if (true) {
-  // 2 spaces
+  // 2 space indent!
 }
 
-var Body = Matter.Body,
-    Bodies = Matter.Bodies,
-    Composite = Matter.Composite,
-    Composites = Matter.Composites,
-    Mouse = Matter.Mouse,
-    MouseConstraint = Matter.MouseConstraint,
-    Vector = Matter.Vector
+const Body = Matter.Body,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Composites = Matter.Composites,
+      Mouse = Matter.Mouse,
+      MouseConstraint = Matter.MouseConstraint,
+      Vector = Matter.Vector
 
 export class Gun {
   // static
@@ -189,7 +189,7 @@ export class Gun {
   }
   
   draw(render) {
-    var ctx = render.context
+    const ctx = render.context
     draw.setFillDarkenStroke(ctx, this.fill)
     draw.setLineWidth(ctx, this.lineWidth)
     if (this.stroke !== this.fill) {
@@ -211,7 +211,7 @@ export class Gun {
     // check whether gun can shoot
     if (this.dummy) return
     // get reload from stat
-    var reload = this.reloadFrames
+    const reload = this.reloadFrames
     // check for player existence
     if (this.gametype === "tower" && this.tower.isPlayer) {
       // do something here?
@@ -235,21 +235,21 @@ export class Gun {
   }
   
   shoot() {
-    var s = this.stat,
-        m = this.statMult,
-        bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
-        objectStyle = style[bodyGametype],
-        b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
-          isStatic: false,
-          isBullet: true,
-          label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
-          collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
-          render: objectStyle.bullet, // big todo
-          density: s.mass * m.mass * 0.001,
-          friction: s.kineticFriction,
-          frictionStatic: s.staticFriction,
-          frictionAir: s.airResistance * m.air,
-        });
+    const s = this.stat,
+          m = this.statMult,
+          bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
+          objectStyle = style[bodyGametype],
+          b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
+            isStatic: false,
+            isBullet: true,
+            label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
+            collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
+            render: objectStyle.bullet, // big todo
+            density: s.mass * m.mass * 0.001,
+            friction: s.kineticFriction,
+            frictionStatic: s.staticFriction,
+            frictionAir: s.airResistance * m.air,
+          });
     b.gametype = bodyGametype
     b.gun = this
     b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
@@ -275,7 +275,7 @@ export class Gun {
     // remove earliest created child, if possible
     while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
       this.childrenTime.shift()
-      var b = this.children[0]
+      const b = this.children[0]
       Composite.remove(Tower.world, b)
       this.children.shift()
     }

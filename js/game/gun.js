@@ -23,8 +23,6 @@ var Body = Matter.Body,
     MouseConstraint = Matter.MouseConstraint,
     Vector = Matter.Vector
 
-export var guns = [ ] // Gun[]
-
 export class Gun {
   // static
   static _count = 1
@@ -65,9 +63,7 @@ export class Gun {
   childrenTime = [ ] // queue of int
   
   // constructor
-  constructor(object, location, gametype) {
-    guns.push(this)
-    
+  constructor(object, location, gametype) {    
     this.gametype = gametype
     if (gametype === "tower") {
       this.tower = object

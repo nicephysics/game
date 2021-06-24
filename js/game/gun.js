@@ -282,7 +282,7 @@ export class Gun {
   }
   
   removeChild(b) {
-    var index = this.children.indexOf(b)
+    const index = this.children.indexOf(b)
     if (index !== -1) {
       this.children.splice(index, 1)
       this.childrenTime.splice(index, 1)

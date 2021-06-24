@@ -158,6 +158,7 @@ export class Enemy {
   
   static send(type, options) {
     var e = new Enemy(type, options)
+    e.createShape()
     e.send()
   }
   

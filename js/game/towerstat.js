@@ -181,6 +181,8 @@ export class TowerStat {
     air: 19,
   }
   
+  static upgradekeys = ["size", "mass", "speed", "reload", "towerspeed", "spread", "air"]
+  
   // fields
   tier = 0
   size = 1
@@ -191,13 +193,12 @@ export class TowerStat {
   // points and upgrade stuff
   points = 0
   upgradetext = "normal"
-  upgradekeys = ["size", "mass", "speed", "reload", "towerspeed", "spread", "air"]
   upgrade = { }
   
   constructor(tower) {
     // empty constructor for now
     this.tower = tower
-    for (let k of this.upgradekeys) {
+    for (let k of TowerStat.upgradekeys) {
       this.upgrade[k] = 0
     }
     this.refresh()
@@ -206,7 +207,7 @@ export class TowerStat {
   // get
   get upgradeArray() {
     const ans = []
-    for (let k of this.upgradekeys) {
+    for (let k of TowerStat.upgradekeys) {
       ans.push(this.upgrade[k])
     }
     return ans
@@ -239,8 +240,8 @@ export class TowerStat {
   // set
   set upgradeArray(arr) {
     const u = this.upgrade
-    for (let i = 0; i < this.upgradekeys.length; i++) {
-      u[this.upgradekeys[i]] = arr[i]
+    for (let i = 0; i < TowerStat.upgradekeys.length; i++) {
+      u[TowerStat.upgradekeys[i]] = arr[i]
     }
   }
   
@@ -254,7 +255,7 @@ export class TowerStat {
     this.tower.refreshLevel()
     
     let points = this.tower.level
-    for (let k of this.upgradekeys) {
+    for (let k of TowerStat.upgradekeys) {
       points -= this.upgrade[k]
     }
     this.points = points

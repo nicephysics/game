@@ -171,6 +171,16 @@ export class TowerStat {
   static stats = towerstats
   static map = towermap
   
+  static upgradeMax = {
+    // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
+    size: 49,
+    speed: 99,
+    reload: 199,
+    towerspeed: 49,
+    spread: 19,
+    air: 19,
+  }
+  
   // fields
   tier = 0
   size = 1
@@ -183,22 +193,12 @@ export class TowerStat {
   upgradetext = "normal"
   upgradekeys = ["size", "mass", "speed", "reload", "towerspeed", "spread", "air"]
   upgrade = { }
-  upgradeMax = {
-    // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
-    size: 49,
-    speed: 99,
-    reload: 199,
-    towerspeed: 49,
-    spread: 19,
-    air: 19,
-  }
   
   constructor(tower) {
     // empty constructor for now
     this.tower = tower
     for (let k of this.upgradekeys) {
       this.upgrade[k] = 0
-      this.upgradeMax[k] = this.upgradeMax[k] || -1
     }
     this.refresh()
   }
@@ -277,4 +277,9 @@ export class TowerStat {
       this.tower.addGun(g.set, g.stat, g.options)
     }
   }
+}
+
+// init
+for (let k of TowerStat.upgradekeys) {
+  TowerStat.upgradeMax[k] = TowerStat.upgradeMax[k] || -1
 }

@@ -9,20 +9,25 @@
 
     <!-- random properties -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"> <!-- user-scalable=no -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=no"> <!--  -->
     <meta name="robots" content="index, follow">
 
     <!-- meta icon -->
     <meta property="og:image" content="https://nicephysics.github.io/assets/icon_32.png">
     <meta property="og:image:width" content="54">
     <meta property="og:image:height" content="54">
+    
+    <!--
+      a theme color!
+      on android devices it will customise the top bar,
+      but this site does not work on mobile...
+    -->
+    <meta name="theme-color" content="#0acc75">
 
     <!-- favicon --> <!--
     <link rel="icon" type="image/png" sizes="32x32" href="https://nicephysics.github.io/assets/icon_32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://nicephysics.github.io/assets/icon_16.png">
     -->
-    
-    <link rel="preload">
 
     <!-- Title -->
     <title>Game</title>
@@ -38,30 +43,30 @@
       gtag('config', 'G-ZXEP243M4F');
     </script>
     <!-- library - matter.js - for stuff that matter? -->
+    <link rel="preload" href="./lib/matter.js" as="script">
     <script src="./lib/matter.js"></script>
     <!-- library - chroma.js - for colours, or colors, does it matter? -->
+    <link rel="preload" href="./lib/chroma.js" as="script">
     <script src="./lib/chroma.js"></script>
     <!-- library - fabric.js - for canvas & drawing stuff / removed-->
+    <!-- <link rel="preload" href="./lib/fabric.js" as="script"> -->
     <!-- <script src="./lib/fabric.js"></script> -->
     <!-- library - decomp.js - for matter's vertices stuff -->
+    <link rel="preload" href="./lib/decomp.js" as="script">
     <script src="./lib/decomp.js"></script>
     <!-- library - hull.js - for my vertices stuff -->
+    <link rel="preload" href="./lib/hull.js" as="script">
     <script src="./lib/hull.js"></script>
 
     <!-- css stuff -->
     <!-- Roboto? -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab">
-    <link rel="stylesheet" href="./main.css">
-    <!--
-      a theme color!
-      on android devices it will customise the top bar,
-      but this site does not work on mobile...
-    -->
-    <meta name="theme-color" content="#0acc75">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto" as="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto+Condensed" as="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto+Mono" as="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto+Slab" as="stylesheet">
+    <link rel="preload" href="./main.css" as="stylesheet">
     
+    <link rel="modulepreload" href="./js/main.js" as="script"> 
   </head>
 
   <body oncontextmenu="return event.target.tagName === 'A'">

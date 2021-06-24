@@ -326,6 +326,7 @@ export class Enemy {
         // circle for now
         draw.circle(render, x, y, this.size)
         // haha rotate circle
+        break
       case "asteroid":
         // draw stored vertices
         const vertices = []
@@ -333,6 +334,7 @@ export class Enemy {
           vertices.push(Vector.create(v.x + x, v.y + y))
         }
         draw.polygon(render, vertices, angle)
+        break
     }
   }
   
@@ -360,9 +362,11 @@ export class Enemy {
     switch (shape) {
       case "circle":
         // do nothing
+        break
       case "asteroid":
         // CONST how many sides the asteroid has
         this.vertices = math.asteroid(10, size)
+        break
     }
   }
   

@@ -33,7 +33,7 @@ collide.init = function(render) {
           Tower.health -= b.enemy.stat.damage
         }
         if (tb === "bullet") {
-          b.gun.removeChild(tb)
+          b.gun.removeChild(b)
         }
         // projectile too?
         break

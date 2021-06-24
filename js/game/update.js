@@ -39,14 +39,14 @@ gameupdate.init = function(render) {
   */
   
   function tickALL() {
-    Tower.tickAll()
     Enemy.tick()
+    Tower.tickAll()
     Effect.tick()    
   }
   
   function drawALL() {
-    Tower.drawAll()
     Enemy.draw()
+    Tower.drawAll()
     Effect.draw()
     // then draw GUI overlay
     ui.draw()

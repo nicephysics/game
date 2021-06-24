@@ -185,10 +185,10 @@ export class TowerStat {
   upgrade = { }
   upgradeMax = {
     // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
-    size: 19,
-    speed: 49,
-    reload: 49,
-    towerspeed: 19,
+    size: 49,
+    speed: 99,
+    reload: 199,
+    towerspeed: 49,
     spread: 19,
     air: 19,
   }

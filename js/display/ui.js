@@ -4,7 +4,7 @@ import { style } from "./style.js"
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Tower } from "../game/tower.js"
-import { towerstats, towermap } from "../game/towerstat.js"
+import { TowerStat, towerstats, towermap } from "../game/towerstat.js"
 import { wave } from "../game/wave.js"
 import { waves } from "../game/waves.js"
 
@@ -452,8 +452,8 @@ ui.draw = function() {
     
     if (clicked !== -1 && clicksign !== 0) {
       const index = clicked,
-            key = playerStat.upgradekeys[index],
-            maxstat = playerStat.upgradeMax[key],
+            key = TowerStat.upgradekeys[index],
+            maxstat = TowerStat.upgradeMax[key] - 1,
             newstat = playerStat.upgrade[key] + clicksign
       if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && playerStat.points >= clicksign) {
         playerStat.upgrade[key] = newstat

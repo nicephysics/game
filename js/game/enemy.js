@@ -306,7 +306,7 @@ export class Enemy {
       remove_addXP()
     } else if (this.x < this.size && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
       remove_addXP()
-    } else if (this.x > Tower.render.options.width && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
+    } else if (this.x > Tower.render.options.width + this.size && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
       remove_addXP()
     }
   }

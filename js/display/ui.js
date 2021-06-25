@@ -3,6 +3,8 @@ import { style } from "./style.js"
 
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
+import { Thing } from "../game/thing.js"
+import { things } from "../game/thing.js"
 import { Tower } from "../game/tower.js"
 import { TowerStat, towerstats, towermap } from "../game/towerstat.js"
 import { wave } from "../game/wave.js"
@@ -110,7 +112,7 @@ ui.init = function(render) {
 
 ui.tick = function() {
   const v = ui.vars,
-        render = Tower.render,
+        render = Thing.render,
         ctx = render.context
   // tick time!
   v.time++
@@ -132,7 +134,7 @@ ui.tick = function() {
 
 ui.tickAfter = function() {
   let v = ui.vars,
-      render = Tower.render,
+      render = Thing.render,
       ctx = render.context
   // clear click
   v.click = false
@@ -144,7 +146,7 @@ ui.draw = function() {
   // define common variables first
   
   const v = ui.vars,
-        render = Tower.render,
+        render = Thing.render,
         ctx = render.context,
         player = Tower.player,
         playerX = player.x,

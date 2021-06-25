@@ -302,9 +302,9 @@ export class Enemy {
       Tower.player.addxp(reward * mult)
       this.remove()
     }
-    if (this.y < 0 && this.velocity.y <= 0) {
+    if (this.y < this.size && this.velocity.y <= 0) {
       remove_addXP()
-    } else if (this.x < 0 && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
+    } else if (this.x < this.size && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
       remove_addXP()
     } else if (this.x > Tower.render.options.width && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
       remove_addXP()

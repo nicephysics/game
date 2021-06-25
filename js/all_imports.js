@@ -34,6 +34,9 @@ import('./game/aim.js').then(m => {
 import('./game/collide.js').then(m => {
   game.collide = m.collide
 })
+import('./game/controller.js').then(m => {
+  game.Controller = m.Controller
+})
 import('./game/controls.js').then(m => {
   game.controls = m.controls
 })
@@ -58,6 +61,16 @@ import('./game/gunset.js').then(m => {
 import('./game/stat.js').then(m => {
   game.Stat = m.Stat
   game.stats = m.stats
+})
+import('./game/thing.js').then(m => {
+  game.Thing = m.Thing
+  game.everything = m.everything
+})
+import('./game/things.js').then(m => {
+  game.things = m.things
+})
+import('./game/thingstat.js').then(m => {
+  game.ThingStat = m.ThingStat
 })
 import('./game/tower.js').then(m => {
   game.Tower = m.Tower

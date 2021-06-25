@@ -3,6 +3,8 @@ import { aim } from "./aim.js"
 import { Effect } from "./effect.js"
 import { enemies, Enemy } from "./enemy.js"
 import { Gun } from "./gun.js"
+import { Thing } from "./thing.js"
+import { things } from "./things.js"
 import { TowerStat, towermap, towerstats, towerlevels } from "./towerstat.js"
 // config
 import { config, category } from "../config/config.js"
@@ -64,23 +66,6 @@ export class Tower {
   // map from type to kind
   static kinds = {
     basic: "shooter",
-  }
-  
-  // matter.js stuff (static and global) (useful!)
-  static render = null
-  static engine = null
-  static canvas = null
-  static mouse = null
-  static world = null
-  static runner = null
-  
-  // init function, important!
-  static init(render) {
-    Tower.render = render
-    Tower.engine = render.engine
-    Tower.canvas = render.canvas
-    Tower.mouse = render.mouse
-    Tower.world = render.engine.world
   }
   
   // draw all guns (and other stuff related to towers not already drawn by matter renderer)
@@ -418,7 +403,6 @@ export class Tower {
   addxp(add) {
     this.xp += add
     Tower.xp += add
-    this.refreshLevel()
     this.stat.refreshPoints()
   }
   

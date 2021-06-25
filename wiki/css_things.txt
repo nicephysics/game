@@ -1,0 +1,101 @@
+transparent
+onesize (size-1)
+waytootiny (size-4)
+waytoosmall (size-5)
+tootiny (size-6)
+toosmall (size-7)
+tinier (size-8)
+tinyy (size-9)
+tiny (size-10)
+smaller (size-11)
+small (size-12)
+smalll (size-13)
+smallll (size-14)
+medium (size-15)
+regular (size-16)
+regularr (size-17)
+large (size-18)
+huge (size-24)
+gigantic (size-36)
+enormous (size-48)
+jumbo (size-64)
+toolarge (size-96)
+toohuge (size-120)
+toogigantic (size-150)
+toojumbo (size-200)
+padding-none (0, 0)
+padding-small (4, 8)
+padding-medium (8, 16)
+padding-large (12, 24)
+padding-huge (18, 36)
+padding-gigantic (24, 48)
+padding-16/24/32/48/64
+padding-top-24/32/48/64
+margin (16)
+margin-top (16)
+margin-bottom (16)
+margin-left (16)
+margin-right (16)
+wider-letters (8px)
+border-transparent
+hover-border-transparent
+top
+bottom
+topleft
+topright
+bottomleft
+bottomright
+middle
+left
+right
+topmiddle
+bottommiddle
+vertical-center (vertical-middle)
+horizontal-center (horizontal-middle)
+position-absolute
+circle
+round-tiny (round-1)
+round-small (round-2)
+round-medium (round-4)
+round-large (round-8)
+round-huge (round-16)
+round-gigantic (round-32)
+container
+panel
+code
+codespan
+text-left
+text-right
+text-justify (justify)
+text-center
+border-0
+card, card-2, card-4
+animate-spin (spin)
+animate-fading
+animate-opacity (animate-opac)
+animate-top
+animate-left
+animate-right
+animate-bottom
+animate-zoom
+animate-input
+opacity, hover-opacity [60%]
+opacity-off, hover-opacity-off [0%]
+opacity-max (translucent) [75%]
+opacity-min (opacity-low) [25%]
+grayscale-max, hover-grayscale
+grayscale
+grayscale-min
+sepia-max, hover-sepia
+sepia
+sepia-min
+border
+border-top
+border-bottom
+border-left
+border-right
+topbar
+bottombar
+leftbar
+rightbar
+section

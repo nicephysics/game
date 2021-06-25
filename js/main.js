@@ -11,10 +11,13 @@ import { ui } from "./display/ui.js"
 // config
 import { config, category } from "./config/config.js"
 // game
-import { Tower } from "./game/tower.js"
-import { Enemy } from "./game/enemy.js"
 import { collide } from "./game/collide.js"
 import { controls } from "./game/controls.js"
+import { Enemy } from "./game/enemy.js"
+import { Thing } from "./game/thing.js"
+import { things } from "./game/things.js"
+import { ThingStat } from "./game/thingstat.js"
+import { Tower } from "./game/tower.js"
 import { gameupdate } from "./game/update.js"
 import { waves } from "./game/waves.js"
 
@@ -142,7 +145,7 @@ var init = function() {
   // INITIALIZE EVERYTHING
   // yes
   
-  Tower.init(render)
+  Thing.init(render)
   var tower = new Tower("basic")
   tower.moveTo(_width * 0.5, _height - 100)
   Tower.player = tower
@@ -167,7 +170,7 @@ var init = function() {
   // run the engine
   Runner.run(runner, engine)
   
-  Tower.runner = runner
+  Thing.runner = runner
   
   // run waves
   waves.init("tut1")

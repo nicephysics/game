@@ -1,0 +1,12 @@
+/* smooth scrolling */
+html {
+  scroll-behavior: smooth!important;
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.bar, h1, button {
+  font-family: "Roboto Mono", sans-serif;
+}

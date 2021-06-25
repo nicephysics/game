@@ -1,8 +1,9 @@
 // imports
 import { category, config } from "../config/config.js"
 
-import { gunset } from "./gunset.js"
 import { stats, Stat } from "./stat.js"
+import { Thing } from "./thing.js"
+import { things } from "./things.js"
 import { Tower } from "./tower.js"
 
 import { style } from "../display/style.js"
@@ -26,7 +27,6 @@ const Body = Matter.Body,
 export class Gun {
   // static
   static _count = 1
-  static set = gunset
   static create(object, gunset, gametype) {
     return new Gun(object, gunset, gametype)
   }
@@ -38,11 +38,8 @@ export class Gun {
   // counters
   gunTime = 0
   shot = 0 // reload counter
-  // type
-  gametype = ""
-  // object backreferences
-  tower = null
-  enemy = null
+  // thing
+  thing = null
   // positions
   position = Vector.create(0, 0)
   size = Vector.create(0, 0)
@@ -63,14 +60,9 @@ export class Gun {
   childrenTime = [ ] // queue of int
   
   // constructor
-  constructor(object, location, gametype) {    
-    this.gametype = gametype
-    if (gametype === "tower") {
-      this.tower = object
-    } else if (gametype === "enemy") {
-      this.enemy = object
-    }
-    this.setLocation(location)
+  constructor(thing, gunset) {    
+    this.thing = thing
+    this.setLocation(gunset)
   }
   
   // get
@@ -80,14 +72,14 @@ export class Gun {
   get realPosition() {
     if (this.size.x === 0) {
       let x = this.position.x * this.statSize * 2 // difference!
-      let y = this.position.y * this.objectSize * Gun.set.scale
+      let y = this.position.y * this.thing.size * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
       )
     } else {
-      let x = this.position.x * this.objectSize * Gun.set.scale
-      let y = this.position.y * this.objectSize * Gun.set.scale
+      let x = this.position.x * this.thing.size * Gun.set.scale
+      let y = this.position.y * this.thing.size * Gun.set.scale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
@@ -95,7 +87,7 @@ export class Gun {
     }
   }
   get location() {
-    return Vector.add(this.objectPosition, this.realPosition)
+    return Vector.add(this.thing.position, this.realPosition)
   }
   get x() {
     return this.location.x
@@ -104,41 +96,19 @@ export class Gun {
     return this.location.y
   }
   get width() {
-    return Math.max(this.size.x * this.objectSize * Gun.set.scale, this.statSize)
+    return Math.max(this.size.x * this.thing.size * Gun.set.scale, this.statSize)
   }
   get height() {
     return this.size.y * this.objectSize * Gun.set.scale
   }
-  get object() {
-    if (this.gametype === "tower") {
-      return this.tower
-    } else if (this.gametype === "enemy") {
-      return this.enemy
-    }
-  }
-  get objectSize() {
-    return this.object.size
-  }
-  get objectAngle() {
-    return this.object.angle
-  }
-  get objectDirection() {
-    return this.object.direction
-  }
-  get objectPosition() {
-    return this.object.position
-  }
-  get objectGuns() {
-    return this.object.guns
-  }
   get statMult() {
-    return (this.object.stat) ? this.object.stat.mult : false
+    return (this.thing.stat) ? this.thing.stat.mult : false
   }
   get reloadFrames() {
     return this.stat.reloadFrames * ( (this.statMult) ? this.statMult.reload : 1 )
   }
   get direction() {
-    return this.angle + this.objectAngle
+    return this.angle + this.thing.angle
   }
   get gunDifference() {
     return Vector.create(
@@ -153,29 +123,15 @@ export class Gun {
     return Vector.add(this.location, Vector.mult(this.gunDifference, 0.5))
   }
   get shooting() {
-    if (this.gametype === "tower") {
-      // object is a tower, check stuff
-      if (!this.tower.effect.canshoot) {
-        return false
-      }
-      if (!this.tower.isPlayer) {
-        return true
-      }
-      return this.tower.control.shoot || this.tower.control.autoshoot
-    } else if (this.gametype === "enemy") {
-      // object is an enemy, enemies shoot blindly!
-      return true
+    // thing is a tower, check stuff
+    if (!this.thing.effect.canshoot) {
+      return false
     }
+    // if (!this.thing.isPlayer) return true
+    return this.thing.control.shoot || this.thing.control.autoshoot
   }
   
   // set
-  set object(thing) {
-    if (this.gametype === "tower") {
-      this.tower = thing
-    } else if (this.gametype === "enemy") {
-      this.enemy = thing
-    }
-  }
   
   // go!
   refreshStats() {
@@ -212,10 +168,6 @@ export class Gun {
     if (this.dummy) return
     // get reload from stat
     const reload = this.reloadFrames
-    // check for player existence
-    if (this.gametype === "tower" && this.tower.isPlayer) {
-      // do something here?
-    }
     if (this.shot < reload) {
       this.shot++
       this.refreshShot()
@@ -237,13 +189,13 @@ export class Gun {
   shoot() {
     const s = this.stat,
           m = this.statMult,
-          bodyGametype = (this.gametype === "tower") ? "projectile" : "bullet",
+          bodyGametype = (this.thing.gametype === "tower") ? "projectile" : "bullet",
           objectStyle = style[bodyGametype],
           b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
             isStatic: false,
             isBullet: true,
             label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
-            collisionFilter: (this.gametype === "tower") ? category.yourBullet : category.enemyBullet,
+            collisionFilter: (this.thing.gametype === "tower") ? category.yourBullet : category.enemyBullet,
             render: objectStyle.bullet, // big todo
             density: s.mass * m.mass * 0.001,
             friction: s.kineticFriction,
@@ -312,15 +264,15 @@ export class Gun {
   
   remove(removeFromArray = true) {
     if (removeFromArray) {
-      const index = this.objectGuns.indexOf(this);
+      const index = this.thing.guns.indexOf(this);
       if (index > -1) {
-        this.objectGuns.splice(index, 1);
+        this.thing.guns.splice(index, 1);
       }
     }
     for (let body of this.children) {
       Composite.remove(Tower.world, body)
     }
-    this.object = null
+    this.thing = null
   }
   
 }

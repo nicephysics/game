@@ -59,11 +59,11 @@ export class Thing {
   
   // init function, important!
   static init(render) {
-    Tower.render = render
-    Tower.engine = render.engine
-    Tower.canvas = render.canvas
-    Tower.mouse = render.mouse
-    Tower.world = render.engine.world
+    Thing.render = render
+    Thing.engine = render.engine
+    Thing.canvas = render.canvas
+    Thing.mouse = render.mouse
+    Thing.world = render.engine.world
   }
   
   

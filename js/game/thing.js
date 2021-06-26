@@ -346,6 +346,9 @@ export class Thing {
   draw(render) {
     if (this.options.drawable && this.options.active) {
       // draw!
+      // draw accessories 0
+      this.drawAccessories(render, 0)
+      this.drawThing(render)
       // draw accessories 1
       this.drawAccessories(render, 1)
       // draw guns
@@ -359,6 +362,17 @@ export class Thing {
       // draw accessories 3
       this.drawAccessories(render, 3)
     }
+  }
+  
+  drawThing(render) {
+    const s = this.style.render,
+          ctx = render.context
+    draw.setFill(ctx, s.fillStyle)
+    draw.setStroke(ctx, s.strokeStyle)
+    draw.setLineWidth(ctx, s.lineWidth)
+    draw.setGlobalAlpha(ctx, s.opacity)
+    this.drawShape(render) // draw the thing's shape! 
+    draw.setGlobalAlpha(ctx, 1)
   }
   
   drawShape(render, x = this.x, y = this.y, angle = this.rotation) {

@@ -2,6 +2,8 @@
 import { config, category } from "../config/config.js"
 
 import { Enemy } from "./enemy.js"
+import { Thing } from "./thing.js"
+import { things } from "./things.js"
 import { Tower } from "./tower.js"
 
 import { math } from "../util/math.js"
@@ -19,6 +21,7 @@ export class Effect {
   
   static time = 0
   
+  /*
   static tick = function() {
     Effect.time++
     for (let e of effects) {
@@ -32,6 +35,7 @@ export class Effect {
       e.draw(Tower.render)
     }
   }
+  */
   
   // fields
   // effect fields
@@ -39,41 +43,17 @@ export class Effect {
   type = "none"
   duration = 0
   strength = 0
-  // gametype fields
-  gametype = "tower"
-  tower = null
-  enemy = null
+  thing = null
   // storage fields
   
   // constructor
-  constructor(object, gametype) {
+  constructor(thing, gametype) {
     // add to main list
     effects.push(this)
-    this.gametype = gametype
-    this.object = object
+    this.thing = thing
   }
   
   // get
-  get object() {
-    switch (this.gametype) {
-      case "tower":
-        return this.tower
-      case "enemy":
-        return this.enemy
-    }
-  }
-  get objectPos() {
-    return this.object.position
-  }
-  get objectSize() {
-    return this.object.size
-  }
-  get objectX() {
-    return this.objectPos.x
-  }
-  get objectY() {
-    return this.objectPos.y
-  }
   get speedmult() {
     if (this.contains("stun")) {
       return 0
@@ -100,16 +80,6 @@ export class Effect {
   }
   
   // set
-  set object(o) {
-    switch (this.gametype) {
-      case "tower":
-        this.tower = o
-        break
-      case "enemy":
-        this.enemy = o
-        break
-    }
-  }
   
   // go!
   tick() {
@@ -141,9 +111,8 @@ export class Effect {
   }
   
   drawEffect(render, e) {
-    var ctx = render.context,
-        // e.[thing]
-        type = e.type,
+    const ctx = render.context,
+    let type = e.type,
         duration = e.duration,
         time = e.time,
         // ratio of time left
@@ -152,9 +121,9 @@ export class Effect {
         barcolor = style.effect.barcolor[type],
         bardegrees = 360 * ratio,
         // draw properties
-        x = this.objectX,
-        y = this.objectY,
-        size = this.objectSize
+        x = this.thing.x,
+        y = this.thing.y,
+        size = this.thing.size
     // draw circular bar (arc)
     draw.setFill(ctx, "transparent")
     draw.setStroke(ctx, barcolor)
@@ -163,9 +132,8 @@ export class Effect {
     // todo
     switch (type) {
       case "stun":
-        draw.setFill(ctx, style.effect.overlay.stun)
-        draw.setStroke(ctx, "transparent")
-        this.object.drawOverlay(render)
+        draw.setFillNoStroke(ctx, style.effect.overlay.stun)
+        this.thing.drawShape(render)
     }
   }
   

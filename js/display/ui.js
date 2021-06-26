@@ -5,8 +5,6 @@ import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
-import { Thing } from "../game/thing.js"
-import { things } from "../game/things.js"
 import { Tower } from "../game/tower.js"
 import { TowerStat, towerstats, towermap } from "../game/towerstat.js"
 import { wave } from "../game/wave.js"
@@ -475,7 +473,7 @@ ui.draw = function() {
   
   // tier up button
   
-  if (player.canTierUp && !v.something_show()) {
+  if (playerStat.canTierUp && !v.something_show()) {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap

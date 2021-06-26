@@ -96,7 +96,7 @@ export class Enemy {
   }
   
   static draw() {
-    const render = Tower.render
+    const render = Thing.render
     for (let e of enemies) {
       for (let g of e.guns) {
         g.draw(render)
@@ -306,7 +306,7 @@ export class Enemy {
       remove_addXP()
     } else if (this.x < this.size && this.velocity.x <= 0 && this.velocity.y <= -this.velocity.x) {
       remove_addXP()
-    } else if (this.x > Tower.render.options.width + this.size && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
+    } else if (this.x > Thing.render.options.width + this.size && this.velocity.x >= 0 && this.velocity.y <= this.velocity.x) {
       remove_addXP()
     }
   }
@@ -415,13 +415,13 @@ export class Enemy {
     if (s.inertia && s.inertia !== 1) {
       Body.setInertia(body, body.inertia * s.inertia)
     }
-    Composite.add(Tower.world, body)
+    Composite.add(Thing.world, body)
     this.body = body
   }
   
   removeBody() {
     if (!this.body) return
-    Composite.remove(Tower.world, this.body)
+    Composite.remove(Thing.world, this.body)
     this.body = null
   }
   

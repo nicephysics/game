@@ -11,9 +11,15 @@ if (true) {
 
 export const upgradekeys = ["size", "mass", "speed", "reload", "thingspeed", "spread", "air", "thingrot"]
 
+export const upgradelevel = {
+  tier: [5, 15, 25],
+  ability: [],
+}
+
 export class ThingStat {
   // static
   static upgradekeys = upgradekeys
+  static upgradelevel = upgradelevel
   
   // fields
   thing = null
@@ -68,6 +74,10 @@ export class ThingStat {
   
   get realrot() {
     return this.rotspeed * this.mult.thingrot
+  }
+  
+  get canTierUp() {
+    return upgradelevel.tier[this.tier] <= this.thing.level
   }
   
   // set

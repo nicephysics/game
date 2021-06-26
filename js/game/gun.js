@@ -221,7 +221,7 @@ export class Gun {
       Body.setInertia(b, b.inertia * s.inertia) // works?
       b.gravityScale = 1 / s.inertia
     }
-    Composite.add(Tower.world, b)
+    Composite.add(Thing.world, b)
     this.children.push(b)
     this.childrenTime.push(this.gunTime)
   }
@@ -231,7 +231,7 @@ export class Gun {
     while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
       this.childrenTime.shift()
       const b = this.children[0]
-      Composite.remove(Tower.world, b)
+      Composite.remove(Thing.world, b)
       this.children.shift()
     }
   }
@@ -242,7 +242,7 @@ export class Gun {
       this.children.splice(index, 1)
       this.childrenTime.splice(index, 1)
     }
-    Composite.remove(Tower.world, b)
+    Composite.remove(Thing.world, b)
   }
   
   setStatString(s) {
@@ -273,7 +273,7 @@ export class Gun {
       }
     }
     for (let body of this.children) {
-      Composite.remove(Tower.world, body)
+      Composite.remove(Thing.world, body)
     }
     this.thing = null
   }

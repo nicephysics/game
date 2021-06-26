@@ -4,13 +4,21 @@ export var random = { }
 
 random.rand = common.random
 
-random.randreal = function() {
+random.randreal = function(start, end) {
   return common.random()
 }
 
 // inclusive
 random.randint = function(start, end) {
   return common.random(start, end)
+}
+
+random.angle = function() {
+  return random.rand() * Math.PI * 2
+}
+
+random.angleDegrees = function() {
+  return random.rand() * 360
 }
 
 

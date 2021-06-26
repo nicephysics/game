@@ -2,7 +2,8 @@
 
 // util
 import { events } from "./util/events.js"
-import { util_world } from "./util/world.js"
+import { math } from "./util/math.js"
+import { random } from "./util/random.js"
 // display
 import { style } from "./display/style.js"
 import { display } from "./display/display.js"

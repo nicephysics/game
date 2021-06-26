@@ -24,7 +24,8 @@ things.tower = {
   // game stuff
   guns: [],
   controlType: "player",
-  
+  xp: 0,
+  bonusxp: null,
 }
 
 things.enemy = {
@@ -41,7 +42,8 @@ things.enemy = {
   // game stuff
   guns: [],
   controlType: "enemy",
-  
+  xp: 0,
+  bonusxp: 0,
 }
 
 
@@ -65,3 +67,13 @@ things.basic = {
 
 
 // ENEMIES
+
+things.asteroid = {
+  parent: ["enemy"],
+  label: "Asteroid",
+  render: style.enemy.asteroid,
+  guns: null,
+  // stats?
+  xp: 10,
+  bonusxp: 0.1,
+}

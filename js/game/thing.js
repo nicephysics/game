@@ -327,8 +327,11 @@ export class Thing {
       if (this.controller != null) {
         this.controller.tick()
       }
-      // todo tick!
+      // tick body
       this.tickBody()
+      if (this.effect != null) {
+        this.effect.tick()
+      }
     }
   }
   

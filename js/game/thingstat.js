@@ -32,6 +32,14 @@ export class ThingStat {
   }
   
   // get
+  get upgradeArray() {
+    const ans = []
+    for (let key of upgradekeys) {
+      ans.push(this.upgrade[key])
+    }
+    return ans
+  }
+  
   get mult() {
     const u = this.upgrade,
           ans = { }

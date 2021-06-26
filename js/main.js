@@ -149,6 +149,7 @@ var init = function() {
   Thing.init(render)
   const player = new Thing(Vector.create(_width * 0.5, _height - 100))
   player.make(things.basic)
+  player.create()
   player.rotateTo(random.angle())
   Tower.player = player
   

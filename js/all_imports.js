@@ -28,9 +28,6 @@ import { towerstats, TowerStat } from "./game/towerstat.js"
 
 // game
 var game = { }
-import('./game/aim.js').then(m => {
-  game.aim = m.aim
-})
 import('./game/collide.js').then(m => {
   game.collide = m.collide
 })

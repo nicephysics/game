@@ -83,6 +83,8 @@ export class Thing {
   controller = new Controller(this) // the second most important thing!
   body = null // the most important thing!
   static = false
+  exists = false
+  gravityScale = 1
   // draw stuffs
   shape = "circle" // default
   shapeType = "circle" // default, determined by shape
@@ -97,7 +99,8 @@ export class Thing {
     tickable: true,
     drawable: true,
     active: true,
-    layer: 0, // ?
+    layer: 0, // ? not implemented yet!
+    draggable: false,
   } // end options
   
   
@@ -137,6 +140,11 @@ export class Thing {
   }
   get direction() {
     return this.targetrot
+  }
+  
+  // other body stuff
+  get velocity() {
+    return this.body.velocity
   }
   
   // stat stuff
@@ -180,6 +188,9 @@ export class Thing {
     if (o.category != null) {
       this.collisionFilter = o.category
     }
+    if (o.gravityScale != null) {
+      this.gravityScale = o.gravityScale
+    }
     // type stuff
     if (o.gametype != null) {
       this.gametype = o.gametype
@@ -205,6 +216,13 @@ export class Thing {
     if (o.stat != null) {
       this.stat.make(o.stat)
     }
+    if (o.xp != null) {
+      this.xp = o.xp
+      this.stat.refreshPoints()
+    }
+    if (o.bonusxp != null) {
+      this.bonusxp = o.bonusxp
+    }
   }
   // the end of the MAKE FUNCTION
   
@@ -215,6 +233,7 @@ export class Thing {
     // this.createGuns() is already called in this.make(options)
     // add to [everything]
     everything.push(this)
+    this.exists = true
   }
   
   // create SHAPE
@@ -271,7 +290,13 @@ export class Thing {
         console.error("Invalid thing shape type: " + this.shapeType + "!")
         break
     }
-    body.gametype = this.gametype
+    b.gametype = this.gametype
+    b.thing = this
+    b.canDrag = this.options.draggable
+    b.gravityScale = this.gravityScale
+    // todo
+    this.body = b
+    Composite.add(Thing.world, b)
   }
   
   createGuns(guns) { // was (gunset, gunstat, options = { })
@@ -300,12 +325,14 @@ export class Thing {
     if (index > -1) {
       everything.splice(index, 1)
     }
+    // poof
+    this.exists = false
   }
   
   removeBody() {
     if (this.body != null) {
       // remove from world
-      Composite.remove(Tower.world, this.body)
+      Composite.remove(Thing.world, this.body)
       this.body = null
       return true
     } else {
@@ -452,6 +479,33 @@ export class Thing {
   
   rotateBy(angle) {
     this.targetrot += angle
+  }
+  
+  setSpeed(speed, direction) {
+    if (speed !== 0) {
+      const vel = Vector.mult(
+              Vector.create( Math.cos(direction), Math.sin(direction) ),
+              speed
+            )
+      this.body.initialVelocity = vel
+      Body.setVelocity(this.body, vel)
+    }
+  }
+  
+  setOmega(speed) {
+    if (speed !== 0) {
+      Body.setAngularVelocity(this.body, math.degToRad(speed))
+    }    
+  }
+  
+  launchEnemy(speed) {
+    // launch at a certain speed
+    if (speed !== 0) {
+      const tilt = (random.randreal() - 0.5) * 15, // 15 degrees tilt max
+            down = Math.PI / 180 * (90 + tilt)
+      this.setSpeed(speed, down)
+      this.setOmega(Math.min(speed, 10))
+    }    
   }
   
   addxp(add) {

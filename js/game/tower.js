@@ -1,5 +1,4 @@
 // game
-import { aim } from "./aim.js"
 import { Effect } from "./effect.js"
 import { enemies, Enemy } from "./enemy.js"
 import { Gun } from "./gun.js"
@@ -29,6 +28,75 @@ const Bodies = Matter.Bodies,
       SAT = Matter.SAT,
       Vector = Matter.Vector
 
+export const towermap = {
+  basic: "G-0",
+  double: "D-1",
+  fast: "F-2",
+  big: "B-3",
+  strong: "S-4",
+  twin: "T-5",
+}
+
+for (let key in towermap) {
+  let k = towermap[key]
+  if (towermap.hasOwnProperty(k)) {
+    console.error("Tower map already has the label '" + k + "'!")
+    continue
+  } else {
+    towermap[k] = key
+  }
+}
+
+export class Tower {
+  // static
+  static towermap = towermap
+  
+  static player = null
+  static health = 10
+  
+  static drawtowers = {}
+  static drawTower(render, x, y, size, label) {
+    let type = towermap[label],
+        t = Tower.drawtowers[type],
+        s = style.tower[type]
+    const mousepos = render.mouse.absolute,
+          ctx = render.context
+    if (!t) {
+      t = new Thing(Vector.create(0, 0))
+      t.make(things[type])
+      Tower.drawtowers[type] = t
+    }
+    // set body attributes, fit the draw
+    t.body.position = {
+      x: x + render.bounds.min.x,
+      y: y + render.bounds.min.y,
+    }
+    t.targetrot = Vector.angle(Vector.create(x, y), mousepos)
+    Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, t.stat.rotspeed))
+    t.stat.size = size
+    t.draw(render)
+  }
+  
+  // fields
+  thing = null
+  
+  // constructor
+  constructor(position, parent) {
+    // nothing for now
+    this.thing = new Thing(position, parent)
+  }
+  
+  // get
+  // set
+  // go!
+}
+
+/*
+
+PLEASE IGNORE THE BELOW CODE
+
+*/
+
 /*
 
 # How to use class: Tower
@@ -43,6 +111,8 @@ var tower = new Tower(type); // specify type of tower
 var tower = new Tower(type, parent); // parent's parent will be taken, if any
 
 */
+
+/*
 export class Tower {
   // ##### tower static fields
   
@@ -53,7 +123,6 @@ export class Tower {
   // player
   static player = null
   static health = 10
-  static xp = 0
   
   // a running number for ID and default label
   static _count = 1
@@ -409,3 +478,4 @@ export class Tower {
   
   // contemplationOfMortality
 }
+*/

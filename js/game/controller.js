@@ -1,8 +1,19 @@
 import { config, category } from "../config/config.js"
 
+import { math } from "../util/math.js"
+import { random } from "../util/random.js"
+
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
 import { Tower } from "./tower.js"
+
+if (true) {
+  // 2 space indent!
+}
+
+const Body = Matter.Body,
+      Bodies = Matter.Bodies,
+      Vector = Matter.Vector
 
 export class Controller {
   // static
@@ -62,9 +73,9 @@ export class Controller {
     if (c.left) movedir.x--
     if (c.right) movedir.x++
     // move variables
-    var speed = t.movespeed * (t.effect.speedmult || 0),
-        moveVector = Vector.mult(Vector.normalise(movedir), speed),
-        moveResult = Vector.add(t.targetpos, moveVector)
+    const speed = t.movespeed * (t.effect.speedmult || 0),
+          moveVector = Vector.mult(Vector.normalise(movedir), speed),
+          moveResult = Vector.add(t.targetpos, moveVector)
     // move limits
     if (moveResult.x - size < config.movelimits.min.x) moveResult.x = config.movelimits.min.x + size
     if (moveResult.y - size < config.movelimits.min.y) moveResult.y = config.movelimits.min.y + size
@@ -90,7 +101,7 @@ export class Controller {
       case "aim":
         // aim at the player!
         Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, config.smooth.enemy.rot * t.stat.mult.enemyrot))
-        this.targetrot = Vector.angle(t.position, Tower.player.position)
+        t.targetrot = Vector.angle(t.position, Tower.player.position)
         break
       case "none":
         // yes, NONE

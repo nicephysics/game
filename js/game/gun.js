@@ -24,9 +24,12 @@ const Body = Matter.Body,
       MouseConstraint = Matter.MouseConstraint,
       Vector = Matter.Vector
 
+const gunscale = 0.1
+
 export class Gun {
   // static
   static _count = 1
+  static gunscale = gunscale
   static create(object, gunset, gametype) {
     return new Gun(object, gunset, gametype)
   }
@@ -72,14 +75,14 @@ export class Gun {
   get realPosition() {
     if (this.size.x === 0) {
       let x = this.position.x * this.statSize * 2 // difference!
-      let y = this.position.y * this.thing.size * Gun.set.scale
+      let y = this.position.y * this.thing.size * gunscale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
       )
     } else {
-      let x = this.position.x * this.thing.size * Gun.set.scale
-      let y = this.position.y * this.thing.size * Gun.set.scale
+      let x = this.position.x * this.thing.size * gunscale
+      let y = this.position.y * this.thing.size * gunscale
       return Vector.create(
         y * Math.cos(this.direction) + x * -Math.sin(this.direction),
         x * Math.cos(this.direction) + y * Math.sin(this.direction),
@@ -96,10 +99,10 @@ export class Gun {
     return this.location.y
   }
   get width() {
-    return Math.max(this.size.x * this.thing.size * Gun.set.scale, this.statSize)
+    return Math.max(this.size.x * this.thing.size * gunscale, this.statSize)
   }
   get height() {
-    return this.size.y * this.objectSize * Gun.set.scale
+    return this.size.y * this.objectSize * gunscale
   }
   get statMult() {
     return (this.thing.stat) ? this.thing.stat.mult : false

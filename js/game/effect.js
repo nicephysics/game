@@ -111,7 +111,7 @@ export class Effect {
   }
   
   drawEffect(render, e) {
-    const ctx = render.context,
+    const ctx = render.context
     let type = e.type,
         duration = e.duration,
         time = e.time,

@@ -382,7 +382,7 @@ export class Thing {
     if (this.body == null) {
       return
     }
-    Body.setAngle(math.lerp(this.rotation, this.targetrot, this.rotspeed))
+    Body.setAngle(this.body, math.lerp(this.rotation, this.targetrot, this.rotspeed))
   }
   
   refreshLevel() {

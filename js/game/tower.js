@@ -70,12 +70,13 @@ export class Tower {
   
   // draw all guns (and other stuff related to towers not already drawn by matter renderer)
   static drawAll() {
+    const render = Thing.render
     towers.forEach((tower) => {
       tower.guns.forEach((gun) => {
-        gun.draw(Tower.render)
+        gun.draw(render)
       })
-      tower.draw(Tower.render)
-      tower.effect.draw(Tower.render)
+      tower.draw(render)
+      tower.effect.draw(render)
     })
   }
   
@@ -197,10 +198,10 @@ export class Tower {
     return this.stat.size
   }
   get canvas() {
-    return Tower.render.canvas
+    return Thing.render.canvas
   }
   get gravity() {
-    return Tower.engine.gravity
+    return Thing.engine.gravity
   }
   get projectileSpeed() {
     return this.guns[0].stat.speed
@@ -325,14 +326,14 @@ export class Tower {
     this.body.gravityScale = 1
     // add to world
     if (addToWorld) {
-      Composite.add(Tower.world, this.body)
+      Composite.add(Thing.world, this.body)
     }
   }
   
   removeBody() {
     if (this.body != null) {
       // remove from world
-      Composite.remove(Tower.world, this.body)
+      Composite.remove(Thing.world, this.body)
       return true
     } else {
       return false

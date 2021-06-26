@@ -4,9 +4,11 @@ import { events } from "../util/events.js"
 
 import { ui } from "../display/ui.js"
 
+import { Effect } from "./effect.js"
+import { Thing, everything } from "./thing.js"
+import { things } from "./things.js"
 import { Tower } from "./tower.js"
 import { Enemy } from "./enemy.js"
-import { Effect } from "./effect.js"
 
 export var gameupdate = { }
 
@@ -39,15 +41,25 @@ gameupdate.init = function(render) {
   */
   
   function tickALL() {
+    for (let thing of everything) {
+      thing.tick()
+    }
+    /*
     Enemy.tick()
     Tower.tickAll()
-    Effect.tick()    
+    Effect.tick()
+    */
   }
   
   function drawALL() {
+    for (let thing of everything) {
+      thing.draw(render)
+    }
+    /*
     Enemy.draw()
     Tower.drawAll()
     Effect.draw()
+    */
     // then draw GUI overlay
     ui.draw()
   }
@@ -58,8 +70,8 @@ gameupdate.init = function(render) {
   
   events.beforeUpdate(engine, function(engine) {
     tickALL()
-    var all = Composite.allBodies(engine.world)
-    var gravity = engine.gravity
+    const all = Composite.allBodies(engine.world)
+    let gravity = engine.gravity
     for (let body of all) {
       // 1. gravity scale/off
       if (body.gravityOff) {

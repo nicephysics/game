@@ -543,6 +543,7 @@ ui.draw = function() {
     // some vars
     y = _height / 2 // CONST tier up circle y-position
     const choices = stat.displayUpgrades || ["G-0"], // ?
+          choicesX = stat.upgrades || ["basic"], // ?
           choiceLength = choices.length,
           towerSizeRatio = 0.7, // CONST tier up circle size ratio (how much smaller?)
           circleSizes = []
@@ -552,7 +553,7 @@ ui.draw = function() {
         sumSize = 0
     for (let i = 0; i < choiceLength; ++i) {
       const choice = choices[i],
-            statSize = towerstats[towermap[choice]].size,
+            statSize = towerstats[choicesX[i]].size,
             circleSize = statSize / towerSizeRatio
       circleSizes.push(circleSize)
       sumSize += circleSize * 2 + 25 // CONST tier up circles gap (x)
@@ -590,7 +591,7 @@ ui.draw = function() {
     }
     if (hovered >= 0) {
       const choice = choices[hovered],
-            text = towerstats[towermap[choice]].description, // "Description for " + choice,
+            text = towerstats[choicesX[hovered]].description, // "Description for " + choice,
             fontSize = 20,
             fontGap = 24
       draw.setFillNoStroke(ctx, "#002620") // CONST tier up description heading text (#003d09)
@@ -604,7 +605,7 @@ ui.draw = function() {
       }
     }
     if (clicked >= 0) {
-      player.type = towermap[choices[clicked]]
+      player.type = choicesX[clicked]
       player.refresh()
       ui.closeOverlay()
       clickpos = false

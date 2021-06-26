@@ -2,6 +2,7 @@ import { config, category } from "../config/config.js"
 
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
+import { Tower } from "./tower.js"
 
 export class Controller {
   // static
@@ -28,8 +29,11 @@ export class Controller {
       case "player":
         this.tickPlayer()
         break
-      case "enemy":
-        this.tickEnemy()
+      case "enemy_aim":
+        this.tickEnemy("aim")
+        break
+      case "enemy_none":
+        this.tickEnemy("none")
         break
       case "none":
         // do nothing!
@@ -37,6 +41,10 @@ export class Controller {
       default:
         console.error("Unknown controller type: ", this.type)
         break
+    }
+    // also: enemies
+    if (this.type.startsWith("enemy")) {
+      this.tickCheckEnemy()
     }
   }
   
@@ -74,7 +82,70 @@ export class Controller {
     }
   }
   
-  tickEnemy() {
+  tickEnemy(type) {
     // todo
+    const t = this.thing,
+          size = t.size
+    switch (type) {
+      case "aim":
+        // aim at the player!
+        Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, config.smooth.enemy.rot * t.stat.mult.enemyrot))
+        this.targetrot = Vector.angle(t.position, Tower.player.position)
+        break
+      case "none":
+        // yes, NONE
+        break
+      default:
+        console.error("Unknown enemy type: " + type)
+        break
+    }
   }
+  
+  tickCheckEnemy() {
+    const t = this.thing,
+          size = t.size,
+          X = t.x,
+          Y = t.y,
+          v = t.velocity,
+          screenWidth = Thing.render.options.width
+    if (Y < size && v.y <= 0) {
+      this.tickCheckEnemy_remove()
+    } else if (X < size && v.x <= 0 && v.y <= -v.x) {
+      this.tickCheckEnemy_remove()
+    } else if (X > screenWidth + size && v.x >= 0 && v.y <= v.x) {
+      this.tickCheckEnemy_remove()
+    }
+  }
+  
+  // to be used in the above method...
+  tickCheckEnemy_remove() {
+    const t = this.thing
+    let pos = Vector.sub(t.position, Vector.mult(Vector.normalise(t.velocity), 50)), // 50 pixels of velocity
+        bonusvel = Math.floor(Vector.magnitude(t.velocity)),
+        reward = t.xp + Math.round( (t.bonusxp || 0) * bonusvel),
+        color = "#b09f1c", // darkish yellow colour
+        size = 13, // default font size 13
+        time = 2, // default text time = 2 seconds
+        mult = 1
+    if (!t.body.hitByProjectile) {
+      mult *= 2
+      color = "#00ab17" // darkish green colour
+      size += 3 // font size 16
+      time += 1 // slightly longer text time = 3 seconds
+    }
+    ui.vars.enemy_texts.push({
+      x: pos.x,
+      y: pos.y,
+      text: "+" + math.number(reward * mult),
+      size: size,
+      fill: color,
+      stroke: "transparent",
+      lineWidth: 0,
+      angle: math.degToRad(random.randint(-15, 15)),
+      time: ui.vars.time + time * config.FPS,
+    })
+    Tower.player.addxp(reward * mult)
+    t.remove()    
+  }
+  
 }

@@ -146,10 +146,10 @@ var init = function() {
   // yes
   
   Thing.init(render)
-  var tower = new Tower("basic")
-  tower.moveTo(_width * 0.5, _height - 100)
-  Tower.player = tower
-  tower.isPlayer = true
+  const player = new Thing(Vector.create(_width * 0.5, _height - 100))
+  player.make(things.basic)
+  player.rotateTo(random.angle())
+  Tower.player = player
   
   navigation.init(render, mouseConstraint)
   

@@ -99,7 +99,7 @@ export class Thing {
     tickable: true,
     drawable: true,
     active: true,
-    layer: 0, // ? not implemented yet!
+    drawLayer: 0, // ? not implemented yet!
     draggable: false,
   } // end options
   
@@ -222,6 +222,22 @@ export class Thing {
     }
     if (o.bonusxp != null) {
       this.bonusxp = o.bonusxp
+    }
+    // this.options (some)
+    if (o.drawable != null) {
+      this.options.drawable = o.drawable
+    }
+    if (o.tickable != null) {
+      this.options.tickable = o.tickable
+    }
+    if (o.active != null) {
+      this.options.active = o.active
+    }
+    if (o.draggable != null) {
+      this.options.draggable = o.draggable
+    }
+    if (o.drawLayer != null) {
+      this.options.drawLayer = o.drawLayer
     }
   }
   // the end of the MAKE FUNCTION

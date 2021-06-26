@@ -2,6 +2,8 @@ import { config, category } from "../config/config.js"
 
 import { Enemy } from "./enemy.js"
 import { Tower } from "./tower.js"
+import { Thing } from "./thing.js"
+import { things } from "./things.js"
 import { waves } from "./waves.js"
 
 import { math } from "../util/math.js"
@@ -26,7 +28,7 @@ let ON_N = false,
 controls.setPaused = function(paused) {
   const player = Tower.player
   player.control.paused = paused
-  Tower.runner.enabled = !paused
+  Thing.runner.enabled = !paused
 }
 
 controls.isPaused = function() {

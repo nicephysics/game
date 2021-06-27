@@ -50,7 +50,7 @@ export class Gun {
   // shooting
   delay = 0
   dummy = false
-  shootType = "bullet"
+  shootType = "defaultGunShootThing"
   // shape
   shape = "rectangle"
   // styles
@@ -311,10 +311,11 @@ export class Gun {
     this.delay = set.d || 0
     this.fill = style.gun[set.style] || set.style || "#a7a7af"
     this.stroke = style.gun[set.stroke] || set.stroke || this.fill
-    this.lineWidth = set.lineWidth || 3
+    this.lineWidth = set.lineWidth || 0
     this.shape = set.shape || "rectangle"
-    this.dummy = set.dummy || false
+    this.dummy = set.dummy
     this.aspects = set.aspects || { }
+    this.shootType = set.type
     this.setStatString(set.stat)
   }
   

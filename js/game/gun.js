@@ -30,8 +30,8 @@ export class Gun {
   // static
   static _count = 1
   static gunscale = gunscale
-  static create(object, gunset, gametype) {
-    return new Gun(object, gunset, gametype)
+  static create(object, gunset) {
+    return new Gun(object, gunset)
   }
   
   // fields
@@ -50,6 +50,7 @@ export class Gun {
   // shooting
   delay = 0
   dummy = false
+  shootType = "bullet"
   // shape
   shape = "rectangle"
   // styles
@@ -72,6 +73,7 @@ export class Gun {
   get statSize() {
     return this.stat.size * this.statMult.size
   }
+  
   get realPosition() {
     if (this.size.x === 0) {
       let x = this.position.x * this.statSize * 2 // difference!
@@ -89,6 +91,7 @@ export class Gun {
       )
     }
   }
+  
   get location() {
     return Vector.add(this.thing.position, this.realPosition)
   }
@@ -98,33 +101,38 @@ export class Gun {
   get y() {
     return this.location.y
   }
+  
+  get direction() {
+    return this.angle + this.thing.angle
+  }
+  
   get width() {
     return Math.max(this.size.x * this.thing.size * gunscale, this.statSize)
   }
   get height() {
     return this.size.y * this.objectSize * gunscale
   }
-  get statMult() {
-    return (this.thing.stat) ? this.thing.stat.mult : false
-  }
-  get reloadFrames() {
-    return this.stat.reloadFrames * ( (this.statMult) ? this.statMult.reload : 1 )
-  }
-  get direction() {
-    return this.angle + this.thing.angle
-  }
+  
   get gunDifference() {
     return Vector.create(
       this.height * Math.cos(this.direction),
       this.height * Math.sin(this.direction)
     )
   }
-  get gunEnd() {
-    return Vector.add(this.location, this.gunDifference)
-  }
   get gunMiddle() {
     return Vector.add(this.location, Vector.mult(this.gunDifference, 0.5))
   }
+  get gunEnd() {
+    return Vector.add(this.location, this.gunDifference)
+  }
+  
+  get statMult() {
+    return (this.thing.stat) ? this.thing.stat.mult : false
+  }
+  get reloadFrames() {
+    return this.stat.reloadFrames * ( (this.statMult) ? this.statMult.reload : 1 )
+  }
+  
   get shooting() {
     // thing is a tower, check stuff
     if (!this.thing.effect.canshoot) {
@@ -192,9 +200,51 @@ export class Gun {
   shoot() {
     const s = this.stat,
           m = this.statMult,
+          t = new Thing(this.gunEnd, this.thing),
+          toMake = things[this.shootType]
+    t.make(toMake)
+    t.stat.make({
+      tier: null,
+      size: s.size * m.size,
+      speed: s.speed * m.speed,
+      rotspeed: 0,
+      mass: s.mass * m.mass,
+      air: s.airResistance * m.air,
+      gravityScale: 1 / s.inertia,
+      kineticFriction: s.kineticFriction,
+      staticFriction: s.staticFriction,
+    })
+    t.label = this.thing.parent.label + " " + t.label
+    t.create()
+    const b = t.body
+    b.gun = this
+    b.thing = t
+    b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
+    if (s.speed !== 0) {
+      Body.setVelocity(b, Vector.mult(
+        Vector.create( Math.cos(b.direction), Math.sin(b.direction) ),
+        s.speed * m.speed
+      ))
+    }
+    if (s.effect.type) {
+      b.effect = s.effect
+    }
+    if (s.inertia !== 1) {
+      // Body.setInertia(b, b.inertia * s.inertia) // works?
+      b.gravityScale = 1 / s.inertia
+    }
+    // push to children and childrenTime
+    this.children.push(t)
+    this.childrenTime.push(this.gunTime)
+  }
+  
+  /*
+  oldShoot() {
+    const s = this.stat,
+          m = this.statMult,
           bodyGametype = (this.thing.gametype === "tower") ? "projectile" : "bullet",
           objectStyle = style[bodyGametype],
-          b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size  * m.size, {
+          b = Bodies.circle(this.gunEnd.x, this.gunEnd.y, s.size * m.size, {
             isStatic: false,
             isBullet: true,
             label: "Bullet #" + (this.bulletcount++) + " from " + this.label,
@@ -225,24 +275,27 @@ export class Gun {
     this.children.push(b)
     this.childrenTime.push(this.gunTime)
   }
+  */
   
   clearChildren() {
     // remove earliest created child, if possible
     while (!this.dummy && this.childrenTime[0] < this.gunTime - this.stat.timeFrames) {
       this.childrenTime.shift()
-      const b = this.children[0]
-      Composite.remove(Thing.world, b)
+      const thing = this.children[0]
+      thing.remove()
+      // Composite.remove(Thing.world, thing.body)
       this.children.shift()
     }
   }
   
-  removeChild(b) {
-    const index = this.children.indexOf(b)
+  removeChild(thing) {
+    const index = this.children.indexOf(thing)
     if (index !== -1) {
       this.children.splice(index, 1)
       this.childrenTime.splice(index, 1)
     }
-    Composite.remove(Thing.world, b)
+    thing.remove()
+    // Composite.remove(Thing.world, thing.body)
   }
   
   setStatString(s) {

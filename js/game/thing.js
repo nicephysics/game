@@ -103,6 +103,10 @@ export class Thing {
     draggable: false,
   } // end options
   
+  enemyOptions = {
+    damage: 0,
+  }
+  
   
   // constructor
   // default constructor, copy constructor
@@ -185,6 +189,9 @@ export class Thing {
     if (o.static != null) {
       this.static = o.static
     }
+    if (o.isBullet != null) {
+      this.isBullet = o.isBullet
+    }
     if (o.category != null) {
       this.collisionFilter = o.category
     }
@@ -239,6 +246,9 @@ export class Thing {
     if (o.drawLayer != null) {
       this.options.drawLayer = o.drawLayer
     }
+    if (o.enemyDamage != null) {
+      this.enemyOptions.damage = o.enemyDamage
+    }
   }
   // the end of the MAKE FUNCTION
   
@@ -278,11 +288,14 @@ export class Thing {
           size = s.size,
           options = {
             isStatic: this.static,
+            isBullet: this.isBullet,
             label: this.label,
             render: this.style.render,
             collisionFilter: this.collisionFilter,
             density: s.mass * 0.001,
             frictionAir: s.air,
+            friction: s.kineticFriction,
+            frictionStatic: s.staticFriction,
           }
     let b = null,
         x = this.targetpos.x,
@@ -294,11 +307,11 @@ export class Thing {
         break
       case "vertices":
         // do things
-        b = Bodies.fromVertices(x, y, [this.vertices], bodyOptions)
+        b = Bodies.fromVertices(x, y, [this.vertices], options)
         if (b == null) {
           console.error("Body is bad!")
           console.log(this.vertices)
-          b = Bodies.circle(x, y, size, bodyOptions)        
+          b = Bodies.circle(x, y, size, options)        
         }
         break
       default:
@@ -309,7 +322,7 @@ export class Thing {
     b.gametype = this.gametype
     b.thing = this
     b.canDrag = this.options.draggable
-    b.gravityScale = this.gravityScale
+    b.gravityScale = s.gravityScale
     // todo
     this.body = b
     Composite.add(Thing.world, b)

@@ -299,7 +299,7 @@ export class Gun {
   }
   
   setStatString(s) {
-    s = Array.isArray(s) ? s : return
+    s = (Array.isArray(s)) ? s : []
     this.stat.setString(s)
     this.refreshStats()
   }

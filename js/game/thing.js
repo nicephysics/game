@@ -290,13 +290,15 @@ export class Thing {
             isStatic: this.static,
             isBullet: this.isBullet,
             label: this.label,
-            render: this.style.render,
             collisionFilter: this.collisionFilter,
             density: s.mass * 0.001,
             frictionAir: s.air,
             friction: s.kineticFriction,
             frictionStatic: s.staticFriction,
           }
+    if (this.style.render != null) {
+      options.render = this.style.render
+    }
     let b = null,
         x = this.targetpos.x,
         y = this.targetpos.y

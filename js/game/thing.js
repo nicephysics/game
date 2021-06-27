@@ -385,6 +385,10 @@ export class Thing {
       }
       // tick body
       this.tickBody()
+      // tick guns
+      for (let g of this.guns) {
+        g.tick()
+      }
       if (this.effect != null) {
         this.effect.tick()
       }

@@ -66,7 +66,7 @@ export class Gun {
   // constructor
   constructor(thing, gunset) {    
     this.thing = thing
-    this.setLocation(gunset)
+    this.make(gunset)
   }
   
   // get
@@ -299,24 +299,32 @@ export class Gun {
   }
   
   setStatString(s) {
-    s = s || []
+    s = Array.isArray(s) ? s : return
     this.stat.setString(s)
     this.refreshStats()
   }
   
-  setLocation(set) {
-    this.position = Vector.create(set.x, set.y)
-    this.size = Vector.create(set.w, set.h)
-    this.angle = (set.a / 180 * Math.PI) || 0
-    this.delay = set.d || 0
-    this.fill = style.gun[set.style] || set.style || "#a7a7af"
-    this.stroke = style.gun[set.stroke] || set.stroke || this.fill
-    this.lineWidth = set.lineWidth || 0
-    this.shape = set.shape || "rectangle"
-    this.dummy = set.dummy
-    this.aspects = set.aspects || { }
-    this.shootType = set.type
-    this.setStatString(set.stat)
+  make(options) {
+    const o = options
+    if (o.set != null) {
+      const set = o.set
+      this.position = Vector.create(set.x, set.y)
+      this.size = Vector.create(set.w, set.h)
+      this.angle = (set.a / 180 * Math.PI) || 0
+      this.delay = set.d || 0
+      this.fill = style.gun[set.style] || set.style || "#a7a7af"
+      this.stroke = style.gun[set.stroke] || set.stroke || this.fill
+      this.lineWidth = set.lineWidth || 0
+      this.shape = set.shape || "rectangle"
+      this.dummy = set.dummy
+      this.aspects = set.aspects || { }
+    }
+    if (o.type != null) {
+      this.shootType = o.type
+    }
+    if (o.stat != null) {
+      this.setStatString(o.stat)
+    }
   }
   
   remove(removeFromArray = true) {

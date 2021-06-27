@@ -429,12 +429,14 @@ export class Thing {
   drawThing(render) {
     const s = this.style.render,
           ctx = render.context
-    draw.setFill(ctx, s.fillStyle)
-    draw.setStroke(ctx, s.strokeStyle)
-    draw.setLineWidth(ctx, s.lineWidth)
-    draw.setGlobalAlpha(ctx, s.opacity)
-    this.drawShape(render) // draw the thing's shape! 
-    draw.setGlobalAlpha(ctx, 1)
+    if (s != null) {
+      draw.setFill(ctx, s.fillStyle)
+      draw.setStroke(ctx, s.strokeStyle)
+      draw.setLineWidth(ctx, s.lineWidth)
+      draw.setGlobalAlpha(ctx, s.opacity)
+      this.drawShape(render) // draw the thing's shape! 
+      draw.setGlobalAlpha(ctx, 1)
+    }
   }
   
   drawShape(render, x = this.x, y = this.y, angle = this.rotation) {

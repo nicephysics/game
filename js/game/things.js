@@ -75,6 +75,7 @@ things.basic = {
         x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
         style: "basic",
       },
+      type: "projectile",
       stat: ["shooter", "basic"],
       options: { },
     },

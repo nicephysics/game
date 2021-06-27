@@ -8,7 +8,11 @@ if (true) {
 
 export var things = { }
 
-// default tower and enemy
+// default things
+
+things.thing = {
+  // nothing to predefine
+}
 
 things.tower = {
   parent: ["thing"],
@@ -26,6 +30,14 @@ things.tower = {
   controlType: "player",
   xp: 0,
   bonusxp: null,
+  stat: {
+    tier: 0,
+    size: 25,
+    speed: 5,
+    rotspeed: 0.2,
+    upgradetext: "normal",
+    upgrade: null,
+  }
 }
 
 things.enemy = {
@@ -44,6 +56,10 @@ things.enemy = {
   controlType: "enemy",
   xp: 0,
   bonusxp: 0,
+  enemyDamage: 1,
+  stat: {
+    size: 25,
+  }
 }
 
 
@@ -63,6 +79,14 @@ things.basic = {
       options: { },
     },
   ],
+  stat: {
+    tier: 0,
+    size: 25,
+    speed: 5,
+    rotspeed: 0.2,
+    upgradetext: "normal",
+    upgrade: null,
+  }
 }
 
 
@@ -76,4 +100,32 @@ things.asteroid = {
   // stats?
   xp: 10,
   bonusxp: 0.1,
+  enemyDamage: 1,
+  stat: {
+    tier: -1,
+    size: 10,
+    speed: 1,
+    rotspeed: 0.2,
+    upgradetext: "normal",
+    upgrade: null,
+  }
+}
+
+// BULLETS
+
+things.projectile = {
+  parent: ["thing"],
+  label: "Projectile",
+  // matter stuff
+  static: false,
+  isBullet: true,
+  category: category.yourBullet,
+  // render stuff
+  shape: "circle",
+  accessories: null,
+  render: style.projectile.default,
+  guns: null,
+  xp: 0,
+  bonusxp: 0,
+  stat: null,
 }

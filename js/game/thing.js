@@ -337,12 +337,9 @@ export class Thing {
   
   addGuns(guns) {
     for (let g of guns) {
-      const gunset = g.set,
-            gunstat = g.stat,
-            gun = Gun.create(this, gunset)
-      gun.setStatString(gunstat)
+      const gun = Gun.create(this, g)
       this.guns.push(gun)
-    }    
+    }
   }
   
   remove() {

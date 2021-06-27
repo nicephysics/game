@@ -124,7 +124,24 @@ things.projectile = {
   // render stuff
   shape: "circle",
   accessories: null,
-  render: style.projectile.default,
+  render: style.projectile.bullet,
+  guns: null,
+  xp: 0,
+  bonusxp: 0,
+  stat: null,
+}
+
+things.bullet = {
+  parent: ["thing"],
+  label: "Enemy Bullet",
+  // matter stuff
+  static: false,
+  isBullet: true,
+  category: category.enemyBullet,
+  // render stuff
+  shape: "circle",
+  accessories: null,
+  render: style.bullet.bullet,
   guns: null,
   xp: 0,
   bonusxp: 0,

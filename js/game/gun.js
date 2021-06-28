@@ -207,7 +207,7 @@ export class Gun {
       tier: null,
       size: s.size * m.size,
       speed: s.speed * m.speed,
-      rotspeed: 0,
+      rotspeed: 0.2,
       mass: s.mass * m.mass,
       air: s.airResistance * m.air,
       gravityScale: 1 / s.inertia,
@@ -217,6 +217,7 @@ export class Gun {
     t.label = this.thing.parent.label + " " + t.label
     t.create()
     const b = t.body
+    console.log(JSON.parse(JSON.stringify(t)))
     b.gun = this
     b.thing = t
     b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
@@ -236,6 +237,7 @@ export class Gun {
     // push to children and childrenTime
     this.children.push(t)
     this.childrenTime.push(this.gunTime)
+    console.log(JSON.parse(JSON.stringify(t)))
   }
   
   /*

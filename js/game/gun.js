@@ -217,7 +217,7 @@ export class Gun {
     t.label = this.thing.parent.label + " " + t.label
     t.create()
     const b = t.body
-    console.log(JSON.parse(JSON.stringify(t)))
+    console.log(JSON.stringify(b))
     b.gun = this
     b.thing = t
     b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
@@ -237,7 +237,7 @@ export class Gun {
     // push to children and childrenTime
     this.children.push(t)
     this.childrenTime.push(this.gunTime)
-    console.log(JSON.parse(JSON.stringify(t)))
+    console.log(JSON.stringify(b))
   }
   
   /*

@@ -69,6 +69,12 @@ things.basic = {
   parent: ["tower"],
   label: "Basic Tower",
   render: style.tower.basic,
+  accessories: [
+    {
+      type: "guncircle",
+      size: 2,
+    }
+  ],
   guns: [
     {
       set: {

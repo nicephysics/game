@@ -72,6 +72,7 @@ things.basic = {
   accessories: [
     {
       type: "guncircle",
+      layer: 2,
       size: 2,
     }
   ],

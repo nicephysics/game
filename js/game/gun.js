@@ -217,15 +217,16 @@ export class Gun {
     t.label = this.thing.parent.label + " " + t.label
     t.create()
     const b = t.body
-    console.log(JSON.stringify(b))
     b.gun = this
     b.thing = t
     b.direction = math.degToRad(random.gauss(math.radToDeg(this.direction), s.spread * m.spread))
     if (s.speed !== 0) {
-      Body.setVelocity(b, Vector.mult(
+      const vel = Vector.mult(
         Vector.create( Math.cos(b.direction), Math.sin(b.direction) ),
         s.speed * m.speed
-      ))
+      )
+      b.initialVelocity = vel
+      Body.setVelocity(b, vel)
     }
     if (s.effect.type) {
       b.effect = s.effect

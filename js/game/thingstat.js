@@ -112,11 +112,26 @@ export class ThingStat {
     if (o.size != null) {
       this.size = o.size
     }
+    if (o.mass != null) {
+      this.mass = o.mass
+    }
     if (o.speed != null) {
       this.speed = o.speed
     }
     if (o.rotspeed != null) {
       this.rotspeed = o.rotspeed
+    }
+    if (o.air != null) {
+      this.air = o.air
+    }
+    if (o.gravityScale != null) {
+      this.gravityScale = o.gravityScale
+    }
+    if (o.kineticFriction != null) {
+      this.kineticFriction = o.kineticFriction
+    }
+    if (o.staticFriction != null) {
+      this.staticFriction = o.staticFriction
     }
     if (o.upgradetext != null) {
       this.upgradetext = o.upgradetext

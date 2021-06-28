@@ -238,7 +238,7 @@ export class Gun {
     // push to children and childrenTime
     this.children.push(t)
     this.childrenTime.push(this.gunTime)
-    console.log(JSON.stringify(b))
+    console.log(t)
   }
   
   /*

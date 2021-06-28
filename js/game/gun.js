@@ -30,8 +30,8 @@ export class Gun {
   // static
   static _count = 1
   static gunscale = gunscale
-  static create(object, gunset) {
-    return new Gun(object, gunset)
+  static create(thing, gunset) {
+    return new Gun(thing, gunset)
   }
   
   // fields
@@ -110,7 +110,7 @@ export class Gun {
     return Math.max(this.size.x * this.thing.size * gunscale, this.statSize)
   }
   get height() {
-    return this.size.y * this.objectSize * gunscale
+    return this.size.y * this.thing.size * gunscale
   }
   
   get gunDifference() {

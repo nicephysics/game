@@ -117,6 +117,7 @@ things.asteroid = {
 things.projectile = {
   parent: ["thing"],
   label: "Projectile",
+  gametype: "projectile",
   // matter stuff
   static: false,
   isBullet: true,
@@ -134,6 +135,7 @@ things.projectile = {
 things.bullet = {
   parent: ["thing"],
   label: "Enemy Bullet",
+  gametype: "bullet",
   // matter stuff
   static: false,
   isBullet: true,

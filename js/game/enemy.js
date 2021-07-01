@@ -13,6 +13,7 @@ import { Effect } from "./effect.js"
 import { Gun } from "./gun.js"
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
+import { ThingStat } from "./thingstat.js"
 import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
 
@@ -37,6 +38,157 @@ const getSpawnBounds = function(size) {
   }
 }
 
+export class Enemy {
+  // static
+  static enemies = enemies
+  
+  static init = function() {
+    document.addEventListener("keydown", function(event) {
+      switch (event.code) {
+        case "Digit1":
+          Enemy.sendwavemaker(wave.make(["ball"], 1, { }), 1)
+          break
+        case "Digit2":
+          Enemy.sendwavemaker(wave.make(["ballgun"], 1, { }), 1)
+          break
+        case "Digit3":
+          Enemy.sendwavemaker(wave.make(["asteroid"], 1, { }), 1)
+          break
+      }
+    })
+  }
+  
+  static spawn = {
+    count: 0,
+    queue: new PriorityQueue( // spawn queue
+      // comparison
+      (a, b) => { return a.time < b.time }
+    ),
+    random: function(size) {
+      const b = getSpawnBounds(size), // bounds
+            ans = Vector.create(
+              b.x + random.randreal() * b.w,
+              b.y + random.randreal() * b.h
+            )
+      return ans
+    }
+  }
+  
+  static waveOn = function() {
+    return (enemies.length > 0 || Enemy.spawn.queue.size() > 0)
+  }
+  
+  static time = 0
+  static tick() {
+    // no need to tick all enemies anymore
+    // check spawn queue
+    const q = Enemy.spawn.queue
+    while (q.size() > 0 && q.peek().time < Enemy.time) {
+      let item = q.peek()
+      Enemy.send(item.type, item.options)
+      q.pop()
+    }
+  }
+  
+  // for drawEnemy and redrawEnemy
+  static drawEnemies = {} // basically a Map<String, Thing>
+  
+  static drawEnemy(render, x, y, size, type, options) {
+    let e = Enemy.drawEnemies[type],
+        s = style.enemy[type]
+    const ctx = render.context,
+          mousepos = render.mouse.absolute,
+          time = ui.vars.time
+    if (!e) {
+      e = new Enemy(type)
+      e.createShape()
+      Enemy.drawEnemies[type] = e
+    }
+    e.init(options)
+    e.stat.size = size
+    const X = x + render.bounds.min.x,
+          Y = y + render.bounds.min.y
+    e.body = Bodies.circle(X, Y, size, { isStatic: true })
+    e.targetrot = math.degToRad( (ui.vars.time * 0.5) % 360 )
+    Body.setAngle(e.body, e.targetrot)
+    draw.setFill(ctx, s.fillStyle || "transparent")
+    draw.setStroke(ctx, s.strokeStyle || "transparent")
+    draw.setLineWidth(ctx, s.lineWidth || 3)
+    ctx.save() // ctx.restore()
+    draw.setGlobalAlpha(ctx, s.opacity || 1)
+    e.drawOverlay(render, X, Y) // enemy shape!
+    ctx.restore()
+    for (let g of e.guns) {
+      // draw guns
+      g.draw(render)
+    }
+    // draw enemy
+    e.draw(render)
+    return e
+  }
+  
+  static redrawEnemy(type, options = null) {
+    let e = Enemy.drawEnemies[type]
+    if (e) {
+      e.createShape()
+      if (options) {
+        e.init(options)
+      }
+      return e
+    } else {
+      return null
+    }
+  }
+  
+  static send(type, options) {
+    const make = things[type],
+          size = make.stat.size,
+          e = new Thing(Enemy.spawn.random(size))
+    e.make(make)
+    e.create()
+    /*
+    var e = new Enemy(type, options)
+    e.createShape()
+    e.send()
+    */
+  }
+  
+  static sendNumber(type, number, sep, options = { }) {
+    var q = Enemy.spawn.queue,
+        time = Enemy.time
+    for (let i = 0; i < number; i++) {
+      q.push({
+        time: time,
+        type: type,
+        options: options,
+      })
+      time += sep * config.FPS
+    }
+  }
+  
+  static sendwave(w) {
+    const type = w.type || w.t || "asteroid",
+          num = w.number || w.n || 1,
+          sep = w.sep || w.s || 1
+    Enemy.sendNumber(type, num, sep, w) // options
+  }
+  
+  static sendwavemaker(wavemaker, num) {
+    var w = wavemaker.wave(num)
+    if (w.count !== num) {
+      console.error("Wave numbers don't match!", w, wavemaker)
+    }
+    Enemy.sendNumber(w.type, w.number, w.sep, {
+      difficulty: w.difficulty,
+      rand: w.rand,
+    })
+  }
+}
+
+// finally...
+Enemy.init()
+
+/*
 export class Enemy {
   // static
   static stats = enemystats
@@ -109,7 +261,7 @@ export class Enemy {
   }
   
   // for drawEnemy and redrawEnemy
-  static drawEnemies = {}
+  static drawEnemies = {} // basically a Map<String, Thing>
   
   static drawEnemy(render, x, y, size, type, options) {
     let e = Enemy.drawEnemies[type],
@@ -445,6 +597,4 @@ export class Enemy {
     
   }
 }
-
-// finally...
-Enemy.init()
+*/

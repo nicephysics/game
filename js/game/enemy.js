@@ -133,7 +133,6 @@ export class Enemy {
     
     const b = e.body,
           s = e.stat
-    b.thing = e
     if (s.speed !== 0) {
       const tilt = (random.randreal() - 0.5) * 2, // 2 degrees tilt max
             dir = math.degToRad(90 + tilt),
@@ -144,9 +143,6 @@ export class Enemy {
       b.direction = dir
       b.initialVelocity = vel
       Body.setVelocity(b, vel)
-    }
-    if (s.effect.type) {
-      b.effect = s.effect
     }
     /*
     var e = new Enemy(type, options)

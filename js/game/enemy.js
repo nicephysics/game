@@ -100,27 +100,10 @@ export class Enemy {
           mousepos = render.mouse.absolute,
           time = ui.vars.time
     if (!e) {
-      e = new Enemy(type)
+      e = new Thing()
+      e.make(things[type])
       e.createShape()
       Enemy.drawEnemies[type] = e
-    }
-    e.init(options)
-    e.stat.size = size
-    const X = x + render.bounds.min.x,
-          Y = y + render.bounds.min.y
-    e.body = Bodies.circle(X, Y, size, { isStatic: true })
-    e.targetrot = math.degToRad( (ui.vars.time * 0.5) % 360 )
-    Body.setAngle(e.body, e.targetrot)
-    draw.setFill(ctx, s.fillStyle || "transparent")
-    draw.setStroke(ctx, s.strokeStyle || "transparent")
-    draw.setLineWidth(ctx, s.lineWidth || 3)
-    ctx.save() // ctx.restore()
-    draw.setGlobalAlpha(ctx, s.opacity || 1)
-    e.drawOverlay(render, X, Y) // enemy shape!
-    ctx.restore()
-    for (let g of e.guns) {
-      // draw guns
-      g.draw(render)
     }
     // draw enemy
     e.draw(render)
@@ -131,9 +114,6 @@ export class Enemy {
     let e = Enemy.drawEnemies[type]
     if (e) {
       e.createShape()
-      if (options) {
-        e.init(options)
-      }
       return e
     } else {
       return null

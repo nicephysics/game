@@ -45,15 +45,8 @@ import('./game/enemy.js').then(m => {
   game.Enemy = m.Enemy
   game.enemies = m.enemies
 })
-import('./game/enemystat.js').then(m => {
-  game.EnemyStat = m.EnemyStat
-  game.enemystats = m.enemystats
-})
 import('./game/gun.js').then(m => {
   game.Gun = m.Gun
-})
-import('./game/gunset.js').then(m => {
-  game.gunset = m.gunset
 })
 import('./game/stat.js').then(m => {
   game.Stat = m.Stat
@@ -72,10 +65,6 @@ import('./game/thingstat.js').then(m => {
 import('./game/tower.js').then(m => {
   game.Tower = m.Tower
   game.towers = m.towers
-})
-import('./game/towerstat.js').then(m => {
-  game.TowerStat = m.TowerStat
-  game.towerstats = m.towerstats
 })
 import('./game/update.js').then(m => {
   game.update = m.update

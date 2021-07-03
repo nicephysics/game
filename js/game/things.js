@@ -63,7 +63,7 @@ things.enemy = {
     mass: 1,
     speed: 1,
     rotspeed: 0.2,
-    air: 0.01,
+    air: 1,
     gravity: 1,
     upgradetext: "normal",
     upgrade: null,

@@ -30,6 +30,7 @@ export class ThingStat {
   points = 0
   upgradetext = "normal"
   upgrade = { }
+  realMult = { }
   
   // constructor
   constructor(thing) {
@@ -47,6 +48,9 @@ export class ThingStat {
   }
   
   get mult() {
+    if (this.thing.gametype === "Enemy" || this.upgrade == null) {
+      return this.realMult
+    }
     const u = this.upgrade,
           ans = { }
     // 1. size (add 4%)
@@ -124,6 +128,9 @@ export class ThingStat {
     if (o.air != null) {
       this.air = o.air
     }
+    if (o.gravity != null) {
+      this.gravity = o.gravity
+    }
     if (o.gravityScale != null) {
       this.gravityScale = o.gravityScale
     }
@@ -139,6 +146,121 @@ export class ThingStat {
     if (o.upgrade != null) {
       this.upgradeArray = o.upgrade
     }
+  }
+  
+  makeMult(options = { }) {
+    const o = options
+    
+    if (o.tier != null) {
+      // not multiplicative
+      this.tier = o.tier
+    }
+    
+    if (o.z != null) {
+      this.size *= o.z
+    }
+    if (o.size != null) {
+      this.size *= o.size
+    }
+    
+    if (o.m != null) {
+      this.mass *= o.m
+    }
+    if (o.mass != null) {
+      this.mass *= o.mass
+    }
+    
+    if (o.s != null) {
+      this.speed *= o.s
+    }
+    if (o.speed != null) {
+      this.speed *= o.speed
+    }
+    
+    if (o.rs != null) {
+      this.rotspeed *= o.rs
+    }
+    if (o.rotspeed != null) {
+      this.rotspeed *= o.rotspeed
+    }
+    
+    if (o.a != null) {
+      this.air *= o.a
+    }
+    if (o.air != null) {
+      this.air *= o.air
+    }
+    
+    if (o.g != null) {
+      this.gravity *= o.g
+    }
+    if (o.gravity != null) {
+      this.gravity *= o.gravity
+    }
+    if (o.gravityScale != null) {
+      this.gravityScale *= o.gravityScale
+    }
+    
+    if (o.kineticFriction != null) {
+      this.kineticFriction *= o.kineticFriction
+    }
+    if (o.staticFriction != null) {
+      this.staticFriction *= o.staticFriction
+    }
+
+    // changes this.thing instead of stat
+    const t = this.thing
+    if (o.xp != null) {
+      // not multiplicative
+      t.xp = o.xp
+    }
+    if (o.r != null) {
+      t.xp *= o.r
+    }
+    if (o.reward != null) {
+      t.xp *= o.reward
+    }
+    if (o.bonusxp != null) {
+      // not multiplicative
+      t.bonusxp = o.bonusxp
+    }
+    if (o.b != null) {
+      t.bonusxp *= o.b
+    }
+    if (o.bonus != null) {
+      t.bonusxp *= o.bonus
+    }
+    if (o.d != null) {
+      t.enemyOptions.damage *= o.d
+    }
+    if (o.damage != null) {
+      t.enemyOptions.damage *= o.damage
+    }
+    if (o.enemyDamage != null) {
+      // not multiplicative
+      t.enemyOptions.damage = o.enemyDamage
+    }
+    
+    // changes realMult... see this.makeRealMult(b)
+    if (o.bu != null) {
+      // not multiplicative
+      this.makeRealMult(o.bu)
+    }
+    if (o.bulletMult != null) {
+      // not multiplicative
+      this.makeRealMult(o.bulletMult)
+    }
+  }
+  
+  makeRealMult(b) {
+    this.upgrade = null
+    this.realMult.size = b.size || b.z || 1
+    this.realMult.mass = b.mass || b.m || 1
+    this.realMult.speed = b.speed || b.s || 1
+    this.realMult.reload = b.reload || b.r || 1
+    this.realMult.spread = b.spread || b.p || 1
+    this.realMult.air = b.air || b.a || 1
+    this.realMult.rot = b.rot || b.ro || 1
   }
   
   refreshPoints() {

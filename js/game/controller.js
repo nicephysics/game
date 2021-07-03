@@ -3,6 +3,8 @@ import { config, category } from "../config/config.js"
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 
+import { ui } from "../display/ui.js"
+
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
 import { Tower } from "./tower.js"

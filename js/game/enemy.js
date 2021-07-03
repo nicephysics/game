@@ -8,7 +8,6 @@ import { draw } from "../display/draw.js"
 import { style } from "../display/style.js"
 import { ui } from "../display/ui.js"
 
-import { EnemyStat, enemystats } from "./enemystat.js"
 import { Effect } from "./effect.js"
 import { Gun } from "./gun.js"
 import { Thing } from "./thing.js"

@@ -44,8 +44,9 @@ gameupdate.init = function(render) {
     for (let thing of everything) {
       thing.tick()
     }
-    /*
     Enemy.tick()
+    Tower.tick()
+    /*
     Tower.tickAll()
     Effect.tick()
     */

@@ -130,6 +130,7 @@ export class Enemy {
     e.make(make)
     e.stat.makeMult(options)
     e.create()
+    enemies.push(e)
     
     const b = e.body,
           s = e.stat

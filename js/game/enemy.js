@@ -99,9 +99,12 @@ export class Enemy {
     const ctx = render.context,
           mousepos = render.mouse.absolute,
           time = ui.vars.time
+    x -= render.bounds.min.x
+    y -= render.bounds.min.y
     if (!e) {
-      e = new Thing()
+      e = new Thing(Vector.create(x, y))
       e.make(things[type])
+      e.make({ size: size })
       e.createShape()
       Enemy.drawEnemies[type] = e
     }

@@ -104,7 +104,7 @@ export class Enemy {
     if (!e) {
       e = new Thing(Vector.create(x, y))
       e.make(things[type])
-      e.make({ size: size })
+      e.stat.make({ size: size })
       e.createShape()
       Enemy.drawEnemies[type] = e
     }
@@ -128,7 +128,26 @@ export class Enemy {
           size = make.stat.size,
           e = new Thing(Enemy.spawn.random(size))
     e.make(make)
+    e.stat.makeMult(options)
     e.create()
+    
+    const b = e.body,
+          s = e.stat
+    b.thing = e
+    if (s.speed !== 0) {
+      const tilt = (random.randreal() - 0.5) * 2, // 2 degrees tilt max
+            dir = math.degToRad(90 + tilt),
+            vel = Vector.mult(
+              Vector.create( Math.cos(dir), Math.sin(dir) ),
+              s.speed * s.mult.speed
+            )
+      b.direction = dir
+      b.initialVelocity = vel
+      Body.setVelocity(b, vel)
+    }
+    if (s.effect.type) {
+      b.effect = s.effect
+    }
     /*
     var e = new Enemy(type, options)
     e.createShape()

@@ -58,7 +58,24 @@ things.enemy = {
   bonusxp: 0,
   enemyDamage: 1,
   stat: {
-    size: 25,
+    tier: -1,
+    size: 10,
+    mass: 1,
+    speed: 1,
+    rotspeed: 0.2,
+    air: 1,
+    gravity: 1,
+    upgradetext: "normal",
+    upgrade: null,
+    bulletMult: {
+      size: 1,
+      mass: 1,
+      speed: 1,
+      reload: 1,
+      spread: 1,
+      air: 1,
+      rot: 1,
+    }
   }
 }
 

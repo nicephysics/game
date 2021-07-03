@@ -53,6 +53,10 @@ export class Tower {
   static player = null
   static health = 10
   
+  static tick() {
+    // wow nothing here!
+  }
+  
   static drawtowers = {}
   static drawTower(render, x, y, size, label) {
     let type = towermap[label],

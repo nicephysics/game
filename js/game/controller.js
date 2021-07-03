@@ -44,6 +44,7 @@ export class Controller {
         this.tickEnemy("aim")
         break
       case "enemy_none":
+      case "enemy":
         this.tickEnemy("none")
         break
       case "none":

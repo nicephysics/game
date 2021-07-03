@@ -79,6 +79,7 @@ export class Enemy {
   
   static time = 0
   static tick() {
+    Enemy.time++
     // no need to tick all enemies anymore
     // check spawn queue
     const q = Enemy.spawn.queue

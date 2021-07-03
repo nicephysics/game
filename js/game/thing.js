@@ -11,6 +11,7 @@ import { ThingStat } from "./thingstat.js"
 import { things } from "./things.js"
 import { Controller } from "./controller.js"
 import { Effect } from "./effect.js"
+import { Enemy, enemies } from "./enemy.js"
 import { Gun } from "./gun.js"
 
 if (true) {
@@ -348,13 +349,17 @@ export class Thing {
   remove() {
     this.removeBody()
     this.removeGuns()
+    if (this.gametype === "enemy") {
+      this.removeEnemy()
+    }
     // no this.removeShape() though
     // finally, remove from [everything]
     const index = everything.indexOf(this)
     if (index > -1) {
       everything.splice(index, 1)
     }
-    // poof
+    // poof! everything's gone!
+    // - me
     this.exists = false
   }
   
@@ -374,6 +379,15 @@ export class Thing {
       gun.remove(false)
     }
     this.guns = [ ]
+  }
+  
+  removeEnemy() {
+    const index = enemies.indexOf(this)
+    if (index > -1) {
+      enemies.splice(index, 1)
+    } else {
+      console.error("Enemy to remove not found in 'enemies' list: ", this)
+    }
   }
   
   // tick and refresh functions

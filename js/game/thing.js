@@ -293,7 +293,7 @@ export class Thing {
             label: this.label,
             collisionFilter: this.collisionFilter,
             density: s.mass * 0.001,
-            frictionAir: s.air,
+            frictionAir: s.air * 0.01,
             friction: s.kineticFriction,
             frictionStatic: s.staticFriction,
           }

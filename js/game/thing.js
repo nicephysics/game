@@ -264,6 +264,7 @@ export class Thing {
   
   // create SHAPE
   createShape() {
+    const size = this.size
     switch (this.shape) {
       case "circle":
         this.shapeType = "circle"

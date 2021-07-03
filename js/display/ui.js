@@ -5,8 +5,8 @@ import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
-import { Tower } from "../game/tower.js"
-import { TowerStat, towerstats, towermap } from "../game/towerstat.js"
+import { Tower, towermap } from "../game/tower.js"
+import { ThingStat, upgradekeys, upgradelevel } from "../game/thingstat.js"
 import { wave } from "../game/wave.js"
 import { waves } from "../game/waves.js"
 
@@ -159,7 +159,7 @@ ui.draw = function() {
   
   let mousepos = render.mouse.absolute,
       clickpos = v.click,
-      stat = towerstats[playerType],
+      stat = things[playerType],
       x = 0,
       y = 0,
       size = 0,
@@ -454,8 +454,8 @@ ui.draw = function() {
     
     if (clicked !== -1 && clicksign !== 0) {
       const index = clicked,
-            key = TowerStat.upgradekeys[index],
-            maxstat = TowerStat.upgradeMax[key] - 1,
+            key = upgradekeys[index],
+            maxstat = /*upgradeMax[key]*/0 - 1,
             newstat = playerStat.upgrade[key] + clicksign
       if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && playerStat.points >= clicksign) {
         playerStat.upgrade[key] = newstat
@@ -553,7 +553,7 @@ ui.draw = function() {
         sumSize = 0
     for (let i = 0; i < choiceLength; ++i) {
       const choice = choices[i],
-            statSize = towerstats[choicesX[i]].size,
+            statSize = things[choicesX[i]].stat.size,
             circleSize = statSize / towerSizeRatio
       circleSizes.push(circleSize)
       sumSize += circleSize * 2 + 25 // CONST tier up circles gap (x)
@@ -591,7 +591,7 @@ ui.draw = function() {
     }
     if (hovered >= 0) {
       const choice = choices[hovered],
-            text = towerstats[choicesX[hovered]].description, // "Description for " + choice,
+            text = things[choicesX[hovered]].description, // "Description for " + choice,
             fontSize = 20,
             fontGap = 24
       draw.setFillNoStroke(ctx, "#002620") // CONST tier up description heading text (#003d09)

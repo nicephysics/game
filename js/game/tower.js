@@ -37,12 +37,22 @@ export const towermap = {
 }
 
 for (let key in towermap) {
-  let k = towermap[key]
+  const k = towermap[key]
   if (towermap.hasOwnProperty(k)) {
     console.error("Tower map already has the label '" + k + "'!")
     continue
   } else {
     towermap[k] = key
+  }
+}
+
+for (let key in towermap) {
+  const ts = things[key]
+  if (ts != null) {
+    ts.displayUpgrades = []
+    for (let u in ts.upgrades) {
+      ts.displayUpgrades.push(towermap[u])
+    }
   }
 }
 

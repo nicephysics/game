@@ -86,7 +86,7 @@ things.enemy = {
 
 things.basic = {
   parent: ["tower"],
-  label: "Basic Tower",
+  label: "G-0",
   type: "basic",
   description: "A simple tower with a simple gun.",
   render: style.tower.basic,
@@ -110,12 +110,181 @@ things.basic = {
     },
   ],
   stat: {
-    tier: 0,
+    tier: 1,
     size: 25,
     speed: 5,
     rotspeed: 0.2,
     upgradetext: "normal",
     upgrade: null,
+  }
+}
+
+things.twin = {
+  parent: ["tower"],
+  label: "T-5",
+  type: "twin",
+  description: "Two weaker shooters side-by-side, like twins.",
+  render: style.tower.tier2,
+  accessories: [
+    {
+      type: "guncircle",
+      layer: 2,
+      size: 2.5,
+    }
+  ],
+  // upgrades: [],
+  guns: [
+    {
+      set: { 
+        x: -0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0, 
+        style: "twin",
+      },
+      stat: ["shooter", "twin"],
+    }, {
+      set: {
+        x: 0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0.5,
+        style: "twin",
+      },
+      stat: ["shooter", "twin"],
+    },
+  ],
+  stat: {
+    tier: 2,
+    size: 25,
+    speed: 5.02,
+    rotspeed: 0.2,
+    upgradetext: "normal",
+  }
+}
+
+things.double = {
+  parent: ["tower"],
+  label: "D-1",
+  type: "double",
+  description: "Double the gun, double the fun!",
+  render: style.tower.tier2,
+  accessories: [
+    {
+      type: "guncircle",
+      layer: 2,
+      size: 2,
+    }
+  ],
+  // upgrades: [],
+  guns: [
+    {
+      set: { 
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0, 
+        style: "double",
+      },
+      stat: ["shooter", "double"],
+    },
+  ],
+  stat: {
+    tier: 2,
+    size: 25,
+    speed: 5.16,
+    rotspeed: 0.2,
+    upgradetext: "normal",
+  }
+}
+
+things.big = {
+  parent: ["tower"],
+  label: "B-4",
+  type: "big",
+  description: "Slower and bigger projectiles.",
+  render: style.tower.tier2,
+  accessories: [
+    {
+      type: "guncircle",
+      layer: 2,
+      size: 2,
+    }
+  ],
+  // upgrades: [],
+  guns: [
+    {
+      set: {
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+        style: "big",
+      },
+      stat: ["shooter", "big"],
+      options: { },
+    },
+  ],
+  stat: {
+    tier: 2,
+    size: 28,
+    speed: 5,
+    rotspeed: 0.18,
+    upgradetext: "normal",
+  }
+}
+
+things.strong = {
+  parent: ["tower"],
+  label: "S-3",
+  type: "strong",
+  description: "Faster and heavier projectiles.",
+  render: style.tower.tier2,
+  accessories: [
+    {
+      type: "guncircle",
+      layer: 2,
+      size: 2,
+    }
+  ],
+  // upgrades: [],
+  guns: [
+    {
+      set: {
+        x: 0, y: 0, w: 0, h: 11, a: 0, d: 0,
+        style: "strong",
+      },
+      stat: ["shooter", "strong"],
+      options: { },
+    },
+  ],
+  stat: {
+    tier: 2,
+    size: 27,
+    speed: 4.6,
+    rotspeed: 0.175,
+    upgradetext: "normal",
+  }
+}
+
+things.fast = {
+  parent: ["tower"],
+  label: "F-2",
+  type: "fast",
+  description: "Faster rate of fire and smaller projectiles.",
+  render: style.tower.tier2,
+  accessories: [
+    {
+      type: "guncircle",
+      layer: 2,
+      size: 2,
+    }
+  ],
+  // upgrades: [],
+  guns: [
+    {
+      set: {
+        x: 0, y: 0, w: 0, h: 7, a: 0, d: 0,
+        style: "fast",
+      },
+      stat: ["shooter", "fast"],
+      options: { },
+    },
+  ],
+  stat: {
+    tier: 2,
+    size: 24,
+    speed: 5.3,
+    rotspeed: 0.22,
+    upgradetext: "normal",
   }
 }
 

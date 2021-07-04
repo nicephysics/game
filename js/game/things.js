@@ -85,6 +85,7 @@ things.enemy = {
 things.basic = {
   parent: ["tower"],
   label: "Basic Tower",
+  description: "A simple tower with a simple gun.",
   render: style.tower.basic,
   accessories: [
     {
@@ -93,6 +94,7 @@ things.basic = {
       size: 2,
     }
   ],
+  upgrades: ["twin", "fast", "strong", "big"],
   guns: [
     {
       set: {

@@ -72,6 +72,7 @@ export class Thing {
   
   gametype = "none" // none by default
   label = "Thing" // default
+  type = "unknown" // default
   targetrot = 0 // rot
   targetpos = null // pos
   parent = this
@@ -186,6 +187,9 @@ export class Thing {
     // matter.js stuff
     if (o.label != null) {
       this.label = o.label
+    }
+    if (o.type != null) {
+      this.type = o.type
     }
     if (o.static != null) {
       this.static = o.static

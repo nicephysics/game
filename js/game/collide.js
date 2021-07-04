@@ -29,13 +29,13 @@ collide.init = function(render) {
     switch (ta) {
       case "ground":
         if (tb === "enemy") {
-          b.enemy.remove()
+          b.remove()
           Tower.health -= b.enemy.stat.damage
         }
-        if (tb === "bullet") {
+        if (tb === "bullet" || tb === "projectile") {
+          b.remove()
           b.gun.removeChild(b)
         }
-        // projectile too?
         break
         
       case "atmosphere":
@@ -55,17 +55,12 @@ collide.init = function(render) {
               momentumA = Vector.mult(a.velocity, a.mass),
               momentumB = Vector.mult(b.velocity, b.mass),
               relative = Vector.sub(momentumA, momentumB)
+          // unused: relative momentum for collision effects
           if (tb === "tower") {
-            b.tower.effect.inflict(e.type, e.duration, e)
+            b.effect.inflict(e.type, e.duration, e)
           } else if (tb === "enemy") {
-            b.enemy.effect.inflict(e.type, e.duration, e)
+            b.effect.inflict(e.type, e.duration, e)
           }
-        }
-        break
-        
-      case "space":
-        if (tb === "enemy") {
-          
         }
         break
         

@@ -57,6 +57,7 @@ style.default = {
 
 style.tower = {
   basic: style.fillStroke("#00bd8e"),
+  tier2: style.fillStroke("#009ebd"),
   double: style.fillStroke("#009ebd"),
   twin: style.fillStroke("#009ebd"),
   big: style.fillStroke("#009ebd"),

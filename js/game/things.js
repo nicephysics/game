@@ -19,6 +19,7 @@ things.tower = {
   gametype: "tower",
   // matter stuff
   label: "Unknown Tower",
+  type: "unknown",
   static: true,
   category: category.yourTower,
   // render stuff
@@ -45,6 +46,7 @@ things.enemy = {
   gametype: "enemy",
   // matter stuff
   label: "Unknown Enemy",
+  type: "unknown",
   static: false,
   category: category.enemy,
   // render stuff
@@ -85,6 +87,7 @@ things.enemy = {
 things.basic = {
   parent: ["tower"],
   label: "Basic Tower",
+  type: "basic",
   description: "A simple tower with a simple gun.",
   render: style.tower.basic,
   accessories: [
@@ -122,6 +125,7 @@ things.basic = {
 things.asteroid = {
   parent: ["enemy"],
   label: "Asteroid",
+  type: "asteroid",
   render: style.enemy.asteroid,
   guns: null,
   // stats?

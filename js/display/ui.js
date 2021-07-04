@@ -858,7 +858,11 @@ ui.draw = function() {
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
     }
-    if (ui.hitcircle(clickpos, x, y, circleSize * 0.4)) {
+    if (
+      ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
+      ui.pressed("ArrowRight") ||
+      ui.pressed("Enter")
+    ) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {
         v.waves_popup_text_show = false

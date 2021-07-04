@@ -95,6 +95,21 @@ ui.hitcircle = function(pos, x, y, size) {
   return pos && Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y))) < size * size
 }
 
+ui.keypress = {
+  code: null,
+}
+
+ui.pressed = function(key) {
+  const code = ui.keypress.code
+  return (
+    code === key ||
+    code === "Key" + key.toUpperCase() ||
+    code === key[0].toUpperCase() + key.substring(1) ||
+    code === "Digit" + key || 
+    code === "Arrow" + key[0].toUpperCase() + key.substring(1)
+  )
+}
+
 ui.init = function(render) {
   let v = ui.vars,
       mouse = render.mouse,
@@ -106,6 +121,15 @@ ui.init = function(render) {
   })
   window.addEventListener("mouseup", function(event) {
     v.click = mouse.absolute
+  })
+  window.addEventListener("keydown", function(event) {
+    if (event.isComposing || event.keyCode === 229) {
+      return;
+    }
+    ui.keypress.code = event.code
+  })
+  window.addEventListener("keyup", function(event) {
+    ui.keypress.code = null
   })
   // .
 }

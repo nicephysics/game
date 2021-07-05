@@ -140,12 +140,14 @@ things.twin = {
         x: -0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0, 
         style: "twin",
       },
+      type: "projectile",
       stat: ["shooter", "twin"],
     }, {
       set: {
         x: 0.65, y: 0, w: 0, h: 8.5, a: 0, d: 0.5,
         style: "twin",
       },
+      type: "projectile",
       stat: ["shooter", "twin"],
     },
   ],
@@ -178,6 +180,14 @@ things.double = {
         x: 0, y: 0, w: 0, h: 10, a: 0, d: 0, 
         style: "double",
       },
+      type: "projectile",
+      stat: ["shooter", "double"],
+    }, {
+      set: {
+        x: 0, y: 0, w: 0, h: 8, a: 0, d: 0.5,
+        style: "double",
+      },
+      type: "projectile",
       stat: ["shooter", "double"],
     },
   ],
@@ -210,6 +220,7 @@ things.big = {
         x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
         style: "big",
       },
+      type: "projectile",
       stat: ["shooter", "big"],
       options: { },
     },
@@ -243,8 +254,8 @@ things.strong = {
         x: 0, y: 0, w: 0, h: 11, a: 0, d: 0,
         style: "strong",
       },
+      type: "projectile",
       stat: ["shooter", "strong"],
-      options: { },
     },
   ],
   stat: {
@@ -276,8 +287,8 @@ things.fast = {
         x: 0, y: 0, w: 0, h: 7, a: 0, d: 0,
         style: "fast",
       },
+      type: "projectile",
       stat: ["shooter", "fast"],
-      options: { },
     },
   ],
   stat: {

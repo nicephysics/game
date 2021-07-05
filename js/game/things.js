@@ -302,6 +302,53 @@ things.fast = {
 
 // ENEMIES
 
+things.ball = {
+  parent: ["enemy"],
+  label: "Ball (Test)",
+  type: "ball",
+  shape: "circle",
+  render: style.enemy.ball,
+  guns: null,
+  // stats?
+  xp: 20,
+  bonusxp: 0.2,
+  enemyDamage: 1,
+  stat: {
+    tier: -1,
+    size: 15,
+    speed: 1,
+    rotspeed: 0.2,
+  }
+}
+
+things.ballgun = {
+  parent: ["enemy"],
+  label: "Ballgun (Test)",
+  type: "ballgun",
+  shape: "circle",
+  render: style.enemy.ball,
+  guns: [
+    { 
+      set: {
+        x: 0, y: 0, w: 0, h: 10, a: 0, d: 0,
+        style: "ballgun",
+      },
+      type: "bullet",
+      stat: ["enemy", "enemyshooter", "ballgun"],
+    },
+  ],
+  // stats?
+  xp: 40,
+  bonusxp: 0.4,
+  enemyDamage: 1,
+  stat: {
+    tier: -1,
+    size: 25,
+    speed: 1,
+    rotspeed: 0.2,
+  }
+}
+
 things.asteroid = {
   parent: ["enemy"],
   label: "Asteroid",
@@ -314,11 +361,9 @@ things.asteroid = {
   enemyDamage: 1,
   stat: {
     tier: -1,
-    size: 10,
+    size: 20,
     speed: 1,
     rotspeed: 0.2,
-    upgradetext: "normal",
-    upgrade: null,
   }
 }
 

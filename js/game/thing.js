@@ -508,8 +508,14 @@ export class Thing {
     switch (type) {
       case "guncircle":
         const gunIndex = (a.gunIndex || 0),
-              gun = this.guns[gunIndex]
-        draw.circle(render, gun.x, gun.y, gun.stat.size * a.size)
+              gun = this.guns[gunIndex],
+              centre = a.center || a.centre,
+              gunsize = gun.stat.size * (a.size || 1)
+        if (centre) {
+          draw.circle(render, this.x, this.y, gunsize)
+        } else {
+          draw.circle(render, gun.x, gun.y, gunsize)
+        }
         break
       case "none":
         break

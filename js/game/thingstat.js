@@ -192,10 +192,10 @@ export class ThingStat {
     }
     
     if (o.g != null) {
-      this.gravity *= o.g
+      this.gravityScale *= o.g
     }
     if (o.gravity != null) {
-      this.gravity *= o.gravity
+      this.gravityScale *= o.gravity
     }
     if (o.gravityScale != null) {
       this.gravityScale *= o.gravityScale

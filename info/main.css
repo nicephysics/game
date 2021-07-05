@@ -1,6 +1,6 @@
 /* smooth scrolling */
 html {
-  scroll-behavior: smooth!important;
+  scroll-behavior: smooth !important;
 }
 
 body, h1, h2, h3, h4, h5, h6, p {
@@ -15,17 +15,22 @@ body, h1, h2, h3, h4, h5, h6, p {
 a {
   text-decoration: none;
   background-color: transparent !important;
-  color:#673ab7 !important;
+  color: #673ab7 !important;
 }
 
 a:active, a:hover {
   text-decoration: dotted underline;
   background-color: transparent !important;
-  color:#009688 !important;
+  color: #009688 !important;
   outline-width: 0;
 }
 
 /* for underlining links */
-.underline {
+.underline-link, .underline {
   text-decoration: underline;
+}
+
+/* for hiding links */
+.hidden-link {
+  color: #000000 !important;
 }

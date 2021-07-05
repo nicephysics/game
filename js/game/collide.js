@@ -30,7 +30,7 @@ collide.init = function(render) {
       case "ground":
         if (tb === "enemy") {
           b.thing.remove()
-          Tower.health -= b.enemy.stat.damage
+          Tower.health -= b.thing.enemyOptions.damage
         }
         if (tb === "bullet" || tb === "projectile") {
           b.gun.removeChild(b.thing)

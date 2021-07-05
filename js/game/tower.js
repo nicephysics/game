@@ -59,9 +59,10 @@ for (let key in towermap) {
 
 export class Tower {
   // static
-  static towermap = towermap
+  static towermap = towermap // ok
   
-  static player = null
+  static player = null // the main player!
+  
   static health = 10
   
   static tick() {
@@ -69,6 +70,7 @@ export class Tower {
   }
   
   static drawtowers = {}
+  
   static drawTower(render, x, y, size, label) {
     let type = towermap[label],
         t = Tower.drawtowers[type],
@@ -79,7 +81,6 @@ export class Tower {
       t = new Thing(Vector.create(0, 0))
       t.make(things[type])
       t.createTemp()
-      t.exists = true
       Tower.drawtowers[type] = t
     }
     // set body attributes, fit the draw
@@ -91,14 +92,5 @@ export class Tower {
     Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, t.stat.rotspeed))
     t.stat.size = size
     t.draw(render)
-  }
-  
-  // fields
-  thing = null
-  
-  // constructor
-  constructor(position, parent) {
-    // nothing for now
-    this.thing = new Thing(position, parent)
   }
 }

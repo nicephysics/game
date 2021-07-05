@@ -130,6 +130,7 @@ things.twin = {
       type: "guncircle",
       layer: 2,
       size: 2.5,
+      center: true
     }
   ],
   // upgrades: [],

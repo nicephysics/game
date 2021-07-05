@@ -267,6 +267,12 @@ export class Thing {
     this.exists = true
   }
   
+  // temporarily create (for Tower.draw())
+  createTemp() {
+    this.createShape()
+    this.createBody(true)
+  }
+  
   // create SHAPE
   createShape() {
     const size = this.size
@@ -284,7 +290,7 @@ export class Thing {
   }
   
   // create BODY (why am I even capitalizing random words)
-  createBody() {
+  createBody(temp = false) {
     if (this.body != null) {
       console.log("Body already exists! Removing body...")
       console.log(JSON.parse(JSON.stringify(this.body)))
@@ -333,7 +339,9 @@ export class Thing {
     b.gravityScale = s.gravityScale
     // todo
     this.body = b
-    Composite.add(Thing.world, b)
+    if (!temp) {
+      Composite.add(Thing.world, b)
+    }
   }
   
   createGuns(guns) { // was (gunset, gunstat, options = { })

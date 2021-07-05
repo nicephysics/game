@@ -78,8 +78,7 @@ export class Tower {
     if (!t) {
       t = new Thing(Vector.create(0, 0))
       t.make(things[type])
-      t.createShape()
-      t.createBody()
+      t.createTemp()
       t.exists = true
       Tower.drawtowers[type] = t
     }

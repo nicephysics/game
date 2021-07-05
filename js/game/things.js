@@ -29,7 +29,6 @@ things.tower = {
   // game stuff
   guns: [],
   controlType: "player",
-  xp: 0,
   bonusxp: null,
   stat: {
     tier: 0,

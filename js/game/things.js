@@ -97,7 +97,7 @@ things.basic = {
       size: 2,
     }
   ],
-  upgrades: ["twin", "fast", "strong", "big"],
+  upgrades: ["twin", "fast", "big", "strong", "double"],
   guns: [
     {
       set: {

@@ -12,7 +12,7 @@ if (true) {
 export const upgradekeys = ["size", "mass", "speed", "reload", "thingspeed", "spread", "air", "thingrot"]
 
 export const upgradelevel = {
-  tier: [5, 15, 25],
+  tier: [0, 5, 15, 25],
   ability: [],
 }
 

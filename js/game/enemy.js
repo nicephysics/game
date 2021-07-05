@@ -108,6 +108,7 @@ export class Enemy {
       e.createShape()
       Enemy.drawEnemies[type] = e
     }
+    e.body.angle += math.degToRad(5)
     // draw enemy
     e.draw(render)
     return e

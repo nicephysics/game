@@ -96,18 +96,27 @@ ui.hitcircle = function(pos, x, y, size) {
 }
 
 ui.keypress = {
-  code: null,
+  down: null,
+  up: null,
+  check: function(code, key) {
+    return (
+      code === key ||
+      code === "Key" + key.toUpperCase() ||
+      code === key[0].toUpperCase() + key.substring(1) ||
+      code === "Digit" + key || 
+      code === "Arrow" + key[0].toUpperCase() + key.substring(1)
+    )
+  }
 }
 
 ui.pressed = function(key) {
-  const code = ui.keypress.code
-  return (
-    code === key ||
-    code === "Key" + key.toUpperCase() ||
-    code === key[0].toUpperCase() + key.substring(1) ||
-    code === "Digit" + key || 
-    code === "Arrow" + key[0].toUpperCase() + key.substring(1)
-  )
+  const code = ui.keypress.down
+  return ui.keypress.check(code, key)
+}
+
+ui.released = function(key) {
+  const code = ui.keypress.up
+  return ui.keypress.check(code, key)
 }
 
 ui.init = function(render) {
@@ -126,10 +135,11 @@ ui.init = function(render) {
     if (event.isComposing || event.keyCode === 229) {
       return;
     }
-    ui.keypress.code = event.code
+    ui.keypress.down = event.code
   })
   window.addEventListener("keyup", function(event) {
-    ui.keypress.code = null
+    ui.keypress.down = null
+    ui.keypress.up = event.code
   })
   // .
 }
@@ -162,7 +172,8 @@ ui.tickAfter = function() {
       ctx = render.context
   // clear click
   v.click = false
-  // how about hover?
+  // clear keypress
+  ui.keypress.up = null
 }
 
 ui.draw = function() {
@@ -861,8 +872,8 @@ ui.draw = function() {
     }
     if (
       ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
-      ui.pressed("ArrowRight") ||
-      ui.pressed("Enter")
+      ui.released("ArrowRight") ||
+      ui.released("Enter")
     ) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {

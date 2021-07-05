@@ -33,7 +33,7 @@ a:active, a:hover {
 }
 
 /* for underlining links */
-.underline-link, .underline {
+.underline-link, .underline, .hover-underline:hover, .hover-underline-link:hover {
   text-decoration: underline;
 }
 

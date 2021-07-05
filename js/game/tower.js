@@ -48,11 +48,12 @@ for (let key in towermap) {
 
 for (let key in towermap) {
   const ts = things[key]
-  if (ts != null) {
-    ts.displayUpgrades = []
+  if (ts != null && ts.upgrades != null) {
+    const disp = []
     for (let u in ts.upgrades) {
-      ts.displayUpgrades.push(towermap[u])
+      disp.push(towermap[u])
     }
+    ts.displayUpgrades = disp
   }
 }
 

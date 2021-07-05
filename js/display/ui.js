@@ -630,7 +630,6 @@ ui.draw = function() {
     }
     if (clicked >= 0) {
       player.make(things[choicesX[clicked]])
-      player.refresh()
       ui.closeOverlay()
       clickpos = false
     }

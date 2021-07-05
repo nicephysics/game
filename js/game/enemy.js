@@ -105,7 +105,7 @@ export class Enemy {
       e = new Thing(Vector.create(x, y))
       e.make(things[type])
       e.stat.make({ size: size })
-      e.createShape()
+      e.createTemp()
       Enemy.drawEnemies[type] = e
     }
     e.body.angle += math.degToRad(5)

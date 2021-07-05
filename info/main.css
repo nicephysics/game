@@ -14,13 +14,17 @@ body, h1, h2, h3, h4, h5, h6, p {
 /* links */
 a {
   text-decoration: none;
-  background-color: transparent !important;
-  color: #673ab7 !important;
+  background-color: transparent;
+  color: #7542cf !important;
+}
+
+a:visited {
+  color: #772ff7 !important;
 }
 
 a:active, a:hover {
   text-decoration: dotted underline;
-  background-color: transparent !important;
+  background-color: transparent;
   color: #009688 !important;
   outline-width: 0;
 }

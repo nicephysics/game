@@ -17,6 +17,11 @@ a {
   background-color: transparent;
 }
 
+a:active, a:hover {
+  text-decoration: dotted underline;
+  outline-width: 0;
+}
+
 /* for underlining links */
 .underline {
   text-decoration: underline;

@@ -18,11 +18,11 @@ a {
 }
 
 a:link {
-  color: #7542cf !important;
+  color: #7542cf;
 }
 
 a:visited {
-  color: #772ff7 !important;
+  color: #772ff7;
 }
 
 a:active, a:hover {

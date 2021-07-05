@@ -20,6 +20,8 @@ a {
 
 a:active, a:hover {
   text-decoration: dotted underline;
+  background-color: transparent !important;
+  color:#009688 !important;
   outline-width: 0;
 }
 

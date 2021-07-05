@@ -327,6 +327,7 @@ things.ballgun = {
   type: "ballgun",
   shape: "circle",
   render: style.enemy.ball,
+  controlType: "enemy_aim",
   guns: [
     { 
       set: {

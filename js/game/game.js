@@ -1,5 +1,4 @@
 export var Game = { }
 
-Game.menu = "main"
-Game.mode = "normal"
+Game.mode = "menu"
 Game.theme = "dark" // hmmm

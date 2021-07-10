@@ -40,8 +40,11 @@ const getSpawnBounds = function(size) {
 export class Enemy {
   // static
   static enemies = enemies
+  static enemyTypes = []
+  static randomEnemyTypes = []
   
   static init = function() {
+    // send shortcuts
     document.addEventListener("keydown", function(event) {
       switch (event.code) {
         case "Digit1":
@@ -55,6 +58,21 @@ export class Enemy {
           break
       }
     })
+    // enemy types
+    for (let k in things) {
+      if (things[k].gametype === "enemy" ||
+          things[k].parent.includes("enemy")
+         ) {
+        Enemy.enemyTypes.push(k)
+        if (things[k].enemy_random === true) {
+          Enemy.randomEnemyTypes.push(k)
+        }
+      }
+    }
+  }
+  
+  static randomEnemy = function() {
+    return things[random.choose(Enemy.randomEnemyTypes)]
   }
   
   static spawn = {

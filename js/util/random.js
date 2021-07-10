@@ -9,8 +9,8 @@ random.randreal = function(start = 0, end = 1) {
 }
 
 // inclusive
-random.randint = function(start, end) {
-  return common.random(start, end)
+random.randint = function(start = 0, end = 1) {
+  return Math.floor(start + common.random() * (end - start + 1))
 }
 
 random.angle = function() {
@@ -19,6 +19,10 @@ random.angle = function() {
 
 random.angleDegrees = function() {
   return random.rand() * 360
+}
+
+random.choose = function(arr) {
+  return arr[random.randint(0, arr.length - 1)]
 }
 
 

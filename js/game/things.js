@@ -308,6 +308,7 @@ things.ball = {
   type: "ball",
   shape: "circle",
   render: style.enemy.ball,
+  enemy_random: true,
   guns: null,
   // stats?
   xp: 20,
@@ -355,6 +356,7 @@ things.asteroid = {
   label: "Asteroid",
   type: "asteroid",
   render: style.enemy.asteroid,
+  enemy_random: true,
   guns: null,
   // stats?
   xp: 10,

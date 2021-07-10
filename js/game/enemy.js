@@ -60,8 +60,8 @@ export class Enemy {
     })
     // enemy types
     for (let k in things) {
-      if (things[k].gametype === "enemy" ||
-          things[k].parent.includes("enemy")
+      if (  things[k].gametype === "enemy" ||
+           (Array.isArray(things[k].parent) && things[k].parent.includes("enemy"))
          ) {
         Enemy.enemyTypes.push(k)
         if (things[k].enemy_random === true) {

@@ -4,8 +4,8 @@ export var random = { }
 
 random.rand = common.random
 
-random.randreal = function(start, end) {
-  return common.random()
+random.randreal = function(start = 0, end = 1) {
+  return start + common.random() * (end - start)
 }
 
 // inclusive

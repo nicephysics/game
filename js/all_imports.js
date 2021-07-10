@@ -45,8 +45,17 @@ import('./game/enemy.js').then(m => {
   game.Enemy = m.Enemy
   game.enemies = m.enemies
 })
+import('./game/game.js').then(m => {
+  game.Game = m.Game
+})
 import('./game/gun.js').then(m => {
   game.Gun = m.Gun
+})
+import('./game/menu.js').then(m => {
+  game.menu = m.menu
+})
+import('./game/start.js').then(m => {
+  game.game_start = m.game_start
 })
 import('./game/stat.js').then(m => {
   game.Stat = m.Stat

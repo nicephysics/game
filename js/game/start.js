@@ -114,8 +114,6 @@ export const game_init = function() {
 }
 
 const addGameThings = function() {
-  const add_array = [ atmosphere, leftwall, rightwall ]
-  
   if (Game.mode === "game") {
     ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
       isStatic: true,
@@ -124,7 +122,8 @@ const addGameThings = function() {
       render: style.default.ground,
     })
     ground.gametype = "ground"
-    add_array.push(ground)
+  } else {
+    ground = undefined
   }
   
   leftwall = Bodies.rectangle(-30, _height * 0.85 + 25, 60, _height + 50, {
@@ -152,7 +151,11 @@ const addGameThings = function() {
   })
   atmosphere.gametype = "atmosphere"
   
-  Composite.add(world, add_array)
+  for (let thing of [ atmosphere, ground, leftwall, rightwall ]) {
+    if (thing != null) {
+      Composite.add(world, thing)
+    }
+  }
 }
 
 const removeGameThings = function() {

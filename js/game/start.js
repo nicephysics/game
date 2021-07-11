@@ -31,6 +31,7 @@ const Engine = Matter.Engine,
       Body = Matter.Body,
       Bodies = Matter.Bodies,
       Mouse = Matter.Mouse,
+      MouseConstraint = Matter.MouseConstraint,
       Composite = Matter.Composite,
       Vector = Matter.Vector,
       Bounds = Matter.Bounds

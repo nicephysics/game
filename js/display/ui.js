@@ -120,6 +120,8 @@ ui.released = function(key) {
   return ui.keypress.check(code, key)
 }
 
+ui.focused = true
+
 ui.init = function(render) {
   let v = ui.vars,
       mouse = render.mouse,
@@ -141,6 +143,13 @@ ui.init = function(render) {
   window.addEventListener("keyup", function(event) {
     ui.keypress.down = null
     ui.keypress.up = event.code
+  })
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "visible") {
+      ui.focused = true
+    } else {
+      ui.focused = false
+    }
   })
   // .
 }

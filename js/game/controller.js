@@ -128,12 +128,15 @@ export class Controller {
           X = t.x,
           Y = t.y,
           v = t.velocity,
-          screenWidth = Thing.render.options.width
+          screenWidth = Thing.render.options.width,
+          screenHeight = Thing.render.options.height
     if (Y < size && v.y <= 0) {
       this.tickCheckEnemy_remove()
     } else if (X < size && v.x <= 0 && v.y <= -v.x) {
       this.tickCheckEnemy_remove()
     } else if (X > screenWidth + size && v.x >= 0 && v.y <= v.x) {
+      this.tickCheckEnemy_remove()
+    } else if (Y > screenHeight + size) {
       this.tickCheckEnemy_remove()
     }
   }

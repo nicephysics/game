@@ -21,6 +21,10 @@ import { Tower } from "./tower.js"
 import { gameupdate } from "./update.js"
 import { waves } from "./waves.js"
 
+if (true) {
+  // 2 space indent!
+}
+
 const Engine = Matter.Engine,
       Render = Matter.Render,
       Runner = Matter.Runner,
@@ -161,6 +165,7 @@ const refreshGameThings = function() {
   addGameThings()
 }
 
+let dropEnemyInterval = null
 const dropEnemy = function() {
   let x = random.randreal(0, _width),
       y = random.randreal(-50, -100)
@@ -194,7 +199,7 @@ export const game_start = function(name) {
   waves.init(name)
   
   // remove menu enemy drop
-  clearInterval(dropEnemy)
+  clearInterval(dropEnemyInterval)
 }
 
 // called when the menu is opened
@@ -206,7 +211,7 @@ export const game_menu() {
   if (Tower.player) {
     Composite.remove(world, [ Tower.player ])
   }
-  setInterval(dropEnemy, 250)
+  dropEnemyInterval = setInterval(dropEnemy, 250)
 }
 
 window.addEventListener("load", function() {

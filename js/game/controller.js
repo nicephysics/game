@@ -141,6 +141,10 @@ export class Controller {
   // to be used in the above method...
   tickCheckEnemy_remove() {
     const t = this.thing
+    if (this.type === "enemy_menu") {
+      t.remove()
+      return
+    }
     let pos = Vector.sub(t.position, Vector.mult(Vector.normalise(t.velocity), 50)), // 50 pixels of velocity
         bonusvel = Math.floor(Vector.magnitude(t.velocity)),
         reward = t.xp + Math.round( (t.bonusxp || 0) * bonusvel),

@@ -4,6 +4,7 @@ import { style } from "./style.js"
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Game } from "../game/game.js"
+import { game_start, game_menu } from "../game/start.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
 import { Tower, towermap } from "../game/tower.js"
@@ -217,11 +218,15 @@ ui.drawMenu = function() {
       width = 0,
       height = 0
   
-  // nothing to draw for now
-  // perhaps maybe large text?
-  draw.setLightFill(ctx, "#f4ffb5")
+  // maybe some large text?
+  draw.setFill(ctx, "#80b7ff")
+  draw.setStroke(ctx, "#00367d")
   draw.setFont(ctx, "48px Roboto Condensed")
-    draw._text(ctx, _width / 2, _height / 2, "MAIN MENU", ui.time, "center")
+    draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.time, "center")
+  
+  if (ui.released("enter")) {
+    game_start("tut1")
+  }
   
 }
 

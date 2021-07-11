@@ -195,8 +195,10 @@ ui.draw = function() {
   switch (Game.mode) {
     case "game":
       ui.drawGame()
+      break
     case "menu":
       ui.drawMenu()
+      break
   }
   
   // tick after!

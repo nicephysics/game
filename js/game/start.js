@@ -156,7 +156,11 @@ const addGameThings = function() {
 }
 
 const removeGameThings = function() {
-  Composite.remove(world, [ atmosphere, ground, leftwall, rightwall ])  
+  for (let thing of [ atmosphere, ground, leftwall, rightwall ]) {
+    if (thing != null) {
+      Composite.remove(world, thing)
+    }
+  }
 }
 
 const refreshGameThings = function() {

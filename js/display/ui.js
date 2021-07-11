@@ -3,6 +3,7 @@ import { style } from "./style.js"
 
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
+import { Game } from "../game/game.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
 import { Tower, towermap } from "../game/tower.js"

@@ -38,7 +38,7 @@ let canvas, // the canvas
     mouseConstraint, // the mouse constraint
     ground, atmosphere, leftwall, rightwall, // game stuff
     _width = 0, // window width
-    _height = 0, // window height
+    _height = 0 // window height
 
 // initialize the WHOLE GAME
 export const game_init = function() {

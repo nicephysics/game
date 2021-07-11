@@ -196,6 +196,8 @@ const dropEnemy = function() {
 
 // called at the start of a game in the game
 export const game_start = function(name) {
+  Game.mode = "start"
+  
   // add game things
   refreshGameThings()
   

@@ -1,25 +1,25 @@
 // ===== imports go here =====
 
 // util
-import { events } from "./util/events.js"
+import { events } from "../util/events.js"
 // display
-import { style } from "./display/style.js"
-import { display } from "./display/display.js"
-import { navigation } from "./display/navigation.js"
-import { ui } from "./display/ui.js"
+import { style } from "../display/style.js"
+import { display } from "../display/display.js"
+import { navigation } from "../display/navigation.js"
+import { ui } from "../display/ui.js"
 // config
-import { config, category } from "./config/config.js"
+import { config, category } from "../config/config.js"
 // game
-import { collide } from "./game/collide.js"
-import { controls } from "./game/controls.js"
-import { Enemy } from "./game/enemy.js"
-import { Game } from "./game/game.js"
-import { Thing } from "./game/thing.js"
-import { things } from "./game/things.js"
-import { ThingStat } from "./game/thingstat.js"
-import { Tower } from "./game/tower.js"
-import { gameupdate } from "./game/update.js"
-import { waves } from "./game/waves.js"
+import { collide } from "./collide.js"
+import { controls } from "./controls.js"
+import { Enemy } from "./enemy.js"
+import { Game } from "./game.js"
+import { Thing } from "./thing.js"
+import { things } from "./things.js"
+import { ThingStat } from "./thingstat.js"
+import { Tower } from "./tower.js"
+import { gameupdate } from "./update.js"
+import { waves } from "./waves.js"
 
 const Engine = Matter.Engine,
       Render = Matter.Render,

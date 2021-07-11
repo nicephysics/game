@@ -215,10 +215,6 @@ export const game_menu = function() {
   dropEnemyInterval = setInterval(dropEnemy, 250)
 }
 
-window.addEventListener("load", function() {
-    game_init()
-})
-
 // called whenever the window is resized
 window.addEventListener("resize", function() {
   _width = window.innerWidth

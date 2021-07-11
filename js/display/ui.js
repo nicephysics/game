@@ -221,7 +221,7 @@ ui.drawMenu = function() {
   // perhaps maybe large text?
   draw.setLightFill(ctx, "#f4ffb5")
   draw.setFont(ctx, "48px Roboto Condensed")
-    draw._text(ctx, _width, _height, "MAIN MENU", ui.time, "center")
+    draw._text(ctx, _width / 2, _height / 2, "MAIN MENU", ui.time, "center")
   
 }
 

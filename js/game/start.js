@@ -108,8 +108,6 @@ export const game_init = function() {
   
   collide.init(render)
   
-  controls.init(render)
-  
   gameupdate.init(render)
   
   ui.init(render)
@@ -195,6 +193,9 @@ export const game_start = function(name) {
   player.create()
   player.rotateTo(random.angle())
   Tower.player = player
+  
+  // initialize controls too
+  controls.init(render)
   
   // initialize waves...
   waves.init(name)

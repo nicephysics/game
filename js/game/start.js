@@ -29,7 +29,7 @@ const Engine = Matter.Engine,
       Mouse = Matter.Mouse,
       Composite = Matter.Composite,
       Vector = Matter.Vector,
-      Bounds = Matter.Bounds,
+      Bounds = Matter.Bounds
 let canvas, // the canvas
     engine, // default engine
     world, // default world

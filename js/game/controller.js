@@ -45,6 +45,9 @@ export class Controller {
       case "enemy_aim":
         this.tickEnemy("aim")
         break
+      case "enemy_menu":
+        this.tickEnemy("menu")
+        break
       case "enemy_none":
       case "enemy":
         this.tickEnemy("none")
@@ -105,6 +108,10 @@ export class Controller {
         // aim at the player!
         Body.setAngle(t.body, math.lerpAngle(t.angle, t.targetrot, config.smooth.enemy.rot * t.stat.mult.enemyrot))
         t.targetrot = Vector.angle(t.position, Tower.player.position)
+        break
+      case "menu":
+        // aim at the player!
+        Body.setAngle(t.body, t.angle + math.degToRad(2))
         break
       case "none":
         // yes, NONE

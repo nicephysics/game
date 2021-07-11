@@ -27,13 +27,15 @@ let ON_N = false,
 
 controls.setPaused = function(paused) {
   const player = Tower.player
-  player.control.paused = paused
+  if (player != null) {
+    player.control.paused = paused
+  }
   Thing.runner.enabled = !paused
 }
 
 controls.isPaused = function() {
   const player = Tower.player
-  return player.control.paused
+  return player && player.control.paused
 }
 
 controls.toggleN = function() {
@@ -49,7 +51,13 @@ controls.levelup = function(level) {
   // to level up one level
   // player.addxp(50 * (player.level + 1))
   // to level up to a certain level
-  player.addxp(math.towerxp(level) - player.xp)
+  if (player != null) {
+    player.addxp(math.towerxp(level) - player.xp)
+  }
+}
+
+const playerExists = function() {
+  return Tower.player != null
 }
 
 controls.init = function(render) {
@@ -76,6 +84,9 @@ controls.init = function(render) {
   var c = player.control // alias
   
   document.addEventListener("keydown", function(event) {
+    if (!playerExists()) {
+      return
+    }
     switch (event.code) {
       case "KeyS":
       case "ArrowDown":
@@ -97,6 +108,9 @@ controls.init = function(render) {
   })
   
   document.addEventListener("keyup", function(event) {
+    if (!playerExists()) {
+      return
+    }
     switch (event.code) {
       case "KeyS":
       case "ArrowDown":
@@ -192,10 +206,16 @@ controls.init = function(render) {
   })
   
   window.addEventListener("mousemove", function(event) {
+    if (!playerExists()) {
+      return
+    }
     c.pointer = mouse.position
   })
   
   window.addEventListener("mousedown", function(event) {
+    if (!playerExists()) {
+      return
+    }
     if ((event.buttons & 1) > 0) {
       c.shoot = true
     }
@@ -208,6 +228,9 @@ controls.init = function(render) {
   })
   
   window.addEventListener("mouseup", function(event) {
+    if (!playerExists()) {
+      return
+    }
     c.shoot = false
     c.altshoot = false
     c.midshoot = false

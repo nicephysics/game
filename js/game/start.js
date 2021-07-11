@@ -174,10 +174,14 @@ const refreshGameThings = function() {
 
 let dropEnemyInterval = null
 const dropEnemy = function() {
+  if (!ui.focused) {
+    return
+  }
   let x = random.randreal(0, _width),
       y = random.randreal(-50, -100)
   const enemy = new Thing(Vector.create(x, y))
   enemy.make(Enemy.randomEnemy())
+  enemy.make( { controlType: "enemy_menu" } )
   enemy.create()
   enemies.push(enemy)
   const dir = math.degToRad(90),

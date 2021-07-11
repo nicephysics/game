@@ -13,7 +13,7 @@ import { config, category } from "../config/config.js"
 // game
 import { collide } from "./collide.js"
 import { controls } from "./controls.js"
-import { Enemy } from "./enemy.js"
+import { Enemy, enemies } from "./enemy.js"
 import { Game } from "./game.js"
 import { Thing } from "./thing.js"
 import { things } from "./things.js"

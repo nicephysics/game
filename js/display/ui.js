@@ -178,6 +178,46 @@ ui.tickAfter = function() {
 
 ui.draw = function() {
   
+  // tick!
+  ui.tick()
+  
+  switch (Game.mode) {
+    case "game":
+      ui.drawGame()
+    case "menu":
+      ui.drawMenu()
+  }
+  
+  // tick after!
+  ui.tickAfter()
+  
+}
+
+ui.drawMenu = function() {
+  const v = ui.vars,
+        render = Thing.render,
+        ctx = render.context,
+        _width = render.options.width,
+        _height = render.options.height
+  let mousepos = render.mouse.absolute,
+      clickpos = v.click,
+      stat = things[playerType],
+      x = 0,
+      y = 0,
+      size = 0,
+      width = 0,
+      height = 0
+  
+  // nothing to draw for now
+  // perhaps maybe large text?
+  draw.setLightFill(ctx, "#f4ffb5")
+  draw.setFont(ctx, "48px Roboto Condensed")
+    draw._text(ctx, _width, _height, "MAIN MENU", ui.time, "center")
+  
+}
+
+ui.drawGame = function() {
+  
   // define common variables first
   
   const v = ui.vars,
@@ -200,10 +240,6 @@ ui.draw = function() {
       size = 0,
       width = 0,
       height = 0
-  
-  
-  // tick!
-  ui.tick()
   
   // there will be 5 spaces after every major section in this function
   
@@ -937,9 +973,6 @@ ui.draw = function() {
   
   
   
-  
-  // tick after...
-  ui.tickAfter()
   
   // end of function
 }

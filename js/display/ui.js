@@ -202,7 +202,6 @@ ui.drawMenu = function() {
         _height = render.options.height
   let mousepos = render.mouse.absolute,
       clickpos = v.click,
-      stat = things[playerType],
       x = 0,
       y = 0,
       size = 0,

@@ -242,17 +242,10 @@ window.addEventListener("resize", function() {
   render.bounds.max.x = _width
   render.bounds.max.y = _height
   
-  if (Game.mode === "game") {
-    // remove all game things
-    removeGameThings()
-    // and then add them back
-    addGameThings()
-  } else if (Game.mode === "menu") {
-    // remove all game things
-    removeMenuThings()
-    // and then add them back
-    addMenuThings()
-  }
+  // remove all game things
+  removeGameThings()
+  // and then add them back
+  addGameThings()
   // basically an initialization again
   
   // also update config stuff

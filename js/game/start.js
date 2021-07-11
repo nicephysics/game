@@ -1,7 +1,8 @@
 // ===== imports go here =====
 
 // util
-import { events } from "../util/events.js"
+import { math } from "../util/math.js"
+import { random } from "../util/random.js"
 // display
 import { style } from "../display/style.js"
 import { display } from "../display/display.js"

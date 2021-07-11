@@ -203,7 +203,7 @@ export const game_start = function(name) {
 }
 
 // called when the menu is opened
-export const game_menu() {
+export const game_menu = function() {
   Game.mode = "menu"
   // remove the game walls and add menu walls
   refreshGameThings()

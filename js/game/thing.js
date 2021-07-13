@@ -59,12 +59,13 @@ export class Thing {
   static runner = null
   
   // init function, important!
-  static init(render) {
+  static init(render, runner) {
     Thing.render = render
     Thing.engine = render.engine
     Thing.canvas = render.canvas
     Thing.mouse = render.mouse
     Thing.world = render.engine.world
+    Thing.runner = runner
   }
   
   

@@ -103,7 +103,7 @@ export const game_init = function() {
   // run the engine
   Runner.run(runner, engine)
   
-  Thing.init(render)
+  Thing.init(render, runner)
   
   navigation.init(render, mouseConstraint)
   

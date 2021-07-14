@@ -266,7 +266,7 @@ ui.drawMenu = function() {
       draw.setFillDarkenStroke(ctx, "#b04419")
       o.onclick()
     }
-    draw.setLineWidth(6)
+    draw.setLineWidth(ctx, 6)
     draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
     draw.setFillNoStroke(ctx, "#ffe7a6")
     draw._text(ctx, _width / 2, y, text, 0, "center")

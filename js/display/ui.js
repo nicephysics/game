@@ -236,12 +236,12 @@ ui.drawMenu = function() {
       { text: "New Game",
         onclick: function() {
           game_start("tut1")
-        }
+        },
       },
       { text: "Upgrades",
         onclick: function() {
           // ?????
-        }
+        },
       }
     ],
     font_size: 20,
@@ -249,7 +249,7 @@ ui.drawMenu = function() {
   }
   y = _height / 2 - options.gap * options.array.length
   draw.setFont(ctx, options.font_size + "px Roboto Mono")
-  for (let o in options.array) {
+  for (let o of options.array) {
     const text = o.text,
           text_width = ctx.measureText(text).width,
           rect_width = text_width + options.gap,

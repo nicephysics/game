@@ -258,17 +258,17 @@ ui.drawMenu = function() {
           clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
     // draw (rounded) rectangle
     if (hovering) {
-      draw.setFillDarkenStroke("#b05f19")
+      draw.setFillDarkenStroke(ctx, "#b05f19")
     } else {
-      draw.setFillDarkenStroke("#b08819")
+      draw.setFillDarkenStroke(ctx, "#b08819")
     }
     if (clicking) {
-      draw.setFillDarkenStroke("#b04419")
+      draw.setFillDarkenStroke(ctx, "#b04419")
       o.onclick()
     }
     draw.setLineWidth(6)
     draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
-    draw.setFillNoStroke("#ffe7a6")
+    draw.setFillNoStroke(ctx, "#ffe7a6")
     draw._text(ctx, _width / 2, y, text, 0, "center")
     y += options.gap
   }

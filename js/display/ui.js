@@ -89,6 +89,10 @@ ui.hitrect = function(pos, x, y, w, h) {
   return pos && ( pos.x >= x && pos.y >= y && pos.x <= x + w && pos.y <= y + h )
 }
 
+ui.hitrectangle = function(pos, x, y, w, h) {
+  return ui.hitrect(pos, x - w / 2, y - h / 2, w, h)
+}
+
 ui.hitrectpoints = function(pos, x1, y1, x2, y2) {
   return pos && ( pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2 )
 }
@@ -224,7 +228,50 @@ ui.drawMenu = function() {
   draw.setFill(ctx, "#80b7ff")
   draw.setStroke(ctx, "#00367d")
   draw.setFont(ctx, "48px Roboto Condensed")
-    draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.time, "center")
+    draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.vars.time / 200, "center")
+  
+  // maybe some options?
+  const options = {
+    array: [
+      { text: "New Game",
+        onclick: function() {
+          game_start("tut1")
+        }
+      },
+      { text: "Upgrades",
+        onclick: function() {
+          // ?????
+        }
+      }
+    ],
+    font_size: 20,
+    gap: 60,
+  }
+  y = _height / 2 - options.gap * options.array.length
+  draw.setFont(ctx, options.font_size + "px Roboto Mono")
+  for (let o in options.array) {
+    const text = o.text,
+          text_width = ctx.measureText(text).width,
+          rect_width = text_width + options.gap,
+          rect_height = options.font_size + options.gap * 0.2,
+          hovering = ui.hitrectangle(mousepos, _width / 2, y, rect_width, rect_height),
+          clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
+    // draw (rounded) rectangle
+    if (hovering) {
+      draw.setFillDarkenStroke("#b05f19")
+    } else {
+      draw.setFillDarkenStroke("#b08819")
+    }
+    if (clicking) {
+      draw.setFillDarkenStroke("#b04419")
+      o.onclick()
+    }
+    draw.setLineWidth(6)
+    draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
+    draw.setFillNoStroke("#ffe7a6")
+    draw._text(ctx, _width / 2, y, text, 0, "center")
+    y += options.gap
+  }
   
   if (ui.released("enter")) {
     game_start("tut1")

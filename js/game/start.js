@@ -114,6 +114,54 @@ export const game_init = function() {
   ui.init(render)
 }
 
+let dropEnemyInterval = null
+const dropEnemies = []
+const dropEnemy = function() {
+  if (!ui.focused) {
+    return
+  }
+  let x = random.randreal(0, _width),
+      y = random.randreal(-50, -100)
+  const enemy = new Thing(Vector.create(x, y))
+  enemy.make(Enemy.randomEnemy())
+  enemy.make( { controlType: "enemy_menu" } )
+  enemy.create()
+  enemies.push(enemy)
+  dropEnemies.push(enemy)
+  const dir = math.degToRad(90),
+        vel = Vector.mult(
+          Vector.create( Math.cos(dir), Math.sin(dir) ),
+          8
+        )
+  enemy.body.direction = dir
+  enemy.body.initialVelocity = vel
+  Body.setVelocity(enemy.body, vel)
+}
+
+// called at the start of a game in the game
+export const game_start = function(name) {
+  Game.mode = "game"
+  
+  // add game things
+  refreshGameThings()
+  
+  // add the player!
+  const player = new Thing(Vector.create(_width * 0.5, _height - 100))
+  player.make(things.basic)
+  player.create()
+  player.rotateTo(random.angle())
+  Tower.player = player
+  
+  // initialize controls too
+  controls.init(render)
+  
+  // initialize waves...
+  waves.init(name)
+  
+  // remove menu enemy drop
+  clearInterval(dropEnemyInterval)
+}
+
 const addGameThings = function() {
   if (Game.mode === "game") {
     ground = Bodies.rectangle(_width / 2, _height + 10, _width * 10, 60, {
@@ -165,57 +213,14 @@ const removeGameThings = function() {
       Composite.remove(world, thing)
     }
   }
+  for (let e of dropEnemies) {
+    e.remove()
+  }
 }
 
 const refreshGameThings = function() {
   removeGameThings()
   addGameThings()
-}
-
-let dropEnemyInterval = null
-const dropEnemy = function() {
-  if (!ui.focused) {
-    return
-  }
-  let x = random.randreal(0, _width),
-      y = random.randreal(-50, -100)
-  const enemy = new Thing(Vector.create(x, y))
-  enemy.make(Enemy.randomEnemy())
-  enemy.make( { controlType: "enemy_menu" } )
-  enemy.create()
-  enemies.push(enemy)
-  const dir = math.degToRad(90),
-        vel = Vector.mult(
-          Vector.create( Math.cos(dir), Math.sin(dir) ),
-          8
-        )
-  enemy.body.direction = dir
-  enemy.body.initialVelocity = vel
-  Body.setVelocity(enemy.body, vel)
-}
-
-// called at the start of a game in the game
-export const game_start = function(name) {
-  Game.mode = "game"
-  
-  // add game things
-  refreshGameThings()
-  
-  // add the player!
-  const player = new Thing(Vector.create(_width * 0.5, _height - 100))
-  player.make(things.basic)
-  player.create()
-  player.rotateTo(random.angle())
-  Tower.player = player
-  
-  // initialize controls too
-  controls.init(render)
-  
-  // initialize waves...
-  waves.init(name)
-  
-  // remove menu enemy drop
-  clearInterval(dropEnemyInterval)
 }
 
 // called when the menu is opened

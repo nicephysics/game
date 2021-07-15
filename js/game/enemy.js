@@ -126,6 +126,7 @@ export class Enemy {
       e.createTemp()
       Enemy.drawEnemies[type] = e
     }
+    e.body.position = Vector.create(x, y)
     e.body.angle += math.degToRad(5)
     // draw enemy
     e.draw(render)

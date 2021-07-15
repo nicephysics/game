@@ -1031,6 +1031,9 @@ ui.drawGame = function() {
       controls.setPaused(false)
       clickpos = false
     }
+    if (ui.released("esc")) {
+      game_menu()
+    }
   }
   
   

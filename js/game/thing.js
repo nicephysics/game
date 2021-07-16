@@ -87,7 +87,6 @@ export class Thing {
   body = null // the most important thing!
   static = false
   exists = false
-  gravityScale = 1
   // draw stuffs
   shape = "circle" // default
   shapeType = "circle" // default, determined by shape
@@ -201,9 +200,6 @@ export class Thing {
     if (o.category != null) {
       this.collisionFilter = o.category
     }
-    if (o.gravityScale != null) {
-      this.gravityScale = o.gravityScale
-    }
     // type stuff
     if (o.gametype != null) {
       this.gametype = o.gametype
@@ -290,7 +286,7 @@ export class Thing {
     }
   }
   
-  // create BODY (why am I even capitalizing random words)
+  // create BODY (why am I capitalizing random words)
   createBody(temp = false) {
     if (this.body != null) {
       console.log("Body already exists! Removing body...")

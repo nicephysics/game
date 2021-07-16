@@ -27,6 +27,9 @@ export class ThingStat {
   size = 1
   speed = 1
   rotspeed = 1
+  gravityScale = 1
+  kineticFriction = null
+  staticFriction = null
   points = 0
   upgradetext = "normal"
   upgrade = { }
@@ -129,7 +132,7 @@ export class ThingStat {
       this.air = o.air
     }
     if (o.gravity != null) {
-      this.gravity = o.gravity
+      this.gravityScale = o.gravity
     }
     if (o.gravityScale != null) {
       this.gravityScale = o.gravityScale

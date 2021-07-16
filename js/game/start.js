@@ -230,7 +230,7 @@ export const game_menu = function() {
   refreshGameThings()
   // remove player and other Things
   if (Tower.player) {
-    Composite.remove(world, [ Tower.player ])
+    Tower.player.remove()
   }
   dropEnemyInterval = setInterval(dropEnemy, 250)
 }

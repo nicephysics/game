@@ -285,7 +285,6 @@ export class Gun {
       this.childrenTime.shift()
       const thing = this.children[0]
       thing.remove()
-      // Composite.remove(Thing.world, thing.body)
       this.children.shift()
     }
   }
@@ -297,7 +296,6 @@ export class Gun {
       this.childrenTime.splice(index, 1)
     }
     thing.remove()
-    // Composite.remove(Thing.world, thing.body)
   }
   
   setStatString(s) {
@@ -336,8 +334,8 @@ export class Gun {
         this.thing.guns.splice(index, 1);
       }
     }
-    for (let body of this.children) {
-      Composite.remove(Thing.world, body)
+    for (let child of this.children) {
+      child.remove()
     }
     this.thing = null
   }

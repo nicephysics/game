@@ -3,8 +3,12 @@ html {
   scroll-behavior: smooth !important;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, th, td {
+body, h1, h2, h3, h4, h5, h6 {
   font-family: "Roboto Condensed", sans-serif;
+}
+
+td, p {
+  font-family: "Roboto", sans-serif;  
 }
 
 .bar, h1, button, table thead tr {
@@ -46,7 +50,7 @@ a:active, a:hover {
 .table {
     border-collapse: collapse;
     margin: 25px 0;
-    font-size: 0.9em;
+    font-size: 1.25em;
     font-family: sans-serif;
     min-width: 400px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

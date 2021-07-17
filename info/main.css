@@ -3,11 +3,11 @@ html {
   scroll-behavior: smooth !important;
 }
 
-body, h1, h2, h3, h4, h5, h6, p {
+body, h1, h2, h3, h4, h5, h6, p, table {
   font-family: "Roboto Condensed", sans-serif;
 }
 
-.bar, h1, button {
+.bar, h1, button, table thead tr {
   font-family: "Roboto Mono", sans-serif;
 }
 
@@ -54,7 +54,7 @@ a:active, a:hover {
 .table thead tr {
     background-color: #269800; /* #009879; */
     color: #ffffff;
-    text-align: left;
+    text-align: center;
 }
 .table th, .table td {
     padding: 12px 15px;

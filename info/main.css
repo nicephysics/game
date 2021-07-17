@@ -62,10 +62,10 @@ a:active, a:hover {
 }
 .table th, .table td {
   padding: 12px 15px;
+  border-right: thin solid #dddddd;
 }
 .table tbody tr {
   border-bottom: thin solid #dddddd;
-  border-right: thin solid #dddddd;
 }
 .table tbody tr:nth-of-type(even) {
   background-color: #f3f3f3;

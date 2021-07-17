@@ -110,7 +110,7 @@ export class Controller {
         t.targetrot = Vector.angle(t.position, Tower.player.position)
         break
       case "menu":
-        // aim at the player!
+        // rotato
         Body.setAngle(t.body, t.angle + math.degToRad(2))
         break
       case "none":
@@ -172,7 +172,9 @@ export class Controller {
       angle: math.degToRad(random.randint(-15, 15)),
       time: ui.vars.time + time * config.FPS,
     })
-    Tower.player.addxp(reward * mult)
+    if (this.type != "enemy_menu" && Tower.player != null) {
+      Tower.player.addxp(reward * mult)
+    }
     t.remove()    
   }
   

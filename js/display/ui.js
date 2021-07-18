@@ -4,6 +4,7 @@ import { style } from "./style.js"
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Game } from "../game/game.js"
+import { stars } from "../game/stars.js"
 import { game_start, game_menu } from "../game/start.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
@@ -244,7 +245,6 @@ ui.drawMenu = function() {
         onclick: function() {
           v.star_show = true
           v.menu_options_show = false
-          game_start("tut1")
         },
       },
       { text: "Upgrades",
@@ -293,8 +293,25 @@ ui.drawMenu = function() {
     const overlayGap = 50 // CONST star overlay gap
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore() // restore the canvas to just a few lines above
-    // draw the boxes!
-    // TODO
+    // draw the star boxes!
+    const boxSize = 50,
+          boxGap = 30
+    y = overlayGap + boxGap + boxSize / 2
+    for (let star_key in stars.stars) {
+      const star = stars.stars[star_key],
+            unlocked = true
+      if (unlocked) {
+        draw.setFillNoStroke(ctx, "#d46a00")
+        draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
+        // TODO
+      } else {
+        // locked
+        draw.setFillNoStroke(ctx, "#6a6e7a")
+        draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
+        // TODO
+      }
+      y += boxSize + boxGap
+    }
     
     // temporary, remove
     if (ui.released("enter")) {

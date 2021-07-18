@@ -310,8 +310,9 @@ export class Thing {
             frictionStatic: s.staticFriction,
           }
     if (this.style.render != null && this.style.rendered) {
-      console.log("Rendering...", this.style.render)
       options.render = this.style.render
+    } else {
+      options.render = { visible: false }
     }
     let b = null,
         x = this.targetpos.x,

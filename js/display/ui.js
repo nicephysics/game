@@ -74,6 +74,7 @@ ui.vars = {
   enemy_texts: [ ],
   
   /* menu */
+  menu_options_show: true,
   star_show: false,
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
@@ -241,6 +242,8 @@ ui.drawMenu = function() {
     array: [
       { text: "Start",
         onclick: function() {
+          v.star_show = true
+          v.menu_options_show = false
           game_start("tut1")
         },
       },
@@ -253,42 +256,51 @@ ui.drawMenu = function() {
     font_size: 20,
     gap: 60,
   }
-  y = _height / 2 - options.gap * options.array.length
-  draw.setFont(ctx, options.font_size + "px Roboto Mono")
-  for (let o of options.array) {
-    const text = o.text,
-          text_width = ctx.measureText(text).width,
-          rect_width = text_width + options.gap,
-          rect_height = options.font_size + options.gap * 0.2,
-          hovering = ui.hitrectangle(mousepos, _width / 2, y, rect_width, rect_height),
-          clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
-    // draw (rounded) rectangle
-    if (hovering) {
-      draw.setFillDarkenStroke(ctx, "#b05f19")
-    } else {
-      draw.setFillDarkenStroke(ctx, "#b08819")
+  if (v.menu_options_show) {
+    y = _height / 2 - options.gap * options.array.length
+    draw.setFont(ctx, options.font_size + "px Roboto Mono")
+    for (let o of options.array) {
+      const text = o.text,
+            text_width = ctx.measureText(text).width,
+            rect_width = text_width + options.gap,
+            rect_height = options.font_size + options.gap * 0.2,
+            hovering = ui.hitrectangle(mousepos, _width / 2, y, rect_width, rect_height),
+            clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
+      // draw (rounded) rectangle
+      if (hovering) {
+        draw.setFillDarkenStroke(ctx, "#b05f19")
+      } else {
+        draw.setFillDarkenStroke(ctx, "#b08819")
+      }
+      if (clicking) {
+        draw.setFillDarkenStroke(ctx, "#b04419")
+        o.onclick()
+      }
+      draw.setLineWidth(ctx, 6)
+      draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
+      draw.setFillNoStroke(ctx, "#ffe7a6")
+      draw._text(ctx, _width / 2, y, text, 0, "center")
+      y += options.gap
     }
-    if (clicking) {
-      draw.setFillDarkenStroke(ctx, "#b04419")
-      o.onclick()
-    }
-    draw.setLineWidth(ctx, 6)
-    draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
-    draw.setFillNoStroke(ctx, "#ffe7a6")
-    draw._text(ctx, _width / 2, y, text, 0, "center")
-    y += options.gap
-  }
-  
-  /*
-  if (ui.released("enter")) {
-    game_start("tut1")
-  }
-  */
+  } // end menu options show
   
   // some stars?
   if (v.star_show) {
+    // draw overlay
+    draw.setFillNoStroke(ctx, "#ffb300") // CONST star overlay rect color
+    ctx.save() // save the canvas
+    draw.setGlobalAlpha(ctx, 0.80) // CONST star overlay rect opacity
+    const overlayGap = 50 // CONST star overlay gap
+      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
+    ctx.restore() // restore the canvas to just a few lines above
+    // draw the boxes!
+    // TODO
     
-  }
+    // temporary, remove
+    if (ui.released("enter")) {
+      game_start("tut1")
+    }
+  } // end star show
   
 }
 

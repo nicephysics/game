@@ -29,14 +29,7 @@ const Common = Matter.Common,
 ui.vars = {
   // constants
   
-  xp_bar_length_ratio: 0.50, // ratio of height
-  xp_bar_side_x: 30,
-  xp_bar_side_x_mouse: 60,
   xp_bar_color: "#ff801f",
-  
-  xp_ball_font_size: 20,
-  
-  xp_text_font_size: 15,
   
   health_heart_side_x: 25,
   health_heart_side_y: 20,
@@ -48,10 +41,13 @@ ui.vars = {
   c_icon_purple: "#27007a",
   
   // change
+  
+  /* main */
   time: 0,
   click: false,
   hover: { x: 0, y: 0 },
   
+  /* game */
   xp_bar_xp: 0,
   xp_bar_show: 1,
   
@@ -76,6 +72,11 @@ ui.vars = {
   },
   
   enemy_texts: [ ],
+  
+  /* menu */
+  star_show: false,
+  
+  end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
 
 ui.closeOverlay = function() {
@@ -185,7 +186,7 @@ ui.tickAfter = function() {
   let v = ui.vars,
       render = Thing.render,
       ctx = render.context
-  // clear click
+  // clear click (and hover too?)
   v.click = false
   // clear keypress
   ui.keypress.up = null
@@ -233,7 +234,7 @@ ui.drawMenu = function() {
   // maybe some options?
   const options = {
     array: [
-      { text: "New Game",
+      { text: "Start",
         onclick: function() {
           game_start("tut1")
         },
@@ -273,9 +274,11 @@ ui.drawMenu = function() {
     y += options.gap
   }
   
+  /*
   if (ui.released("enter")) {
     game_start("tut1")
   }
+  */
   
 }
 
@@ -325,9 +328,10 @@ ui.drawGame = function() {
           current = xp - math.towerxp(level),
           next = math.towerxpneeded(level),
           ratio = current / next,
-          rBall = 15 // CONST xp ball radius
-      x = _width - v.xp_bar_side_x * xp_show
-      height = v.xp_bar_length_ratio * _height
+      const rBall = 15, // CONST xp ball radius
+            xp_bar_side_x = 30
+      x = _width - xp_bar_side_x * xp_show
+      height = 0.5 * _height
       let y1 = _height / 2 - height / 2 - rBall * 2,
           y2 = y1 + height,
           mid = y2 - ratio * height,
@@ -348,15 +352,16 @@ ui.drawGame = function() {
       draw.setStroke(ctx, "transparent")
         draw._circle(ctx, x, yBall - 2, rBall)
       draw.setDarkFill(ctx, color)
-      draw.setFont(ctx, Math.floor(v.xp_ball_font_size) + "px Roboto Condensed")
+      draw.setFont(ctx, "20px Roboto Condensed")
         draw._text(ctx, x, yBall, level + "", 0, "center")
       // check mouse!
-      if (smoothing || ( mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
+      const xp_bar_side_x_mouse = 60
+      if (smoothing || ( mousepos && mousepos.x > (_width - xp_bar_side_x_mouse * xp_show) && mousepos.y > y1 - 10 && mousepos.y < y2 )) {
         draw.setLightFill(ctx, color)
-        draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
+        draw.setFont(ctx, "15px Roboto Condensed")
           draw._text(ctx, x - 15, mid, math.number(current) + "/" + math.number(next), 0, "right")
       }
-      if (mousepos && mousepos.x > (_width - v.xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
+      if (mousepos && mousepos.x > (_width - xp_bar_side_x_mouse * xp_show) && mousepos.y > yBall - rBall && mousepos.y < yBall + rBall) {
         draw.setLightFill(ctx, color)
         draw.setFont(ctx, Math.floor(v.xp_text_font_size) + "px Roboto Condensed")
           draw._text(ctx, x - rBall - 15, yBall, "Level " + Math.round(level), 0, "right")

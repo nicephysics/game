@@ -310,6 +310,7 @@ export class Thing {
             frictionStatic: s.staticFriction,
           }
     if (this.style.render != null && this.style.rendered) {
+      console.log("Rendering...", this.style.render)
       options.render = this.style.render
     }
     let b = null,

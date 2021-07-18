@@ -217,6 +217,7 @@ ui.drawMenu = function() {
         ctx = render.context,
         _width = render.options.width,
         _height = render.options.height
+  
   let mousepos = render.mouse.absolute,
       clickpos = v.click,
       x = 0,
@@ -225,13 +226,17 @@ ui.drawMenu = function() {
       width = 0,
       height = 0
   
-  // maybe some large text?
+  
+  // some large text
   draw.setFill(ctx, "#80b7ff")
   draw.setStroke(ctx, "#00367d")
   draw.setFont(ctx, "48px Roboto Condensed")
     draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.vars.time / 200, "center")
   
-  // maybe some options?
+  
+  
+  
+  // some options
   const options = {
     array: [
       { text: "Start",
@@ -280,6 +285,11 @@ ui.drawMenu = function() {
   }
   */
   
+  // some stars?
+  if (v.star_show) {
+    
+  }
+  
 }
 
 ui.drawGame = function() {
@@ -327,7 +337,7 @@ ui.drawGame = function() {
           level = math.towerlevel(Math.round(xp)),
           current = xp - math.towerxp(level),
           next = math.towerxpneeded(level),
-          ratio = current / next,
+          ratio = current / next
       const rBall = 15, // CONST xp ball radius
             xp_bar_side_x = 30
       x = _width - xp_bar_side_x * xp_show

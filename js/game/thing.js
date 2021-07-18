@@ -395,6 +395,7 @@ export class Thing {
     if (index > -1) {
       enemies.splice(index, 1)
     } else {
+      if (this.controller.type == "enemy_menu") return
       console.error("Enemy to remove not found in 'enemies' list: ", this)
     }
   }

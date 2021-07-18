@@ -316,6 +316,22 @@ draw.text = function(render, x, y, text, angle = 0, textAlign = "") {
   draw._text(ctx, x, y, text, angle, textAlign)
 }
 
+draw.cliprect = function(ctx, x, y, w, h) {
+  ctx = ctx || draw.ctx
+  ctx.save()
+  ctx.beginPath()
+    ctx.rect(x, y, w, h)
+  ctx.clip()
+}
+
+draw.cliprectangle = function(ctx, x, y, w, h) {
+  ctx = ctx || draw.ctx
+  ctx.save()
+  ctx.beginPath()
+    ctx.rect(x - w / 2, y - h / 2, w, h)
+  ctx.clip()
+}
+
 draw.gun = function(render, x, y, length, height, aspect, angle) {
   x -= render.bounds.min.x
   y -= render.bounds.min.y

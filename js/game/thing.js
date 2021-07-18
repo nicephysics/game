@@ -93,6 +93,7 @@ export class Thing {
   vertices = [] // import java.*.*; Matter.Vector[] v = new Matter.Vector[5]()
   accessories = [] // typedef std::array<std::pair<std::string, int>> accessories_t (e.g. { type: "C++", layer: -1 to 5 })
   style = { // cascading _____ sheets
+    rendered: false,
     render: null, // matter render style
     // other styles? todo
   }
@@ -214,6 +215,9 @@ export class Thing {
     if (o.render != null) {
       this.style.render = o.render
     }
+    if (o.rendered != null) {
+      this.style.rendered = o.rendered
+    }
     // game stuff (A LOT!)
     if (o.guns != null) {
       this.createGuns(o.guns)
@@ -305,7 +309,7 @@ export class Thing {
             friction: s.kineticFriction,
             frictionStatic: s.staticFriction,
           }
-    if (this.style.render != null) {
+    if (this.style.render != null && this.style.rendered) {
       options.render = this.style.render
     }
     let b = null,

@@ -1,18 +1,33 @@
 import { math } from "../util/math.js"
 
-export var color = { }
+export var C = { }
 export var theme = { }
 
 theme.default = {
-  black: "#000000",
-  white: "#FFFFFF",
+  // grayscale colours
+  black:         "#000000", // !
+  white:         "#ffffff", // !
+  grey:          "#6a6e7a", // !
+  locked:        "#6a6e7a", // locked
+  // red colours
+  orange:        "#d46a00", // xp bar base color
+  // yellow colours
+  // green colours
+  // blue colours
+  cyan:          "#00ffee", // upgrade overlay
+  button:        "#00ffee", // button
+  button_hover:  "#00ada2", // button hover
+  // purple colours
+  purple:        "#27007a", // icons?
+  // misc colours
 }
 
 theme.set = function(type) {
   const t = theme[type]
   for (let k in t) {
-    color[k] = t[k]
+    C[k] = t[k]
   }
 }
 
+// init (default)
 theme.set("default")

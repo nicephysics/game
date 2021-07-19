@@ -87,3 +87,6 @@ a:active, a:hover {
   font-weight: bold;
   color: #269800;
 }
+.table tbody tr.hidden-link {
+  color: #000000;
+}

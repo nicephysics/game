@@ -9,7 +9,10 @@ theme.default = {
 }
 
 theme.set = function(type) {
-  color = theme[type]
+  const t = theme[type]
+  for (let k in t) {
+    color[k] = t[k]
+  }
 }
 
 theme.set("default")

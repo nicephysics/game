@@ -1,4 +1,5 @@
 import { draw } from "./draw.js"
+import { C, theme } from "./color.js"
 import { style } from "./style.js"
 
 import { controls } from "../game/controls.js"
@@ -37,8 +38,6 @@ ui.vars = {
   health_heart_size: 20,
   health_text_size: 20,
   
-  c_button: "#00ffee",
-  c_button_hover: "#00ada2", // (was #ff7700)
   c_icon_purple: "#27007a",
   
   // change
@@ -230,8 +229,8 @@ ui.drawMenu = function() {
   
   
   // some large text
-  draw.setFill(ctx, "#80b7ff")
-  draw.setStroke(ctx, "#00367d")
+  draw.setFill(ctx, C.lightblue)
+  draw.setStroke(ctx, C.darkblue)
   draw.setFont(ctx, "48px Roboto Condensed")
     draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.vars.time / 200, "center")
   
@@ -287,26 +286,27 @@ ui.drawMenu = function() {
   // some stars?
   if (v.star_show) {
     // draw overlay
-    draw.setFillNoStroke(ctx, "#ffb300") // CONST star overlay rect color
+    draw.setFillNoStroke(ctx, C.cyan) // CONST star overlay rect color
     ctx.save() // save the canvas
     draw.setGlobalAlpha(ctx, 0.80) // CONST star overlay rect opacity
     const overlayGap = 50 // CONST star overlay gap
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore() // restore the canvas to just a few lines above
     // draw the star boxes!
-    const boxSize = 50,
-          boxGap = 30
+    const boxSize = 80,
+          boxGap = 20
     y = overlayGap + boxGap + boxSize / 2
     for (let star_key in stars.stars) {
+      x = overlayGap * 1.5
       const star = stars.stars[star_key],
             unlocked = true
       if (unlocked) {
-        draw.setFillNoStroke(ctx, "#d46a00")
+        draw.setFillNoStroke(ctx, C.orange)
         draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
-        // TODO
+        // draw star
       } else {
         // locked
-        draw.setFillNoStroke(ctx, "#6a6e7a")
+        draw.setFillNoStroke(ctx, C.locked)
         draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
         // TODO
       }
@@ -436,11 +436,11 @@ ui.drawGame = function() {
     size = 16 // CONST upgrade button size
     x = _width - size - 11 // CONST upgrade button right side gap
     y = _height - size - 100 // CONST upgrade button 
-    let color = v.c_button
+    let color = C.button
     const mouseBoxSize = size * 1.1 // CONST upgrade button mouse box ratio
     if ( !v.something_show() && mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST upgrade button hover size change
-      color = v.c_button_hover
+      color = C.button_hover
       mousepos = false
     }
     if ( !v.something_show() && clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
@@ -453,7 +453,7 @@ ui.drawGame = function() {
       draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
     const statSymbolSize = 0.6 // CONST upgrade button symbol size
-    draw.setStrokeNoFill(ctx, v.c_icon_purple)
+    draw.setStrokeNoFill(ctx, C.purple)
     draw.setLineWidth(ctx, 4) // CONST upgrade button symbol line width
     y += size * statSymbolSize
       draw._line(ctx, x, y, x, y - size * 1.2)
@@ -655,11 +655,11 @@ ui.drawGame = function() {
     size = 14 // CONST tier up button size
     x = playerX
     y = playerY - playerSize - size - 20 // CONST tier up button-body gap
-    let color = v.c_button // CONST tier up button color
+    let color = C.button // CONST tier up button color
     const mouseBoxSize = size * 1.1 // CONST tier up button mouse box ratio
     if ( mousepos && Math.abs(mousepos.x - x) < mouseBoxSize && Math.abs(mousepos.y - y) < mouseBoxSize ) {
       size *= 1.0 // CONST tier up button hover size change
-      color = v.c_button_hover // CONST tier up button hover color (changed from #0095ff)
+      color = C.button_hover // CONST tier up button hover color (changed from #0095ff)
     }
     if ( clickpos && Math.abs(clickpos.x - x) < mouseBoxSize && Math.abs(clickpos.y - y) < mouseBoxSize ) {
       v.tier_up_show = true
@@ -673,7 +673,7 @@ ui.drawGame = function() {
     const upSymbolSize = 0.7, // CONST
           arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, v.c_icon_purple) // CONST tier up button symbol color (was #0c9400 and #ff7700)
+    draw.setStroke(ctx, C.purple) // CONST tier up button symbol color (was #0c9400 and #ff7700)
     draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
@@ -688,7 +688,7 @@ ui.drawGame = function() {
   
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
-    draw.setFillNoStroke(ctx, "#13f2d8") // CONST tier up overlay rect color (was #00ffee)
+    draw.setFillNoStroke(ctx, C.cyan) // CONST tier up overlay rect color
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.75) // CONST tier up overlay rect opacity (was 0.6)
     const overlayGap = 50
@@ -799,13 +799,13 @@ ui.drawGame = function() {
   
   if (!v.something_show()) {
     const waveshow = v.wave_show
-    let buttoncolor = v.c_button
+    let buttoncolor = C.button
     x = _width / 2
     y = 0
     size = 30
     
     if (ui.hitrect(mousepos, x - size / 2, y - size / 2, size, size)) {
-      buttoncolor = v.c_button_hover
+      buttoncolor = C.button_hover
       mousepos = false
     }
     if (ui.hitrect(clickpos, x - size / 2, y - size / 2, size, size)) {
@@ -894,7 +894,7 @@ ui.drawGame = function() {
           xx += ctx.measureText(recttext).width + 10
           yy = y + rectgap + rectheight / 2
           recttext = wave.sep + " s apart"
-          draw.setFillNoStroke(ctx, v.c_icon_purple)
+          draw.setFillNoStroke(ctx, C.purple)
           draw._text(ctx, xx, yy, recttext, 0, "left")
           
           // TODO here
@@ -996,9 +996,9 @@ ui.drawGame = function() {
     }
     x = (_width + rectwidth) / 2 - circleSize / 2
     y = _height / 2
-    let buttonColor = v.c_button
+    let buttonColor = C.button
     if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
-      buttonColor = v.c_button_hover
+      buttonColor = C.button_hover
       mousepos = false
     }
     draw.setFillDarkenStroke(ctx, buttonColor)
@@ -1008,7 +1008,7 @@ ui.drawGame = function() {
       draw.setFont(ctx, "16px Roboto Condensed") // same
         draw._text(ctx, x, y + 2, "OK", 0, "center")
     } else {
-      draw.setStrokeNoFill(ctx, v.c_icon_purple)
+      draw.setStrokeNoFill(ctx, C.purple)
       draw.setLineWidth(ctx, 3)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)

@@ -14,7 +14,9 @@ theme.default = {
   // yellow colours
   // green colours
   // blue colours
-  cyan:          "#00ffee", // upgrade overlay
+  lightblue:     "#add1ff", // blue text probably
+  darkblue:      "#00367d", // blue text probably
+  cyan:          "#13f2d8", // tier up overlay / other overlay
   button:        "#00ffee", // button
   button_hover:  "#00ada2", // button hover
   // purple colours

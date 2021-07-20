@@ -26,14 +26,22 @@ draw.setStroke = function(ctx, stroke) {
   ctx.strokeStyle = stroke
 }
 
+draw.setNoFill = function(ctx) {
+  draw.setFill(ctx, "transparent")
+}
+
+draw.setNoStroke = function(ctx) {
+  draw.setStroke(ctx, "transparent")
+}
+
 draw.setFillNoStroke = function(ctx, fill) {
   draw.setFill(ctx, fill)
-  draw.setStroke(ctx, "transparent")
+  draw.setNoStroke(ctx)
 }
 
 draw.setStrokeNoFill = function(ctx, stroke) {
   draw.setStroke(ctx, stroke)
-  draw.setFill(ctx, "transparent")
+  draw.setNoFill(ctx)
 }
 
 draw.setDarkFill = function(ctx, fill, dark = 1) {

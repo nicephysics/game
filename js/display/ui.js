@@ -79,6 +79,8 @@ ui.vars = {
   /* menu */
   menu_options_show: true,
   star_show: false,
+  planet_show: false,
+  current_star_key: "",
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
@@ -349,6 +351,10 @@ ui.drawMenu = function() {
           }
           draw.setFillNoStroke(ctx, boxColor)
         }
+        if (boxClick) {
+          v.planet_show = true
+          v.current_star_key = star_key
+        }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
         const starContentWidth = boxSize * 1.4
@@ -388,20 +394,27 @@ ui.drawMenu = function() {
       }
     }
     
-    // temporary, remove
     if ( ui.released("escape") ||
          ui.hitoutsiderect(clickpos, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
        ) {
       v.star_show = false
       v.menu_options_show = true
     } else if (ui.released("enter")) {
+      // temporary, remove
       game_start("tut1")
     }
   } // end star show
   
   if (v.planet_show) {
     // draw full black overlay
+    const star = stars.stars[v.current_star_key],
+          planets = star.planets
     
+    if ( ui.released("escape") ) {
+      v.planet_show = false
+      v.current_star_key = ""
+      v.star_show = true
+    }
   } // end planet show
   
 }

@@ -46,6 +46,9 @@ ui.vars = {
   time: 0,
   click: false,
   hover: { x: 0, y: 0 },
+  clicktime: 0,
+  hovertime: 0,
+  hoverstring: "",
   
   /* game */
   xp_bar_xp: 0,
@@ -145,6 +148,9 @@ ui.init = function(render) {
   window.addEventListener("mouseup", function(event) {
     v.click = mouse.absolute
   })
+  window.addEventListener("touchend", function(event) {
+    v.click = mouse.absolute
+  })
   window.addEventListener("keydown", function(event) {
     if (event.isComposing || event.keyCode === 229) {
       return;
@@ -192,6 +198,12 @@ ui.tickAfter = function() {
       render = Thing.render,
       ctx = render.context
   // clear click (and hover too?)
+  if (v.click != false) {
+    // increment click time
+    v.clicktime++
+  } else {
+    v.clicktime = 0
+  }
   v.click = false
   // clear keypress
   ui.keypress.up = null
@@ -271,8 +283,16 @@ ui.drawMenu = function() {
             clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
       // draw (rounded) rectangle
       if (hovering) {
-        draw.setFillDarkenStroke(ctx, "#b05f19")
+        v.hovertime++
+        v.hoverstring = "menu option " + text
+        const hoverPercent = Math.min(100, v.hovertime * 3.5),
+              hoverColor = chroma.mix("#b08819", "#b05f19", hoverPercent / 100, 'lch')
+        draw.setFillDarkenStroke(ctx, hoverColor)
       } else {
+        if (v.hoverstring === "menu option " + text) {
+          v.hovertime = 0
+          v.hoverstring = ""
+        }
         draw.setFillDarkenStroke(ctx, "#b08819")
       }
       if (clicking) {
@@ -314,11 +334,19 @@ ui.drawMenu = function() {
         if (star.boxcolor != null) {
           boxColor = star.boxcolor
         }
-        const boxHover = ui.hitrectangle(mousepos, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
+        const boxHover = ui.hitrectangle(mousepos, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize),
+              boxClick = ui.hitrectangle(clickpos, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         if (boxHover) {
-          draw.setLightFill(ctx, boxColor, 0.5)
+          v.hovertime++
+          v.hoverstring = "star: " + star_key
+          const hoverPercent = Math.min(50, v.hovertime * 2) // maximum 50 percent
+          draw.setLightFill(ctx, boxColor, hoverPercent / 100)
           draw.setNoStroke(ctx)
         } else {
+          if (v.hoverstring === "star: " + star_key) {
+            v.hovertime = 0
+            v.hoverstring = ""
+          }
           draw.setFillNoStroke(ctx, boxColor)
         }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
@@ -370,6 +398,11 @@ ui.drawMenu = function() {
       game_start("tut1")
     }
   } // end star show
+  
+  if (v.planet_show) {
+    // draw full black overlay
+    
+  } // end planet show
   
 }
 

@@ -287,7 +287,7 @@ ui.drawMenu = function() {
       if (hovering) {
         v.hovertime++
         v.hoverstring = "menu option " + text
-        const hoverPercent = Math.min(100, v.hovertime * 3.5),
+        const hoverPercent = Math.min(100, v.hovertime * 7),
               hoverColor = chroma.mix("#b08819", "#b05f19", hoverPercent / 100, 'lch')
         draw.setFillDarkenStroke(ctx, hoverColor)
       } else {
@@ -341,7 +341,7 @@ ui.drawMenu = function() {
         if (boxHover) {
           v.hovertime++
           v.hoverstring = "star: " + star_key
-          const hoverPercent = Math.min(50, v.hovertime * 2) // maximum 50 percent
+          const hoverPercent = Math.min(50, v.hovertime * 4) // maximum 50 percent
           draw.setLightFill(ctx, boxColor, hoverPercent / 100)
           draw.setNoStroke(ctx)
         } else {
@@ -352,6 +352,7 @@ ui.drawMenu = function() {
           draw.setFillNoStroke(ctx, boxColor)
         }
         if (boxClick) {
+          v.star_show = false
           v.planet_show = true
           v.current_star_key = star_key
         }
@@ -411,9 +412,9 @@ ui.drawMenu = function() {
           planets = star.planets
     
     if ( ui.released("escape") ) {
+      v.star_show = true
       v.planet_show = false
       v.current_star_key = ""
-      v.star_show = true
     }
   } // end planet show
   

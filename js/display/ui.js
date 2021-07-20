@@ -407,14 +407,37 @@ ui.drawMenu = function() {
   } // end star show
   
   if (v.planet_show) {
-    // draw full black overlay
     const star = stars.stars[v.current_star_key],
           planets = star.planets
-    
+    // draw full black overlay
+    draw.setFillNoStroke(ctx, C.black)
+    if (star.background != null) {
+      draw.setFillNoStroke(ctx, star.background)
+    }
+    draw._rect(ctx, 0, 0, _width, _height)
+    // draw star in the middle
+    const realStarSize = 50 * star.size,
+          dispStarWobble = 10 * (star.wobble || 0),
+          wobblePeriod = star.wobblePeriod || 10,
+          dispStarSize = realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)
+    draw.setFillNoStroke(ctx, star.color)
+    if (star.stroke != null) {
+      draw.setStroke(ctx, star.stroke)
+    }
+    if (star.lineWidth != null) {
+      draw.setLineWidth(ctx, star.lineWidth)
+    } else {
+      draw.setLineWidth(ctx, 0)
+    }
+    // draw the star circle!
+    draw._circle(ctx, _width / 2, _height / 2, dispStarSize)
+    // TODO planets
     if ( ui.released("escape") ) {
       v.star_show = true
       v.planet_show = false
       v.current_star_key = ""
+    } else if ( ui.released("enter") ) {
+      // nothing for now
     }
   } // end planet show
   

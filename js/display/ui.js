@@ -310,10 +310,16 @@ ui.drawMenu = function() {
         continue
       }
       if (unlocked) {
+        let boxColor = C.orange
         if (star.boxcolor != null) {
-          draw.setFillNoStroke(ctx, star.boxcolor)
+          boxColor = star.boxcolor
+        }
+        const boxHover = ui.hitrectangle(mousepos, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
+        if (boxHover) {
+          draw.setLightFill(ctx, boxColor, 0.5)
+          draw.setNoStroke(ctx)
         } else {
-          draw.setFillNoStroke(ctx, C.orange)
+          draw.setFillNoStroke(ctx, boxColor)
         }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
@@ -334,13 +340,14 @@ ui.drawMenu = function() {
         // draw the circle for the star!
         draw._circle(ctx, x, y, dispStarSize / 2)
         // draw the star text!
-        x += starContentWidth / 2 + 30
+        x += starContentWidth / 2 + 5
         draw.setFillNoStroke(ctx, C.darkblue)
         draw.setFont(ctx, "28px Roboto Condensed")
         draw._text(ctx, x, y - 10, star.name, 0, "left")
         draw.setFillNoStroke(ctx, C.darkpurple)
         draw.setFont(ctx, "16px Roboto Condensed")
         draw._text(ctx, x, y + 20, star.description, 0, "left")
+        // add a progress bar?
         // finally create a gap for the next box
         y += boxSize + boxGap
       } else {

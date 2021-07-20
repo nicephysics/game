@@ -53,6 +53,12 @@ math.powersum = function(power, n, mult = 1) {
   return mult * ( (Math.pow(n + 1, power) - 1) / (power - 1) )
 }
 
+math.max = Math.max
+math.min = Math.min
+math.bound = function(n, min, max) {
+  return Math.min(max, Math.max(min, n))
+}
+
 math.rand = Math.random
 
 math.randreal = function(low, high) {

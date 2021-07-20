@@ -91,6 +91,10 @@ ui.hitrect = function(pos, x, y, w, h) {
   return pos && ( pos.x >= x && pos.y >= y && pos.x <= x + w && pos.y <= y + h )
 }
 
+ui.hitoutsiderect = function(pos, x, y, w, h) {
+  return pos && ( pos.x <= x || pos.x >= x + w || pos.y <= y || pos.y >= y + h )
+}
+
 ui.hitrectangle = function(pos, x, y, w, h) {
   return ui.hitrect(pos, x - w / 2, y - h / 2, w, h)
 }
@@ -302,6 +306,9 @@ ui.drawMenu = function() {
       x = overlaySideGap + contentSideGap
       const star = stars.stars[star_key],
             unlocked = true
+      if (star.secret) {
+        continue
+      }
       if (unlocked) {
         if (star.boxcolor != null) {
           draw.setFillNoStroke(ctx, star.boxcolor)
@@ -310,7 +317,8 @@ ui.drawMenu = function() {
         }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
-        x += boxSize * 0.7
+        const starContentWidth = boxSize * 1.4
+        x += starContentWidth / 2
         const realStarSize = boxSize * 0.6 * Math.pow(star.size, 0.5),
               dispStarSize = math.bound(realStarSize, boxSize * 0.1, boxSize * 0.9),
               cutoffRatio = dispStarSize / realStarSize // should be 1 most of the time...
@@ -325,17 +333,29 @@ ui.drawMenu = function() {
         }
         // draw the circle for the star!
         draw._circle(ctx, x, y, dispStarSize / 2)
+        // draw the star text!
+        x += starContentWidth / 2 + 30
+        draw.setFont(ctx, "")
+        draw._text(ctx, x, y, star.name, 0, "left")
+        // finally create a gap for the next box
+        y += boxSize + boxGap
       } else {
         // locked
         draw.setFillNoStroke(ctx, C.locked)
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap - contentSideGap) * 2, boxSize)
         // TODO
+        // finally create a gap for the next box (might be smaller than the unlocked star???)
+        y += boxSize + boxGap
       }
-      y += boxSize + boxGap
     }
     
     // temporary, remove
-    if (ui.released("enter")) {
+    if ( ui.released("esc") ||
+         ui.hitoutsiderect(clickpos, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
+       ) {
+      v.star_show = false
+      v.menu_options_show = true
+    } else if (ui.released("enter")) {
       game_start("tut1")
     }
   } // end star show

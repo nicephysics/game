@@ -470,7 +470,7 @@ ui.drawGame = function() {
       draw._rectangle(ctx, x, y, size * 2, size * 2)
     // draw up symbol time
     const statSymbolSize = 0.6 // CONST upgrade button symbol size
-    draw.setStrokeNoFill(ctx, C.purple)
+    draw.setStrokeNoFill(ctx, C.darkpurple)
     draw.setLineWidth(ctx, 4) // CONST upgrade button symbol line width
     y += size * statSymbolSize
       draw._line(ctx, x, y, x, y - size * 1.2)
@@ -690,7 +690,7 @@ ui.drawGame = function() {
     const upSymbolSize = 0.7, // CONST
           arrowSize = 0.5 // CONST
     draw.setFill(ctx, "transparent")
-    draw.setStroke(ctx, C.purple) // CONST tier up button symbol color (was #0c9400 and #ff7700)
+    draw.setStroke(ctx, C.darkpurple) // CONST tier up button symbol color (was #0c9400 and #ff7700)
     draw.setLineWidth(ctx, 3) // CONST tier up button symbol line width
     draw._line(ctx, x, y - size * upSymbolSize, x - size * arrowSize, y - size * (upSymbolSize - arrowSize))
     draw._line(ctx, x, y - size * upSymbolSize, x + size * arrowSize, y - size * (upSymbolSize - arrowSize))
@@ -911,7 +911,7 @@ ui.drawGame = function() {
           xx += ctx.measureText(recttext).width + 10
           yy = y + rectgap + rectheight / 2
           recttext = wave.sep + " s apart"
-          draw.setFillNoStroke(ctx, C.purple)
+          draw.setFillNoStroke(ctx, C.darkpurple)
           draw._text(ctx, xx, yy, recttext, 0, "left")
           
           // TODO here
@@ -1025,7 +1025,7 @@ ui.drawGame = function() {
       draw.setFont(ctx, "16px Roboto Condensed") // same
         draw._text(ctx, x, y + 2, "OK", 0, "center")
     } else {
-      draw.setStrokeNoFill(ctx, C.purple)
+      draw.setStrokeNoFill(ctx, C.darkpurple)
       draw.setLineWidth(ctx, 3)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
         draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)

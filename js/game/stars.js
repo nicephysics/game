@@ -69,7 +69,7 @@ stars.stars = {
       "https://arxiv.org/pdf/1611.03495.pdf#page=3", // {2} for the star's mass and radius
     ],
   },
-  sun: {
+  test: {
     name: "Surreal Star",
     short: "★",
     secret: false,

@@ -303,8 +303,12 @@ ui.drawMenu = function() {
       const star = stars.stars[star_key],
             unlocked = true
       if (unlocked) {
-        draw.setFillNoStroke(ctx, C.orange)
-        draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap - contentSideGap) * 2, boxSize)
+        if (star.boxcolor != null) {
+          draw.setFillNoStroke(ctx, star.boxcolor)
+        } else {
+          draw.setFillNoStroke(ctx, C.orange)
+        }
+        draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
         x += boxSize * 0.7
         const realStarSize = boxSize * 0.6 * Math.pow(star.size, 0.5),
@@ -317,7 +321,7 @@ ui.drawMenu = function() {
         if (star.lineWidth != null) {
           draw.setLineWidth(ctx, star.lineWidth)
         } else {
-          draw.setLineWidth(ctx, 2 * cutoffRatio) // can consider doing a Math.pow(cutoffRatio, 0.5) or something here
+          draw.setLineWidth(ctx, 4 * cutoffRatio) // can consider doing a Math.pow(cutoffRatio, 0.5) or something here
         }
         // draw the circle for the star!
         draw._circle(ctx, x, y, dispStarSize / 2)

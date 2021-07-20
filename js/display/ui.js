@@ -293,13 +293,13 @@ ui.drawMenu = function() {
     draw.setFillNoStroke(ctx, C.cyan) // CONST star overlay rect color
     ctx.save() // save the canvas
     draw.setGlobalAlpha(ctx, 0.80) // CONST star overlay rect opacity
-    const overlayTopGap = 50, // CONST star overlay gap
-          overlaySideGap = 150,
-          contentSideGap = 50
+    const overlayTopGap = _height * 0.05, // CONST star overlay gap
+          overlaySideGap = _width * 0.1,
+          contentSideGap = _width * 0.05
       draw._rect(ctx, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
     ctx.restore() // restore the canvas to just a few lines above
     // draw the star boxes!
-    const boxSize = 80,
+    const boxSize = Math.min(80, _height * 0.2),
           boxGap = 20
     y = overlayTopGap + boxGap + boxSize / 2
     for (let star_key in stars.stars) {
@@ -335,8 +335,8 @@ ui.drawMenu = function() {
         draw._circle(ctx, x, y, dispStarSize / 2)
         // draw the star text!
         x += starContentWidth / 2 + 30
-        draw.setFont(ctx, "")
-        draw._text(ctx, x, y, star.name, 0, "left")
+        draw.setFont(ctx, "20px Roboto Condensed")
+        draw._text(ctx, x, y - 2, star.name, 0, "left")
         // finally create a gap for the next box
         y += boxSize + boxGap
       } else {

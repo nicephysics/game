@@ -361,7 +361,7 @@ ui.drawMenu = function() {
     }
     
     // temporary, remove
-    if ( ui.released("esc") ||
+    if ( ui.released("escape") ||
          ui.hitoutsiderect(clickpos, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
        ) {
       v.star_show = false

@@ -51,6 +51,7 @@ waves.start = function() {
 }
 
 waves.end = function() {
+  if (waves.waves == null) return
   const W = waves.waves,
         curr = waves.current,
         currtext = W.endtext[curr]

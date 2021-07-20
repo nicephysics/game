@@ -337,7 +337,7 @@ ui.drawMenu = function() {
         x += starContentWidth / 2 + 30
         draw.setFillNoStroke(ctx, C.darkblue)
         draw.setFont(ctx, "28px Roboto Condensed")
-        draw._text(ctx, x, y - 20, star.name, 0, "left")
+        draw._text(ctx, x, y - 10, star.name, 0, "left")
         draw.setFillNoStroke(ctx, C.darkpurple)
         draw.setFont(ctx, "16px Roboto Condensed")
         draw._text(ctx, x, y + 20, star.description, 0, "left")

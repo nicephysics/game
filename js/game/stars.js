@@ -13,6 +13,7 @@ stars.stars = {
   tutorial: {
     name: "Proxima Centauri",
     short: "α Cen C", // actually
+    secret: false,
     description: "Proxima Centauri is the nearest star to the Sun, four and a quarter light-years away.",
     game_description: "The tutorial star!",
     color: "#b03517",
@@ -69,14 +70,28 @@ stars.stars = {
     ],
   },
   sun: {
+    name: "Surreal Star",
+    short: "★",
+    secret: false,
+    description: "Testing stuff.",
+    game_description: "Just a test...",
+    color: "#ff00aa", // pink
+    stroke: null,
+    size: 1.00,
+    mass: 1.00,
+    planets: [],
+    references: [],
+  },
+  sun: {
     name: "The Sun",
     short: "☉",
-    planets: [], // TODO
+    secret: true,
     description: "The Sun is the Sun. The Sun. Sun. sun. un. n.",
     game_description: "A secret star... not really.",
     color: "#f8ff3d", // default yellow, slightly light
     size: 1.00,
     mass: 1.00,
+    planets: [],
     references: [ // haha
       "https://en.wikipedia.org/wiki/Sun", // {7}
       "https://en.wikipedia.org/wiki/Solar_System", // {8}

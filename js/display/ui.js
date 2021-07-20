@@ -289,25 +289,42 @@ ui.drawMenu = function() {
     draw.setFillNoStroke(ctx, C.cyan) // CONST star overlay rect color
     ctx.save() // save the canvas
     draw.setGlobalAlpha(ctx, 0.80) // CONST star overlay rect opacity
-    const overlayGap = 50 // CONST star overlay gap
-      draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
+    const overlayTopGap = 50, // CONST star overlay gap
+          overlaySideGap = 150,
+          contentSideGap = 50
+      draw._rect(ctx, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
     ctx.restore() // restore the canvas to just a few lines above
     // draw the star boxes!
     const boxSize = 80,
           boxGap = 20
-    y = overlayGap + boxGap + boxSize / 2
+    y = overlayTopGap + boxGap + boxSize / 2
     for (let star_key in stars.stars) {
-      x = overlayGap * 1.5
+      x = overlaySideGap + contentSideGap
       const star = stars.stars[star_key],
             unlocked = true
       if (unlocked) {
         draw.setFillNoStroke(ctx, C.orange)
-        draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
-        // draw star
+        draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap - contentSideGap) * 2, boxSize)
+        // draw star: (fit width = boxSize * 1.4)
+        x += boxSize * 0.7
+        const realStarSize = boxSize * 0.6 * Math.pow(star.size, 0.5),
+              dispStarSize = math.bound(realStarSize, boxSize * 0.1, boxSize * 0.9),
+              cutoffRatio = dispStarSize / realStarSize // should be 1 most of the time...
+        draw.setFillDarkenStroke(ctx, star.color)
+        if (star.stroke != null) {
+          draw.setStroke(ctx, star.stroke)
+        }
+        if (star.lineWidth != null) {
+          draw.setLineWidth(ctx, star.lineWidth)
+        } else {
+          draw.setLineWidth(ctx, 2 * cutoffRatio) // can consider doing a Math.pow(cutoffRatio, 0.5) or something here
+        }
+        // draw the circle for the star!
+        draw._circle(ctx, x, y, dispStarSize / 2)
       } else {
         // locked
         draw.setFillNoStroke(ctx, C.locked)
-        draw._rectangle(ctx, _width / 2, y, _width - overlayGap * 3, boxSize)
+        draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap - contentSideGap) * 2, boxSize)
         // TODO
       }
       y += boxSize + boxGap
@@ -419,9 +436,9 @@ ui.drawGame = function() {
     x = _width - v.health_heart_side_x
     y = _height - 20 - v.health_heart_side_y
     size = v.health_heart_size
-    draw.setFillNoStroke(ctx, "#d41111") // CONST health heart color (was #662c2c)
+    draw.setFillNoStroke(ctx, C.deepred)
       draw._heart(ctx, x, y, size, size)
-    draw.setTextLightFill(ctx, "#d41111") // CONST health heart text color (was #e88484 without lightening)
+    draw.setTextLightFill(ctx, C.deepred)
     draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto Condensed")
       draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }

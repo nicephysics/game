@@ -10,6 +10,7 @@ theme.default = {
   grey:          "#6a6e7a", // !
   locked:        "#6a6e7a", // locked
   // red colours
+  deepred:       "#d41111", // red text and heart and health colour
   orange:        "#d46a00", // xp bar base color
   // yellow colours
   // green colours
@@ -20,8 +21,9 @@ theme.default = {
   button:        "#00ffee", // button
   button_hover:  "#00ada2", // button hover
   // purple colours
-  purple:        "#27007a", // icons?
+  darkpurple:        "#27007a", // icons?
   // misc colours
+  wow:           "#6EQUJ5", // Wow!
 }
 
 theme.set = function(type) {

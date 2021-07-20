@@ -87,6 +87,10 @@ import('./game/waves.js').then(m => {
 
 // display
 var disp = { }
+import('./display/color.js').then(m => {
+  disp.C = m.C
+  disp.theme = m.theme
+})
 import('./display/draw.js').then(m => {
   disp.draw = m.draw
 })

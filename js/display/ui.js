@@ -84,6 +84,7 @@ ui.vars = {
   current_star_key: "",
   
   planet_system_scale: 1,
+  planet_system_target_scale: 1,
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
@@ -168,7 +169,8 @@ ui.init = function(render) {
   })
   window.addEventListener("wheel", function(event) {
     console.log(event)
-    ui.vars.scroll = event.deltaY
+    const y = event.deltaY
+    ui.vars.scroll = y / Math.abs(y)
   })
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === "visible") {
@@ -421,8 +423,9 @@ ui.drawMenu = function() {
           planets = star.planets
     // if scrolled
     if (v.scroll != 0) {
-      v.planet_system_scale /= 1 + v.scroll
+      v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
     }
+    v.planet_system_scale = math.lerp(v.planet_system_scale, v.planet_system_target_scale, 0.1)
     // then get the planetary system's scale
     let scale = v.planet_system_scale
     // draw full black overlay

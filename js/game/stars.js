@@ -19,6 +19,7 @@ stars.stars = {
     color: "#b03517",
     size: 0.1542,
     mass: 0.1221,
+    system_scale: 1,
     planets: [
       { name: "b",
         full: "α Cen Cb",
@@ -79,6 +80,7 @@ stars.stars = {
     stroke: null,
     size: 1.00,
     mass: 1.00,
+    system_scale: 1,
     planets: [],
     references: [],
   },
@@ -91,6 +93,7 @@ stars.stars = {
     color: "#f8ff3d", // default yellow, slightly light
     size: 1.00,
     mass: 1.00,
+    system_scale: 1,
     planets: [],
     references: [ // haha
       "https://en.wikipedia.org/wiki/Sun", // {7}

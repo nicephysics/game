@@ -301,6 +301,7 @@ ui.drawMenu = function() {
         const hoverPercent = Math.min(100, v.hovertime * 7),
               hoverColor = chroma.mix("#b08819", "#b05f19", hoverPercent / 100, 'lch')
         draw.setFillDarkenStroke(ctx, hoverColor)
+        mousepos = false
       } else {
         if (v.hoverstring === "menu option " + text) {
           v.hovertime = 0
@@ -311,6 +312,7 @@ ui.drawMenu = function() {
       if (clicking) {
         draw.setFillDarkenStroke(ctx, "#b04419")
         o.onclick()
+        clickpos = false
       }
       draw.setLineWidth(ctx, 6)
       draw._rectangle(ctx, _width / 2, y, rect_width, rect_height)
@@ -367,6 +369,7 @@ ui.drawMenu = function() {
           v.planet_show = true
           v.current_star_key = star_key
           v.planet_system_scale = star.system_scale || 1
+          clickpos = false
         }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
@@ -412,6 +415,7 @@ ui.drawMenu = function() {
        ) {
       v.star_show = false
       v.menu_options_show = true
+      clickpos = false
     } else if (ui.released("enter")) {
       // temporary, remove
       game_start("tut1")
@@ -455,6 +459,7 @@ ui.drawMenu = function() {
       v.star_show = true
       v.planet_show = false
       v.current_star_key = ""
+      clickpos = false
     } else if ( ui.released("enter") ) {
       // nothing for now
     }

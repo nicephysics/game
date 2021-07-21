@@ -46,6 +46,7 @@ ui.vars = {
   time: 0,
   click: false,
   hover: { x: 0, y: 0 },
+  scroll: 0,
   clicktime: 0,
   hovertime: 0,
   hoverstring: "",
@@ -81,6 +82,8 @@ ui.vars = {
   star_show: false,
   planet_show: false,
   current_star_key: "",
+  
+  planet_system_scale: 1,
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
@@ -163,6 +166,10 @@ ui.init = function(render) {
     ui.keypress.down = null
     ui.keypress.up = event.code
   })
+  window.addEventListener("wheel", function(event) {
+    console.log(event)
+    ui.vars.scroll = event.deltaY
+  })
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === "visible") {
       ui.focused = true
@@ -209,6 +216,8 @@ ui.tickAfter = function() {
   v.click = false
   // clear keypress
   ui.keypress.up = null
+  // clear scroll
+  v.scroll = 0
 }
 
 ui.draw = function() {
@@ -355,6 +364,7 @@ ui.drawMenu = function() {
           v.star_show = false
           v.planet_show = true
           v.current_star_key = star_key
+          v.planet_system_scale = star.system_scale || 1
         }
         draw._rectangle(ctx, _width / 2, y, _width - (overlaySideGap + contentSideGap) * 2, boxSize)
         // draw star: (fit width = boxSize * 1.4)
@@ -409,6 +419,12 @@ ui.drawMenu = function() {
   if (v.planet_show) {
     const star = stars.stars[v.current_star_key],
           planets = star.planets
+    // if scrolled
+    if (v.scroll != 0) {
+      v.planet_system_scale /= 1 + v.scroll
+    }
+    // then get the planetary system's scale
+    let scale = v.planet_system_scale
     // draw full black overlay
     draw.setFillNoStroke(ctx, C.black)
     if (star.background != null) {
@@ -430,7 +446,7 @@ ui.drawMenu = function() {
       draw.setLineWidth(ctx, 0)
     }
     // draw the star circle!
-    draw._circle(ctx, _width / 2, _height / 2, dispStarSize)
+    draw._circle(ctx, _width / 2, _height / 2, dispStarSize * scale)
     // TODO planets
     if ( ui.released("escape") ) {
       v.star_show = true

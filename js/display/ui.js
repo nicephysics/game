@@ -439,8 +439,8 @@ ui.drawMenu = function() {
     }
     draw._rect(ctx, 0, 0, _width, _height)
     // draw star in the middle
-    const realStarSize = 50 * star.size,
-          dispStarWobble = 10 * (star.wobble || 0),
+    const realStarSize = stars.c.star_size * star.size,
+          dispStarWobble = stars.c.star_wobble * (star.wobble || 0),
           wobblePeriod = star.wobblePeriod || 10,
           dispStarSize = realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)
     draw.setFillNoStroke(ctx, star.color)
@@ -454,7 +454,24 @@ ui.drawMenu = function() {
     }
     // draw the star circle!
     draw._circle(ctx, _width / 2, _height / 2, dispStarSize * scale)
-    // TODO planets
+    // draw the planets!
+    for (let p of planets) {
+      const planetName = star.name + star.postfix + p.name,
+            realPlanetSize = stars.c.planet_size * p.size
+      // draw orbit of planet
+      // TODO
+      // draw planet
+      draw.setFillNoStroke(ctx, p.color)
+      if (p.stroke != null) {
+        draw.setStroke(ctx, p.stroke)
+      }
+      if (p.lineWidth != null) {
+        draw.setLineWidth(ctx, p.lineWidth)
+      } else {
+        draw.setLineWidth(ctx, 0)
+      }
+      // TODO
+    }
     if ( ui.released("escape") ) {
       v.star_show = true
       v.planet_show = false

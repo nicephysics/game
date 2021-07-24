@@ -368,7 +368,7 @@ ui.drawMenu = function() {
           v.star_show = false
           v.planet_show = true
           v.current_star_key = star_key
-          v.planet_system_scale = star.pre_system_scale || 1000000
+          v.planet_system_scale = star.pre_system_scale || 0.0001
           v.target_planet_system_scale = star.system_scale || 1
           clickpos = false
         }

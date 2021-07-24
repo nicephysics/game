@@ -14,9 +14,12 @@ stars.c = {
   star_size: 50,
   star_wobble: 10,
   planet_size: 5,
-  orbit_size: 100,
+  orbit_size: 1000,
   real_planet_star_ratio: 109.19, // actual R_earth to R_sun ratio for reference
   real_star_orbit_ratio: 215.15, // actual R_sun to 1 AU ratio for reference
+  // period is out of 360, e.g. 3600 period means in every 10 seconds the planet spins around once
+  period_mult: 50,
+  period_max: 100,
 }
 
 stars.stars = {

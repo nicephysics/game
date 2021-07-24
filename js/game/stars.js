@@ -19,7 +19,6 @@ stars.c = {
   real_star_orbit_ratio: 215.15, // actual R_sun to 1 AU ratio for reference
   // period is out of 360, e.g. 3600 period means in every 10 seconds the planet spins around once
   period_mult: 50,
-  period_max: 100,
 }
 
 stars.stars = {

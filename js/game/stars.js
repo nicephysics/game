@@ -13,7 +13,7 @@ export var stars = { }
 stars.c = {
   star_size: 50,
   star_wobble: 10,
-  planet_size: 5,
+  planet_size: 2,
   orbit_size: 1000,
   real_planet_star_ratio: 109.19, // actual R_earth to R_sun ratio for reference
   real_star_orbit_ratio: 215.15, // actual R_sun to 1 AU ratio for reference
@@ -55,7 +55,7 @@ stars.stars = {
         wave: "tut2",
         description: "",
         game_description: "",
-        color: "#",
+        color: "#5349ab",
         size:   1.913, // calculated from mass
         mass:   7,
         radius: 1.489,
@@ -69,7 +69,7 @@ stars.stars = {
         wave: "tutsecret",
         description: "Discovered in 2020, this planet is unconfirmed.",
         game_description: "",
-        color: "#",
+        color: "#916d6d",
         size:   0.662, // calculated from lower bound mass, can be more
         mass:   0.29, // lower bound mass
         radius: 0.02895,

@@ -460,14 +460,16 @@ ui.drawMenu = function() {
     for (let p of planets) {
       const planetName = star.name + star.postfix + p.name,
             realPlanetSize = stars.c.planet_size * p.size,
+            dispPlanetSize = realPlanetSize * scale,
             realOrbitSize = stars.c.orbit_size * p.radius,
+            dispOrbitSize = realOrbitSize * scale,
             realPeriod = stars.c.period_mult * p.period,
             frequency = 360 / realPeriod, // 2 * pi / T
             angle = math.degToRad((v.time / 60) * frequency * 360)
       // draw orbit of planet
       draw.setStrokeNoFill(ctx, p.orbitColor || "#6e6e6e")
       draw.setLineWidth(ctx, p.orbitWidth || 2)
-      draw._circle(ctx, x, y, realOrbitSize)
+      draw._circle(ctx, x, y, dispOrbitSize)
       // draw planet
       draw.setFillNoStroke(ctx, p.color)
       if (p.stroke != null) {
@@ -478,7 +480,7 @@ ui.drawMenu = function() {
       } else {
         draw.setLineWidth(ctx, 0)
       }
-      draw._circle(ctx, x + realOrbitSize * Math.cos(angle), y + realOrbitSize * Math.sin(angle), realPlanetSize)
+      draw._circle(ctx, x + dispOrbitSize * Math.cos(angle), y + dispOrbitSize * Math.sin(angle), dispPlanetSize)
     }
     if ( ui.released("escape") ) {
       v.star_show = true

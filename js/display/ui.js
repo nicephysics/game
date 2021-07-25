@@ -427,7 +427,7 @@ ui.drawMenu = function() {
     const star = stars.stars[v.current_star_key],
           planets = star.planets
     // if scrolled
-    if (v.scroll != 0) {
+    if (v.scroll && v.scroll != 0) {
       v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
     }
     v.planet_system_scale = math.lerp(v.planet_system_scale, v.planet_system_target_scale, 0.1)
@@ -441,9 +441,9 @@ ui.drawMenu = function() {
     draw._rect(ctx, 0, 0, _width, _height)
     // draw star in the middle
     const realStarSize = stars.c.star_size * star.size,
-          dispStarWobble = stars.c.star_wobble * (star.wobble || 0),
+          dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
           wobblePeriod = star.wobblePeriod || 10,
-          dispStarSize = realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)
+          dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod))
     draw.setFillNoStroke(ctx, star.color)
     if (star.stroke != null) {
       draw.setStroke(ctx, star.stroke)
@@ -456,7 +456,7 @@ ui.drawMenu = function() {
     // draw the star circle!
     x = _width / 2
     y = _height / 2
-    draw._circle(ctx, x, y, dispStarSize * scale)
+    draw._circle(ctx, x, y, dispStarSize)
     // draw the planets!
     for (let p of planets) {
       const planetName = star.name + star.postfix + p.name,

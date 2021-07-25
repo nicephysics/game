@@ -473,8 +473,8 @@ ui.drawMenu = function() {
             angle = math.degToRad((v.time / 60) * frequency * 360),
             // check mouse touching orbit
             hoverdistance = Math.max(dispOrbitSize * 0.1, 20),
-            hovering = draw.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
-            clicking = draw.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
+            hovering = ui.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
+            clicking = ui.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
       if (clicking) {
         v.planet_selected = index
       }

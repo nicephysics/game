@@ -46,7 +46,7 @@ stars.stars = {
         description: "",
         game_description: "",
         color: "#bcffa3", // same as real color
-        size:   2.50, // 15
+        size:   5.80, // 15
         mass:   1.60,
         radius: 148.0,
         period: 11.18418,
@@ -84,7 +84,7 @@ stars.stars = {
         description: "Discovered in 2020, this planet is unconfirmed.",
         game_description: "",
         color: "#916d6d",
-        size:   1.50,
+        size:   3.75,
         mass:   0.29,
         radius: 50.0,
         period: 5.168,

@@ -83,6 +83,7 @@ ui.vars = {
   planet_show: false,
   current_star_key: "",
   
+  planet_selected: -1,
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
@@ -112,8 +113,9 @@ ui.hitrectpoints = function(pos, x1, y1, x2, y2) {
   return pos && ( pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2 )
 }
 
-ui.hitcircle = function(pos, x, y, size) {
-  return pos && Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y))) < size * size
+ui.hitcircle = function(pos, x, y, size, minSize = 0) {
+  const dist = Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y)))
+  return pos && dist < size * size && dist > minSize * minSize
 }
 
 ui.keypress = {
@@ -367,6 +369,7 @@ ui.drawMenu = function() {
         if (boxClick) {
           v.star_show = false
           v.planet_show = true
+          v.planet_selected = -1
           v.current_star_key = star_key
           v.planet_system_scale = star.pre_system_scale || 0.0001
           v.target_planet_system_scale = star.system_scale || 1
@@ -457,6 +460,7 @@ ui.drawMenu = function() {
     x = _width / 2
     y = _height / 2
     draw._circle(ctx, x, y, dispStarSize)
+    let index = 0
     // draw the planets!
     for (let p of planets) {
       const planetName = star.name + star.postfix + p.name,
@@ -466,9 +470,21 @@ ui.drawMenu = function() {
             dispOrbitSize = realOrbitSize * scale,
             realPeriod = stars.c.period_mult * p.period,
             frequency = 360 / realPeriod, // 2 * pi / T
-            angle = math.degToRad((v.time / 60) * frequency * 360)
+            angle = math.degToRad((v.time / 60) * frequency * 360),
+            // check mouse touching orbit
+            hoverdistance = Math.max(dispOrbitSize * 0.1, 20),
+            hovering = draw.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
+            clicking = draw.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
+      if (clicking) {
+        v.planet_selected = index
+      }
       // draw orbit of planet
-      draw.setStrokeNoFill(ctx, p.orbitColor || "#6e6e6e")
+      if (hovering) {
+        draw.setLightStroke(ctx, p.orbitColor || "#6e6e6e", 1)
+        draw.setNoFill(ctx)
+      } else {
+        draw.setStrokeNoFill(ctx, p.orbitColor || "#6e6e6e")
+      }
       draw.setLineWidth(ctx, p.orbitWidth || 2)
       draw._circle(ctx, x, y, dispOrbitSize)
       // draw planet
@@ -482,7 +498,9 @@ ui.drawMenu = function() {
         draw.setLineWidth(ctx, 0)
       }
       draw._circle(ctx, x + dispOrbitSize * Math.cos(angle), y + dispOrbitSize * Math.sin(angle), dispPlanetSize)
-    }
+      // increment planet index
+      index++
+    } // end of planet loop
     if ( ui.released("escape") ) {
       v.star_show = true
       v.planet_show = false

@@ -20,6 +20,13 @@ stars.c = {
   real_star_orbit_ratio: 215.15, // actual R_sun to 1 AU ratio for reference
   // period is out of 360, e.g. 3600 period means in every 10 seconds the planet spins around once
   period_mult: 100, // the higher the multiplier, the slower planets move
+  // planet stuff
+  planet_types: [ // unused
+    // rock
+    "Rock", "Carbon", "Desert", "Ice", "Iron", "Lava", "Volcanic", "Ocean", "Underground ocean"
+    // gas
+    "Gas dwarf", "Gas giant", "Helium", "Ice giant",
+  ],
 }
 
 stars.stars = {
@@ -42,8 +49,13 @@ stars.stars = {
     planets: [
       { name: "b",
         full: "α Cen Cb",
-        wave: "tut1",
-        description: "",
+        waves: [
+          { wave: "tut1",
+            difficulty: 1,
+            description: "The first tutorial!",
+          },
+        ],
+        description: "This is a pale green planet, the first one to be discovered orbiting Proxima Centauri.",
         game_description: "",
         color: "#bcffa3", // same as real color
         size:   5.80, // 15
@@ -62,8 +74,13 @@ stars.stars = {
       },
       { name: "c",
         full: "α Cen Cc",
-        wave: "tut2",
-        description: "",
+        waves: [
+          { wave: "tut2",
+            difficulty: 1,
+            description: "The second tutorial!",
+          },
+        ],
+        description: "A larger and more slow-moving planet.",
         game_description: "",
         color: "#5349ab",
         size:   16.5,
@@ -80,7 +97,12 @@ stars.stars = {
       },
       { name: "d",
         full: "α Cen Cd",
-        wave: "tutsecret",
+        waves: [
+          { wave: "tutsecret",
+            difficulty: 2,
+            description: "A secret tutorial???",
+          },
+        ],
         description: "Discovered in 2020, this planet is unconfirmed.",
         game_description: "",
         color: "#916d6d",

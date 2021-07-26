@@ -9,6 +9,8 @@ theme.default = {
   white:         "#ffffff", // !
   lightgrey:     "#a4a9ba", // planet popup
   grey:          "#6a6e7a", // !
+  darkgrey:      "#3c403d", // planet sidebar
+  verydarkgrey:  "#212121", // !
   locked:        "#6a6e7a", // locked
   // red colours
   deepred:       "#d41111", // red text and heart and health colour

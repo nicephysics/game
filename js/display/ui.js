@@ -472,7 +472,7 @@ ui.drawMenu = function() {
             realOrbitSize = stars.c.orbit_size * p.radius,
             dispOrbitSize = realOrbitSize * scale,
             realPeriod = stars.c.period_mult * p.period,
-            small_planet_threshold = 10,
+            small_planet_threshold = 5,
             frequency = 360 / realPeriod, // 2 * pi / T
             angle = math.degToRad((v.time / 60) * frequency * 360),
             // check mouse touching orbit

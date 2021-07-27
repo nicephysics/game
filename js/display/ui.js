@@ -566,7 +566,7 @@ ui.drawMenu = function() {
       // draw planet information, if there is no planet selected, draw nothing
       if (v.planet_selected >= 0) {
         // get the currently selected planet
-        p = planets[v.planet_selected]
+        const p = planets[v.planet_selected]
         // draw sidebar title
         draw.setFillNoStroke(ctx, C.lightgreen)
         draw.setFont(ctx, "18px Roboto Mono")

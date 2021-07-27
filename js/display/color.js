@@ -7,7 +7,7 @@ theme.default = {
   // grayscale colours
   black:         "#000000", // !
   white:         "#ffffff", // !
-  almostwhite:   "#e8e8e8", // planet orbit hover color
+  almostwhite:   "#e8e8e8", // !
   lightgrey:     "#a4a9ba", // planet popup
   grey:          "#6e6e6e", // planet orbit default color
   darkgrey:      "#3c403d", // planet sidebar
@@ -21,6 +21,7 @@ theme.default = {
   // orange colours
   lightorange:   "#e8a87b", // light orange, for light text
   orange:        "#d46a00", // xp bar base color
+  darkorange:    "#8f5317", // dark orange, actually brown sandy soil
   // yellow colours
   // green colours
   lightgreen:    "#54ff6e", // light green, used for text

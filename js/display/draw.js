@@ -469,7 +469,7 @@ draw.getTextWidth = function(ctx, textArray) {
   }
   let _max = 0
   for (let text of textArray) {
-    _max = Math.max(_max, ctx.measureText(text))
+    _max = Math.max(_max, ctx.measureText(text).width)
   }
   return _max
 }

@@ -573,9 +573,16 @@ ui.drawMenu = function() {
       // check hover or click (the whole thing :O)
       let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
           clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height),
-          sidebar_center = v.planet_sidebar - width / 2
+          sidebar_center = v.planet_sidebar - width / 2,
+          sidebar_y = _height * 0.1
       if (clicking) {
         clicked_on_orbit = true
+      }
+      // convenience function
+      const separator = function() {
+        sidebar_y += 15
+        draw._line(ctx, 0, sidebar_y, v.planet_sidebar, sidebar_y)
+        sidebar_y += 15
       }
       // draw sidebar background (dark grey, whole thing)
       draw.setFillNoStroke(ctx, C.darkgrey)
@@ -587,8 +594,20 @@ ui.drawMenu = function() {
         // draw sidebar title
         draw.setFillNoStroke(ctx, C.lightgreen)
         draw.setFont(ctx, "18px Roboto Mono")
-        draw._text(ctx, sidebar_center, _height * 0.1, star.name + star.postfix + p.name, 0, "center")
+        draw._text(ctx, sidebar_center, sidebar_y, star.name + star.postfix + p.name, 0, "center")
         // draw sidebar planet description
+        separator()
+        draw.setFillNoStroke(ctx, C.lightorange)
+        draw.setFont(ctx, "14px Roboto Mono")
+        const desc_texts = draw.splitText(ctx, p.description, width - 50),
+              desc_text_gap = 18,
+              desc_width = draw.getTextWidth(ctx, desc_texts)
+        for (let desc_text of desc_texts) {
+          draw._text(ctx, sidebar_center - desc_width / 2, sidebar_y, desc_text, 0, "left")
+          sidebar_y += desc_text_gap
+        }
+        sidebar_y -= desc_text_gap
+        separator()
         // draw sidebar planet levels
         // TODO
       } // end of planet information

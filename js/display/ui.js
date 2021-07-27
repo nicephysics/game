@@ -573,19 +573,22 @@ ui.drawMenu = function() {
       // check hover or click (the whole thing :O)
       let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
           clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height),
-          sidebar_center = v.planet_sidebar - width / 2,
-          sidebar_y = _height * 0.1
+          sidebar_y = _height * 0.075
+      const sidebar_ratio = v.planet_sidebar / width,
+            sidebar_center = v.planet_sidebar - width / 2
       if (clicking) {
         clicked_on_orbit = true
       }
       // convenience function
       const separator = function() {
-        sidebar_y += 15
+        sidebar_y += 30
+        draw.setStrokeNoFill(ctx, C.grey)
         draw._line(ctx, 0, sidebar_y, v.planet_sidebar, sidebar_y)
-        sidebar_y += 15
+        sidebar_y += 30
       }
       // draw sidebar background (dark grey, whole thing)
-      draw.setFillNoStroke(ctx, C.darkgrey)
+      draw.setDarkFill(ctx, C.darkgrey, 1 - sidebar_ratio)
+      draw.setNoStroke(ctx)
       draw._rect(ctx, 0, 0, v.planet_sidebar, _height)
       // draw planet information, if there is no planet selected, draw nothing
       if (v.planet_selected >= 0) {
@@ -600,7 +603,7 @@ ui.drawMenu = function() {
         draw.setFillNoStroke(ctx, C.lightorange)
         draw.setFont(ctx, "14px Roboto Mono")
         const desc_texts = draw.splitText(ctx, p.description, width - 50),
-              desc_text_gap = 18,
+              desc_text_gap = 21,
               desc_width = draw.getTextWidth(ctx, desc_texts)
         for (let desc_text of desc_texts) {
           draw._text(ctx, sidebar_center - desc_width / 2, sidebar_y, desc_text, 0, "left")

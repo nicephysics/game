@@ -466,7 +466,7 @@ ui.drawMenu = function() {
     draw.setLightFill(ctx, star.color, 1)
     draw.setNoStroke(ctx)
     draw.setFont(ctx, "24px Roboto Mono")
-    draw._text(ctx, x, _height * 0.08 + 20 * Math.sin(ui.time * 0.005), star.name, 0, "center")
+    draw._text(ctx, x, _height * 0.08 + 20 * Math.sin(v.time * 0.005), star.name, 0, "center")
     // draw the planets!
     let index = 0,
         clicked_on_orbit = false

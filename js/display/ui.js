@@ -84,6 +84,7 @@ ui.vars = {
   current_star_key: "",
   
   planet_selected: -1,
+  planet_sidebar: 0,
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
@@ -370,6 +371,7 @@ ui.drawMenu = function() {
           v.star_show = false
           v.planet_show = true
           v.planet_selected = -1
+          v.planet_sidebar = 0
           v.current_star_key = star_key
           v.planet_system_scale = star.pre_system_scale || 0.0001
           v.target_planet_system_scale = star.system_scale || 1
@@ -457,10 +459,11 @@ ui.drawMenu = function() {
       draw.setLineWidth(ctx, 0)
     }
     // draw the star circle!
-    x = _width / 2
+    x = _width / 2 + v.planet_sidebar / 2
     y = _height / 2
     draw._circle(ctx, x, y, dispStarSize)
-    let index = 0
+    let index = 0,
+        clicked_on_orbit = false
     // draw the planets!
     for (let p of planets) {
       const planetName = star.name + star.postfix + p.name,
@@ -477,9 +480,11 @@ ui.drawMenu = function() {
             clicking = ui.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
       if (clicking) {
         v.planet_selected = index
+        clickpos = false
+        clicked_on_orbit = true
       }
       // draw orbit of planet
-      if (hovering) {
+      if (hovering || v.planet_selected === index) {
         draw.setLightStroke(ctx, p.orbitColor || "#6e6e6e", 1)
         draw.setNoFill(ctx)
       } else {
@@ -497,10 +502,82 @@ ui.drawMenu = function() {
       } else {
         draw.setLineWidth(ctx, 0)
       }
+      const planetX = x + dispOrbitSize * Math.cos(angle),
+            planetY = y + dispOrbitSize * Math.sin(angle)
       draw._circle(ctx, x + dispOrbitSize * Math.cos(angle), y + dispOrbitSize * Math.sin(angle), dispPlanetSize)
-      // increment planet index
+      if (v.planet_selected === index) {
+        // draw planet popup (if needed)
+        /*
+        draw.setFont(ctx, "14px Roboto Mono")
+        const strings = [
+                "Name: " + p.full, // planet full name
+                "Orbit Radius: " + math.roundBy(p.radius, 3) + "",
+                "Radius: " + math.roundBy(p.size, 3) + "",
+                "Period: " + math.roundBy(p.real_period, 3) + " days"
+              ],
+              stringColors = [
+                C.darkgreen, "",
+              ],
+              maxLength = Math.max(...strings.map( str => {
+                return ctx.measureText(str).width
+              } )),
+              popupTextGap = 5,
+              popupWidth = maxLength + 20,
+              popupHeight = popupTextGap * 3 + (14 + popupTextGap) * strings.length,
+        let popupX = planetX - popupWidth / 2 + 10,
+            popupY = planetY - dispPlanetSize - 20 - popupHeight
+        // draw popup
+        draw.setFillNoStroke(ctx, C.lightgrey)
+        draw._rectangle(ctx, planetX, popupY + popupHeight / 2, popupWidth, popupHeight)
+        for (let index = 0; index < strings.length; ++index) {
+          const str = strings[index],
+                strcolor = stringColors[index]
+          draw.setFillNoStroke(ctx, strcolor)
+          draw._text(ctx, popupX, popupY, str, 0, "left")
+        }
+        */
+        // draw planet sidebar
+      }
+      // finally, increment planet index
       index++
     } // end of planet loop
+    // move planet sidebar
+    const planet_sidebar_move_rate = 0.1,
+          planet_sidebar_target = _width * 0.3
+    if (v.planet_selected >= 0) {
+      v.planet_sidebar = math.lerp(v.planet_sidebar, planet_sidebar_target, planet_sidebar_move_rate)
+    } else {
+      v.planet_sidebar = math.lerp(v.planet_sidebar, 0, planet_sidebar_move_rate)
+    }
+    // draw planet sidebar
+    if (Math.round(v.planet_sidebar) > 0) {
+      // expected sidebar width
+      width = planet_sidebar_target
+      // check hover or click (the whole thing :O)
+      let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
+          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height),
+          sidebar_center = v.planet_sidebar - width / 2
+      if (clicking) {
+        clicked_on_orbit = true
+      }
+      // draw sidebar background (dark grey, whole thing)
+      draw.setFillNoStroke(ctx, C.darkgrey)
+      draw._rect(ctx, 0, 0, v.planet_sidebar, _height)
+      // draw planet information, if there is no planet selected, draw nothing
+      if (v.planet_selected >= 0) {
+        // get the currently selected planet
+        p = planets[v.planet_selected]
+        // draw sidebar title
+        draw.setFillNoStroke(ctx, C.lightgreen)
+        draw.setFont(ctx, "18px Roboto Mono")
+        draw._text(ctx, sidebar_center, _height * 0.1, star.name + star.postfix + p.name)
+        // TODO
+      } // end of planet information
+    } // end planet sidebar
+    // unselect selected planet if clicked on the space area
+    if (!clicked_on_orbit && clickpos) {
+      v.planet_selected = -1
+    }
     if ( ui.released("escape") ) {
       v.star_show = true
       v.planet_show = false

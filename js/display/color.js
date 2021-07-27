@@ -13,13 +13,21 @@ theme.default = {
   verydarkgrey:  "#212121", // !
   locked:        "#6a6e7a", // locked
   // red colours
-  deepred:       "#d41111", // red text and heart and health colour
+  lightred:      "#e35656", // light red, used for text
+  brightred:     "#ff1919", // very normal red (quite bright)
+  darkred:       "#8f0303", // dark red, used for text
+  deepred:       "#d41111", // red text and heart and health colour, like C.brightred
+  // orange colours
+  lightorange:   "#e8a87b", // light orange, for light text
   orange:        "#d46a00", // xp bar base color
   // yellow colours
   // green colours
+  lightgreen:    "#54ff6e", // light green, used for text
+  green:         "#25e829", // very normal green
   darkgreen:     "#114712", // dark forest green, used for text
   // blue colours
   lightblue:     "#add1ff", // blue text probably
+  blue:          "#104ade", // very normal blue
   darkblue:      "#0a3773", // blue text probably
   deepblue:      "#061a69", // blue text probably
   cyan:          "#13f2d8", // tier up overlay / other overlay

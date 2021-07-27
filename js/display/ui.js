@@ -472,6 +472,7 @@ ui.drawMenu = function() {
             realOrbitSize = stars.c.orbit_size * p.radius,
             dispOrbitSize = realOrbitSize * scale,
             realPeriod = stars.c.period_mult * p.period,
+            small_planet_threshold = 10,
             frequency = 360 / realPeriod, // 2 * pi / T
             angle = math.degToRad((v.time / 60) * frequency * 360),
             // check mouse touching orbit
@@ -508,7 +509,14 @@ ui.drawMenu = function() {
       }
       const planetX = x + dispOrbitSize * Math.cos(angle),
             planetY = y + dispOrbitSize * Math.sin(angle)
-      draw._circle(ctx, x + dispOrbitSize * Math.cos(angle), y + dispOrbitSize * Math.sin(angle), dispPlanetSize)
+      draw._circle(ctx, planetX, planetY, dispPlanetSize)
+      // the planet is too small! draw another circle around it!
+      if (dispPlanetSize <= small_planet_threshold) {
+        draw.setStrokeToCurrentFill(ctx)
+        draw.setNoFill(ctx)
+        draw.setLineWidth(ctx, 2)
+        draw._circle(ctx, planetX, planetY, small_planet_threshold * 1.4)
+      }
       if (v.planet_selected === index) {
         // draw planet popup (if needed)
         /*

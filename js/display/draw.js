@@ -463,15 +463,12 @@ draw.splitText = function(ctx, text, maxWidth) {
   return newlines
 }
 
-draw.getTextWidth = function(ctx, textArray, font) {
+draw.getTextWidth = function(ctx, textArray) {
   if (!Array.isArray(textArray)) {
     textArray = [textArray]
   }
-  if (font != null) {
-    draw.setFont(ctx, font)
-  }
   let _max = 0
-  for (let text in textArray) {
+  for (let text of textArray) {
     _max = Math.max(_max, ctx.measureText(text))
   }
   return _max

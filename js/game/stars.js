@@ -23,7 +23,7 @@ stars.c = {
   // planet stuff
   planet_types: [ // unused
     // rock
-    "Rock", "Carbon", "Desert", "Ice", "Iron", "Lava", "Volcanic", "Ocean", "Underground ocean"
+    "Rock", "Carbon", "Desert", "Ice", "Iron", "Lava", "Volcanic", "Ocean", "Underground ocean",
     // gas
     "Gas dwarf", "Gas giant", "Helium", "Ice giant",
   ],

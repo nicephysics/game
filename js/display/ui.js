@@ -587,8 +587,7 @@ ui.drawMenu = function() {
         sidebar_y += 30
       }
       // draw sidebar background (dark grey, whole thing)
-      draw.setDarkFill(ctx, C.darkgrey, 1 - sidebar_ratio)
-      draw.setNoStroke(ctx)
+      draw.setFillNoStroke(ctx, chroma.mix(C.darkgrey, C.black, 1 - sidebar_ratio))
       draw._rect(ctx, 0, 0, v.planet_sidebar, _height)
       // draw planet information, if there is no planet selected, draw nothing
       if (v.planet_selected >= 0) {

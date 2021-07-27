@@ -50,13 +50,14 @@ stars.stars = {
       { name: "b",
         full: "α Cen Cb",
         waves: [
-          { wave: "tut1",
-            difficulty: 1,
+          { name: "Yes",
             description: "The first tutorial!",
+            wave: "tut1",
+            difficulty: 1,
           },
         ],
-        description: "This is a pale green planet, the first one to be discovered orbiting Proxima Centauri.",
-        game_description: "",
+        description: "This pale green planet is the first planet to be explored. It has since been converted into a training site for new spherical flying objects.",
+        real_description: "This is a pale green planet, the first one to be discovered orbiting Proxima Centauri, the nearest star to the Earth.",
         color: "#bcffa3", // same as real color
         size:   5.80, // 15
         mass:   1.60,

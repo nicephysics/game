@@ -462,9 +462,14 @@ ui.drawMenu = function() {
     x = _width / 2 + v.planet_sidebar / 2
     y = _height / 2
     draw._circle(ctx, x, y, dispStarSize)
+    // draw star name at the top
+    draw.setLightFill(ctx, star.color, 1)
+    draw.setNoStroke(ctx)
+    draw.setFont(ctx, "24px Roboto Mono")
+    draw._text(ctx, _width / 2, _height * 0.1, star.name, 0, "center")
+    // draw the planets!
     let index = 0,
         clicked_on_orbit = false
-    // draw the planets!
     for (let p of planets) {
       const planetName = star.name + star.postfix + p.name,
             realPlanetSize = stars.c.planet_size * p.size,
@@ -582,7 +587,9 @@ ui.drawMenu = function() {
         // draw sidebar title
         draw.setFillNoStroke(ctx, C.lightgreen)
         draw.setFont(ctx, "18px Roboto Mono")
-        draw._text(ctx, sidebar_center, _height * 0.1, star.name + star.postfix + p.name)
+        draw._text(ctx, sidebar_center, _height * 0.1, star.name + star.postfix + p.name, 0, "center")
+        // draw sidebar planet description
+        // draw sidebar planet levels
         // TODO
       } // end of planet information
     } // end planet sidebar

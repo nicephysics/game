@@ -7,8 +7,9 @@ theme.default = {
   // grayscale colours
   black:         "#000000", // !
   white:         "#ffffff", // !
+  almostwhite:   "#e8e8e8", // planet orbit hover color
   lightgrey:     "#a4a9ba", // planet popup
-  grey:          "#6a6e7a", // !
+  grey:          "#6e6e6e", // planet orbit default color
   darkgrey:      "#3c403d", // planet sidebar
   verydarkgrey:  "#212121", // !
   locked:        "#6a6e7a", // locked

@@ -485,12 +485,13 @@ ui.drawMenu = function() {
       }
       // draw orbit of planet
       if (hovering || v.planet_selected === index) {
-        draw.setLightStroke(ctx, p.orbitColor || "#6e6e6e", 1)
-        draw.setNoFill(ctx)
+        draw.setLightStroke(ctx, p.orbitColor || C.grey, 2.5) // VERY bright
+        draw.setNoFill(ctx) // and no fill too
+        draw.setLineWidth(ctx, 1.5 + (p.orbitWidth || 2))
       } else {
-        draw.setStrokeNoFill(ctx, p.orbitColor || "#6e6e6e")
+        draw.setStrokeNoFill(ctx, p.orbitColor || C.grey)
+        draw.setLineWidth(ctx, p.orbitWidth || 2)
       }
-      draw.setLineWidth(ctx, p.orbitWidth || 2)
       draw._circle(ctx, x, y, dispOrbitSize)
       // draw planet
       draw.setFillNoStroke(ctx, p.color)

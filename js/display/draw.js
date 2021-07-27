@@ -44,6 +44,16 @@ draw.setStrokeNoFill = function(ctx, stroke) {
   draw.setNoFill(ctx)
 }
 
+draw.setFillToCurrentStroke = function(ctx) {
+  ctx = ctx || draw.ctx
+  draw.setFill(ctx, ctx.strokeStyle)
+}
+
+draw.setStrokeToCurrentFill = function(ctx) {
+  ctx = ctx || draw.ctx
+  draw.setStroke(ctx, ctx.fillStyle)
+}
+
 draw.setDarkFill = function(ctx, fill, dark = 1) {
   draw.setFill(ctx, chroma(fill).darken(dark).hex())  
 }

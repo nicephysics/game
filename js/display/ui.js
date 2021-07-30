@@ -85,6 +85,7 @@ ui.vars = {
   
   planet_selected: -1,
   planet_sidebar: 0,
+  planet_sidebar_description: true, // show the game description?
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
@@ -447,7 +448,8 @@ ui.drawMenu = function() {
           dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
           wobblePeriod = star.wobblePeriod || 10,
           dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
-          maxStarSize = realStarSize + dispStarWobble
+          maxStarSize = realStarSize + dispStarWobble,
+          sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
     draw.setFillNoStroke(ctx, star.color)
     if (star.stroke != null) {
       draw.setStroke(ctx, star.stroke)
@@ -483,7 +485,8 @@ ui.drawMenu = function() {
             hovering = ui.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
             clicking = ui.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
       maxPlanetOrbitSize = Math.max(maxPlanetOrbitSize, realPlanetSize + realOrbitSize)
-      if (clicking) {
+      // check if clicking
+      if (clicking && !sidebar_clicking) {
         v.planet_selected = index
         clickpos = false
         clicked_on_orbit = true
@@ -580,19 +583,23 @@ ui.drawMenu = function() {
       width = planet_sidebar_target
       // check hover or click (the whole thing :O)
       let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
-          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height),
+          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height), // not _exactly_ sidebar_clicking
           sidebar_y = _height * 0.075
       const sidebar_ratio = v.planet_sidebar / width,
             sidebar_center = v.planet_sidebar - width / 2
       if (clicking) {
         clicked_on_orbit = true
       }
-      // convenience function
+      // convenience function to draw a separator line
+      const lines_y = []
       const separator = function() {
         sidebar_y += 30
         draw.setStrokeNoFill(ctx, C.grey)
-        draw._line(ctx, 0, sidebar_y, v.planet_sidebar, sidebar_y)
+        draw.setLineWidth(ctx, 2)
+        draw._line(ctx, 0, sidebar_y, Math.floor(v.planet_sidebar), sidebar_y)
+        lines_y.push(sidebar_y)
         sidebar_y += 30
+        //? return lines_y[lines_y.length - 1]
       }
       // draw sidebar background (dark grey, whole thing)
       draw.setFillNoStroke(ctx, chroma.mix(C.darkgrey, C.black, 1 - sidebar_ratio))
@@ -607,17 +614,32 @@ ui.drawMenu = function() {
         draw._text(ctx, sidebar_center, sidebar_y, star.name + star.postfix + p.name, 0, "center")
         // draw sidebar planet description
         separator()
-        draw.setFillNoStroke(ctx, C.lightorange)
-        draw.setFont(ctx, "14px Roboto Mono")
-        const desc_texts = draw.splitText(ctx, p.description, width - 50),
+        const desc_text = v.planet_sidebar_description ? p.description : p.real_description,
+              desc_texts = draw.splitText(ctx, desc_text, width - 50),
               desc_text_gap = 21,
               desc_width = draw.getTextWidth(ctx, desc_texts)
+        draw.setFont(ctx, "14px Roboto Mono")
+        if (v.planet_sidebar_description) {
+          draw.setFillNoStroke(ctx, C.lightorange)      
+        } else {
+          draw.setFillNoStroke(ctx, C.lightred)          
+        }
         for (let desc_text of desc_texts) {
           draw._text(ctx, sidebar_center - desc_width / 2, sidebar_y, desc_text, 0, "left")
           sidebar_y += desc_text_gap
         }
         sidebar_y -= desc_text_gap
         separator()
+        const desc_hovering = ui.hitrect(mousepos, 0, lines_y[0], v.planet_sidebar, lines_y[1]),
+              desc_clicking = ui.hitrect(clickpos, 0, lines_y[0], v.planet_sidebar, lines_y[1])
+        if (desc_hovering) {
+          draw.setStrokeNoFill(ctx, C.grey)
+          draw.setLineWidth(ctx, 3)
+          draw._line(ctx, v.planet_sidebar - 1, lines_y[0], v.planet_sidebar - 1, lines_y[1])
+        }
+        if (desc_clicking) {
+          v.planet_sidebar_description = !v.planet_sidebar_description
+        }
         // draw sidebar planet levels
         // TODO
       } // end of planet information

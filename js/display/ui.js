@@ -447,7 +447,7 @@ ui.drawMenu = function() {
           dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
           wobblePeriod = star.wobblePeriod || 10,
           dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
-          maxStarSize = scale * (realStarSize + dispStarWobble)
+          maxStarSize = realStarSize + dispStarWobble
     draw.setFillNoStroke(ctx, star.color)
     if (star.stroke != null) {
       draw.setStroke(ctx, star.stroke)
@@ -476,14 +476,13 @@ ui.drawMenu = function() {
             realOrbitSize = stars.c.orbit_size * p.radius,
             dispOrbitSize = realOrbitSize * scale,
             realPeriod = stars.c.period_mult * p.period,
-            small_planet_threshold = 5,
-            frequency = 360 / realPeriod, // 2 * pi / T
+            frequency = 360 / realPeriod, // (2 * pi) / T
             angle = math.degToRad((v.time / 60) * frequency * 360),
-            // check mouse touching orbit
+            // check whether mouse is touching orbit
             hoverdistance = Math.max(dispOrbitSize * 0.1, 20),
             hovering = ui.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
             clicking = ui.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
-      maxPlanetOrbitSize = Math.max(maxPlanetOrbitSize, dispPlanetSize + dispOrbitSize)
+      maxPlanetOrbitSize = Math.max(maxPlanetOrbitSize, realPlanetSize + realOrbitSize)
       if (clicking) {
         v.planet_selected = index
         clickpos = false
@@ -516,11 +515,11 @@ ui.drawMenu = function() {
             planetY = y + dispOrbitSize * Math.sin(angle)
       draw._circle(ctx, planetX, planetY, dispPlanetSize)
       // the planet is too small! draw another circle around it!
-      if (dispPlanetSize <= small_planet_threshold) {
+      if (dispPlanetSize <= 5) {
         draw.setStrokeToCurrentFill(ctx)
         draw.setNoFill(ctx)
         draw.setLineWidth(ctx, 2)
-        draw._circle(ctx, planetX, planetY, small_planet_threshold * 1.4)
+        draw._circle(ctx, planetX, planetY, 7) // outline circle size
       }
       if (v.planet_selected === index) {
         // draw planet popup (if needed)
@@ -559,13 +558,14 @@ ui.drawMenu = function() {
       index++
     } // end of planet loop
     // do zoom scale
-    let min_zoom = _min_wh / maxPlanetOrbitSize / 2 * 1.1,
-        max_zoom = _min_wh / maxStarSize / 2 * 0.9
+    const min_wh = Math.min(width - v.planet_sidebar, _height),
+          min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1,
+          max_zoom = min_wh / maxStarSize / 2 * 0.9
     // if scrolled, then change scale
     if (v.scroll && v.scroll != 0) {
       v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
-      v.planet_system_target_scale = math.bound(v.planet_system_target_scale, min_zoom, max_zoom)
     }
+    v.planet_system_target_scale = math.bound(v.planet_system_target_scale, min_zoom, max_zoom)
     // move planet sidebar
     const planet_sidebar_move_rate = 0.1,
           planet_sidebar_target = _width * 0.3

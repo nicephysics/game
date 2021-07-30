@@ -249,7 +249,8 @@ ui.drawMenu = function() {
         render = Thing.render,
         ctx = render.context,
         _width = render.options.width,
-        _height = render.options.height
+        _height = render.options.height,
+        _min_wh = Math.min(_width, _height)
   
   let mousepos = render.mouse.absolute,
       clickpos = v.click,
@@ -431,13 +432,10 @@ ui.drawMenu = function() {
   if (v.planet_show) {
     const star = stars.stars[v.current_star_key],
           planets = star.planets
-    // if scrolled
-    if (v.scroll && v.scroll != 0) {
-      v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
-    }
     v.planet_system_scale = math.lerp(v.planet_system_scale, v.planet_system_target_scale, 0.1)
     // then get the planetary system's scale
-    let scale = v.planet_system_scale
+    let scale = v.planet_system_scale,
+        maxPlanetOrbitSize = 0 // for keeping track of highest planet distance (for calculation of zoom limits)
     // draw full black overlay
     draw.setFillNoStroke(ctx, C.black)
     if (star.background != null) {
@@ -448,7 +446,8 @@ ui.drawMenu = function() {
     const realStarSize = stars.c.star_size * star.size,
           dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
           wobblePeriod = star.wobblePeriod || 10,
-          dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod))
+          dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
+          maxStarSize = scale * (realStarSize + dispStarWobble)
     draw.setFillNoStroke(ctx, star.color)
     if (star.stroke != null) {
       draw.setStroke(ctx, star.stroke)
@@ -484,6 +483,7 @@ ui.drawMenu = function() {
             hoverdistance = Math.max(dispOrbitSize * 0.1, 20),
             hovering = ui.hitcircle(mousepos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance), // max/min
             clicking = ui.hitcircle(clickpos, x, y, dispOrbitSize + hoverdistance, dispOrbitSize - hoverdistance)
+      maxPlanetOrbitSize = Math.max(maxPlanetOrbitSize, dispPlanetSize + dispOrbitSize)
       if (clicking) {
         v.planet_selected = index
         clickpos = false
@@ -558,6 +558,14 @@ ui.drawMenu = function() {
       // finally, increment planet index
       index++
     } // end of planet loop
+    // do zoom scale
+    let min_zoom = _min_wh / maxPlanetOrbitSize / 2 * 1.1,
+        max_zoom = _min_wh / maxStarSize / 2 * 0.9
+    // if scrolled, then change scale
+    if (v.scroll && v.scroll != 0) {
+      v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
+      v.planet_system_target_scale = math.bound(v.planet_system_target_scale, min_zoom, max_zoom)
+    }
     // move planet sidebar
     const planet_sidebar_move_rate = 0.1,
           planet_sidebar_target = _width * 0.3

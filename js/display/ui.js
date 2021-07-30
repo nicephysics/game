@@ -620,9 +620,9 @@ ui.drawMenu = function() {
               desc_width = draw.getTextWidth(ctx, desc_texts)
         draw.setFont(ctx, "14px Roboto Mono")
         if (v.planet_sidebar_description) {
-          draw.setFillNoStroke(ctx, C.lightorange)      
+          draw.setFillNoStroke(ctx, C.lightorange)
         } else {
-          draw.setFillNoStroke(ctx, C.lightred)          
+          draw.setFillNoStroke(ctx, C.lightred)
         }
         for (let desc_text of desc_texts) {
           draw._text(ctx, sidebar_center - desc_width / 2, sidebar_y, desc_text, 0, "left")
@@ -630,12 +630,16 @@ ui.drawMenu = function() {
         }
         sidebar_y -= desc_text_gap
         separator()
-        const desc_hovering = ui.hitrect(mousepos, 0, lines_y[0], v.planet_sidebar, lines_y[1]),
-              desc_clicking = ui.hitrect(clickpos, 0, lines_y[0], v.planet_sidebar, lines_y[1])
+        const desc_hovering = ui.hitrect(mousepos, 0, lines_y[0], v.planet_sidebar, lines_y[1] - lines_y[0]),
+              desc_clicking = ui.hitrect(clickpos, 0, lines_y[0], v.planet_sidebar, lines_y[1] - lines_y[0])
         if (desc_hovering) {
-          draw.setStrokeNoFill(ctx, C.grey)
+          if (v.planet_sidebar_description) {
+            draw.setFillNoStroke(ctx, C.lightred)      
+          } else {
+            draw.setFillNoStroke(ctx, C.lightorange)          
+          }
           draw.setLineWidth(ctx, 3)
-          draw._line(ctx, v.planet_sidebar - 1, lines_y[0], v.planet_sidebar - 1, lines_y[1])
+          draw._line(ctx, v.planet_sidebar - 2, lines_y[0] - 1, v.planet_sidebar - 2, lines_y[1] + 1)
         }
         if (desc_clicking) {
           v.planet_sidebar_description = !v.planet_sidebar_description

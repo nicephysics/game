@@ -557,8 +557,8 @@ ui.drawMenu = function() {
       // finally, increment planet index
       index++
     } // end of planet loop
-    // do zoom scale
-    const min_wh = Math.min(width - v.planet_sidebar, _height),
+    // do planet zoom scale
+    const min_wh = Math.min(_width - v.planet_sidebar, _height),
           min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1,
           max_zoom = min_wh / maxStarSize / 2 * 0.9
     // if scrolled, then change scale

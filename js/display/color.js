@@ -26,7 +26,8 @@ theme.default = {
   // green colours
   lightgreen:    "#54ff6e", // light green, used for text
   green:         "#25e829", // very normal green
-  darkgreen:     "#114712", // dark forest green, used for text
+  darkgreen:     "#05800f", // dark green, used for buttons
+  forestgreen:   "#114712", // dark forest green, used for text
   // blue colours
   lightblue:     "#add1ff", // blue text probably
   blue:          "#104ade", // very normal blue

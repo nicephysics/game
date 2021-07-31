@@ -37,6 +37,14 @@ theme.default = {
   button_hover:  "#00ada2", // button hover
   // purple colours
   darkpurple:    "#27007a", // icons?
+  // series colours
+  difficulty_0:  "#3e89c7", // light-blue
+  difficulty_1:  "#11d62b", // green
+  difficulty_2:  "#96e62e", // yellow-green
+  difficulty_3:  "#e8c92c", // yellow-orange
+  difficulty_4:  "#e6702c", // orange-red
+  difficulty_5:  "#bf0606", // dark-red
+  difficulty_6:  "#6e1c87", // deep-purple
   // misc colours
   wow:           "#6EQUJ5", // Wow!
 }

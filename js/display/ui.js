@@ -449,6 +449,8 @@ ui.drawMenu = function() {
           wobblePeriod = star.wobblePeriod || 10,
           dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
           maxStarSize = realStarSize + dispStarWobble,
+          star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
+          star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
           sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
     draw.setFillNoStroke(ctx, star.color)
     if (star.stroke != null) {
@@ -634,12 +636,12 @@ ui.drawMenu = function() {
               desc_clicking = ui.hitrect(clickpos, 0, lines_y[0], v.planet_sidebar, lines_y[1] - lines_y[0])
         if (desc_hovering) {
           if (v.planet_sidebar_description) {
-            draw.setFillNoStroke(ctx, C.lightred)      
+            draw.setStrokeNoFill(ctx, C.lightred)      
           } else {
-            draw.setFillNoStroke(ctx, C.lightorange)          
+            draw.setStrokeNoFill(ctx, C.lightorange)          
           }
           draw.setLineWidth(ctx, 3)
-          draw._line(ctx, v.planet_sidebar - 2, lines_y[0] - 1, v.planet_sidebar - 2, lines_y[1] + 1)
+          draw._line(ctx, v.planet_sidebar - 1.5, lines_y[0] + 1, v.planet_sidebar - 1.5, lines_y[1] - 1)
         }
         if (desc_clicking) {
           v.planet_sidebar_description = !v.planet_sidebar_description

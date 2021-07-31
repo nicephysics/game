@@ -427,8 +427,7 @@ ui.drawMenu = function() {
       v.menu_options_show = true
       clickpos = false
     } else if (ui.released("enter")) {
-      // temporary, remove
-      game_start("tut1")
+      // ?
     }
   } // end star show
   
@@ -701,6 +700,8 @@ ui.drawMenu = function() {
           wave_index = v.planet_sidebar_level
           if (wave_index >= 0) {
             const wave = p.waves[wave_index]
+            // draw waves done
+            // TODO
             // draw difficulty rating
             const diff_rating = wave.difficulty_rating,
                   difficulty_color = C["difficulty_" + Math.floor(diff_rating)],
@@ -715,8 +716,8 @@ ui.drawMenu = function() {
             for (let d = 0; d <= diff_rating; ++d) {
               draw._circle(ctx, wave_x, sidebar_y, diff_circle_size)
               wave_x += diff_circle_size * 2 + diff_circle_gap
-            }
-            // draw waves done
+            }]
+            // draw other statistics?
             // TODO
             // draw start button
             separator()
@@ -734,6 +735,7 @@ ui.drawMenu = function() {
               draw.setDarkStroke(ctx, C.darkgreen, 0.5)
             }
             if (start_clicking) {
+              game_start(wave.wave)
               clickpos = false
             }
             draw.setLineWidth(ctx, 3)

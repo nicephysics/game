@@ -86,6 +86,7 @@ ui.vars = {
   planet_selected: -1,
   planet_sidebar: 0,
   planet_sidebar_description: true, // show the game description?
+  planet_sidebar_level: -1,
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
@@ -490,6 +491,7 @@ ui.drawMenu = function() {
       // check if clicking
       if (clicking && !sidebar_clicking) {
         v.planet_selected = index
+        v.planet_sidebar_level = -1
         clickpos = false
         clicked_on_orbit = true
       }
@@ -650,20 +652,20 @@ ui.drawMenu = function() {
         if (p.waves != null && p.waves.length > 0) {
           draw.setFillNoStroke(ctx, C.lightred)
           draw.setFont(ctx, "18px Roboto Mono")
-          draw._text(ctx, v.planet_sidebar / 2, sidebar_y, "Levels", 0, "center")
+          draw._text(ctx, sidebar_center, sidebar_y, "Levels", 0, "center")
           // draw level boxes
           const box_size = 50,
                 box_gap = 15
           sidebar_y += box_size / 2 + 25
           let waves = p.waves
           // filter p.waves here
-          let wave_x = v.planet_sidebar / 2 - (box_size + box_gap) * (waves.length - 1) / 2,
+          let wave_x = sidebar_center - (box_size + box_gap) * (waves.length - 1) / 2,
               wave_index = 0
           for (let w of waves) {
             const box_hovering = ui.hitrectangle(mousepos, wave_x, sidebar_y, box_size, box_size),
                   box_clicking = ui.hitrectangle(clickpos, wave_x, sidebar_y, box_size, box_size),
                   difficulty_color = C["difficulty_" + Math.floor(w.difficulty_rating)]
-            // draw box
+            // draw box (*0.5 opacity)
             ctx.globalAlpha *= 0.5
             if (box_hovering) {
               draw.setLightFill(ctx, difficulty_color, 0.75) // how light it is
@@ -682,12 +684,12 @@ ui.drawMenu = function() {
               draw.setLineWidth(ctx, 0)
             }
             draw._rectangle(ctx, wave_x, sidebar_y, box_size, box_size)
-            ctx.globalAlpha /= 0.5
-            // draw text
+            ctx.globalAlpha /= 0.5 // set the opacity back
+            // draw the text char
             draw.setFillNoStroke(ctx, C.lightgrey)
             draw.setFont(ctx, "25px Roboto")
             draw._text(ctx, wave_x, sidebar_y + 2, w.char, 0, "center")
-            // move
+            // move!
             wave_x += box_size + box_gap
             wave_index++
           }
@@ -696,6 +698,32 @@ ui.drawMenu = function() {
           wave_index = v.planet_sidebar_level
           if (wave_index >= 0) {
             const wave = p.waves[wave_index]
+            // draw difficulty rating
+            const diff_rating = wave.difficulty_rating,
+                  difficulty_color = C["difficulty_" + Math.floor(diff_rating)],
+                  diff_circle_size = 15,
+                  diff_circle_gap = 10
+            draw._text(ctx, sidebar_center - diff_circle_gap / 2, sidebar_y + 2, "Difficulty:", 0, "right")
+            wave_x = sidebar_center + diff_circle_gap / 2 + diff_circle_size
+            draw.setFillNoStroke(ctx, difficulty_color)
+            for (let d = 0; d < diff_rating; ++d) {
+              draw._circle(ctx, wave_x, sidebar_y, diff_circle_size)
+              wave_x += diff_circle_size * 2 + diff_circle_gap
+            }
+            // draw waves done
+            // TODO
+            // draw start button
+            separator()
+            draw.setFont(ctx, "18px Roboto Mono")
+            const start_height = 30,
+                  start_text = "Start!",
+                  start_width = draw.getLineWidth(ctx, start_text) + start_height * 2
+            sidebar_y += start_height / 2
+            draw.setFillDarkenStroke(ctx, C.green)
+            draw.setLineWidth(ctx, 3)
+            draw._rectangle(ctx, sidebar_center, sidebar_y, start_width, start_height)
+            draw.setFillNoStroke(ctx, C.almostwhite)
+            draw._text(ctx, sidebar_center, sidebar_y, start_text, 0, "center")
           }
         }
       } // end of planet information

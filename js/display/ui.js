@@ -651,6 +651,7 @@ ui.drawMenu = function() {
           // draw level boxes
           const box_size = 50,
                 box_gap = 15
+          sidebar_y += box_size + box_gap
           let waves = p.waves
           // filter p.waves here
           let wave_x = v.planet_sidebar / 2 - (box_size + box_gap) * (waves.length - 1) / 2,
@@ -676,7 +677,7 @@ ui.drawMenu = function() {
               draw.setNoStroke(ctx)
               draw.setLineWidth(ctx, 0)
             }
-            draw.rectangle(ctx, wave_x, sidebar_y, box_size, box_size)
+            draw._rectangle(ctx, wave_x, sidebar_y, box_size, box_size)
             ctx.globalAlpha /= 0.5
             // draw text
             draw.setFillNoStroke(ctx, C.lightgrey)

@@ -726,7 +726,7 @@ ui.drawMenu = function() {
                   start_text = "Start!",
                   start_width = draw.getTextWidth(ctx, start_text) + start_height * 2,
                   start_hovering = ui.hitrectangle(mousepos, sidebar_center, sidebar_y, start_width, start_height),
-                  start_clicking = ui.hitrectangle(clickpos, sidebar_center, sidebar_y, start_width, start_height),
+                  start_clicking = ui.hitrectangle(clickpos, sidebar_center, sidebar_y, start_width, start_height)
             sidebar_y += start_height / 2
             if (start_hovering) {
               draw.setFillDarkenStroke(ctx, C.darkgreen, 1)

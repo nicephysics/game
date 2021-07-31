@@ -703,15 +703,15 @@ ui.drawMenu = function() {
             // draw difficulty rating
             const diff_rating = wave.difficulty_rating,
                   difficulty_color = C["difficulty_" + Math.floor(diff_rating)],
-                  diff_circle_size = 15,
-                  diff_circle_gap = 10
-            draw.setDarkFill(ctx, difficulty_color, 1)
+                  diff_circle_size = 7,
+                  diff_circle_gap = 5
+            draw.setLightFill(ctx, difficulty_color, 1)
             draw.setNoStroke(ctx)
-            draw.setFont(ctx, "16px Roboto Mono")
-            draw._text(ctx, sidebar_center - diff_circle_gap / 2, sidebar_y + 2, "Difficulty:", 0, "right")
+            draw.setFont(ctx, "14px Roboto Mono")
+            draw._text(ctx, sidebar_center - diff_circle_gap / 2, sidebar_y + 2, "Difficulty: " + Math.round(wave.difficulty), 0, "right")
             wave_x = sidebar_center + diff_circle_gap / 2 + diff_circle_size
             draw.setFillNoStroke(ctx, difficulty_color)
-            for (let d = 0; d < diff_rating; ++d) {
+            for (let d = 0; d <= diff_rating; ++d) {
               draw._circle(ctx, wave_x, sidebar_y, diff_circle_size)
               wave_x += diff_circle_size * 2 + diff_circle_gap
             }

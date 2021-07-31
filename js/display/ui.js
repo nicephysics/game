@@ -616,11 +616,11 @@ ui.drawMenu = function() {
         draw._text(ctx, sidebar_center, sidebar_y, star.name + star.postfix + p.name, 0, "center")
         // draw sidebar planet description
         separator()
+        draw.setFont(ctx, "14px Roboto Mono")
         const desc_text = v.planet_sidebar_description ? p.description : p.real_description,
               desc_texts = draw.splitText(ctx, desc_text, width - 50),
               desc_text_gap = 21,
               desc_width = draw.getTextWidth(ctx, desc_texts)
-        draw.setFont(ctx, "14px Roboto Mono")
         if (v.planet_sidebar_description) {
           draw.setFillNoStroke(ctx, C.lightorange)
         } else {

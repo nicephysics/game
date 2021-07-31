@@ -375,6 +375,7 @@ ui.drawMenu = function() {
           v.planet_show = true
           v.planet_selected = -1
           v.planet_sidebar = 0
+          v.planet_sidebar_level = -1
           v.current_star_key = star_key
           v.planet_system_scale = star.pre_system_scale || 0.0001
           v.target_planet_system_scale = star.system_scale || 1
@@ -384,7 +385,7 @@ ui.drawMenu = function() {
         // draw star: (fit width = boxSize * 1.4)
         const starContentWidth = boxSize * 1.4
         x += starContentWidth / 2
-        const realStarSize = boxSize * 0.6 * Math.pow(star.size, 0.5),
+        const realStarSize = boxSize * 0.6 * Math.pow(star.size * 0.01, 0.5),
               dispStarSize = math.bound(realStarSize, boxSize * 0.1, boxSize * 0.9),
               cutoffRatio = dispStarSize / realStarSize // should be 1 most of the time...
         draw.setFillDarkenStroke(ctx, star.color)
@@ -703,13 +704,13 @@ ui.drawMenu = function() {
             // draw difficulty rating
             const diff_rating = wave.difficulty_rating,
                   difficulty_color = C["difficulty_" + Math.floor(diff_rating)],
-                  diff_circle_size = 7,
+                  diff_circle_size = 8,
                   diff_circle_gap = 5
             draw.setLightFill(ctx, difficulty_color, 1)
             draw.setNoStroke(ctx)
             draw.setFont(ctx, "14px Roboto Mono")
-            draw._text(ctx, sidebar_center - diff_circle_gap / 2, sidebar_y + 2, "Difficulty: " + Math.round(wave.difficulty), 0, "right")
-            wave_x = sidebar_center + diff_circle_gap / 2 + diff_circle_size
+            draw._text(ctx, sidebar_center, sidebar_y + 1, "Difficulty: " + Math.round(wave.difficulty), 0, "right")
+            wave_x = sidebar_center + diff_circle_gap * 3 + diff_circle_size
             draw.setFillNoStroke(ctx, difficulty_color)
             for (let d = 0; d <= diff_rating; ++d) {
               draw._circle(ctx, wave_x, sidebar_y, diff_circle_size)
@@ -722,9 +723,19 @@ ui.drawMenu = function() {
             draw.setFont(ctx, "18px Roboto Mono")
             const start_height = 30,
                   start_text = "Start!",
-                  start_width = draw.getTextWidth(ctx, start_text) + start_height * 2
+                  start_width = draw.getTextWidth(ctx, start_text) + start_height * 2,
+                  start_hovering = ui.hitrectangle(mousepos, sidebar_center, sidebar_y, start_width, start_height),
+                  start_clicking = ui.hitrectangle(clickpos, sidebar_center, sidebar_y, start_width, start_height),
             sidebar_y += start_height / 2
-            draw.setFillDarkenStroke(ctx, C.green)
+            if (start_hovering) {
+              draw.setFillDarkenStroke(ctx, C.darkgreen, 1)
+            } else {
+              draw.setLightFill(ctx, C.darkgreen, 0.6)
+              draw.setDarkStroke(ctx, C.darkgreen, 0.5)
+            }
+            if (start_clicking) {
+              clickpos = false
+            }
             draw.setLineWidth(ctx, 3)
             draw._rectangle(ctx, sidebar_center, sidebar_y, start_width, start_height)
             draw.setFillNoStroke(ctx, C.almostwhite)

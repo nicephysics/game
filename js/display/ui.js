@@ -648,13 +648,16 @@ ui.drawMenu = function() {
         }
         // draw sidebar planet levels (if any)
         if (p.waves != null && p.waves.length > 0) {
+          draw.setFillNoStroke(ctx, C.lightred)
+          draw.setFont(ctx, "18px Roboto Mono")
+          draw._text(ctx, v.planet_sidebar / 2, sidebar_y, "Levels", 0, "center")
           // draw level boxes
-          const box_size = 50,
+          const box_size = 25,
                 box_gap = 15
-          sidebar_y += box_size + box_gap
+          sidebar_y += box_size + 25
           let waves = p.waves
           // filter p.waves here
-          let wave_x = v.planet_sidebar / 2 - (box_size + box_gap) * (waves.length - 1) / 2,
+          let wave_x = v.planet_sidebar / 2 - (box_size * 2 + box_gap) * (waves.length - 1) / 2,
               wave_index = 0
           for (let w of waves) {
             const box_hovering = ui.hitrectangle(mousepos, wave_x, sidebar_y, box_size, box_size),
@@ -671,22 +674,25 @@ ui.drawMenu = function() {
               v.planet_sidebar_level = wave_index
             }
             if (v.planet_sidebar_level == wave_index) {
-              draw.setStroke(ctx, C.grey)
-              draw.setLineWidth(ctx, 2)
+              draw.setStroke(ctx, difficulty_color)
+              draw.setNoFill(ctx)
+              draw.setLineWidth(ctx, 3)
             } else {
               draw.setNoStroke(ctx)
               draw.setLineWidth(ctx, 0)
             }
-            draw._rectangle(ctx, wave_x, sidebar_y, box_size, box_size)
+            draw._rectangle(ctx, wave_x, sidebar_y, box_size * 2, box_size * 2)
             ctx.globalAlpha /= 0.5
             // draw text
             draw.setFillNoStroke(ctx, C.lightgrey)
             draw.setFont(ctx, "25px Roboto")
-            draw._text(ctx, wave_x, sidebar_y, w.char, 0, "center")
+            draw._text(ctx, wave_x, sidebar_y + 2, w.char, 0, "center")
             // move
-            wave_x += box_size + box_gap
+            wave_x += box_size * 2 + box_gap
             wave_index++
           }
+          sidebar_y += box_size
+          separator()
           wave_index = v.planet_sidebar_level
           if (wave_index >= 0) {
             const wave = p.waves[wave_index]

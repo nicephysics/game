@@ -716,7 +716,7 @@ ui.drawMenu = function() {
             for (let d = 0; d <= diff_rating; ++d) {
               draw._circle(ctx, wave_x, sidebar_y, diff_circle_size)
               wave_x += diff_circle_size * 2 + diff_circle_gap
-            }]
+            }
             // draw other statistics?
             // TODO
             // draw start button

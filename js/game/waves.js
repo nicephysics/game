@@ -62,10 +62,10 @@ waves.end = function() {
 
 
 /* TUTORIAL */
-waves.tut1 = {
+waves.tut1_1 = {
   wave: [],
 }
-waves.tut1.wave.push(
+waves.tut1_1.wave.push(
   { // 1
     type: "asteroid",
     rating: 1,
@@ -104,7 +104,7 @@ waves.tut1.wave.push(
     m: 0.1, s: 1, z: 10, g: 0.1,
   }
 )
-waves.tut1.starttext = {
+waves.tut1_1.starttext = {
   [0]: ["Welcome to the tutorial! You are a [thing] trying to protect the planet from incoming asteroids.",
         "Use ↑↓→← or wasd keys to move and click (and hold) to launch a projectile.",
         "The lighter area of the screen is the atmosphere of the planet. Everything inside the atmosphere falls due to gravity and everything above it floats in space!",
@@ -113,7 +113,7 @@ waves.tut1.starttext = {
   [1]: ["The first asteroids should start to appear now.", ],
   [4]: ["Many asteroids can appear at the same time too!", ],
 }
-waves.tut1.endtext = {
+waves.tut1_1.endtext = {
   [1]: ["Did you hit the 2 asteroids away? More of them will come this time...", ],
   [2]: ["The asteroids will start to come at a faster rate after this, try to keep up!", ],
   [3]: ["The points you gain from hitting asteroids can be used for upgrading!",

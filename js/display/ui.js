@@ -641,13 +641,56 @@ ui.drawMenu = function() {
             draw.setStrokeNoFill(ctx, C.lightorange)          
           }
           draw.setLineWidth(ctx, 3)
-          draw._line(ctx, v.planet_sidebar - 1.5, lines_y[0] + 1, v.planet_sidebar - 1.5, lines_y[1] - 1)
+          draw._line(ctx, v.planet_sidebar - 1, lines_y[0] + 1, v.planet_sidebar - 1, lines_y[1] - 1)
         }
         if (desc_clicking) {
           v.planet_sidebar_description = !v.planet_sidebar_description
         }
-        // draw sidebar planet levels
-        // TODO
+        // draw sidebar planet levels (if any)
+        if (p.waves != null && p.waves.length > 0) {
+          // draw level boxes
+          const box_size = 50,
+                box_gap = 15
+          let waves = p.waves
+          // filter p.waves here
+          let wave_x = v.planet_sidebar / 2 - (box_size + box_gap) * (waves.length - 1) / 2,
+              wave_index = 0
+          for (let w of waves) {
+            const box_hovering = ui.hitrectangle(mousepos, wave_x, sidebar_y, box_size, box_size),
+                  box_clicking = ui.hitrectangle(clickpos, wave_x, sidebar_y, box_size, box_size),
+                  difficulty_color = C["difficulty_" + Math.floor(w.difficulty_rating)]
+            // draw box
+            ctx.globalAlpha *= 0.5
+            if (box_hovering) {
+              draw.setLightFill(ctx, difficulty_color, 0.75) // how light it is
+            } else {
+              draw.setFill(ctx, difficulty_color)
+            }
+            if (box_clicking) {
+              v.planet_sidebar_level = wave_index
+            }
+            if (v.planet_sidebar_level == wave_index) {
+              draw.setStroke(ctx, C.grey)
+              draw.setLineWidth(ctx, 2)
+            } else {
+              draw.setNoStroke(ctx)
+              draw.setLineWidth(ctx, 0)
+            }
+            draw.rectangle(ctx, wave_x, sidebar_y, box_size, box_size)
+            ctx.globalAlpha /= 0.5
+            // draw text
+            draw.setFillNoStroke(ctx, C.lightgrey)
+            draw.setFont(ctx, "25px Roboto")
+            draw._text(ctx, wave_x, sidebar_y, w.char, 0, "center")
+            // move
+            wave_x += box_size + box_gap
+            wave_index++
+          }
+          wave_index = v.planet_sidebar_level
+          if (wave_index >= 0) {
+            const wave = p.waves[wave_index]
+          }
+        }
       } // end of planet information
     } // end planet sidebar
     // unselect selected planet if clicked on the space area

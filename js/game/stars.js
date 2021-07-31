@@ -145,7 +145,7 @@ stars.stars = {
     game_description: "Just a test...",
     color: "#ff00aa", // pink
     stroke: null,
-    size: 1.00,
+    size: 100.00,
     mass: 1.00,
     constellation: "Dev",
     system_scale: 1,
@@ -160,8 +160,10 @@ stars.stars = {
     description: "The Sun is the Sun. The Sun. Sun. sun. un. n.",
     game_description: "A secret star... not really.",
     color: "#f8ff3d", // default yellow, slightly light
-    size: 1.00,
+    size: 100.00,
     mass: 1.00,
+    real_size: 1.00,
+    real_mass: 1.00,
     constellation: "Sol",
     system_scale: 1,
     planets: [],

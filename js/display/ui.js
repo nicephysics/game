@@ -81,6 +81,7 @@ ui.vars = {
   menu_options_show: true,
   star_show: false,
   planet_show: false,
+  research_show: false,
   current_star_key: "",
   
   planet_selected: -1,
@@ -266,8 +267,8 @@ ui.drawMenu = function() {
   // some large text
   draw.setFill(ctx, C.lightblue)
   draw.setStroke(ctx, C.darkblue)
-  draw.setFont(ctx, "48px Roboto Condensed")
-    draw._text(ctx, _width / 2, _height / 5, "LOREM IPSUM", ui.vars.time / 200, "center")
+  draw.setFont(ctx, "48px Roboto Mono")
+    draw._text(ctx, _width / 2, _height / 5, "A Physics Game", 0 * ui.vars.time, "center")
   
   
   
@@ -284,6 +285,7 @@ ui.drawMenu = function() {
       { text: "Upgrades",
         onclick: function() {
           // ?????
+          v.research_show = true
         },
       }
     ],
@@ -759,6 +761,11 @@ ui.drawMenu = function() {
       // nothing for now
     }
   } // end planet show
+  
+  
+  if (v.research_show) {
+    
+  } // end research show
   
 }
 

@@ -91,6 +91,9 @@ ui.vars = {
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
+  research_sidebar: 0,
+  research_node: false, // ""
+  
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
 
@@ -286,6 +289,8 @@ ui.drawMenu = function() {
         onclick: function() {
           // ?????
           v.research_show = true
+          v.research_sidebar = 0
+          v.research_node = false
         },
       }
     ],
@@ -764,7 +769,33 @@ ui.drawMenu = function() {
   
   
   if (v.research_show) {
-    
+    // draw black background
+    draw.setFillNoStroke(ctx, C.black)
+    draw._rect(ctx, 0, 0, _width, _height)
+    // draw research stuff
+    // TODO
+    // draw research sidebar
+    const research_sidebar_move_rate = 0.08,
+          research_sidebar_target = _width * 0.35
+    if (v.research_node) {
+      v.research_sidebar = math.lerp(v.research_sidebar, research_sidebar_target, research_sidebar_move_rate)
+    } else {
+      v.research_sidebar = math.lerp(v.research_sidebar, 0, research_sidebar_move_rate)
+    }
+    // draw research sidebar
+    if (Math.round(v.research_sidebar) > 0) {
+      // expected research sidebar width
+      width = research_sidebar_target
+      
+    } // end draw research sidebar
+    // draw other research stuff
+    // TODO
+    // keypresses
+    if ( ui.released("escape") ) {
+      v.research_show = false
+      v.menu_options_show = true
+      clickpos = false
+    }
   } // end research show
   
 }

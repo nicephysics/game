@@ -181,7 +181,7 @@ export class Gun {
     const reload = this.reloadFrames
     if (this.shot < reload) {
       this.shot++
-      this.refreshShot()
+      // this.refreshShot() // ?
     } else {
       if (this.shooting) {
         this.shot++

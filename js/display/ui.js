@@ -177,7 +177,6 @@ ui.init = function(render) {
     ui.keypress.up = event.code
   })
   window.addEventListener("wheel", function(event) {
-    console.log(event)
     const y = event.deltaY
     ui.vars.scroll = y / Math.abs(y)
   })

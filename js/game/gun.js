@@ -179,8 +179,8 @@ export class Gun {
     if (this.dummy) return
     // get reload from stat
     const reload = this.reloadFrames
+    this.shot++
     if (this.shooting) {
-      this.shot++
       while (this.shot >= reload && this.shooting) {
         this.shot -= reload
         this.shoot()

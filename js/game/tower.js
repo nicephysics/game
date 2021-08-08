@@ -84,7 +84,7 @@ export class Tower {
       Tower.drawtowers[type] = t
     }
     // set body attributes, fit the draw
-    t.body.position = {
+    t.position = {
       x: x + render.bounds.min.x,
       y: y + render.bounds.min.y,
     }
@@ -115,6 +115,7 @@ export class Tower {
     }
     const tower = new Thing(Vector.create(0, 0))
     tower.make(things[o.type])
+    tower.create()
     tower.stat.load(o.stat)
     tower.addxp(o.xp)
     tower.position = o.position

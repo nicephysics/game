@@ -101,7 +101,7 @@ export class Tower {
     }
     return {
       type: tower.type,
-      stat: tower.stat.save,
+      stat: tower.stat.save(),
       xp: tower.xp,
       position: tower.position,
       health: Tower.health,

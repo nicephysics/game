@@ -11,7 +11,8 @@ export var things = { }
 // default things
 
 things.thing = {
-  // nothing to predefine
+  type: "unknown",
+  // nothing else to predefine
 }
 
 things.tower = {
@@ -86,7 +87,6 @@ things.enemy = {
 things.basic = {
   parent: ["tower"],
   label: "G-0",
-  type: "basic",
   description: "A simple tower with a simple gun.",
   render: style.tower.basic,
   accessories: [
@@ -121,7 +121,6 @@ things.basic = {
 things.twin = {
   parent: ["tower"],
   label: "T-5",
-  type: "twin",
   description: "Two weaker shooters side-by-side, like twins.",
   render: style.tower.tier2,
   accessories: [
@@ -162,7 +161,6 @@ things.twin = {
 things.double = {
   parent: ["tower"],
   label: "D-1",
-  type: "double",
   description: "Double the gun, double the fun!",
   render: style.tower.tier2,
   accessories: [
@@ -202,7 +200,6 @@ things.double = {
 things.big = {
   parent: ["tower"],
   label: "B-4",
-  type: "big",
   description: "Slower and bigger projectiles.",
   render: style.tower.tier2,
   accessories: [
@@ -236,7 +233,6 @@ things.big = {
 things.strong = {
   parent: ["tower"],
   label: "S-3",
-  type: "strong",
   description: "Faster and heavier projectiles.",
   render: style.tower.tier2,
   accessories: [
@@ -269,7 +265,6 @@ things.strong = {
 things.fast = {
   parent: ["tower"],
   label: "F-2",
-  type: "fast",
   description: "Faster rate of fire and smaller projectiles.",
   render: style.tower.tier2,
   accessories: [
@@ -305,7 +300,6 @@ things.fast = {
 things.ball = {
   parent: ["enemy"],
   label: "Ball (Test)",
-  type: "ball",
   shape: "circle",
   render: style.enemy.ball,
   enemy_random: true,
@@ -325,7 +319,6 @@ things.ball = {
 things.ballgun = {
   parent: ["enemy"],
   label: "Ballgun (Test)",
-  type: "ballgun",
   shape: "circle",
   render: style.enemy.ball,
   controlType: "enemy_aim",
@@ -354,7 +347,6 @@ things.ballgun = {
 things.asteroid = {
   parent: ["enemy"],
   label: "Asteroid",
-  type: "asteroid",
   render: style.enemy.asteroid,
   enemy_random: true,
   guns: null,
@@ -406,4 +398,11 @@ things.bullet = {
   xp: 0,
   bonusxp: 0,
   stat: null,
+}
+
+
+for (let k in things) {
+  if (things[k].type == null) {
+    things[k].type = k
+  }
 }

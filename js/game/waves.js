@@ -31,7 +31,7 @@ waves.init = function(name) {
   if (currtext != null) {
     ui.vars.waves_popup_text.push(...currtext)    
   }
-  save.wave()
+  save.setwave() // save the game!
 }
 
 waves.start = function() {
@@ -123,11 +123,11 @@ if ("TUTORIALS") {
     }*/
   )
   tut1_1.starttext = {
-    [0]: ["Welcome to the tutorial! You are a SFO trying to protect the planet from incoming ☄️asteroids.",
+    [0]: ["Welcome to the tutorial! You are a SFO trying to protect the planet from incoming asteroids. ☄️",
           "Use ↑↓→← or wasd keys to move. Click (and hold) to launch a projectile!",
           "The lighter area of the screen is the atmosphere of the planet. Everything inside the atmosphere falls due to gravity and everything above it floats in space!",
           "Furthermore, you cannot go past the atmosphere barrier or into the ground.",
-          "Ready? Press the green play button at the top of the screen to begin!",
+          "Ready? Press the green play button at the top of the screen to begin! (it will appear after you press OK→)",
           ],
     [1]: ["The first asteroids should start to appear now. Press the green play button again!", ],
     [4]: ["Many asteroids can appear at the same time, get ready!", ],
@@ -140,8 +140,8 @@ if ("TUTORIALS") {
           "Press the statistics button in the bottom right (or press U) to enter the upgrade screen.",
           "In the upgrade screen, you can improve your [thing] by pressing the plus button on any one of the improvements!",
           ],
-    [4]: ["If an asteroid reaches the ground, you lose ❤️health.",
-          "Your health is shown at the bottom right corner. If it reaches zero, you lose (oh no)!", ],
+    [4]: ["If an asteroid reaches the ground, you lose ❤️ health.",
+          "Your health is shown at the bottom right corner. If it reaches zero (or negative), you lose!", ],
     [5]: ["Congratulations, you have successfully completed this tutorial!",
           "There is another more advanced tutorial for you. Click on the next planet to continue!",
          ],

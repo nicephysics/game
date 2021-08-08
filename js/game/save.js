@@ -25,6 +25,7 @@ save.get = function() {
 save.setwave = function() {
   S.game = {
     tower: Tower.saveTower(),
+    wave: waves.current,
   }
   save.set()
 }
@@ -32,4 +33,5 @@ save.setwave = function() {
 save.getwave = function() {
   save.get()
   Tower.loadTower(S.game.tower)
+  waves.current = S.game.wave
 }

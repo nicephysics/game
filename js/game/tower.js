@@ -97,12 +97,28 @@ export class Tower {
   static saveTower(tower = Tower.player) {
     if (tower == null) {
       console.error("Tower to save is null!")
-      return ""
+      return { }
     }
     return {
       type: tower.type,
       stat: tower.stat.save,
-      // TODO
+      xp: tower.xp,
+      position: tower.position,
+      health: Tower.health,
+      // TODO more things
     }
+  }
+  
+  static loadTower(o) {
+    if (Tower.player) {
+      Tower.player.remove()
+    }
+    const tower = new Thing(Vector.create(0, 0))
+    tower.make(things[o.type])
+    tower.stat.load(o.stat)
+    tower.addxp(o.xp)
+    tower.position = o.position
+    Tower.health = o.health
+    Tower.player = tower
   }
 }

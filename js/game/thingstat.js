@@ -87,12 +87,28 @@ export class ThingStat {
     return upgradelevel.tier[this.tier] <= this.thing.level
   }
   
+  get save() {
+    return this.upgrade
+  }
+  
   // set
   set upgradeArray(arr) {
     const u = this.upgrade
     for (let i = 0; i < upgradekeys.length; i++) {
       u[upgradekeys[i]] = arr[i]
     }
+  }
+  
+  set mult(u) {
+    if (this.thing.gametype === "Enemy" || this.upgrade == null) {
+      return
+    }
+    this.upgrade = u
+  }
+  
+  set load(o) {
+    // call "set mult(u)" above
+    this.mult = o
   }
   
   // go!

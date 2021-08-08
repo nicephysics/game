@@ -100,10 +100,10 @@ export class Tower {
       return { }
     }
     return {
+      position: tower.position,
       type: tower.type,
       stat: tower.stat.save(),
       xp: tower.xp,
-      position: tower.position,
       health: Tower.health,
       // TODO more things
     }
@@ -113,12 +113,11 @@ export class Tower {
     if (Tower.player) {
       Tower.player.remove()
     }
-    const tower = new Thing(Vector.create(0, 0))
+    const tower = new Thing(o.position)
     tower.make(things[o.type])
     tower.create()
     tower.stat.load(o.stat)
     tower.addxp(o.xp)
-    tower.position = o.position
     Tower.health = o.health
     Tower.player = tower
   }

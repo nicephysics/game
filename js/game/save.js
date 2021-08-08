@@ -22,9 +22,14 @@ save.get = function() {
   save.save = JSON.parse(localStorage.getItem("game"))
 }
 
-save.wave = function() {
+save.setwave = function() {
   S.game = {
-    player: Tower.saveTower(),
+    tower: Tower.saveTower(),
   }
   save.set()
+}
+
+save.getwave = function() {
+  save.get()
+  Tower.loadTower(S.game.tower)
 }

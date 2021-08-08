@@ -1,6 +1,7 @@
 import { category, config } from "../config/config.js"
 
 import { Enemy } from "./enemy.js"
+import { save } from "./save.js"
 import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
 
@@ -17,7 +18,7 @@ if (true) {
 const Vector = Matter.Vector
 
 // to fill up later
-export var waves = { }
+export const waves = { }
 
 waves.current = 0
 waves.waves = null
@@ -30,6 +31,7 @@ waves.init = function(name) {
   if (currtext != null) {
     ui.vars.waves_popup_text.push(...currtext)    
   }
+  save.wave()
 }
 
 waves.start = function() {

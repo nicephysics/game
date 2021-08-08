@@ -93,4 +93,16 @@ export class Tower {
     t.stat.size = size
     t.draw(render)
   }
+  
+  static saveTower(tower = Tower.player) {
+    if (tower == null) {
+      console.error("Tower to save is null!")
+      return ""
+    }
+    return {
+      type: tower.type,
+      stat: tower.stat.save,
+      // TODO
+    }
+  }
 }

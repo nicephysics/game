@@ -26,4 +26,5 @@ save.wave = function() {
   S.game = {
     player: Tower.saveTower(),
   }
+  save.set()
 }

@@ -65,6 +65,7 @@ waves.end = function() {
 const makelevel = function(levelname) {
   waves[levelname] = {
     wave: [],
+    number: 0,
     starttext: {},
     endtext: {},
   }
@@ -75,6 +76,7 @@ const makelevel = function(levelname) {
 /* TUTORIAL */
 if ("TUTORIALS") {
   const tut1_1 = makelevel("tut1_1")
+  tut1_1.number = 5
   tut1_1.wave.push(
     { // 1
       type: "asteroid",
@@ -145,6 +147,7 @@ if ("TUTORIALS") {
          ],
   }
   const tut1_2 = makelevel("tut1_2")
+  tut1_1.number = 4 // for now
   tut1_2.wave.push(
     { // 1
       type: "asteroid",

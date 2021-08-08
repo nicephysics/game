@@ -98,13 +98,19 @@ if ("TUTORIALS") {
       number: 4,
       sep: 0.1,
       m: 0.1, s: 0.5, g: 0.2,
-    }, /*{ // 5
+    }, { // 5
+      type: "asteroid",
+      rating: 2,
+      number: 10,
+      sep: 2,
+      m: 0.2, s: 0.75, g: 0.25,
+    }, /*{ // 6
       type: "asteroid",
       rating: 3,
       number: 10,
       sep: 5,
       m: 0.1, s: 1, z: 10, g: 0.1,
-    }, { // 6
+    }, { // 7
       type: "ball",
       rating: 3,
       number: 10,
@@ -113,13 +119,15 @@ if ("TUTORIALS") {
     }*/
   )
   tut1_1.starttext = {
-    [0]: ["Welcome to the tutorial! You are a [thing] trying to protect the planet from incoming asteroids.",
-          "Use ↑↓→← or wasd keys to move and click (and hold) to launch a projectile.",
+    [0]: ["Welcome to the tutorial! You are a SFO trying to protect the planet from incoming ☄️asteroids.",
+          "Use ↑↓→← or wasd keys to move. Click (and hold) to launch a projectile!",
           "The lighter area of the screen is the atmosphere of the planet. Everything inside the atmosphere falls due to gravity and everything above it floats in space!",
-          "Ready? Press the play button at the top of the screen to begin!",
+          "Furthermore, you cannot go past the atmosphere barrier or into the ground.",
+          "Ready? Press the green play button at the top of the screen to begin!",
           ],
-    [1]: ["The first asteroids should start to appear now.", ],
-    [4]: ["Many asteroids can appear at the same time too!", ],
+    [1]: ["The first asteroids should start to appear now. Press the green play button again!", ],
+    [4]: ["Many asteroids can appear at the same time, get ready!", ],
+    [5]: ["This is the final round... beware.", ],
   }
   tut1_1.endtext = {
     [1]: ["Did you hit the 2 asteroids away? More of them will come this time...", ],
@@ -128,7 +136,9 @@ if ("TUTORIALS") {
           "Press the statistics button in the bottom right (or press U) to enter the upgrade screen.",
           "In the upgrade screen, you can improve your [thing] by pressing the plus button on any one of the improvements!",
           ],
-    [4]: ["Congratulations, you have completed the tutorial!",
+    [4]: ["If an asteroid reaches the ground, you lose ❤️health.",
+          "Your health is shown at the bottom right corner. If it reaches zero, you lose (oh no)!", ],
+    [5]: ["Congratulations, you have successfully completed this tutorial!",
           "There is another more advanced tutorial for you. Click on the next planet to continue!",
          ],
   }
@@ -162,8 +172,8 @@ if ("TUTORIALS") {
   )
   tut1_2.starttext = {
     [0]: ["Welcome to tutorial 1.2!",
-          "Did you know you could click and hold to constantly shoot?",
-          "This tutorial is slightly harder... good luck!",
+          "Remember: you could click and hold to constantly shoot? You could also press E to automatically shoot all the time!",
+          "Note: This tutorial is slightly harder... good luck!",
           ],
     [3]: ["10 asteroids incoming at once!", ],
   }

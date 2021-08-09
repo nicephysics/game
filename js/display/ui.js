@@ -322,7 +322,7 @@ ui.drawMenu = function() {
       if (o.condition != null && !o.condition()) continue
       options_array_length++
     }
-    y = _height / 2 - options.gap * options_array_length
+    y = _height / 2 - options.gap * options_array_length / 2
     draw.setFont(ctx, options.font_size + "px Roboto Mono")
     for (let o of options.array) {
       if (o.condition != null && !o.condition()) continue

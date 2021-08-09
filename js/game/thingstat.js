@@ -22,6 +22,17 @@ export class ThingStat {
   static upgradekeys = upgradekeys
   static upgradelevel = upgradelevel
   
+  static upgradeMax = {
+    // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
+    size: 20,
+    mass: 100,
+    speed: 100,
+    reload: 100,
+    towerspeed: 20,
+    spread: 19,
+    air: 19,
+  }
+  
   // fields
   thing = null
   tier = -1

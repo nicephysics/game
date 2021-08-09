@@ -316,6 +316,7 @@ ui.drawMenu = function() {
     y = _height / 2 - options.gap * options.array.length
     draw.setFont(ctx, options.font_size + "px Roboto Mono")
     for (let o of options.array) {
+      if (!o.condition()) continue
       const text = o.text,
             text_width = ctx.measureText(text).width,
             rect_width = text_width + options.gap,

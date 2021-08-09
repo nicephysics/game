@@ -33,7 +33,7 @@ waves.init = function(name) {
   if (currtext != null) {
     ui.vars.waves_popup_text.push(...currtext)    
   }
-  save.setwave() // save the game!
+  // same the game?
 }
 
 waves.start = function() {
@@ -62,6 +62,7 @@ waves.end = function() {
   if (currtext != null) {
     ui.vars.waves_popup_text.push(...currtext)
   }
+  save.setwave() // save the game!
 }
 
 const makelevel = function(levelname) {

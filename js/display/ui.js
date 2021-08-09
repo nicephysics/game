@@ -96,9 +96,12 @@ ui.vars = {
   research_node: false, // ""
   
   /* misc */
-  pop_show: false,
-  pop_text: "",
-  pop_options: { yes: function() {}, no: function() {}, }, // just a format
+  pop: {
+    show: false,
+    text: "",
+    color: "", // default orange
+    options: [ { color: "", color_hover: "", symbol: "", click: function() {}, }, ], // more options...
+  },
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
@@ -1591,14 +1594,97 @@ ui.drawGame = function() {
 
 // short for draw popup, a miscellaneous pop-up box for many purposes
 ui.drawpop = function() {
+  
   const v = ui.vars
-  if (!v.pop_show) return
+  if (v.pop == null || !v.pop.show) return
   const render = Thing.render,
         ctx = render.context,
         _width = render.options.width,
         _height = render.options.height,
         _min_wh = Math.min(_width, _height),
         // pop stuff
-        text = v.pop_text,
-        options = v.pop_options
+        p = v.pop,
+        text = p.text,
+        options = p.options
+  let x, y, size
+  
+  if (true) {
+    if (p.font == null) {
+      p.font = p.fontsize + "px Roboto Condensed"
+      draw.setFont(ctx, p.font)
+    } else {
+      draw.setFont(ctx, p.font)
+      // get font size from font
+      p.fontsize = ""
+      let charcount = 0
+      while (p.font.indexOf(charcount) != 'p') p.fontsize += p.font.indexOf(charcount)
+      p.fontsize = +p.fontsize
+    }
+    const maxWidth = Math.min(520, _width * 0.8),
+          texts = draw.splitText(ctx, text, maxWidth),
+          textSize = p.fontsize,
+          textGap = p.fontsize / 2,
+          border = 20,
+          circleSize = 40
+    let rectwidth = maxWidth,
+        rectheight = border * 2 + texts.length * (textSize + textGap) - textGap  + circleSize
+    if (texts.length == 1) {
+      const measured = ctx.measureText(texts[0])
+      rectwidth = measured.width
+    }
+    rectwidth += border * 2
+    // draw translucent pop-up rectangle
+    const overlayColor = p.color || C.lightorange
+    draw.setFillNoStroke(ctx, overlayColor)
+    draw.setGlobalAlpha(ctx, 0.95) // very opaque!
+      // basically a centered rect (rectangle)
+      draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
+    draw.setGlobalAlpha(ctx, 1)
+    x = _width / 2
+    y = (_height - rectheight + textSize) / 2 + border
+    for (let text of texts) {
+      // draw text!
+      draw.setTextDarkFill(ctx, overlayColor)
+        draw._text(ctx, x, y, text, 0, "center")
+      y += textSize + textGap
+    }
+    // draw options...
+    x = (_width - circleSize * (options.length - 1)) / 2
+    y = (_height + rectheight - circleSize) / 2
+    for (let o of options) {
+      let buttonColor = o.color || C.green
+      if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
+        buttonColor = o.color_hover || C.darkgreen
+        mousepos = false
+      }
+      // draw circle
+      draw.setFillDarkenStroke(ctx, buttonColor)
+        draw._circle(ctx, x, y, circleSize * 0.375)
+      // draw symbol
+      if (o.symbol == null) continue
+      switch (o.symbol) {
+        case "ok":
+        case "OK":
+          draw.setTextDarkFill(ctx, overlayColor)
+          draw.setFont(ctx, "16px Roboto Condensed") // not draw.setFont(ctx, p.font)
+            draw._text(ctx, x, y + 2, "OK", 0, "center")
+        case ">":
+        case "right":
+          draw.setDarkStroke(ctx, o.color, 1.5)
+          draw.setLineWidth(ctx, 3)
+          draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
+          draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
+      }
+      if (
+        ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
+        ui.released("ArrowRight") ||
+        ui.released("Enter")
+      ) {
+        o.click()
+      }
+      x += circleSize
+    }
+    // end draw options
+  }
+  
 }

@@ -98,10 +98,10 @@ ui.vars = {
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
 
-// set v.options (menu options)
+// set v.menu_options
 if (true) {
   const v = ui.vars
-  v.options = {
+  v.menu_options = {
     array: [
       { text: "Start",
         onclick: function() {
@@ -120,11 +120,14 @@ if (true) {
       },
       { text: "Upgrades",
         onclick: function() {
-          // ?????
           v.research_show = true
           v.research_sidebar = 0
           v.research_node = false
+          // TODO
         },
+        condition: function() {
+         return true
+        }
       }
     ],
     font_size: 20,
@@ -316,7 +319,7 @@ ui.drawMenu = function() {
     y = _height / 2 - options.gap * options.array.length
     draw.setFont(ctx, options.font_size + "px Roboto Mono")
     for (let o of options.array) {
-      if (!o.condition()) continue
+      if (o.condition != null && !o.condition()) continue
       const text = o.text,
             text_width = ctx.measureText(text).width,
             rect_width = text_width + options.gap,

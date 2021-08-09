@@ -24,16 +24,19 @@ waves.current = 0
 waves.levelname = ""
 waves.waves = null
 
-waves.init = function(name) {
-  waves.current = 0
+waves.init = function(name, continued = false) {
   waves.levelname = name
   waves.waves = waves[name]
-  const W = waves.waves,
-        currtext = W.starttext[0]
-  if (currtext != null) {
-    ui.vars.waves_popup_text.push(...currtext)    
+  const W = waves.waves
+  if (continued) {
+    // save the game?
+  } else {
+    waves.current = 0
+    const currtext = W.starttext[0]
+    if (currtext != null) {
+      ui.vars.waves_popup_text.push(...currtext)    
+    }
   }
-  // same the game?
 }
 
 waves.start = function() {

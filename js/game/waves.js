@@ -21,10 +21,12 @@ const Vector = Matter.Vector
 export const waves = { }
 
 waves.current = 0
+waves.levelname = ""
 waves.waves = null
 
 waves.init = function(name) {
   waves.current = 0
+  waves.levelname = name
   waves.waves = waves[name]
   const W = waves.waves,
         currtext = W.starttext[0]

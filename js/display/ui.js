@@ -112,7 +112,7 @@ if (true) {
       { text: "Continue",
         onclick: function() {
           // load the game
-          save.getwave()
+          save.loadwave()
         },
         condition: function() {
           return save.checkwave()

@@ -139,7 +139,7 @@ const dropEnemy = function() {
 }
 
 // called at the start of a game in the game
-export const game_start = function(name) {
+export const game_start = function(name, continued = false) {
   Game.mode = "game"
   
   // add game things
@@ -156,7 +156,7 @@ export const game_start = function(name) {
   controls.init(render)
   
   // initialize waves...
-  waves.init(name)
+  waves.init(name, continued)
   
   // remove menu enemy drop
   clearInterval(dropEnemyInterval)

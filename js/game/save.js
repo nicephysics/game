@@ -51,5 +51,5 @@ save.loadwave = function() {
 
 save.checkwave = function() {
   save.getwave()
-  return S.game != null && S.game.tower != null
+  return S != null && S.game != null && S.game.tower != null
 }

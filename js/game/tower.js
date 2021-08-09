@@ -64,6 +64,7 @@ export class Tower {
   static player = null // the main player!
   
   static health = 10
+  static score = 0
   
   static tick() {
     // wow nothing here!
@@ -104,6 +105,7 @@ export class Tower {
       stat: tower.stat.save(),
       position: tower.position,
       xp: tower.xp,
+      score: Tower.score,
       health: Tower.health,
       // TODO more things
     }
@@ -121,6 +123,7 @@ export class Tower {
     tower.xp = 0
     tower.addxp(o.xp)
     Tower.health = o.health
+    Tower.score = o.score
     Tower.player = tower
   }
 }

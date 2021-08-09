@@ -16,22 +16,23 @@ export const upgradelevel = {
   tier: [0, 5, 15, 25],
   ability: [],
 }
+  
+export const upgrademax = {
+  // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
+  size: 20,
+  mass: 100,
+  speed: 100,
+  reload: 100,
+  towerspeed: 20,
+  spread: 19,
+  air: 19,
+}
 
 export class ThingStat {
   // static
   static upgradekeys = upgradekeys
   static upgradelevel = upgradelevel
-  
-  static upgradeMax = {
-    // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
-    size: 20,
-    mass: 100,
-    speed: 100,
-    reload: 100,
-    towerspeed: 20,
-    spread: 19,
-    air: 19,
-  }
+  static upgrademax = upgrademax
   
   // fields
   thing = null
@@ -279,7 +280,7 @@ export class ThingStat {
   }
   
   upgradeStat(key, number) {
-    const maxstat = upgradeMax[key] - 1,
+    const maxstat = upgrademax[key] - 1,
           newstat = this.upgrade[key] + number
     if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && this.points >= number) {
       this.upgrade[key] = newstat

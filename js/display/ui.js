@@ -1282,6 +1282,7 @@ ui.drawGame = function() {
       player.remove()
       player.make(things[choicesX[clicked]])
       player.create()
+      save.savewave()
       ui.closeOverlay()
       clickpos = false
     }

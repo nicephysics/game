@@ -316,14 +316,19 @@ ui.drawMenu = function() {
   // some options
   const options = v.menu_options
   if (v.menu_options_show) {
-    y = _height / 2 - options.gap * options.array.length
+    const rect_height = options.font_size + options.gap * 0.2
+    let options_array_length = 0
+    for (let o of options.array) {
+      if (o.condition != null && !o.condition()) continue
+      options_array_length++
+    }
+    y = _height / 2 - options.gap * options_array_length
     draw.setFont(ctx, options.font_size + "px Roboto Mono")
     for (let o of options.array) {
       if (o.condition != null && !o.condition()) continue
       const text = o.text,
             text_width = ctx.measureText(text).width,
             rect_width = text_width + options.gap,
-            rect_height = options.font_size + options.gap * 0.2,
             hovering = ui.hitrectangle(mousepos, _width / 2, y, rect_width, rect_height),
             clicking = ui.hitrectangle(clickpos, _width / 2, y, rect_width, rect_height)
       // draw (rounded) rectangle

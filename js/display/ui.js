@@ -1135,15 +1135,8 @@ ui.drawGame = function() {
     
     if (clicked !== -1 && clicksign !== 0) {
       const index = clicked,
-            key = upgradekeys[index],
-            maxstat = /*upgradeMax[key]*/0 - 1,
-            newstat = playerStat.upgrade[key] + clicksign
-      if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && playerStat.points >= clicksign) {
-        playerStat.upgrade[key] = newstat
-        playerStat.refreshPoints()
-      } else {
-        // todo invalid
-      }
+            key = upgradekeys[index]
+      playerStat.upgradeStat(key, clicksign)
     }
     
   }

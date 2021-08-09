@@ -28,6 +28,7 @@ waves.init = function(name, continued = false) {
   waves.levelname = name
   waves.waves = waves[name]
   const W = waves.waves
+  ui.vars.waves_finish = false
   if (continued) {
     // save the game?
   } else {
@@ -66,6 +67,14 @@ waves.end = function() {
     ui.vars.waves_popup_text.push(...currtext)
   }
   save.savewave() // save the game!
+  // finish the game!
+  if (curr >= W.number) {
+    waves.finish()
+  }
+}
+
+waves.finish = function() {
+  ui.vars.waves_finish = true
 }
 
 const makelevel = function(levelname) {

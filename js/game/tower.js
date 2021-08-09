@@ -118,6 +118,7 @@ export class Tower {
     tower.create()
     tower.stat.load(o.stat)
     tower.position = o.position
+    tower.xp = 0
     tower.addxp(o.xp)
     Tower.health = o.health
     Tower.player = tower

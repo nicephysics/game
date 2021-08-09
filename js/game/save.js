@@ -4,6 +4,8 @@
 // using namespace std; // no
 // main() { (((say))) "Hello\xa0World!";;; }
 
+import { saveversion } from "../config/version.js"
+
 import { Enemy } from "./enemy.js"
 import { game_start } from "./start.js"
 import { Tower } from "./tower.js"
@@ -13,7 +15,7 @@ export const save = { }
 
 save.initial = function() {
   return {
-    version: 1401
+    version: saveversion
   }
 }
 
@@ -21,6 +23,12 @@ let S = save.initial() // a constant, for convenience
 
 save.save = function() {
   return S
+}
+
+save.checkversion = function() {
+  if (S.version < saveversion) {
+    console.warn("Saved version (" + S.version + ") is lower than the current version (" + saveversion + ")!")
+  }
 }
 
 save.fixnull = function() {

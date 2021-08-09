@@ -60,7 +60,7 @@ export class Enemy {
     })
     // enemy types
     for (let k in things) {
-      if (  things[k].gametype === "enemy" ||
+      if ( things[k].gametype === "enemy" ||
            (Array.isArray(things[k].parent) && things[k].parent.includes("enemy"))
          ) {
         Enemy.enemyTypes.push(k)

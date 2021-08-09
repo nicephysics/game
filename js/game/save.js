@@ -11,7 +11,13 @@ import { waves } from "./waves.js"
 
 export const save = { }
 
-let S = { } // a constant, for convenience
+save.initial = function() {
+  return {
+    version: 1401
+  }
+}
+
+let S = save.initial() // a constant, for convenience
 
 save.save = function() {
   return S
@@ -19,7 +25,7 @@ save.save = function() {
 
 save.fixnull = function() {
   if (S == null) {
-    S = { }
+    S = save.initial()
   }
 }
 

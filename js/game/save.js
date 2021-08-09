@@ -44,7 +44,7 @@ save.clearwave = function() {
 
 save.loadwave = function() {
   save.getwave()
-  game_start(S.game.wave.level)
+  game_start(S.game.wave.level, true)
   Tower.loadTower(S.game.tower)
   waves.current = S.game.wave.number
 }

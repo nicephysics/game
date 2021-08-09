@@ -30,10 +30,10 @@ const Body = Matter.Body,
 
 const getSpawnBounds = function(size) {
   return {
-    x: size * 1.2,
+    x: size * 1.25,
     y: -size * 2,
-    w: window.innerWidth - size * 1.2,
-    h: size,
+    w: window.innerWidth - size * 2.5,
+    h: size * 0,
   }
 }
 

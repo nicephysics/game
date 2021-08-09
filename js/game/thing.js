@@ -171,7 +171,7 @@ export class Thing {
   // SET
   set position(pos) {
     if (this.exists && this.body != null) {
-      this.body.position = Vector.create(pos.x, pos.y)
+      this.moveTo(Vector.create(pos.x, pos.y))
     }
   }
   

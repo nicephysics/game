@@ -30,8 +30,18 @@ save.setwave = function() {
   save.set()
 }
 
+save.clearwave = function() {
+  S.game = {}
+  save.set()
+}
+
 save.getwave = function() {
   save.get()
   Tower.loadTower(S.game.tower)
   waves.current = S.game.wave
+}
+
+save.checkwave = function() {
+  save.get()
+  return S.game != null && S.game.tower != null
 }

@@ -17,15 +17,19 @@ save.save = function() {
   return S
 }
 
+save.fixnull = function() {
+  if (S == null) {
+    S = { }
+  }
+}
+
 save.setwave = function() {
   localStorage.setItem("game", JSON.stringify(S))
 }
 
 save.getwave = function() {
   S = JSON.parse(localStorage.getItem("game"))
-  if (S == null) {
-    S = { }
-  }
+  save.fixnull()
 }
 
 save.savewave = function() {

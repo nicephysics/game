@@ -23,6 +23,9 @@ save.setwave = function() {
 
 save.getwave = function() {
   S = JSON.parse(localStorage.getItem("game"))
+  if (S == null) {
+    S = { }
+  }
 }
 
 save.savewave = function() {

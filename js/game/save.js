@@ -4,6 +4,7 @@
 // using namespace std; // no
 // main() { (((say))) "Hello\xa0World!";;; }
 
+import { game_start } from "./start.js"
 import { Tower } from "./tower.js"
 import { waves } from "./waves.js"
 
@@ -25,7 +26,10 @@ save.get = function() {
 save.setwave = function() {
   S.game = {
     tower: Tower.saveTower(),
-    wave: waves.current,
+    wave: {
+      level: waves.levelname,
+      number: waves.current,
+    }
   }
   save.set()
 }
@@ -37,8 +41,9 @@ save.clearwave = function() {
 
 save.getwave = function() {
   save.get()
+  game_start(S.game.wave.level)
   Tower.loadTower(S.game.tower)
-  waves.current = S.game.wave
+  waves.current = S.game.wave.number
 }
 
 save.checkwave = function() {

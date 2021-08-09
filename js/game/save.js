@@ -26,6 +26,7 @@ save.save = function() {
 }
 
 save.checkversion = function() {
+  if (S == null || S.version == null) return
   if (S.version < saveversion) {
     console.warn("Saved version (" + S.version + ") is lower than the current version (" + saveversion + ")!")
   }
@@ -37,13 +38,14 @@ save.fixnull = function() {
   }
 }
 
-save.setwave = function() {
+save.set = function() {
   localStorage.setItem("game", JSON.stringify(S))
 }
 
-save.getwave = function() {
+save.get = function() {
   S = JSON.parse(localStorage.getItem("game"))
   save.fixnull()
+  save.checkversion()
 }
 
 save.savewave = function() {
@@ -55,22 +57,22 @@ save.savewave = function() {
       number: waves.current,
     }
   }
-  save.setwave()
+  save.set()
 }
 
 save.clearwave = function() {
   S.game = { }
-  save.setwave()
+  save.set()
 }
 
 save.loadwave = function() {
-  save.getwave()
+  save.get()
   game_start(S.game.wave.level, true)
   Tower.loadTower(S.game.tower)
   waves.current = S.game.wave.number
 }
 
 save.checkwave = function() {
-  save.getwave()
+  save.get()
   return S != null && S.game != null && S.game.tower != null
 }

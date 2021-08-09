@@ -20,7 +20,7 @@ save.set = function() {
 }
 
 save.get = function() {
-  S = JSON.parse(localStorage.getItem("game"))
+  save.save = JSON.parse(localStorage.getItem("game"))
 }
 
 save.setwave = function() {

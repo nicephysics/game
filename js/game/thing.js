@@ -544,7 +544,7 @@ export class Thing {
   }
   
   moveTo(targetPosition) {
-    this.targetpos = Vector.copy(targetPosition)
+    this.targetpos = Vector.clone(targetPosition)
   }
   
   moveBy(vec) {

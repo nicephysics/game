@@ -10,20 +10,21 @@ import { waves } from "./waves.js"
 
 export const save = { }
 
-save.save = {
-  game: { },
-}
-const S = save.save // a constant, for convenience
+let S = { } // a constant, for convenience
 
-save.set = function() {
-  localStorage.setItem("game", JSON.stringify(S))
-}
-
-save.get = function() {
-  save.save = JSON.parse(localStorage.getItem("game"))
+save.save = function() {
+  return S
 }
 
 save.setwave = function() {
+  localStorage.setItem("game", JSON.stringify(S))
+}
+
+save.getwave = function() {
+  S = JSON.parse(localStorage.getItem("game"))
+}
+
+save.savewave = function() {
   S.game = {
     tower: Tower.saveTower(),
     wave: {
@@ -31,22 +32,22 @@ save.setwave = function() {
       number: waves.current,
     }
   }
-  save.set()
+  save.setwave()
 }
 
 save.clearwave = function() {
-  S.game = {}
-  save.set()
+  S.game = { }
+  save.setwave()
 }
 
-save.getwave = function() {
-  save.get()
+save.loadwave = function() {
+  save.getwave()
   game_start(S.game.wave.level)
   Tower.loadTower(S.game.tower)
   waves.current = S.game.wave.number
 }
 
 save.checkwave = function() {
-  save.get()
+  save.getwave()
   return S.game != null && S.game.tower != null
 }

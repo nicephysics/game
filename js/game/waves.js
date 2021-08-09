@@ -62,7 +62,7 @@ waves.end = function() {
   if (currtext != null) {
     ui.vars.waves_popup_text.push(...currtext)
   }
-  save.setwave() // save the game!
+  save.savewave() // save the game!
 }
 
 const makelevel = function(levelname) {

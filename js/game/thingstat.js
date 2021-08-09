@@ -3,6 +3,7 @@ import { category, config } from "../config/config.js"
 import { random } from "../util/random.js"
 import { math } from "../util/math.js"
 
+import { save } from "./save.js"
 import { things } from "./things.js"
 
 if (true) {
@@ -264,6 +265,18 @@ export class ThingStat {
     this.realMult.spread = b.spread || b.p || 1
     this.realMult.air = b.air || b.a || 1
     this.realMult.rot = b.rot || b.ro || 1
+  }
+  
+  upgradeStat(key, number) {
+    const maxstat = upgradeMax[key] - 1,
+          newstat = this.upgrade[key] + number
+    if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && this.points >= number) {
+      this.upgrade[key] = newstat
+      this.refreshPoints()
+      save.savewave()
+    } else {
+      // todo invalid
+    }
   }
   
   refreshPoints() {

@@ -5,6 +5,7 @@ import { style } from "./style.js"
 import { controls } from "../game/controls.js"
 import { Enemy } from "../game/enemy.js"
 import { Game } from "../game/game.js"
+import { save } from "../game/save.js"
 import { stars } from "../game/stars.js"
 import { game_start, game_menu } from "../game/start.js"
 import { Thing } from "../game/thing.js"
@@ -95,6 +96,40 @@ ui.vars = {
   research_node: false, // ""
   
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
+}
+
+// set v.options (menu options)
+if (true) {
+  const v = ui.vars
+  v.options = {
+    array: [
+      { text: "Start",
+        onclick: function() {
+          v.star_show = true
+          v.menu_options_show = false
+        },
+      },
+      { text: "Continue",
+        onclick: function() {
+          // load the game
+          save.getwave()
+        },
+        condition: function() {
+          return save.checkwave()
+        }
+      },
+      { text: "Upgrades",
+        onclick: function() {
+          // ?????
+          v.research_show = true
+          v.research_sidebar = 0
+          v.research_node = false
+        },
+      }
+    ],
+    font_size: 20,
+    gap: 60,
+  }
 }
 
 ui.closeOverlay = function() {
@@ -276,26 +311,7 @@ ui.drawMenu = function() {
   
   
   // some options
-  const options = {
-    array: [
-      { text: "Start",
-        onclick: function() {
-          v.star_show = true
-          v.menu_options_show = false
-        },
-      },
-      { text: "Upgrades",
-        onclick: function() {
-          // ?????
-          v.research_show = true
-          v.research_sidebar = 0
-          v.research_node = false
-        },
-      }
-    ],
-    font_size: 20,
-    gap: 60,
-  }
+  const options = v.menu_options
   if (v.menu_options_show) {
     y = _height / 2 - options.gap * options.array.length
     draw.setFont(ctx, options.font_size + "px Roboto Mono")

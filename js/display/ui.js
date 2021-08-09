@@ -1136,7 +1136,7 @@ ui.drawGame = function() {
     if (clicked !== -1 && clicksign !== 0) {
       const index = clicked,
             key = upgradekeys[index]
-      playerStat.upgradeStat(key, clicksign, upgradeMax)
+      playerStat.upgradeStat(key, clicksign)
     }
     
   }

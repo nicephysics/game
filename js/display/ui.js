@@ -11,7 +11,7 @@ import { game_start, game_menu } from "../game/start.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
 import { Tower, towermap } from "../game/tower.js"
-import { ThingStat, upgradekeys, upgradelevel } from "../game/thingstat.js"
+import { ThingStat, upgradekeys, upgradelevel, upgrademax } from "../game/thingstat.js"
 import { wave } from "../game/wave.js"
 import { waves } from "../game/waves.js"
 
@@ -1136,7 +1136,7 @@ ui.drawGame = function() {
     if (clicked !== -1 && clicksign !== 0) {
       const index = clicked,
             key = upgradekeys[index]
-      playerStat.upgradeStat(key, clicksign)
+      playerStat.upgradeStat(key, clicksign, upgradeMax)
     }
     
   }

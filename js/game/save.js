@@ -4,6 +4,7 @@
 // using namespace std; // no
 // main() { (((say))) "Hello\xa0World!";;; }
 
+import { Enemy } from "./enemy.js"
 import { game_start } from "./start.js"
 import { Tower } from "./tower.js"
 import { waves } from "./waves.js"
@@ -25,6 +26,7 @@ save.getwave = function() {
 }
 
 save.savewave = function() {
+  if (Enemy.waveOn()) return
   S.game = {
     tower: Tower.saveTower(),
     wave: {

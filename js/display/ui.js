@@ -95,6 +95,11 @@ ui.vars = {
   research_sidebar: 0,
   research_node: false, // ""
   
+  /* misc */
+  pop_show: false,
+  pop_text: "",
+  pop_options: { yes: function() {}, no: function() {}, }, // just a format
+  
   end_of_ui_vars: "yes this is the end and there is no need for a comma after this"
 }
 
@@ -1582,4 +1587,18 @@ ui.drawGame = function() {
   
   
   // end of function
+}
+
+// short for draw popup, a miscellaneous pop-up box for many purposes
+ui.drawpop = function() {
+  const v = ui.vars
+  if (!v.pop_show) return
+  const render = Thing.render,
+        ctx = render.context,
+        _width = render.options.width,
+        _height = render.options.height,
+        _min_wh = Math.min(_width, _height),
+        // pop stuff
+        text = v.pop_text,
+        options = v.pop_options
 }

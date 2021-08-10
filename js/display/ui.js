@@ -290,6 +290,9 @@ ui.draw = function() {
       break
   }
   
+  // draw popup hee
+  ui.drawpop()
+  
   // tick after!
   ui.tickAfter()
   

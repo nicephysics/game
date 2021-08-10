@@ -1742,9 +1742,9 @@ ui.drawpop = function(drawing = true) {
   }
   
   if (!drawing) {
-    p._hover = v.hover
+    p._hover = Vector.clone(v.hover)
     v.hover = false
-    p._click = v.click
+    p._click = Vector.clone(v.click)
     v.click = false
   }
   

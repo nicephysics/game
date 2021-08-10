@@ -283,6 +283,9 @@ ui.draw = function() {
   // tick!
   ui.tick()
   
+  // block popup first
+  ui.drawpop(false)
+  
   switch (Game.mode) {
     case "game":
       ui.drawGame()
@@ -308,7 +311,7 @@ ui.drawMenu = function() {
         _height = render.options.height,
         _min_wh = Math.min(_width, _height)
   
-  let mousepos = render.mouse.absolute,
+  let mousepos = v.hover,
       clickpos = v.click,
       x = 0,
       y = 0,
@@ -853,7 +856,7 @@ ui.drawGame = function() {
         _width = render.options.width,
         _height = render.options.height
   
-  let mousepos = render.mouse.absolute,
+  let mousepos = v.hover,
       clickpos = v.click,
       stat = things[playerType],
       x = 0,
@@ -1598,7 +1601,7 @@ ui.drawGame = function() {
 }
 
 // short for draw popup, a miscellaneous pop-up box for many purposes
-ui.drawpop = function() {
+ui.drawpop = function(drawing = true) {
   
   const v = ui.vars
   if (v.pop == null || !v.pop.show) return
@@ -1613,7 +1616,7 @@ ui.drawpop = function() {
         options = p.options
   
   let x = 0, y = 0, w = 0, h = 0, size = 0,
-      mousepos = render.mouse.absolute,
+      mousepos = v.hover,
       clickpos = v.click
   
   if (true) {
@@ -1649,84 +1652,95 @@ ui.drawpop = function() {
     rectwidth += border * 2
     // draw translucent pop-up rectangle
     const overlayColor = p.color || C.lightorange
-    draw.setFillNoStroke(ctx, overlayColor)
-    draw.setGlobalAlpha(ctx, 0.95) // very opaque!
-      // basically a centered rect (rectangle)
-      draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
-    draw.setGlobalAlpha(ctx, 1)
+    if (drawing) {
+      draw.setFillNoStroke(ctx, overlayColor)
+      draw.setGlobalAlpha(ctx, 0.95) // very opaque!
+        // basically a centered rect (rectangle)
+        draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
+      draw.setGlobalAlpha(ctx, 1)
+    }
     x = _width / 2
     y = (_height - rectheight + textSize) / 2 + border
-    for (let text of texts) {
-      // draw text!
-      draw.setTextDarkFill(ctx, overlayColor)
-        draw._text(ctx, x, y, text, 0, "center")
-      y += textSize + textGap
-    }
-    // draw options...
-    x = (_width - circleSize * (options.length - 1)) / 2
-    y = (_height + rectheight - circleSize * 1.4) / 2
-    for (let o of options) {
-      const optionColor = o.color || C.green
-      let buttonColor = optionColor
-      if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
-        buttonColor = o.color_hover || C.darkgreen
-        mousepos = false
+    if (drawing) {
+      for (let text of texts) {
+        // draw text!
+        draw.setTextDarkFill(ctx, overlayColor)
+          draw._text(ctx, x, y, text, 0, "center")
+        y += textSize + textGap
       }
-      // draw circle
-      draw.setFillDarkenStroke(ctx, buttonColor)
-        draw._circle(ctx, x, y, circleSize * 0.375)
-      // draw symbol
-      if (o.symbol == null) continue
-      switch (o.symbol) {
-        case "ok":
-        case "OK":
-          draw.setTextDarkFill(ctx, overlayColor)
-          draw.setFont(ctx, "16px Roboto Condensed") // not draw.setFont(ctx, p.font)
-            draw._text(ctx, x, y + 2, "OK", 0, "center")
-          break
-        case ">":
-        case "right":
-          draw.setDarkStroke(ctx, optionColor, 1.5)
-          draw.setLineWidth(ctx, 3)
-          draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
-          draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
-          break
-      }
-      if (
-        ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
-        ui.released("ArrowRight") ||
-        ui.released("Enter")
-      ) {
-        if (o.action != null) {
-          switch (o.action) {
-            case "cancel":
-            case "dismiss":
-              p.show = false
-              break
-            case "change":
-            case "text_change":
-              p.text = p.text_change || ""
-              break
-            case "nothing":
-            case "none":
-              break
-            default:
-              console.log("Unknown UI pop-up action: " + o.action)
+      // draw options...
+      x = (_width - circleSize * (options.length - 1)) / 2
+      y = (_height + rectheight - circleSize * 1.4) / 2
+      for (let o of options) {
+        const optionColor = o.color || C.green
+        let buttonColor = optionColor
+        if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
+          buttonColor = o.color_hover || C.darkgreen
+          mousepos = false
+        }
+        // draw circle
+        draw.setFillDarkenStroke(ctx, buttonColor)
+          draw._circle(ctx, x, y, circleSize * 0.375)
+        // draw symbol
+        if (o.symbol == null) continue
+        switch (o.symbol) {
+          case "ok":
+          case "OK":
+            draw.setTextDarkFill(ctx, overlayColor)
+            draw.setFont(ctx, "16px Roboto Condensed") // not draw.setFont(ctx, p.font)
+              draw._text(ctx, x, y + 2, "OK", 0, "center")
+            break
+          case ">":
+          case "right":
+            draw.setDarkStroke(ctx, optionColor, 1.5)
+            draw.setLineWidth(ctx, 3)
+            draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
+            draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
+            break
+        }
+        if (
+          ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
+          ui.released("ArrowRight") ||
+          ui.released("Enter")
+        ) {
+          if (o.action != null) {
+            switch (o.action) {
+              case "cancel":
+              case "dismiss":
+                p.show = false
+                break
+              case "change":
+              case "text_change":
+                p.text = p.text_change || ""
+                break
+              case "nothing":
+              case "none":
+                break
+              default:
+                console.log("Unknown UI pop-up action: " + o.action)
+            }
+          } else {
+            p.show = false
           }
-        } else {
-          p.show = false
+          if (o.click != null) {
+            o.click()
+          }
         }
-        if (o.click != null) {
-          o.click()
-        }
+        x += circleSize
       }
-      x += circleSize
+      // end draw options
     }
-    // end draw options
     // store width, height
     w = rectwidth
     h = rectheight
   }
   
-  return { w: w, h: h }
+  if (!drawing) {
+    const hovering = ui.hitrectangle(mousepos, _width / 2, _height / 2, w, h),
+          clicking = ui.hitrectangle(clickpos, _width / 2, _height / 2, w, h),
+    if (hovering) v.hover = false
+    if (clicking) v.click = false
+  }
+  
+  // return { w: w, h: h }
 }

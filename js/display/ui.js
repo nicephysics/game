@@ -1737,9 +1737,13 @@ ui.drawpop = function(drawing = true) {
   
   if (!drawing) {
     const hovering = ui.hitrectangle(mousepos, _width / 2, _height / 2, w, h),
-          clicking = ui.hitrectangle(clickpos, _width / 2, _height / 2, w, h),
-    if (hovering) v.hover = false
-    if (clicking) v.click = false
+          clicking = ui.hitrectangle(clickpos, _width / 2, _height / 2, w, h)
+    if (hovering) {
+      v.hover = false
+    }
+    if (clicking) {
+      v.click = false
+    }
   }
   
   // return { w: w, h: h }

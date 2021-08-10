@@ -1515,6 +1515,7 @@ ui.drawGame = function() {
       mousepos = false
     }
     draw.setFillDarkenStroke(ctx, buttonColor)
+    draw.setLineWidth(ctx, 1)
       draw._circle(ctx, x, y, circleSize * 0.375)
     if (v.waves_popup_text.length == 1) {
       draw.setTextDarkFill(ctx, "#002620")
@@ -1680,6 +1681,7 @@ ui.drawpop = function(drawing = true) {
         }
         // draw circle
         draw.setFillDarkenStroke(ctx, buttonColor)
+        draw.setLineWidth(ctx, 1)
           draw._circle(ctx, x, y, circleSize * 0.375)
         // draw symbol
         if (o.symbol == null) continue

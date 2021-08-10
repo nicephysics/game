@@ -1658,7 +1658,8 @@ ui.drawpop = function() {
     x = (_width - circleSize * (options.length - 1)) / 2
     y = (_height + rectheight - circleSize) / 2
     for (let o of options) {
-      let buttonColor = o.color || C.green
+      const optionColor = o.color || C.green
+      let buttonColor = optionColor
       if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
         buttonColor = o.color_hover || C.darkgreen
         mousepos = false
@@ -1676,7 +1677,7 @@ ui.drawpop = function() {
             draw._text(ctx, x, y + 2, "OK", 0, "center")
         case ">":
         case "right":
-          draw.setDarkStroke(ctx, o.color, 1.5)
+          draw.setDarkStroke(ctx, optionColor, 1.5)
           draw.setLineWidth(ctx, 3)
           draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
           draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)

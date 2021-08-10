@@ -1616,6 +1616,9 @@ ui.drawpop = function() {
   
   if (true) {
     if (p.font == null) {
+      if (p.fontsize == null) {
+        p.fontsize = 16
+      }
       p.font = p.fontsize + "px Roboto Condensed"
       draw.setFont(ctx, p.font)
     } else {
@@ -1623,7 +1626,10 @@ ui.drawpop = function() {
       // get font size from font
       p.fontsize = ""
       let charcount = 0
-      while (p.font.indexOf(charcount) != 'p') p.fontsize += p.font.indexOf(charcount)
+      while (p.font.indexOf(charcount) != 'p') {
+        p.fontsize += p.font.indexOf(charcount)
+        charcount++
+      }
       p.fontsize = +p.fontsize
     }
     const maxWidth = Math.min(520, _width * 0.8),

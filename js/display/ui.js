@@ -1609,7 +1609,10 @@ ui.drawpop = function() {
         p = v.pop,
         text = p.text,
         options = p.options
-  let x, y, size
+  
+  let x, y, size,
+      mousepos = render.mouse.absolute,
+      clickpos = v.click
   
   if (true) {
     if (p.font == null) {

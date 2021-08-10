@@ -1664,7 +1664,7 @@ ui.drawpop = function() {
     }
     // draw options...
     x = (_width - circleSize * (options.length - 1)) / 2
-    y = (_height + rectheight - circleSize) / 2
+    y = (_height + rectheight - circleSize * 1.4) / 2
     for (let o of options) {
       const optionColor = o.color || C.green
       let buttonColor = optionColor

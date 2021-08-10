@@ -1622,14 +1622,16 @@ ui.drawpop = function() {
       draw.setFont(ctx, p.font)
     } else {
       draw.setFont(ctx, p.font)
-      // get font size from font
-      p.fontsize = ""
-      let charcount = 0
-      while (p.font.indexOf(charcount) != 'p') {
-        p.fontsize += p.font.indexOf(charcount)
-        charcount++
+      if (p.fontsize == null) {
+        // get font size from font
+        p.fontsize = ""
+        let charindex = 0
+        while (p.font[charindex] != 'p' && charindex < p.font.length) {
+          p.fontsize += p.font[charindex]
+          charindex++
+        }
+        p.fontsize = +p.fontsize
       }
-      p.fontsize = +p.fontsize
     }
     const maxWidth = Math.min(520, _width * 0.8),
           texts = draw.splitText(ctx, text, maxWidth),

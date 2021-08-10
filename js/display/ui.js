@@ -1675,7 +1675,7 @@ ui.drawpop = function(drawing = true) {
         const optionColor = o.color || C.green
         let buttonColor = optionColor
         if (ui.hitcircle(mousepos, x, y, circleSize * 0.4)) {
-          buttonColor = o.color_hover || C.darkgreen
+          buttonColor = o.color_hover || (chroma(optionColor).darken(1).hex())
           mousepos = false
         }
         // draw circle

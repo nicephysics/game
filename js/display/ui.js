@@ -1651,14 +1651,17 @@ ui.drawpop = function(drawing = true) {
     }
     rectwidth = Math.max(rectwidth, circleSize * options.length)
     rectwidth += border * 2
-    // draw translucent pop-up rectangle
     const overlayColor = p.color || C.lightorange
     if (drawing) {
+      // draw full overlay rect
+      draw.setFillNoStroke(ctx, C.darkgrey)
+      draw.setGlobalAlpha(ctx, 0.3) // not opaque!
+        draw._rect(ctx, 0, 0, _width, _height)
+      // draw translucent pop-up rectangle
       draw.setFillDarkenStroke(ctx, overlayColor)
-      draw.setLineWidth(ctx, 2)
+      draw.setLineWidth(ctx, 3)
       draw.setGlobalAlpha(ctx, 0.9) // very opaque!
-        // basically a centered rect (rectangle)
-        draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
+        draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight) // not rect
       draw.setGlobalAlpha(ctx, 1)
     }
     x = _width / 2
@@ -1739,16 +1742,10 @@ ui.drawpop = function(drawing = true) {
   }
   
   if (!drawing) {
-    const hovering = ui.hitrectangle(v.hover, _width / 2, _height / 2, w, h),
-          clicking = ui.hitrectangle(v.click, _width / 2, _height / 2, w, h)
-    if (hovering) {
-      p._hover = v.hover
-      v.hover = false
-    }
-    if (clicking) {
-      p._click = v.click
-      v.click = false
-    }
+    p._hover = v.hover
+    v.hover = false
+    p._click = v.click
+    v.click = false
   }
   
   // return { w: w, h: h }

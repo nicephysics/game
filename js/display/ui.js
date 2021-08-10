@@ -1616,8 +1616,8 @@ ui.drawpop = function(drawing = true) {
         options = p.options
   
   let x = 0, y = 0, w = 0, h = 0, size = 0,
-      mousepos = v.hover,
-      clickpos = v.click
+      mousepos = p.hover,
+      clickpos = p.click
   
   if (true) {
     if (!p.font) {
@@ -1736,12 +1736,14 @@ ui.drawpop = function(drawing = true) {
   }
   
   if (!drawing) {
-    const hovering = ui.hitrectangle(mousepos, _width / 2, _height / 2, w, h),
-          clicking = ui.hitrectangle(clickpos, _width / 2, _height / 2, w, h)
+    const hovering = ui.hitrectangle(v.hover, _width / 2, _height / 2, w, h),
+          clicking = ui.hitrectangle(v.click, _width / 2, _height / 2, w, h)
     if (hovering) {
+      p.hover = v.hover
       v.hover = false
     }
     if (clicking) {
+      p.click = v.click
       v.click = false
     }
   }

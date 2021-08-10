@@ -51,6 +51,7 @@ ui.vars = {
   clicktime: 0,
   hovertime: 0,
   hoverstring: "",
+  render: null,
   
   /* game */
   xp_bar_xp: 0,
@@ -201,6 +202,7 @@ ui.init = function(render) {
   let v = ui.vars,
       mouse = render.mouse,
       ctx = render.context
+  v.render = render
   ctx.lineCap = 'round'
   // basically a click
   window.addEventListener("mousemove", function(event) {
@@ -1600,10 +1602,10 @@ ui.drawpop = function() {
   
   const v = ui.vars
   if (v.pop == null || !v.pop.show) return
-  const render = Thing.render,
+  const render = v.render,
         ctx = render.context,
-        _width = render.options.width,
-        _height = render.options.height,
+        _width = window.innerWidth,
+        _height = window.innerHeight,
         _min_wh = Math.min(_width, _height),
         // pop stuff
         p = v.pop,
@@ -1615,11 +1617,8 @@ ui.drawpop = function() {
       clickpos = v.click
   
   if (true) {
-    if (p.font == null) {
-      if (p.fontsize == null) {
-        p.fontsize = 16
-      }
-      p.font = p.fontsize + "px Roboto Condensed"
+    if (!p.font) {
+      p.font = (p.fontsize || 16) + "px Roboto Condensed"
       draw.setFont(ctx, p.font)
     } else {
       draw.setFont(ctx, p.font)
@@ -1681,12 +1680,14 @@ ui.drawpop = function() {
           draw.setTextDarkFill(ctx, overlayColor)
           draw.setFont(ctx, "16px Roboto Condensed") // not draw.setFont(ctx, p.font)
             draw._text(ctx, x, y + 2, "OK", 0, "center")
+          break
         case ">":
         case "right":
           draw.setDarkStroke(ctx, optionColor, 1.5)
           draw.setLineWidth(ctx, 3)
           draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y - circleSize * 0.17)
           draw._line(ctx, x + circleSize * 0.17, y, x - circleSize * 0.15, y + circleSize * 0.17)
+          break
       }
       if (
         ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||

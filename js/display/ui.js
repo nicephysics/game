@@ -1655,7 +1655,7 @@ ui.drawpop = function(drawing = true) {
     if (drawing) {
       // draw full overlay rect
       draw.setFillNoStroke(ctx, C.darkgrey)
-      draw.setGlobalAlpha(ctx, 0.3) // not opaque!
+      draw.setGlobalAlpha(ctx, 0.6) // not that opaque!
         draw._rect(ctx, 0, 0, _width, _height)
       // draw translucent pop-up rectangle
       draw.setFillDarkenStroke(ctx, overlayColor)

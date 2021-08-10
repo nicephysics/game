@@ -1654,8 +1654,9 @@ ui.drawpop = function(drawing = true) {
     // draw translucent pop-up rectangle
     const overlayColor = p.color || C.lightorange
     if (drawing) {
-      draw.setFillNoStroke(ctx, overlayColor)
-      draw.setGlobalAlpha(ctx, 0.95) // very opaque!
+      draw.setFillDarkenStroke(ctx, overlayColor)
+      draw.setLineWidth(ctx, 2)
+      draw.setGlobalAlpha(ctx, 0.9) // very opaque!
         // basically a centered rect (rectangle)
         draw._rectangle(ctx, _width / 2, _height / 2, rectwidth, rectheight)
       draw.setGlobalAlpha(ctx, 1)
@@ -1681,7 +1682,7 @@ ui.drawpop = function(drawing = true) {
         }
         // draw circle
         draw.setFillDarkenStroke(ctx, buttonColor)
-        draw.setLineWidth(ctx, 1)
+        draw.setLineWidth(ctx, 1.5)
           draw._circle(ctx, x, y, circleSize * 0.375)
         // draw symbol
         if (o.symbol == null) continue

@@ -1612,7 +1612,7 @@ ui.drawpop = function() {
         text = p.text,
         options = p.options
   
-  let x, y, size,
+  let x = 0, y = 0, w = 0, h = 0, size = 0,
       mousepos = render.mouse.absolute,
       clickpos = v.click
   
@@ -1645,6 +1645,7 @@ ui.drawpop = function() {
       const measured = ctx.measureText(texts[0])
       rectwidth = measured.width
     }
+    rectwidth = Math.max(rectwidth, circleSize * options.length)
     rectwidth += border * 2
     // draw translucent pop-up rectangle
     const overlayColor = p.color || C.lightorange
@@ -1696,11 +1697,17 @@ ui.drawpop = function() {
         ui.released("ArrowRight") ||
         ui.released("Enter")
       ) {
-        o.click()
+        if (o.click != null) {
+          o.click()
+        }
       }
       x += circleSize
     }
     // end draw options
+    // store width, height
+    w = rectwidth
+    h = rectheight
   }
   
+  return { w: w, h: h }
 }

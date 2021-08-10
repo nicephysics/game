@@ -1697,6 +1697,25 @@ ui.drawpop = function() {
         ui.released("ArrowRight") ||
         ui.released("Enter")
       ) {
+        if (o.action != null) {
+          switch (o.action) {
+            case "cancel":
+            case "dismiss":
+              p.show = false
+              break
+            case "change":
+            case "text_change":
+              p.text = p.text_change || ""
+              break
+            case "nothing":
+            case "none":
+              break
+            default:
+              console.log("Unknown UI pop-up action: " + o.action)
+          }
+        } else {
+          p.show = false
+        }
         if (o.click != null) {
           o.click()
         }

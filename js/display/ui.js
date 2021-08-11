@@ -39,10 +39,6 @@ ui.vars = {
   health_heart_size: 20,
   health_text_size: 20,
   
-  c_icon_purple: "#27007a",
-  
-  // change
-  
   /* main */
   time: 0,
   click: false,

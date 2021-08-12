@@ -1,5 +1,5 @@
 import { draw } from "./draw.js"
-import { C, theme } from "./color.js"
+import { C } from "./color.js"
 import { style } from "./style.js"
 
 import { controls } from "../game/controls.js"
@@ -10,9 +10,8 @@ import { stars } from "../game/stars.js"
 import { game_start, game_menu } from "../game/start.js"
 import { Thing } from "../game/thing.js"
 import { things } from "../game/things.js"
-import { Tower, towermap } from "../game/tower.js"
-import { ThingStat, upgradekeys, upgradelevel, upgrademax } from "../game/thingstat.js"
-import { wave } from "../game/wave.js"
+import { Tower } from "../game/tower.js"
+import { upgradekeys } from "../game/thingstat.js"
 import { waves } from "../game/waves.js"
 
 import { math } from "../util/math.js"
@@ -26,8 +25,7 @@ if (true) {
   // 2 space indent!
 }
 
-const Common = Matter.Common,
-      Vector = Matter.Vector
+const Vector = Matter.Vector
 
 ui.vars = {
   // constants
@@ -170,6 +168,7 @@ ui.hitcircle = function(pos, x, y, size, minSize = 0) {
 
 ui.keypress = {
   down: null,
+  hold: null,
   up: null,
   check: function(code, key) {
     return (
@@ -187,6 +186,11 @@ ui.pressed = function(key) {
   return ui.keypress.check(code, key)
 }
 
+ui.keyheld = function(key) {
+  const code = ui.keypress.hold
+  return ui.keypress.check(code, key)
+}
+
 ui.released = function(key) {
   const code = ui.keypress.up
   return ui.keypress.check(code, key)
@@ -200,21 +204,29 @@ ui.init = function(render) {
       ctx = render.context
   v.render = render
   ctx.lineCap = 'round'
-  // basically a click
+  window.addEventListener("mousedown", function(event) {
+    // ?
+  })
   window.addEventListener("mousemove", function(event) {
     v.hover = mouse.absolute
   })
   window.addEventListener("mouseup", function(event) {
+    // basically a click
     v.click = mouse.absolute
   })
   window.addEventListener("touchend", function(event) {
+    // touch on mobile
     v.click = mouse.absolute
   })
   window.addEventListener("keydown", function(event) {
     if (event.isComposing || event.keyCode === 229) {
-      return;
+      return
     }
-    ui.keypress.down = event.code
+    if (event.repeat) {
+      ui.keypress.hold = event.code
+    } else {
+      ui.keypress.down = event.code
+    }
   })
   window.addEventListener("keyup", function(event) {
     ui.keypress.down = null
@@ -236,8 +248,7 @@ ui.init = function(render) {
 
 ui.tick = function() {
   const v = ui.vars,
-        render = Thing.render,
-        ctx = render.context
+        render = Thing.render
   // tick time!
   v.time++
   // that's all?
@@ -258,8 +269,7 @@ ui.tick = function() {
 
 ui.tickAfter = function() {
   let v = ui.vars,
-      render = Thing.render,
-      ctx = render.context
+      render = Thing.render
   // clear click (and hover too?)
   if (v.click != false) {
     // increment click time
@@ -463,13 +473,13 @@ ui.drawMenu = function() {
       }
     }
     
-    if ( ui.released("escape") ||
+    if ( ui.pressed("escape") ||
          ui.hitoutsiderect(clickpos, overlaySideGap, overlayTopGap, _width - overlaySideGap * 2, _height - overlayTopGap * 2)
        ) {
       v.star_show = false
       v.menu_options_show = true
       clickpos = false
-    } else if (ui.released("enter")) {
+    } else if (ui.pressed("enter")) {
       // ?
     }
   } // end star show
@@ -793,12 +803,12 @@ ui.drawMenu = function() {
     if (!clicked_on_orbit && clickpos) {
       v.planet_selected = -1
     }
-    if ( ui.released("escape") ) {
+    if ( ui.pressed("escape") ) {
       v.star_show = true
       v.planet_show = false
       v.current_star_key = ""
       clickpos = false
-    } else if ( ui.released("enter") ) {
+    } else if ( ui.pressed("enter") ) {
       // nothing for now
     }
   } // end planet show
@@ -827,7 +837,7 @@ ui.drawMenu = function() {
     // draw other research stuff
     // TODO
     // keypresses
-    if ( ui.released("escape") ) {
+    if ( ui.pressed("escape") ) {
       v.research_show = false
       v.menu_options_show = true
       clickpos = false
@@ -1238,8 +1248,7 @@ ui.drawGame = function() {
         maxSize = 0,
         sumSize = 0
     for (let i = 0; i < choiceLength; ++i) {
-      const choice = choices[i],
-            statSize = things[choicesX[i]].stat.size,
+      const statSize = things[choicesX[i]].stat.size,
             circleSize = statSize / towerSizeRatio
       circleSizes.push(circleSize)
       sumSize += circleSize * 2 + 25 // CONST tier up circles gap (x)
@@ -1525,8 +1534,8 @@ ui.drawGame = function() {
     }
     if (
       ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
-      ui.released("ArrowRight") ||
-      ui.released("Enter")
+      ui.pressed("ArrowRight") ||
+      ui.pressed("Enter")
     ) {
       v.waves_popup_text.splice(0, 1)
       if (v.waves_popup_text.length <= 0) {
@@ -1585,7 +1594,7 @@ ui.drawGame = function() {
       controls.setPaused(false)
       clickpos = false
     }
-    if (ui.released("escape")) {
+    if (ui.pressed("escape")) {
       game_menu()
     }
   }
@@ -1702,8 +1711,8 @@ ui.drawpop = function(drawing = true) {
         }
         if (
           ui.hitcircle(clickpos, x, y, circleSize * 0.4) ||
-          ui.released("ArrowRight") ||
-          ui.released("Enter")
+          ui.pressed("ArrowRight") ||
+          ui.pressed("Enter")
         ) {
           if (o.action != null) {
             switch (o.action) {

@@ -1,13 +1,9 @@
-import { config, category } from "../config/config.js"
-
 import { Enemy } from "./enemy.js"
 import { Tower } from "./tower.js"
 import { Thing } from "./thing.js"
-import { things } from "./things.js"
 import { waves } from "./waves.js"
 
 import { math } from "../util/math.js"
-import { random } from "../util/random.js"
 
 import { ui } from "../display/ui.js"
 
@@ -17,10 +13,7 @@ if (true) {
 
 export var controls = { }
 
-const Body = Matter.Body,
-      Bodies = Matter.Bodies,
-      Composite = Matter.Composite,
-      Vector = Matter.Vector
+const Vector = Matter.Vector
 
 let ON_N = false,
     ON_M = false
@@ -46,7 +39,7 @@ controls.toggleM = function() {
   ON_M = !ON_M
 }
 
-controls.levelup = function(level) {
+controls.levelupto = function(level) {
   const player = Tower.player
   // to level up one level
   // player.addxp(50 * (player.level + 1))
@@ -54,6 +47,11 @@ controls.levelup = function(level) {
   if (player != null) {
     player.addxp(math.towerxp(level) - player.xp)
   }
+}
+
+controls.levelup = function() {
+  const player = Tower.player
+  player.addxp(50 * (player.level + 1))
 }
 
 const playerExists = function() {
@@ -72,7 +70,7 @@ controls.init = function(render) {
     down: false,
     left: false,
     right: false,
-    pointer: Vector.create(0, 0), // to avoid the classic NaN
+    pointer: Vector.create(0, 0), // to avoid the NaN
     paused: false,
     shoot: false,
     altshoot: false,
@@ -87,6 +85,7 @@ controls.init = function(render) {
     if (!playerExists()) {
       return
     }
+    const first = !event.repeat // unused for now
     switch (event.code) {
       case "KeyS":
       case "ArrowDown":
@@ -104,6 +103,85 @@ controls.init = function(render) {
       case "ArrowRight":
         c.right = true
         break
+    }
+    // if key is pressed down for the first time (not repeated/held down)
+    if (first) {
+      switch (event.code) {
+        case "KeyE":
+          c.autoshoot = !c.autoshoot
+          break
+        case "KeyR":
+          c.autorotate = !c.autorotate
+          break
+        case "KeyQ":
+          if (Enemy.waveOn()) {
+            ui.vars.target_wave_show = 1 - ui.vars.target_wave_show
+          } else {
+            waves.start()
+          }
+          break
+        case "KeyP":
+          if (!ui.vars.something_show()) {
+            controls.setPaused(!c.paused)
+          }
+          break
+        case "KeyY":
+          if (player.canTierUp && ui.vars.waves_popup_text.length == 0) {
+            function showOverlay() {
+              if (ui.vars.waves_popup_text.length == 0) {
+                ui.vars.tier_up_show = true
+                controls.setPaused(true)
+              }
+            }
+            if (ui.vars.something_show()) {
+              if (!ui.vars.tier_up_show) {
+                ui.closeOverlay()
+                showOverlay()
+              } else {
+                ui.closeOverlay()
+              }
+            } else {
+              if (!ui.vars.tier_up_show) {
+                showOverlay()
+              } else {
+                ui.closeOverlay()
+              }
+            }
+          }
+          break
+        case "KeyU":
+          if (ui.vars.waves_popup_text.length == 0) {
+            function showOverlay() {
+              ui.vars.upgrade_show = true
+              controls.setPaused(true)
+            }
+            if (ui.vars.something_show()) {
+              if (!ui.vars.upgrade_show) {
+                ui.closeOverlay()
+                showOverlay()
+              } else {
+                ui.closeOverlay()
+              }
+            } else {
+              if (!ui.vars.upgrade_show) {
+                showOverlay()
+              } else {
+                ui.closeOverlay()              
+              }
+            }
+          }
+          break
+        case "KeyN":
+          if (ON_N) {
+            controls.levelup()
+          }
+          break
+        case "KeyM":
+          if (ON_M) {
+            waves.current++
+          }
+          break
+      }
     }
   })
   
@@ -127,80 +205,6 @@ controls.init = function(render) {
       case "KeyD":
       case "ArrowRight":
         c.right = false
-        break
-      case "KeyE":
-        c.autoshoot = !c.autoshoot
-        break
-      case "KeyR":
-        c.autorotate = !c.autorotate
-        break
-      case "KeyQ":
-        if (Enemy.waveOn()) {
-          ui.vars.target_wave_show = 1 - ui.vars.target_wave_show
-        } else {
-          waves.start()
-        }
-        break
-      case "KeyP":
-        if (!ui.vars.something_show()) {
-          controls.setPaused(!c.paused)
-        }
-        break
-      case "KeyY":
-        if (player.canTierUp && ui.vars.waves_popup_text.length == 0) {
-          function showOverlay() {
-            if (ui.vars.waves_popup_text.length == 0) {
-              ui.vars.tier_up_show = true
-              controls.setPaused(true)
-            }
-          }
-          if (ui.vars.something_show()) {
-            if (!ui.vars.tier_up_show) {
-              ui.closeOverlay()
-              showOverlay()
-            } else {
-              ui.closeOverlay()
-            }
-          } else {
-            if (!ui.vars.tier_up_show) {
-              showOverlay()
-            } else {
-              ui.closeOverlay()
-            }
-          }
-        }
-        break
-      case "KeyU":
-        if (ui.vars.waves_popup_text.length == 0) {
-          function showOverlay() {
-            ui.vars.upgrade_show = true
-            controls.setPaused(true)
-          }
-          if (ui.vars.something_show()) {
-            if (!ui.vars.upgrade_show) {
-              ui.closeOverlay()
-              showOverlay()
-            } else {
-              ui.closeOverlay()
-            }
-          } else {
-            if (!ui.vars.upgrade_show) {
-              showOverlay()
-            } else {
-              ui.closeOverlay()              
-            }
-          }
-        }
-        break
-      case "KeyN":
-        if (ON_N) {
-          player.addxp(50 * (player.level + 1))
-        }
-        break
-      case "KeyM":
-        if (ON_M) {
-          waves.current++
-        }
         break
     }
   })

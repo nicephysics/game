@@ -15,9 +15,8 @@ import { upgradekeys } from "../game/thingstat.js"
 import { waves } from "../game/waves.js"
 
 import { math } from "../util/math.js"
-import { random } from "../util/random.js"
 
-import { config, category } from "../config/config.js"
+import { config } from "../config/config.js"
 
 export var ui = { }
 
@@ -27,6 +26,7 @@ if (true) {
 
 const Vector = Matter.Vector
 
+// main variables
 ui.vars = {
   // constants
   
@@ -102,7 +102,7 @@ ui.vars = {
 }
 
 // set v.menu_options
-if (true) {
+if ("v.menu_options") {
   const v = ui.vars
   v.menu_options = {
     array: [
@@ -138,66 +138,75 @@ if (true) {
   }
 }
 
-ui.closeOverlay = function() {
+// some UI functions
+if ("UI") {
   const v = ui.vars
-  v.upgrade_show = false
-  v.tier_up_show = false
-  controls.setPaused(false)
-}
 
-ui.hitrect = function(pos, x, y, w, h) {
-  return pos && ( pos.x >= x && pos.y >= y && pos.x <= x + w && pos.y <= y + h )
-}
+  ui.closeOverlay = function() {
+    v.upgrade_show = false
+    v.tier_up_show = false
+    controls.setPaused(false)
+  }
 
-ui.hitoutsiderect = function(pos, x, y, w, h) {
-  return pos && ( pos.x <= x || pos.x >= x + w || pos.y <= y || pos.y >= y + h )
-}
+  ui.hitrect = function(pos, x, y, w, h) {
+    return pos && ( pos.x >= x && pos.y >= y && pos.x <= x + w && pos.y <= y + h )
+  }
 
-ui.hitrectangle = function(pos, x, y, w, h) {
-  return ui.hitrect(pos, x - w / 2, y - h / 2, w, h)
-}
+  ui.hitoutsiderect = function(pos, x, y, w, h) {
+    return pos && ( pos.x <= x || pos.x >= x + w || pos.y <= y || pos.y >= y + h )
+  }
 
-ui.hitrectpoints = function(pos, x1, y1, x2, y2) {
-  return pos && ( pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2 )
-}
+  ui.hitrectangle = function(pos, x, y, w, h) {
+    return ui.hitrect(pos, x - w / 2, y - h / 2, w, h)
+  }
 
-ui.hitcircle = function(pos, x, y, size, minSize = 0) {
-  const dist = Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y)))
-  return pos && dist < size * size && dist > minSize * minSize
-}
+  ui.hitrectpoints = function(pos, x1, y1, x2, y2) {
+    return pos && ( pos.x >= x1 && pos.y >= y1 && pos.x <= x2 && pos.y <= y2 )
+  }
 
-ui.keypress = {
-  down: null,
-  hold: null,
-  up: null,
-  check: function(code, key) {
-    return (
-      code === key ||
-      code === "Key" + key.toUpperCase() ||
-      code === key[0].toUpperCase() + key.substring(1) ||
-      code === "Digit" + key || 
-      code === "Arrow" + key[0].toUpperCase() + key.substring(1)
-    )
+  ui.hitcircle = function(pos, x, y, size, minSize = 0) {
+    const dist = Vector.magnitudeSquared(Vector.sub(pos, Vector.create(x, y)))
+    return pos && dist < size * size && dist > minSize * minSize
   }
 }
 
-ui.pressed = function(key) {
-  const code = ui.keypress.down
-  return ui.keypress.check(code, key)
+// some key functions
+if ("key") {
+  ui.keypress = {
+    down: null,
+    hold: null,
+    up: null,
+    shift: false,
+    ctrl: false,
+    alt: false,
+    check: function(code, key) {
+      return (
+        code === key ||
+        code === "Key" + key.toUpperCase() ||
+        code === key[0].toUpperCase() + key.substring(1) ||
+        code === "Digit" + key || 
+        code === "Arrow" + key[0].toUpperCase() + key.substring(1)
+      )
+    }
+  }
+
+  ui.pressed = function(key) {
+    const code = ui.keypress.down
+    return ui.keypress.check(code, key)
+  }
+
+  ui.keyheld = function(key) {
+    const code = ui.keypress.hold
+    return ui.keypress.check(code, key)
+  }
+
+  ui.released = function(key) {
+    const code = ui.keypress.up
+    return ui.keypress.check(code, key)
+  }
 }
 
-ui.keyheld = function(key) {
-  const code = ui.keypress.hold
-  return ui.keypress.check(code, key)
-}
-
-ui.released = function(key) {
-  const code = ui.keypress.up
-  return ui.keypress.check(code, key)
-}
-
-ui.focused = true
-
+// UI initialize
 ui.init = function(render) {
   let v = ui.vars,
       mouse = render.mouse,
@@ -219,23 +228,36 @@ ui.init = function(render) {
     v.click = mouse.absolute
   })
   window.addEventListener("keydown", function(event) {
+    // event.keyCode is deprecated
     if (event.isComposing || event.keyCode === 229) {
       return
     }
+    ui.keypress.up = null
     if (event.repeat) {
+      ui.keypress.down = null
       ui.keypress.hold = event.code
     } else {
       ui.keypress.down = event.code
+      ui.keypress.hold = event.code
     }
+    ui.keypress.shift = event.shiftKey
+    ui.keypress.ctrl = event.ctrlKey
+    ui.keypress.alt = event.altKey
   })
   window.addEventListener("keyup", function(event) {
     ui.keypress.down = null
+    ui.keypress.hold = null
     ui.keypress.up = event.code
+    ui.keypress.shift = event.shiftKey
+    ui.keypress.ctrl = event.ctrlKey
+    ui.keypress.alt = event.altKey
   })
   window.addEventListener("wheel", function(event) {
     const y = event.deltaY
     ui.vars.scroll = y / Math.abs(y)
   })
+
+  ui.focused = document.visibilityState === "visible" // yes
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === "visible") {
       ui.focused = true
@@ -243,12 +265,11 @@ ui.init = function(render) {
       ui.focused = false
     }
   })
-  // .
 }
 
+// runs every frame
 ui.tick = function() {
-  const v = ui.vars,
-        render = Thing.render
+  const v = ui.vars
   // tick time!
   v.time++
   // that's all?
@@ -267,9 +288,9 @@ ui.tick = function() {
   }
 }
 
+// run after every frame
 ui.tickAfter = function() {
-  let v = ui.vars,
-      render = Thing.render
+  let v = ui.vars
   // clear click (and hover too?)
   if (v.click != false) {
     // increment click time
@@ -284,6 +305,7 @@ ui.tickAfter = function() {
   v.scroll = 0
 }
 
+// main UI run function
 ui.draw = function() {
   
   // tick!
@@ -309,7 +331,9 @@ ui.draw = function() {
   
 }
 
+/****************************************************************** MENU ******************************************************************/
 ui.drawMenu = function() {
+
   const v = ui.vars,
         render = Thing.render,
         ctx = render.context,
@@ -321,20 +345,15 @@ ui.drawMenu = function() {
       clickpos = v.click,
       x = 0,
       y = 0,
-      size = 0,
       width = 0,
       height = 0
-  
   
   // some large text
   draw.setFill(ctx, C.lightblue)
   draw.setStroke(ctx, C.darkblue)
   draw.setFont(ctx, "48px Roboto Mono")
     draw._text(ctx, _width / 2, _height / 5, "A Physics Game", 0 * ui.vars.time, "center")
-  
-  
-  
-  
+
   // some options
   const options = v.menu_options
   if (v.menu_options_show) {
@@ -381,7 +400,7 @@ ui.drawMenu = function() {
     }
   } // end menu options show
   
-  // some stars?
+  // some stars
   if (v.star_show) {
     // draw overlay
     draw.setFillNoStroke(ctx, C.cyan) // CONST star overlay rect color
@@ -484,6 +503,7 @@ ui.drawMenu = function() {
     }
   } // end star show
   
+  // some planets
   if (v.planet_show) {
     const star = stars.stars[v.current_star_key],
           planets = star.planets
@@ -813,7 +833,7 @@ ui.drawMenu = function() {
     }
   } // end planet show
   
-  
+  // some research
   if (v.research_show) {
     // draw black background
     draw.setFillNoStroke(ctx, C.black)
@@ -846,6 +866,7 @@ ui.drawMenu = function() {
   
 }
 
+/****************************************************************** GAME ******************************************************************/
 ui.drawGame = function() {
   
   // define common variables first
@@ -870,15 +891,8 @@ ui.drawGame = function() {
       size = 0,
       width = 0,
       height = 0
-  
-  // there will be 5 spaces after every major section in this function
-  
-  
-  
-  
-  
+
   // draw the xp bar
-  
   if (true) {
     // bar vars
     let xp_show = v.xp_bar_show,
@@ -932,13 +946,8 @@ ui.drawGame = function() {
       }
     }
   }
-  
-  
-  
-  
-  
+
   // draw planet health
-  
   if (true) {
     const towerHealth = Tower.health
     x = _width - v.health_heart_side_x
@@ -950,13 +959,8 @@ ui.drawGame = function() {
     draw.setFont(ctx, Math.floor(v.health_text_size) + "px Roboto Condensed")
       draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
-  
-  
-  
-  
-  
+
   // draw upgrade button at the side...
-  
   if (!v.upgrade_show) {
     size = 16 // CONST upgrade button size
     x = _width - size - 11 // CONST upgrade button right side gap
@@ -992,13 +996,8 @@ ui.drawGame = function() {
         draw._text(ctx, x - size - 8, y - size + 4, "x" + playerStat.points, math.degToRad(-10), "right")
     }
   }
-  
-  
-  
-  
-  
+
   // draw upgrade overlay
-  
   if (v.upgrade_show) {
     // draw translucent overlay rectangle
     draw.setFillNoStroke(ctx, "#99ff00") // CONST upgrade overlay rect color
@@ -1051,14 +1050,17 @@ ui.drawGame = function() {
         ucolor = "#888888",
         ratio = 0,
         dispratio = 0,
-        percentText = "0%",
+        percentText = "??%",
         ygap = 6, // gap between rows
         hovering = false,
         clicking = false,
         hovering_ = false,
         clicking_ = false,
+        shifting = ui.keypress.shift,
+        ctrling = ui.keypress.ctrl,
         clicked = -1,
-        clicksign = 0
+        clicksign = 0,
+        keyindex = 0
     
     x = _width / 3 - 10
     width = _width / 3 - 50
@@ -1084,11 +1086,12 @@ ui.drawGame = function() {
       if (upgradeList[i] === "") {
         continue
       }
+      keyindex++
       utext = upgradeList[i]
       ucolor = upgradeColors[i]
       unumber = upgradeNumbers[i] + 1
       ratio = unumber / upgradeMax
-      const percentText = Math.round(ratio * 100) + "%"
+      percentText = Math.round(ratio * 100) + "%"
       ratio = ratio / maxratio
       size = 10
       dispratio = math.lerp(oldratios[i] || 0, ratio, 0.07)
@@ -1100,15 +1103,15 @@ ui.drawGame = function() {
         draw._text(ctx, x - 20, y, utext, 0, "right")
       
       // upgrade bar button hover/click detection
-      hovering = ui.hitcircle(mousepos, x, y, size + 2)
-      hovering_ = ui.hitcircle(mousepos, x + 60, y, size + 3)
-      clicking = ui.hitcircle(clickpos, x, y, size + 2)
-      clicking_ = ui.hitcircle(clickpos, x + 60, y, size + 3)
-      if (clicking) {
+      hovering = ui.hitcircle(mousepos, x, y, size + 2) || (ui.keyheld("Digit" + keyindex) && !shifting)
+      hovering_ = ui.hitcircle(mousepos, x + 60, y, size + 3) || (ui.keyheld("Digit" + keyindex) && shifting)
+      clicking = ui.hitcircle(clickpos, x, y, size + 2) || (ui.released("Digit" + keyindex) && !shifting)
+      clicking_ = ui.hitcircle(clickpos, x + 60, y, size + 3) || (ui.released("Digit" + keyindex) && shifting)
+      if (clicking && clicked === -1) {
         clicked = i
         clicksign = 1
         clickpos = false
-      } else if (clicking_) {
+      } else if (clicking_ && clicked === -1) {
         clicked = i
         clicksign = -1
         clickpos = false
@@ -1159,16 +1162,16 @@ ui.drawGame = function() {
       const index = clicked,
             key = upgradekeys[index]
       playerStat.upgradeStat(key, clicksign)
+      if (ctrling) {
+        while (playerStat.upgradeStat(key, clicksign)) {
+          // do nothing
+        }
+      }
     }
     
   }
-  
-  
-  
-  
-  
+
   // tier up button
-  
   if (playerStat.canTierUp && !v.something_show()) {
     size = 14 // CONST tier up button size
     x = playerX
@@ -1198,12 +1201,7 @@ ui.drawGame = function() {
     draw._line(ctx, x, y - size * upSymbolSize, x, y + size * upSymbolSize)
   }
   
-  
-  
-  
-  
   // tier up overlay
-  
   if (v.tier_up_show) {
     // draw translucent overlay rectangle
     draw.setFillNoStroke(ctx, C.cyan) // CONST tier up overlay rect color
@@ -1308,13 +1306,8 @@ ui.drawGame = function() {
       clickpos = false
     }
   }
-  
-  
-  
-  
-  
+
   // enemy wave small button (top)
-  
   if (!v.something_show()) {
     const waveshow = v.wave_show
     let buttoncolor = C.button
@@ -1343,12 +1336,7 @@ ui.drawGame = function() {
       draw._line(ctx, x, y + 10 - height, x + 10, y + height)
   }
   
-  
-  
-  
-  
   // enemy waves (top)
-  
   if (v.wave_show * 65 > 0.4) {
     // wave vars
     const W = waves.waves,
@@ -1470,13 +1458,8 @@ ui.drawGame = function() {
     } // end draw the PLAY BUTTON
     // done with drawing enemy wave stuff?
   }
-  
-  
-  
-  
-  
+
   // pre-wave texts
-  
   if (v.waves_popup_text.length > 0) {
     if (!v.waves_popup_text_show) {
       v.waves_popup_text_show = true
@@ -1545,41 +1528,33 @@ ui.drawGame = function() {
       clickpos = false
     }
   }
-  
-  
-  
-  
-  
+
   // enemy texts
-  
-  let i = 0
-  for (let t of v.enemy_texts.slice()) {
-    // lots of default values ahead!
-    x = t.x
-    y = t.y
-    size = t.size
-    draw.setFill(ctx, t.fill || t.color || "transparent")
-    draw.setStroke(ctx, t.stroke || "transparent")
-    draw.setLineWidth(ctx, t.lineWidth || 1)
-    draw.setFont(ctx, Math.floor(size) + "px Roboto Condensed")
-    ctx.save()
-    draw.setGlobalAlpha(ctx, t.opacity || 1)
-      draw._text(ctx, x, y, t.text, t.angle, "center")
-    ctx.restore()
-    if (t.time < v.time) {
-      v.enemy_texts.splice(i, 1)
+  if (true) {
+    let i = 0
+    for (let t of v.enemy_texts.slice()) {
+      // lots of default values ahead!
+      x = t.x
+      y = t.y
+      size = t.size
+      draw.setFill(ctx, t.fill || t.color || "transparent")
+      draw.setStroke(ctx, t.stroke || "transparent")
+      draw.setLineWidth(ctx, t.lineWidth || 1)
+      draw.setFont(ctx, Math.floor(size) + "px Roboto Condensed")
+      ctx.save()
+      draw.setGlobalAlpha(ctx, t.opacity || 1)
+        draw._text(ctx, x, y, t.text, t.angle, "center")
+      ctx.restore()
+      if (t.time < v.time) {
+        v.enemy_texts.splice(i, 1)
+      }
+      ++i
     }
-    ++i
   }
-  
-  
-  
-  
-  
-  // huge pause overlay... (when the user actually pauses)
-  
+
+  // pause overlay
   if (controls.isPaused() && !v.something_show()) {
-    // draw huge pause overlay
+    // draw huge pause overlay... (when the user actually pauses)
     draw.setFillNoStroke(ctx, "#cccccc") // white grey
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.8)
@@ -1598,10 +1573,6 @@ ui.drawGame = function() {
       game_menu()
     }
   }
-  
-  
-  
-  
   
   // end of function
 }
@@ -1625,6 +1596,7 @@ ui.drawpop = function(drawing = true) {
       mousepos = p._hover || v.hover,
       clickpos = p._click || v.click
   
+  // draw popup
   if (true) {
     if (!p.font) {
       p.font = (p.fontsize || 16) + "px Roboto Condensed"

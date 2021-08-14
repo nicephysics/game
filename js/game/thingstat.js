@@ -1,10 +1,4 @@
-import { category, config } from "../config/config.js"
-
-import { random } from "../util/random.js"
-import { math } from "../util/math.js"
-
 import { save } from "./save.js"
-import { things } from "./things.js"
 
 if (true) {
   // 2 space indent!
@@ -23,7 +17,7 @@ export const upgrademax = {
   mass: 100,
   speed: 100,
   reload: 100,
-  towerspeed: 20,
+  thingspeed: 20,
   spread: 19,
   air: 19,
 }
@@ -286,8 +280,10 @@ export class ThingStat {
       this.upgrade[key] = newstat
       this.refreshPoints()
       save.savewave()
+      return true
     } else {
       // todo invalid
+      return false
     }
   }
   

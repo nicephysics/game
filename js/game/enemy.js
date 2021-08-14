@@ -1,19 +1,14 @@
-import { category, config } from "../config/config.js"
+import { config } from "../config/config.js"
 
 import { math } from "../util/math.js"
 import { PriorityQueue } from "../util/pq.js"
 import { random } from "../util/random.js"
 
-import { draw } from "../display/draw.js"
 import { style } from "../display/style.js"
 import { ui } from "../display/ui.js"
 
-import { Effect } from "./effect.js"
-import { Gun } from "./gun.js"
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
-import { ThingStat } from "./thingstat.js"
-import { Tower } from "./tower.js"
 import { wave } from "./wave.js"
 
 export var enemies = [ ]
@@ -23,9 +18,6 @@ if (true) {
 }
 
 const Body = Matter.Body,
-      Bodies = Matter.Bodies,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
       Vector = Matter.Vector
 
 const getSpawnBounds = function(size) {
@@ -45,6 +37,7 @@ export class Enemy {
   
   static init = function() {
     // send shortcuts
+    /*
     document.addEventListener("keydown", function(event) {
       switch (event.code) {
         case "Digit1":
@@ -58,6 +51,7 @@ export class Enemy {
           break
       }
     })
+    */
     // enemy types
     for (let k in things) {
       if ( things[k].gametype === "enemy" ||

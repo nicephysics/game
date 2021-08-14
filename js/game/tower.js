@@ -1,15 +1,9 @@
 // game
-import { Effect } from "./effect.js"
-import { enemies, Enemy } from "./enemy.js"
-import { Gun } from "./gun.js"
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
-// config
-import { config, category } from "../config/config.js"
 // util
 import { math } from "../util/math.js"
 // display
-import { draw } from "../display/draw.js"
 import { style } from "../display/style.js"
 
 if (true) {
@@ -18,13 +12,7 @@ if (true) {
 
 export var towers = [ ] // Tower[]
 
-const Bodies = Matter.Bodies,
-      Body = Matter.Body,
-      Common = Matter.Common,
-      Composite = Matter.Composite,
-      Composites = Matter.Composites,
-      Mouse = Matter.Mouse,
-      SAT = Matter.SAT,
+const Body = Matter.Body,
       Vector = Matter.Vector
 
 export const towermap = {
@@ -85,7 +73,7 @@ export class Tower {
       Tower.drawtowers[type] = t
     }
     // set body attributes, fit the draw
-    t.position = {
+    t.body.position = {
       x: x + render.bounds.min.x,
       y: y + render.bounds.min.y,
     }

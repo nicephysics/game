@@ -24,7 +24,7 @@ things.tower = {
   static: true,
   category: category.yourTower,
   // render stuff
-  shape: "circle",
+  shape: 6,
   accessories: [],
   render: style.tower.default,
   // game stuff

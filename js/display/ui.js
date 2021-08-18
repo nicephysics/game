@@ -62,6 +62,7 @@ ui.vars = {
   waves_popup_text_show: false,
   waves_all_clear: false,
   waves_hover: -1,
+  waves_finish: false,
   
   // show (overlay)
   upgrade_show: false, // upgrade overlay show
@@ -863,6 +864,24 @@ ui.drawMenu = function() {
       clickpos = false
     }
   } // end research show
+
+  // some end screen
+  if (v.waves_finish) {
+    // draw black background
+    draw.setFillNoStroke(ctx, C.space)
+    draw._rect(ctx, 0, 0, _width, _height)
+    // draw stage name and other stuff
+    if ("stage name") {
+      draw.setFillNoStroke(ctx, C.green)
+      draw.setFont(ctx, "24px Roboto Mono")
+      draw._text(ctx, _width / 2, _height * 0.1, waves.waves.name, 0, "center")
+    }
+    if ( ui.pressed("escape") ) {
+      v.waves_finish = false
+      v.menu_options_show = true
+      clickpos = false
+    }
+  } // end end screen (hee)
   
 }
 
@@ -893,7 +912,7 @@ ui.drawGame = function() {
       height = 0
 
   // draw the xp bar
-  if (true) {
+  if ("XP") {
     // bar vars
     let xp_show = v.xp_bar_show,
         xp = math.lerp(v.xp_bar_xp, player.xp, 0.05), // CONST xp bar lerp
@@ -948,7 +967,7 @@ ui.drawGame = function() {
   }
 
   // draw planet health
-  if (true) {
+  if ("health") {
     const towerHealth = Tower.health
     x = _width - v.health_heart_side_x
     y = _height - 20 - v.health_heart_side_y
@@ -1459,7 +1478,7 @@ ui.drawGame = function() {
     // done with drawing enemy wave stuff?
   }
 
-  // pre-wave texts
+  // between-wave texts
   if (v.waves_popup_text.length > 0) {
     if (!v.waves_popup_text_show) {
       v.waves_popup_text_show = true
@@ -1530,7 +1549,7 @@ ui.drawGame = function() {
   }
 
   // enemy texts
-  if (true) {
+  if ("enemy texts") {
     let i = 0
     for (let t of v.enemy_texts.slice()) {
       // lots of default values ahead!

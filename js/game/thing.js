@@ -1,11 +1,7 @@
-import { category, config } from "../config/config.js"
-
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 
 import { draw } from "../display/draw.js"
-import { style } from "../display/style.js"
-import { ui } from "../display/ui.js"
 
 import { ThingStat } from "./thingstat.js"
 import { things } from "./things.js"
@@ -21,12 +17,8 @@ if (true) {
 // matter "imports"
 const Bodies = Matter.Bodies,
       Body = Matter.Body,
-      Common = Matter.Common,
       Composite = Matter.Composite,
-      Composites = Matter.Composites,
-      Mouse = Matter.Mouse,
-      Vector = Matter.Vector,
-      Vertices = Matter.Vertices
+      Vector = Matter.Vector
 
 // everything!
 export var everything = [ ]
@@ -282,8 +274,14 @@ export class Thing {
   // create SHAPE
   createShape() {
     const size = this.size
+    if (typeof this.shape === "number" && this.shape !== 0) {
+      // shape is a regular polygon
+      this.shapeType = "vertices"
+      this.vertices = math.regpoly(this.shape, size)
+    }
     switch (this.shape) {
       case "circle":
+      case 0:
         this.shapeType = "circle"
         // do nothing
         break

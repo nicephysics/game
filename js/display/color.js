@@ -1,5 +1,3 @@
-import { math } from "../util/math.js"
-
 export var C = { }
 export var theme = { }
 
@@ -38,6 +36,7 @@ theme.default = {
   button_hover:  "#00ada2", // button hover
   // purple colours
   darkpurple:    "#27007a", // icons?
+  space:         "#28222e", // space, of course
   // series colours
   difficulty_0:  "#3e89c7", // light-blue
   difficulty_1:  "#11d62b", // green

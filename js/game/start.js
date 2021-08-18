@@ -4,8 +4,8 @@
 import { math } from "../util/math.js"
 import { random } from "../util/random.js"
 // display
+import { C } from "../display/color.js"
 import { style } from "../display/style.js"
-import { display } from "../display/display.js"
 import { navigation } from "../display/navigation.js"
 import { ui } from "../display/ui.js"
 // config
@@ -17,14 +17,9 @@ import { Enemy, enemies } from "./enemy.js"
 import { Game } from "./game.js"
 import { Thing } from "./thing.js"
 import { things } from "./things.js"
-import { ThingStat } from "./thingstat.js"
 import { Tower } from "./tower.js"
 import { gameupdate } from "./update.js"
 import { waves } from "./waves.js"
-
-if (true) {
-  // 2 space indent!
-}
 
 const Engine = Matter.Engine,
       Render = Matter.Render,
@@ -88,7 +83,7 @@ export const game_init = function() {
       height: _height,
       hasBounds: true,
       pixelRatio: 1, // for now... TODO
-      background: '#28222e', // black purple space colour
+      background: C.space,
       wireframes: false, // yes
       showMousePosition: false, // to display the mouse coords, see Mouse.create(canvas) above // disabled
     }

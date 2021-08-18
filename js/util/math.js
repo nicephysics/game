@@ -106,6 +106,17 @@ math.asteroid = function(sides, size) {
   return ans
 }
 
+math.regpoly = function(sides, size, angle = 0, x = 0, y = 0) {
+  const ans = []
+  let a = angle
+  size *= math.getRealSize(sides)
+  for (let i = 0; i < sides; ++i) {
+    ans.push(Vector.create(x + size * Math.cos(a), y + size * Math.sin(a)))
+    a += Math.PI * 2 / sides;
+  }
+  return ans
+}
+
 // ok...
 function decimalAdjust(type, value, exp) {
   // If the exp is undefined or zero...
@@ -154,4 +165,26 @@ math.number = function(number) {
   if (number < 0) return "-" + math.number(-number)
   var log = Math.floor(Math.log10(number) / 3)
   return ( math.sf(number, 3) / Math.pow(1000, log) ) + " " + math.prefixes[log]
+}
+
+// thanks for the code!
+const regpolySizes = (() => {
+  const o = [1, 1, 1]; 
+  for (let sides = 3; sides < 16; sides++) {
+    // We say that the real size of a 0-gon, 1-gon, 2-gon is one, then push the real sizes of triangles, squares, etc...
+    o.push(
+      Math.sqrt((2 * Math.PI / sides) * (1 / Math.sin(2 * Math.PI / sides)))
+    );
+  }
+  return o;
+})();
+
+math.getRealSize = function(sides) {
+  if (sides >= regpolySizes.length) {
+    return 1;
+  } else if (Math.floor(sides) == sides) {
+    return regpolySizes[sides];
+  } else {
+    return Math.sqrt((2 * Math.PI / sides) * (1 / Math.sin(2 * Math.PI / sides)))
+  }
 }

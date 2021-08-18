@@ -1,21 +1,9 @@
-import { category, config } from "../config/config.js"
-
 import { Enemy } from "./enemy.js"
 import { save } from "./save.js"
-import { Tower } from "./tower.js"
-import { wave } from "./wave.js"
+import { game_menu } from "./start.js"
 
 // display stuff here?
 import { ui } from "../display/ui.js"
-
-import { random } from "../util/random.js"
-import { math } from "../util/math.js"
-
-if (true) {
-  // 2 space indent!
-}
-
-const Vector = Matter.Vector
 
 // to fill up later
 export const waves = { }
@@ -24,74 +12,82 @@ waves.current = 0
 waves.levelname = ""
 waves.waves = null
 
-waves.init = function(name, continued = false) {
-  waves.levelname = name
-  waves.waves = waves[name]
-  const W = waves.waves
-  ui.vars.waves_finish = false
-  if (continued) {
-    // save the game?
-  } else {
-    waves.current = 0
-    const currtext = W.starttext[0]
-    if (currtext != null) {
-      ui.vars.waves_popup_text.push(...currtext)    
+// init, start, end, finish
+if ("main wave functions") {
+
+  waves.init = function(name, continued = false) {
+    waves.levelname = name
+    waves.waves = waves[name]
+    const W = waves.waves
+    ui.vars.waves_finish = false
+    if (continued) {
+      // save the game?
+    } else {
+      waves.current = 0
+      const currtext = W.starttext[0]
+      if (currtext != null) {
+        ui.vars.waves_popup_text.push(...currtext)    
+      }
     }
   }
-}
 
-waves.start = function() {
-  const W = waves.waves
-  if (W && !Enemy.waveOn()) {
-    ++waves.current
-    const curr = waves.current,
-          currwave = W.wave[curr - 1],
-          currtext = W.starttext[curr]
-    if (currwave == null) {
-      ui.vars.waves_all_clear = true
-    } else {
-      Enemy.sendwave(currwave)
+  waves.start = function() {
+    const W = waves.waves
+    if (W && !Enemy.waveOn()) {
+      ++waves.current
+      const curr = waves.current,
+            currwave = W.wave[curr - 1],
+            currtext = W.starttext[curr]
+      if (currwave == null) {
+        ui.vars.waves_all_clear = true
+      } else {
+        Enemy.sendwave(currwave)
+      }
+      if (currtext != null) {
+        ui.vars.waves_popup_text.push(...currtext)
+      }
     }
+  }
+
+  waves.end = function() {
+    if (waves.waves == null) return
+    const W = waves.waves,
+          curr = waves.current,
+          currtext = W.endtext[curr]
     if (currtext != null) {
       ui.vars.waves_popup_text.push(...currtext)
     }
+    save.savewave() // save the game!
+    // finish the game!
+    if (curr >= W.number) {
+      waves.finish()
+    }
   }
-}
 
-waves.end = function() {
-  if (waves.waves == null) return
-  const W = waves.waves,
-        curr = waves.current,
-        currtext = W.endtext[curr]
-  if (currtext != null) {
-    ui.vars.waves_popup_text.push(...currtext)
+  waves.finish = function() {
+    ui.vars.waves_finish = true
+    ui.vars.menu_options_show = false
+    game_menu()
   }
-  save.savewave() // save the game!
-  // finish the game!
-  if (curr >= W.number) {
-    waves.finish()
-  }
-}
 
-waves.finish = function() {
-  ui.vars.waves_finish = true
 }
 
 const makelevel = function(levelname) {
   waves[levelname] = {
     wave: [],
     number: 0,
+    name: "",
     starttext: {},
     endtext: {},
   }
   return waves[levelname]
 }
 
-
 /* TUTORIAL */
 if ("TUTORIALS") {
   const tut1_1 = makelevel("tut1_1")
   tut1_1.number = 5
+  tut1_1.name = "Tutorial 1.1"
   tut1_1.wave.push(
     { // 1
       type: "asteroid",
@@ -163,6 +159,7 @@ if ("TUTORIALS") {
   }
   const tut1_2 = makelevel("tut1_2")
   tut1_1.number = 4 // for now
+  tut1_1.name = "Tutorial 1.2"
   tut1_2.wave.push(
     { // 1
       type: "asteroid",

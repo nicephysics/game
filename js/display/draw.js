@@ -284,6 +284,7 @@ draw.polyline = function(render, xx, yy) {
 }
 
 draw._polygon = function(ctx, vs, angle = 0) {
+  ctx = ctx || draw.ctx
   if (angle !== 0) {
     const point = Vertices.centre(vs)
     for (let i = 0; i < vs.length; ++i) {
@@ -308,6 +309,26 @@ draw.polygon = function(render, vs, angle = 0) {
   }
   const ctx = render.context
   draw._polygon(ctx, new_v, angle)
+}
+
+draw._regpoly = function(ctx, sides, r, x, y, angle = 0) {
+  ctx = ctx || draw.ctx
+  ctx.beginPath()
+  let a = angle
+  ctx.moveTo(x + r * Math.cos(a), y + r * Math.sin(a))
+  for (let i = 0; i < sides; ++i) {
+    a += Math.PI * 2 / sides;
+    ctx.lineTo(x + r * Math.cos(a), y + r * Math.sin(a))
+  }
+  ctx.stroke()
+  ctx.fill()
+}
+
+draw.regpoly = function(render, sides, r, x, y, angle = 0) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  const ctx = render.context
+  draw._regpoly(ctx, sides, r, x, y, angle)
 }
 
 draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {

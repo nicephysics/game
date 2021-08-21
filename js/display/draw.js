@@ -1,8 +1,9 @@
 // imports
 import { style } from "./style.js"
 
-import { Enemy } from "../game/enemy.js"
 import { Tower } from "../game/tower.js"
+
+import { math } from "../util/math.js"
 
 if (true) {
   // 2 space indent!
@@ -329,6 +330,26 @@ draw.regpoly = function(render, sides, r, x, y, angle = 0) {
   y -= render.bounds.min.y
   const ctx = render.context
   draw._regpoly(ctx, sides, r, x, y, angle)
+}
+
+draw._shape = function(ctx, shape, size, x, y, angle = 0) {
+  ctx = ctx || draw.ctx
+  if (!shape) {
+    // default to circle
+    draw._circle(ctx, x, y, size)
+  } else if (typeof shape === "number") {
+    // polygon!
+    draw._regpoly(ctx, shape, size * math.getRealSize(shape), x, y, angle)
+  } else if (typeof shape === "string") {
+    // todo SVG strings
+  }
+}
+
+draw.shape = function(render, shape, size, x, y, angle = 0) {
+  x -= render.bounds.min.x
+  y -= render.bounds.min.y
+  const ctx = render.context
+  draw._shape(ctx, shape, size, x, y, angle)
 }
 
 draw._text = function(ctx, x, y, text, angle = 0, textAlign = "") {

@@ -206,6 +206,9 @@ export class Thing {
     if (o.shape != null) {
       this.shape = o.shape
     }
+    if (o.shapeAngle != null) {
+      this.shapeAngle = math.degToRad(o.shapeAngle)
+    }
     if (o.accessories != null) {
       this.accessories = o.accessories.slice()
     }
@@ -273,11 +276,12 @@ export class Thing {
   
   // create SHAPE
   createShape() {
-    const size = this.size
+    const size = this.size,
+          angle = this.shapeAngle
     if (typeof this.shape === "number" && this.shape !== 0) {
       // shape is a regular polygon
       this.shapeType = "vertices"
-      this.vertices = math.regpoly(this.shape, size)
+      this.vertices = math.regpoly(this.shape, size, this.shapeAngle || 0)
     }
     switch (this.shape) {
       case "circle":
@@ -491,6 +495,10 @@ export class Thing {
         break
     }
   }
+
+  drawSideShape(render, shape = 0, size = this.size, x = this.x, y = this.y, angle = this.rotation) {
+    draw.shape(render, shape, size, x, y, angle)
+  }
   
   drawAccessories(render, layer) {
     for (let accessory of this.accessories) {
@@ -521,16 +529,16 @@ export class Thing {
       draw.setGlobalAlpha(ctx, opacity)
     }
     switch (type) {
-      case "guncircle":
+      case "gunshape":
         const gunIndex = (a.gunIndex || 0),
               gun = this.guns[gunIndex],
               centre = a.center || a.centre,
-              gunsize = gun.stat.size * (a.size || 1)
-        if (centre) {
-          draw.circle(render, this.x, this.y, gunsize)
-        } else {
-          draw.circle(render, gun.x, gun.y, gunsize)
-        }
+              gunsize = gun.stat.size * this.stat.mult.size * (a.size || 1),
+              draw_shape = a.shape || a.sides,
+              draw_x = (centre) ? this.x : gun.x,
+              draw_y = (centre) ? this.y : gun.y,
+              draw_angle = this.rotation + math.degToRad(a.angle || 0)
+        draw.shape(render, draw_shape, gunsize, draw_x, draw_y, draw_angle)
         break
       case "none":
         break

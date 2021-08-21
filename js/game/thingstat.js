@@ -1,3 +1,5 @@
+import { category, config } from "../config/config.js"
+
 import { save } from "./save.js"
 
 if (true) {
@@ -12,14 +14,26 @@ export const upgradelevel = {
 }
   
 export const upgrademax = {
-  // those stats not mentioned will get unlimited upgrade amount (e.g. mass, speed)
+  // those stats not mentioned will get unlimited upgrade amount
   size: 20,
   mass: 100,
   speed: 100,
   reload: 100,
   thingspeed: 20,
-  spread: 19,
-  air: 19,
+  spread: 20,
+  air: 20,
+  thingrot: 20,
+}
+
+export const upgradestr = {
+  size: 0.016,
+  mass: 0.075,
+  speed: 0.035,
+  reload: 0.025,
+  thingspeed: 0.025,
+  spread: 0.03,
+  air: 0.06,
+  thingrot: 0.04,
 }
 
 export class ThingStat {
@@ -39,6 +53,9 @@ export class ThingStat {
   staticFriction = null
   points = 0
   upgradetext = "normal"
+  upgrademax = null
+  upgradestr = null
+  upgradeList = [""]
   upgrade = { }
   realMult = { }
   
@@ -62,23 +79,24 @@ export class ThingStat {
       return this.realMult
     }
     const u = this.upgrade,
+          str = this.upgradestr || upgradestr,
           ans = { }
     // 1. size (add 4%)
-    ans.size = 1 + u.size * 0.04
+    ans.size = 1 + u.size * str.size
     // 2. mass (add 7%)
-    ans.mass = 1 + u.mass * 0.07
+    ans.mass = 1 + u.mass * str.mass
     // 3. speed (add 3%)
-    ans.speed = 1 + u.speed * 0.03
+    ans.speed = 1 + u.speed * str.speed
     // 4. reload (add 6%)
-    ans.reload = 1 / (1 + u.reload * 0.03)
+    ans.reload = 1 / (1 + u.reload * str.reload)
     // 5. thingspeed (add 3%)
-    ans.thingspeed = 1 + u.thingspeed * 0.03
+    ans.thingspeed = 1 + u.thingspeed * str.thingspeed
     // 6. spread (minus 4%) (was multiply by 97%)
-    ans.spread = 1 / (1 + u.spread * 0.04) // Math.pow(0.97, u.spread)
+    ans.spread = 1 / (1 + u.spread * str.spread) // Math.pow(0.97, u.spread)
     // 7. air (minus 4%) (was multiply by 96%)
-    ans.air = 1 / (1 + u.air * 0.04)
+    ans.air = 1 / (1 + u.air * str.air)
     // 8. thingrot (add 4%)
-    ans.thingrot = 1 + u.thingrot * 0.04
+    ans.thingrot = 1 + u.thingrot * str.thingrot
     return ans
   }
   
@@ -153,9 +171,16 @@ export class ThingStat {
     if (o.upgradetext != null) {
       this.upgradetext = o.upgradetext
     }
+    if (o.upgrademax != null) {
+      this.upgrademax = o.upgrademax
+    }
+    if (o.upgradestr != null) {
+      this.makeUpgradeStr(o.upgradestr)
+    }
     if (o.upgrade != null) {
       this.upgradeArray = o.upgrade
     }
+    this.makeUpgradeList()
   }
   
   makeMult(options = { }) {
@@ -272,10 +297,46 @@ export class ThingStat {
     this.realMult.air = b.air || b.a || 1
     this.realMult.rot = b.rot || b.ro || 1
   }
+
+  makeUpgradeList() {
+    if (this.upgradetext == null) {
+      return
+    }
+    const text = config.upgradetext[this.upgradetext],
+          umax = this.upgrademax || upgrademax,
+          list = [ ]
+    for (let k of upgradekeys) {
+      if (umax[k]) {
+        list.push(text[k]);
+      } else {
+        list.push("");
+      }
+    }
+    this.upgradeList = list
+  }
+
+  makeUpgradeStr(str) {
+    if (str == null) {
+      this.upgradestr = upgradestr
+      return
+    }
+    this.upgradestr = []
+    for (let k of upgradekeys) {
+      this.upgradestr[k] = (str[k] || 1) * upgradestr[k]
+    }
+  }
   
-  upgradeStat(key, number) {
-    const maxstat = upgrademax[key] - 1,
-          newstat = this.upgrade[key] + number
+  upgradeStat(key, number, all = false) {
+    const currstat = this.upgrade[key],
+          maxstat = this.upgrademax[key] - 1
+    if (all) {
+      if (number > 0) {
+        number = Math.min(maxstat - currstat, this.points)
+      } else if (number < 0) {
+        number = -currstat
+      }
+    }
+    const newstat = currstat + number
     if ( (newstat <= maxstat || maxstat === -1) && newstat >= 0 && this.points >= number) {
       this.upgrade[key] = newstat
       this.refreshPoints()

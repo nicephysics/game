@@ -18,7 +18,16 @@ export var config = {
     },
   },
   upgradetext: {
-    normal: ["projectile size", "projectile mass", "projectile launch speed", "projectile launch rate", "tower movement speed"],
+    normal: {
+      size: "projectile size",
+      mass: "projectile mass",
+      speed: "projectile launch speed",
+      reload: "projectile launch rate",
+      thingspeed: "ship movement speed",
+      spread: "projectile launch spread",
+      air: "projectile air resistance",
+      thingrot: "ship rotation speed",
+    },
   },
 }
 

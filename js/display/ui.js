@@ -876,6 +876,7 @@ ui.drawMenu = function() {
       draw.setFont(ctx, "24px Roboto Mono")
       draw._text(ctx, _width / 2, _height * 0.1, waves.waves.name, 0, "center")
     }
+    // some keypresses
     if ( ui.pressed("escape") ) {
       v.waves_finish = false
       v.menu_options_show = true
@@ -1055,7 +1056,7 @@ ui.drawGame = function() {
       draw._text(ctx, _width / 2, _height * 0.375, "Points remaining: " + playerStat.points, 0, "")
     // finally!
     // upgrade constant vars (all arrays)
-    const upgradeList = config.upgradetext[playerStat.upgradetext],
+    const upgradeList = playerStat.upgradeList,
           upgradeNumbers = playerStat.upgradeArray,
           upgradeColors = style.upgradetext,
           upgradeLength = upgradeList.length,
@@ -1071,6 +1072,7 @@ ui.drawGame = function() {
         dispratio = 0,
         percentText = "??%",
         ygap = 6, // gap between rows
+        plus_minus_gap = 80, // gap between plus button and minus button
         hovering = false,
         clicking = false,
         hovering_ = false,
@@ -1081,7 +1083,7 @@ ui.drawGame = function() {
         clicksign = 0,
         keyindex = 0
     
-    x = _width / 3 - 10
+    x = _width / 3
     width = _width / 3 - 50
     height = 20 // height of each one
     ygap += height
@@ -1123,9 +1125,9 @@ ui.drawGame = function() {
       
       // upgrade bar button hover/click detection
       hovering = ui.hitcircle(mousepos, x, y, size + 2) || (ui.keyheld("Digit" + keyindex) && !shifting)
-      hovering_ = ui.hitcircle(mousepos, x + 60, y, size + 3) || (ui.keyheld("Digit" + keyindex) && shifting)
+      hovering_ = ui.hitcircle(mousepos, x + plus_minus_gap, y, size + 3) || (ui.keyheld("Digit" + keyindex) && shifting)
       clicking = ui.hitcircle(clickpos, x, y, size + 2) || (ui.released("Digit" + keyindex) && !shifting)
-      clicking_ = ui.hitcircle(clickpos, x + 60, y, size + 3) || (ui.released("Digit" + keyindex) && shifting)
+      clicking_ = ui.hitcircle(clickpos, x + plus_minus_gap, y, size + 3) || (ui.released("Digit" + keyindex) && shifting)
       if (clicking && clicked === -1) {
         clicked = i
         clicksign = 1
@@ -1141,11 +1143,11 @@ ui.drawGame = function() {
       draw.setFillDarkenStroke(ctx, (hovering) ? "#46bf00" : ucolor)
         draw._circle(ctx, x, y, size)
       draw.setFillDarkenStroke(ctx, (hovering_) ? "#bf3600" : ucolor)
-        draw._circle(ctx, x + 60, y, size)
+        draw._circle(ctx, x + plus_minus_gap, y, size)
       
       // draw upgrade number
       draw.setTextDarkFill(ctx, ucolor)
-        draw._text(ctx, x + 30, y, unumber + "", 0, "center")
+        draw._text(ctx, x + plus_minus_gap / 2, y, unumber + " / " + playerStat.upgrademax[upgradekeys[i]], 0, "center")
       
       // draw upgrade plus/minus signs
       size *= 0.6 // CONST upgrade bar plus/minus sign size ratio
@@ -1153,10 +1155,10 @@ ui.drawGame = function() {
         draw._line(ctx, x - size, y, x + size, y)
         draw._line(ctx, x, y - size, x, y + size)
       draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
-        draw._line(ctx, x + 60 - size, y, x + 60 + size, y)
+        draw._line(ctx, x + plus_minus_gap - size, y, x + plus_minus_gap + size, y)
       
       // draw bar
-      x += 85 // CONST upgrade bar x-translate of bar
+      x += plus_minus_gap + 25 // CONST upgrade bar x-translate of bar
       
       draw.setFill(ctx, "transparent")
       draw.setDarkStroke(ctx, ucolor)
@@ -1172,7 +1174,7 @@ ui.drawGame = function() {
       draw.setTextDarkFill(ctx, ucolor)
         draw._text(ctx, x + width + 15, y, percentText, 0, "left")
       
-      x -= 85 // same as above
+      x -= plus_minus_gap + 25 // same as above
       
       y += ygap
     }
@@ -1182,9 +1184,7 @@ ui.drawGame = function() {
             key = upgradekeys[index]
       playerStat.upgradeStat(key, clicksign)
       if (ctrling) {
-        while (playerStat.upgradeStat(key, clicksign)) {
-          // do nothing
-        }
+        playerStat.upgradeStat(key, clicksign, true)
       }
     }
     

@@ -25,6 +25,7 @@ things.tower = {
   category: category.yourTower,
   // render stuff
   shape: 6,
+  shapeAngle: 30,
   accessories: [],
   render: style.tower.default,
   // game stuff
@@ -37,6 +38,7 @@ things.tower = {
     speed: 5,
     rotspeed: 0.2,
     upgradetext: "normal",
+    upgradestr: {},
     upgrade: null,
   }
 }
@@ -91,9 +93,10 @@ things.basic = {
   render: style.tower.basic,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
-      size: 2,
+      type: "gunshape",
+      size: 1.6,
+      shape: 0,
     }
   ],
   upgrades: ["twin", "fast", "big", "strong", "double"],
@@ -114,6 +117,7 @@ things.basic = {
     speed: 5,
     rotspeed: 0.2,
     upgradetext: "normal",
+    upgrademax: { size: 5, mass: 5, speed: 5, reload: 5, thingspeed: 5, },
     upgrade: null,
   }
 }
@@ -125,10 +129,11 @@ things.twin = {
   render: style.tower.tier2,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
-      size: 2.5,
-      center: true
+      type: "gunshape",
+      size: 2.4,
+      shape: 0,
+      centre: true,
     }
   ],
   // upgrades: [],
@@ -165,9 +170,10 @@ things.double = {
   render: style.tower.tier2,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
+      type: "gunshape",
       size: 2,
+      shape: 0,
     }
   ],
   // upgrades: [],
@@ -204,9 +210,10 @@ things.big = {
   render: style.tower.tier2,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
+      type: "gunshape",
       size: 2,
+      shape: 0,
     }
   ],
   // upgrades: [],
@@ -237,9 +244,10 @@ things.strong = {
   render: style.tower.tier2,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
+      type: "gunshape",
       size: 2,
+      shape: 0,
     }
   ],
   // upgrades: [],
@@ -269,9 +277,10 @@ things.fast = {
   render: style.tower.tier2,
   accessories: [
     {
-      type: "guncircle",
       layer: 2,
+      type: "gunshape",
       size: 2,
+      shape: 0,
     }
   ],
   // upgrades: [],

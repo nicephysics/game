@@ -208,15 +208,15 @@ controls.init = function(render) {
         break
     }
   })
-  
-  window.addEventListener("mousemove", function(event) {
+
+  const mousemove_f = function(event) {
     if (!playerExists()) {
       return
     }
     c.pointer = mouse.position
-  })
-  
-  window.addEventListener("mousedown", function(event) {
+  }
+
+  const mousedown_f = function(event) {
     if (!playerExists()) {
       return
     }
@@ -229,14 +229,26 @@ controls.init = function(render) {
     if ((event.buttons & 4) > 0) {
       c.midshoot = true
     }
-  })
-  
-  window.addEventListener("mouseup", function(event) {
+  }
+
+  const mouseup_f = function(event) {
     if (!playerExists()) {
       return
     }
     c.shoot = false
     c.altshoot = false
     c.midshoot = false
-  })
+  }
+  
+  window.addEventListener("mousemove", mousemove_f)
+  
+  window.addEventListener("touchmove", mousemove_f)
+  
+  window.addEventListener("mousedown", mousedown_f)
+  
+  window.addEventListener("touchstart", mousedown_f)
+  
+  window.addEventListener("mouseup", mouseup_f)
+  
+  window.addEventListener("touchend", mouseup_f)
 }

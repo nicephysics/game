@@ -1,6 +1,6 @@
-var Events = Matter.Events
+const Events = Matter.Events
 
-export var events = { }
+export const events = { }
 
 // input_function(compositeArray) { for (let composite of compositeArray) { ... } }
 events.afterAdd = function(engine, input_function) {

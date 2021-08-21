@@ -1,10 +1,6 @@
-// no imports
+// no imports, yay
 
-if (true) {
-  // 2 space indent
-}
-
-export var config = {
+export const config = {
   version: "0.0.0",
   FPS: 60,
   smooth: {
@@ -63,7 +59,7 @@ const c = {
   all: 0x00FF,
 }
 
-export var category = {
+export const category = {
   c: c,
   mouseConstraint: {
     mask: c.ground

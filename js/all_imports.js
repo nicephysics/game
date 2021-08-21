@@ -131,6 +131,6 @@ import('./util/math.js').then(m => {
 import('./util/random.js').then(m => {
   util.random = m.random
 })
-import('./util/world.js').then(m => {
-  util.world = m.world
+import('./util/tools.js').then(m => {
+  util.tools = m.tools
 })

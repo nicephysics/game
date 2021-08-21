@@ -224,6 +224,9 @@ ui.init = function(render) {
     // basically a click
     v.click = mouse.absolute
   })
+  window.addEventListener("touchstart", function(event) {
+    // touchdown on mobile
+  })
   window.addEventListener("touchmove", function(event) {
     v.hover = mouse.absolute
   })

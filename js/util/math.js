@@ -1,13 +1,8 @@
-// no imports
+// no imports, yay
 
-if (true) {
-  // 2 space indent!
-}
+var Vector = Matter.Vector
 
-var Query = Matter.Query,
-    Vector = Matter.Vector
-
-export var math = { }
+export const math = { }
 
 // e.g. lerp(start, end, 0) == start and lerp(start, end, 1) == end
 math.lerp = function(start, end, factor) {

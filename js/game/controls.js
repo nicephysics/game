@@ -7,11 +7,7 @@ import { math } from "../util/math.js"
 
 import { ui } from "../display/ui.js"
 
-if (true) {
-  // 2 space indent!
-}
-
-export var controls = { }
+export const controls = { }
 
 const Vector = Matter.Vector
 
@@ -228,6 +224,11 @@ controls.init = function(render) {
     }
     if ((event.buttons & 4) > 0) {
       c.midshoot = true
+    }
+    if (mobileCheck()) {
+      c.shoot = true
+      c.altshoot = true
+      c.midshoot = true      
     }
   }
 

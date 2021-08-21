@@ -1,6 +1,6 @@
 var common = Matter.Common
 
-export var random = { }
+export const random = { }
 
 random.rand = common.random
 

@@ -228,13 +228,13 @@ ui.init = function(render) {
   })
   window.addEventListener("touchstart", function(event) {
     // touchdown on mobile
+    v.click = mouse.absolute
   })
   window.addEventListener("touchmove", function(event) {
     v.hover = mouse.absolute
   })
   window.addEventListener("touchend", function(event) {
-    // touch on mobile
-    v.click = mouse.absolute
+    // touchup on mobile
   })
   window.addEventListener("keydown", function(event) {
     // event.keyCode is deprecated
@@ -1810,11 +1810,17 @@ ui.drawpop = function(drawing = true) {
 ui.interact = function() {
   tools.interact("#canvas").gesturable({
     onmove: function(event) {
+      console.log(event)
       if (Game.mode === "menu") {
         if (v.planet_show) {
           v.planet_system_target_scale = math.bound(v.planet_system_target_scale * event.ds, v.planet_system_min_zoom, v.planet_system_max_zoom)
         }
       }
+    }
+  })
+  tools.interact("#canvas").draggable({
+    onmove: function(event) {
+      // this event fires
     }
   })
 }

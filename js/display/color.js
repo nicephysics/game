@@ -12,8 +12,8 @@ theme.default = {
   verydarkgrey:  "#212121", // !
   locked:        "#6a6e7a", // locked
   // translucent colours
-  joystickleft:  "#ff630360", // joystick left
-  joystickright: "#28f7c760", // joystick right
+  joystickleft:  "#ff630350", // joystick left
+  joystickright: "#28f7c750", // joystick right
   // red colours
   lightred:      "#e35656", // light red, used for text
   brightred:     "#ff3333", // very normal red (quite bright)

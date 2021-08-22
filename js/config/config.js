@@ -14,6 +14,7 @@ export const config = {
     },
   },
   dynamic_joystick: true,
+  joystick_size: 20,
   upgradetext: {
     normal: {
       size: "projectile size",

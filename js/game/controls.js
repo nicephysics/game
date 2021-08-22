@@ -7,6 +7,7 @@ import { math } from "../util/math.js"
 import { tools } from "../util/tools.js"
 
 import { ui } from "../display/ui.js"
+import { config } from "../config/config.js"
 
 export const controls = { }
 
@@ -232,14 +233,20 @@ controls.init = function(render) {
       let { left, right } = get_touches(event.touches)
       if (left != null && j.left.id != null) {
         const v = Vector.create(left.clientX - j.left.x, left.clientY - j.left.y)
-        c.shoot = true
-        c.altshoot = true
-        c.midshoot = true
-        c.pointer = Vector.add(Tower.player.position, v)
+        if (Vector.magnitudeSquared(v) > Math.pow(config.joystick_size, 2)) {
+          c.shoot = true
+          c.altshoot = true
+          c.midshoot = true
+          c.pointer = Vector.add(Tower.player.position, v)
+        }
       }
       if (right != null && j.right.id != null) {
         const v = Vector.create(right.clientX - j.right.x, right.clientY - j.right.y)
-        c.movedir = v
+        if (Vector.magnitudeSquared(v) > Math.pow(config.joystick_size, 2)) {
+          c.movedir = v
+        } else {
+          c.movedir = Vector.create(0, 0)
+        }
       }
     } else {
       c.pointer = mouse.position
@@ -260,14 +267,17 @@ controls.init = function(render) {
       c.midshoot = true
     }
     if (tools.isMobile && event.touches) {
-      const touch = event.touches[0],
-            j = controls.joystick
-      if (touch != null) {
-        if (touch.clientX <= window.innerWidth / 2) {
+      event.preventDefault()
+      const j = controls.joystick
+      for (let touch of event.touches) {
+        if (touch.identifier === j.left.id || touch.identifier === j.right.id) {
+          continue
+        }
+        if (touch.clientX <= window.innerWidth / 2 && j.left.id == null) {
           j.left.x = touch.clientX
           j.left.y = touch.clientY
           j.left.id = touch.identifier
-        } else {
+        } else if (touch.clientX >= window.innerWidth / 2 && j.right.id == null) {
           j.right.x = touch.clientX
           j.right.y = touch.clientY
           j.right.id = touch.identifier

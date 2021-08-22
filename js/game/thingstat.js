@@ -26,14 +26,14 @@ export const upgrademax = {
 }
 
 export const upgradestr = {
-  size: 0.016,
-  mass: 0.075,
-  speed: 0.035,
-  reload: 0.025,
-  thingspeed: 0.025,
-  spread: 0.03,
-  air: 0.06,
-  thingrot: 0.04,
+  size: 0.048,
+  mass: 0.225,
+  speed: 0.080,
+  reload: 0.075,
+  thingspeed: 0.065,
+  spread: 0.09,
+  air: 0.18,
+  thingrot: 0.11,
 }
 
 export class ThingStat {

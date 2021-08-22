@@ -233,15 +233,21 @@ controls.init = function(render) {
       let { left, right } = get_touches(event.touches)
       if (left != null && j.left.id != null) {
         const v = Vector.create(left.clientX - j.left.x, left.clientY - j.left.y)
+        j.left.v = v
         if (Vector.magnitudeSquared(v) > Math.pow(config.joystick_size, 2)) {
           c.shoot = true
           c.altshoot = true
           c.midshoot = true
-          c.pointer = Vector.add(Tower.player.position, v)
+          if (config.pointer_joystick) {
+            c.pointer = Vector.create(left.clientX, left.clientY)
+          } else {
+            c.pointer = Vector.add(Tower.player.position, v)
+          }
         }
       }
       if (right != null && j.right.id != null) {
         const v = Vector.create(right.clientX - j.right.x, right.clientY - j.right.y)
+        j.right.v = v
         if (Vector.magnitudeSquared(v) > Math.pow(config.joystick_size, 2)) {
           c.movedir = v
         } else {
@@ -277,10 +283,12 @@ controls.init = function(render) {
           j.left.x = touch.clientX
           j.left.y = touch.clientY
           j.left.id = touch.identifier
+          j.left.v = Vector.create(0, 0)
         } else if (touch.clientX >= window.innerWidth / 2 && j.right.id == null) {
           j.right.x = touch.clientX
           j.right.y = touch.clientY
           j.right.id = touch.identifier
+          j.right.v = Vector.create(0, 0)
         }
       }
     }

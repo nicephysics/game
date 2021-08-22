@@ -1025,10 +1025,20 @@ ui.drawGame = function() {
       if (j.left) {
         draw.setFillNoStroke(ctx, C.joystickleft)
         draw._circle(ctx, j.left.x, j.left.y, circle_size)
+        if (j.left.v) {
+          const v = Vector.mult(Vector.normalise(j.left.v), circle_size * (2 / 3))
+          draw.setFillNoStroke(ctx, chroma(C.joystickleft).alpha(0.7))
+          draw._circle(ctx, j.left.x + v.x, j.left.y + v.y, circle_size / 3)
+        }
       }
       if (j.right) {
         draw.setFillNoStroke(ctx, C.joystickright)
         draw._circle(ctx, j.right.x, j.right.y, circle_size)
+        if (j.right.v) {
+          const v = Vector.mult(Vector.normalise(j.right.v), circle_size * (2 / 3))
+          draw.setFillNoStroke(ctx, chroma(C.joystickright).alpha(0.7))
+          draw._circle(ctx, j.right.x + v.x, j.right.y + v.y, circle_size / 3)
+        }
       }
     } else {
       draw.setFillNoStroke(ctx, C.joystickleft)
@@ -1642,7 +1652,7 @@ ui.drawGame = function() {
   }
 
   // pause overlay
-  if (controls.isPaused() && !v.something_show()) {
+  if ("pause overlay" && controls.isPaused() && !v.something_show()) {
     // draw huge pause overlay... (when the user actually pauses)
     draw.setFillNoStroke(ctx, "#cccccc") // white grey
     ctx.save()

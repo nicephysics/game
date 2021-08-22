@@ -527,16 +527,16 @@ ui.drawMenu = function() {
     }
     draw._rect(ctx, 0, 0, _width, _height)
     // draw star
+    const realStarSize = stars.c.star_size * star.size,
+          dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
+          wobblePeriod = star.wobblePeriod || 10,
+          dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
+          maxStarSize = realStarSize + dispStarWobble,
+          star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
+          star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
+          sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
     if ("star") {
       // draw star in the middle
-      const realStarSize = stars.c.star_size * star.size,
-            dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
-            wobblePeriod = star.wobblePeriod || 10,
-            dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
-            maxStarSize = realStarSize + dispStarWobble,
-            star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
-            star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
-            sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
       draw.setFillNoStroke(ctx, star.color)
       if (star.stroke != null) {
         draw.setStroke(ctx, star.stroke)

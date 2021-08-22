@@ -78,6 +78,7 @@ export class Controller {
     if (c.down) movedir.y++
     if (c.left) movedir.x--
     if (c.right) movedir.x++
+    if (c.movedir != null) movedir = c.movedir
     // move variables
     const speed = t.movespeed * (t.effect.speedmult || 0),
           moveVector = Vector.mult(Vector.normalise(movedir), speed),

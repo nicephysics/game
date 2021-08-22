@@ -1,5 +1,5 @@
-export var C = { }
-export var theme = { }
+export const C = { }
+export const theme = { }
 
 theme.default = {
   // grayscale colours
@@ -11,9 +11,12 @@ theme.default = {
   darkgrey:      "#3c403d", // planet sidebar
   verydarkgrey:  "#212121", // !
   locked:        "#6a6e7a", // locked
+  // translucent colours
+  joystickleft:  "#ff630360", // joystick left
+  joystickright: "#28f7c760", // joystick right
   // red colours
   lightred:      "#e35656", // light red, used for text
-  brightred:     "#ff1919", // very normal red (quite bright)
+  brightred:     "#ff3333", // very normal red (quite bright)
   darkred:       "#8f0303", // dark red, used for text
   deepred:       "#d41111", // red text and heart and health colour, like C.brightred
   // orange colours

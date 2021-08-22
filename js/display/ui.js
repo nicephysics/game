@@ -17,6 +17,7 @@ import { waves } from "../game/waves.js"
 import { math } from "../util/math.js"
 
 import { config } from "../config/config.js"
+import { tools } from "../util/tools.js"
 
 export var ui = { }
 
@@ -40,6 +41,7 @@ ui.vars = {
   /* main */
   time: 0,
   click: false,
+  preclick: false,
   hover: { x: 0, y: 0 },
   scroll: 0,
   clicktime: 0,
@@ -263,7 +265,6 @@ ui.init = function(render) {
     const y = event.deltaY
     ui.vars.scroll = y / Math.abs(y)
   })
-
   ui.focused = document.visibilityState === "visible" // yes
   document.addEventListener("visibilitychange", function() {
     if (document.visibilityState === "visible") {
@@ -272,6 +273,7 @@ ui.init = function(render) {
       ui.focused = false
     }
   })
+  ui.interact()
 }
 
 // runs every frame
@@ -524,39 +526,42 @@ ui.drawMenu = function() {
       draw.setFillNoStroke(ctx, star.background)
     }
     draw._rect(ctx, 0, 0, _width, _height)
-    // draw star in the middle
-    const realStarSize = stars.c.star_size * star.size,
-          dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
-          wobblePeriod = star.wobblePeriod || 10,
-          dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
-          maxStarSize = realStarSize + dispStarWobble,
-          star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
-          star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
-          sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
-    draw.setFillNoStroke(ctx, star.color)
-    if (star.stroke != null) {
-      draw.setStroke(ctx, star.stroke)
+    // draw star
+    if ("star") {
+      // draw star in the middle
+      const realStarSize = stars.c.star_size * star.size,
+            dispStarWobble = stars.c.star_wobble * realStarSize * (star.wobble || 0),
+            wobblePeriod = star.wobblePeriod || 10,
+            dispStarSize = scale * (realStarSize + dispStarWobble * Math.sin(v.time / 60 / wobblePeriod)),
+            maxStarSize = realStarSize + dispStarWobble,
+            star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
+            star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
+            sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
+      draw.setFillNoStroke(ctx, star.color)
+      if (star.stroke != null) {
+        draw.setStroke(ctx, star.stroke)
+      }
+      if (star.lineWidth != null) {
+        draw.setLineWidth(ctx, star.lineWidth)
+      } else {
+        draw.setLineWidth(ctx, 0)
+      }
+      // draw the star circle!
+      x = _width / 2 + v.planet_sidebar / 2
+      y = _height / 2
+      draw._circle(ctx, x, y, dispStarSize)
+      // draw star name at the top
+      draw.setLightFill(ctx, star.color, 1)
+      draw.setNoStroke(ctx)
+      draw.setFont(ctx, "24px Roboto Mono")
+      draw._text(ctx, x, _height * 0.08 + 20 * Math.sin(v.time * 0.005), star.name, 0, "center")
     }
-    if (star.lineWidth != null) {
-      draw.setLineWidth(ctx, star.lineWidth)
-    } else {
-      draw.setLineWidth(ctx, 0)
-    }
-    // draw the star circle!
-    x = _width / 2 + v.planet_sidebar / 2
-    y = _height / 2
-    draw._circle(ctx, x, y, dispStarSize)
-    // draw star name at the top
-    draw.setLightFill(ctx, star.color, 1)
-    draw.setNoStroke(ctx)
-    draw.setFont(ctx, "24px Roboto Mono")
-    draw._text(ctx, x, _height * 0.08 + 20 * Math.sin(v.time * 0.005), star.name, 0, "center")
-    // draw the planets!
     let index = 0,
         clicked_on_orbit = false
+    // draw planets
     for (let p of planets) {
-      const planetName = star.name + star.postfix + p.name,
-            realPlanetSize = stars.c.planet_size * p.size,
+      // const planetName = star.name + star.postfix + p.name,
+      const realPlanetSize = stars.c.planet_size * p.size,
             dispPlanetSize = realPlanetSize * scale,
             realOrbitSize = stars.c.orbit_size * p.radius,
             dispOrbitSize = realOrbitSize * scale,
@@ -608,8 +613,8 @@ ui.drawMenu = function() {
         draw.setLineWidth(ctx, 2)
         draw._circle(ctx, planetX, planetY, 7) // outline circle size
       }
+      // draw planet popup (removed)
       if (v.planet_selected === index) {
-        // draw planet popup (if needed)
         /*
         draw.setFont(ctx, "14px Roboto Mono")
         const strings = [
@@ -639,23 +644,22 @@ ui.drawMenu = function() {
           draw._text(ctx, popupX, popupY, str, 0, "left")
         }
         */
-        // draw planet sidebar
       }
       // finally, increment planet index
       index++
     } // end of planet loop
     // do planet zoom scale
-    const min_wh = Math.min(_width - v.planet_sidebar, _height),
-          min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1,
-          max_zoom = min_wh / maxStarSize / 2 * 0.9
+    const min_wh = Math.min(_width - v.planet_sidebar, _height)
+    v.planet_system_min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1
+    v.planet_system_max_zoom = min_wh / maxStarSize / 2 * 0.9
     // if scrolled, then change scale
     if (v.scroll && v.scroll != 0) {
       v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
     }
-    v.planet_system_target_scale = math.bound(v.planet_system_target_scale, min_zoom, max_zoom)
+    v.planet_system_target_scale = math.bound(v.planet_system_target_scale, v.planet_system_min_zoom, v.planet_system_max_zoom)
     // move planet sidebar
-    const planet_sidebar_move_rate = 0.1,
-          planet_sidebar_target = _width * 0.3
+    const planet_sidebar_move_rate = tools.screenMobile ? 0.15 : 0.1,
+          planet_sidebar_target = tools.screenMobile ? _width : _width * 0.3
     if (v.planet_selected >= 0) {
       v.planet_sidebar = math.lerp(v.planet_sidebar, planet_sidebar_target, planet_sidebar_move_rate)
     } else {
@@ -667,13 +671,13 @@ ui.drawMenu = function() {
       width = planet_sidebar_target
       // check hover or click (the whole thing :O)
       let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
-          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height), // not _exactly_ sidebar_clicking
+          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height), // not *exactly* sidebar_clicking
           sidebar_y = _height * 0.075
-      const sidebar_ratio = v.planet_sidebar / width,
-            sidebar_center = v.planet_sidebar - width / 2
       if (clicking) {
         clicked_on_orbit = true
       }
+      const sidebar_ratio = v.planet_sidebar / width,
+            sidebar_center = v.planet_sidebar - width / 2
       // convenience function to draw a separator line
       const lines_y = []
       const separator = function() {
@@ -688,6 +692,21 @@ ui.drawMenu = function() {
       // draw sidebar background (dark grey, whole thing)
       draw.setFillNoStroke(ctx, chroma.mix(C.darkgrey, C.black, 1 - sidebar_ratio))
       draw._rect(ctx, 0, 0, v.planet_sidebar, _height)
+      // draw sidebar X button
+      if (true || tools.screenMobile) {
+        const cross_size = 8,
+              cross_x = v.planet_sidebar - cross_size * 2,
+              cross_y = cross_size * 2
+        draw.setStrokeNoFill(ctx, chroma.mix(C.brightred, C.black, 1 - sidebar_ratio))
+        draw.setLineWidth(ctx, 3)
+          draw._line(ctx, cross_x - cross_size, cross_y - cross_size, cross_x + cross_size, cross_y + cross_size)
+          draw._line(ctx, cross_x + cross_size, cross_y - cross_size, cross_x - cross_size, cross_y + cross_size)
+        const cross_click = ui.hitcircle(clickpos, cross_x, cross_y, cross_size * 1.2)
+        if (cross_click) {
+          clickpos = false
+          v.planet_selected = -1
+        }
+      }
       // draw planet information, if there is no planet selected, draw nothing
       if (v.planet_selected >= 0) {
         // get the currently selected planet
@@ -986,6 +1005,28 @@ ui.drawGame = function() {
       draw._text(ctx, x - 15 - size / 2, y + 3, towerHealth + "", 0, "right")
   }
 
+  // draw joystick (if mobile)
+  if ("joystick" && tools.isMobile) {
+    draw.setLineWidth(ctx, 0)
+    const circle_size = 20
+    if (config.dynamic_joystick) {
+      const j = controls.joystick
+      if (j.left) {
+        draw.setFillNoStroke(ctx, C.joystickleft)
+        draw._circle(ctx, j.left.x, j.left.y, circle_size)
+      }
+      if (j.right) {
+        draw.setFillNoStroke(ctx, C.joystickright)
+        draw._circle(ctx, j.right.x, j.right.y, circle_size)
+      }
+    } else {
+      draw.setFillNoStroke(ctx, C.joystickleft)
+      draw._circle(ctx, config.joystick.left.x, config.joystick.left.y, circle_size)
+      draw.setFillNoStroke(ctx, C.joystickright)
+      draw._circle(ctx, config.joystick.right.x, config.joystick.right.y, circle_size)
+    }
+  }
+
   // draw upgrade button at the side...
   if (!v.upgrade_show) {
     size = 16 // CONST upgrade button size
@@ -1029,13 +1070,13 @@ ui.drawGame = function() {
     draw.setFillNoStroke(ctx, "#99ff00") // CONST upgrade overlay rect color
     ctx.save() // save the canvas
     draw.setGlobalAlpha(ctx, 0.75) // CONST upgrade overlay rect opacity
-    const overlayGap = 40 // CONST upgrade overlay gap
+    const overlayGap = (tools.screenMobile) ? 0 : 40 // CONST upgrade overlay gap
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore() // restore the canvas to last save (above)
     // draw X button
     if (true) {
-      const crossX = _width - overlayGap * 2.4,
-            crossY = overlayGap * 2.4
+      const crossX = _width - overlayGap * 1.2 - 20,
+            crossY = overlayGap * 1.2 + 20
       size = 10 // CONST upgrade overlay X button size
       draw.setStrokeNoFill(ctx, "#ff3333") // CONST upgrade overlay X button color
       draw.setLineWidth(ctx, 5)
@@ -1089,7 +1130,7 @@ ui.drawGame = function() {
         clicksign = 0,
         keyindex = 0
     
-    x = _width / 3
+    x = (tools.screenMobile) ? _width / 2 : _width / 3
     width = _width / 3 - 50
     height = 20 // height of each one
     ygap += height
@@ -1163,24 +1204,26 @@ ui.drawGame = function() {
       draw.setStrokeNoFill(ctx, "#6b0000") // CONST upgrade bar minus color
         draw._line(ctx, x + plus_minus_gap - size, y, x + plus_minus_gap + size, y)
       
-      // draw bar
-      x += plus_minus_gap + 25 // CONST upgrade bar x-translate of bar
-      
-      draw.setFill(ctx, "transparent")
-      draw.setDarkStroke(ctx, ucolor)
-      draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
-        draw._line(ctx, x, y, x + width, y)
-      draw.setLightStroke(ctx, ucolor)
-      draw.setLineWidth(ctx, 8) // CONST upgrade bar thinner line width
-        draw._line(ctx, x, y, x + width, y)
-      draw.setStroke(ctx, ucolor)
-        draw._line(ctx, x, y, x + width * dispratio, y)
-      
-      // draw % text
-      draw.setTextDarkFill(ctx, ucolor)
-        draw._text(ctx, x + width + 15, y, percentText, 0, "left")
-      
-      x -= plus_minus_gap + 25 // same as above
+      // draw bar (if not on mobile)
+      if (!tools.screenMobile) {
+        x += plus_minus_gap + 25 // CONST upgrade bar x-translate of bar
+        
+        draw.setFill(ctx, "transparent")
+        draw.setDarkStroke(ctx, ucolor)
+        draw.setLineWidth(ctx, 10) // CONST upgrade bar thicker line width
+          draw._line(ctx, x, y, x + width, y)
+        draw.setLightStroke(ctx, ucolor)
+        draw.setLineWidth(ctx, 8) // CONST upgrade bar thinner line width
+          draw._line(ctx, x, y, x + width, y)
+        draw.setStroke(ctx, ucolor)
+          draw._line(ctx, x, y, x + width * dispratio, y)
+        
+        // draw % text
+        draw.setTextDarkFill(ctx, ucolor)
+          draw._text(ctx, x + width + 15, y, percentText, 0, "left")
+        
+        x -= plus_minus_gap + 25 // same as above
+      }
       
       y += ygap
     }
@@ -1232,12 +1275,12 @@ ui.drawGame = function() {
     draw.setFillNoStroke(ctx, C.cyan) // CONST tier up overlay rect color
     ctx.save()
     draw.setGlobalAlpha(ctx, 0.75) // CONST tier up overlay rect opacity (was 0.6)
-    const overlayGap = 50
+    const overlayGap = (tools.screenMobile) ? 0 : 50
       draw._rect(ctx, overlayGap, overlayGap, _width - overlayGap * 2, _height - overlayGap * 2)
     ctx.restore()
     // draw X button
-    x = _width - overlayGap * 2
-    y = overlayGap * 2
+    x = _width - overlayGap * 1.2 - 20
+    y = overlayGap * 1.2 + 20
     size = 10 // CONST tier up overlay X button size
     draw.setStrokeNoFill(ctx, "#ff3333") // CONST tier up overlay X button color (was #cf0000)
     draw.setLineWidth(ctx, 5)
@@ -1291,9 +1334,19 @@ ui.drawGame = function() {
             hovering = ui.hitcircle(mousepos, x, y, size * mouseBoxSize),
             clicking = ui.hitcircle(clickpos, x, y, size * mouseBoxSize)
       if (clicking) {
-        clicked = i
+        if (tools.isMobile) {
+          if (v.preclicked === i) {
+            v.preclicked = -1
+            clicked = i
+          } else {
+            v.preclicked = i
+            hovered = i
+          }
+        } else {
+          clicked = i
+        }
       }
-      if (hovering) {
+      if (hovering || (tools.isMobile && v.preclicked === i)) {
         hovered = i
         draw.setFill(ctx, "#7547ff55") // CONST tier up circle hover color
       } else {
@@ -1751,4 +1804,17 @@ ui.drawpop = function(drawing = true) {
   }
   
   // return { w: w, h: h }
+}
+
+/****************************************************************** INTERACT ******************************************************************/
+ui.interact = function() {
+  tools.interact("#canvas").gesturable({
+    onmove: function(event) {
+      if (Game.mode === "menu") {
+        if (v.planet_show) {
+          v.planet_system_target_scale = math.bound(v.planet_system_target_scale * event.ds, v.planet_system_min_zoom, v.planet_system_max_zoom)
+        }
+      }
+    }
+  })
 }

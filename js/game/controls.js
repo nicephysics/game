@@ -4,6 +4,7 @@ import { Thing } from "./thing.js"
 import { waves } from "./waves.js"
 
 import { math } from "../util/math.js"
+import { tools } from "../util/tools.js"
 
 import { ui } from "../display/ui.js"
 
@@ -54,12 +55,14 @@ const playerExists = function() {
   return Tower.player != null
 }
 
+controls.joystick = {
+  left: { },
+  right: { },
+}
+
 controls.init = function(render) {
-  const engine = render.engine,
-        mouse = render.mouse,
-        world = engine.world,
-        player = Tower.player,
-        body = player.body
+  const mouse = render.mouse,
+        player = Tower.player
   
   player.control = {
     up: false,
@@ -73,6 +76,7 @@ controls.init = function(render) {
     midshoot: false,
     autoshoot: false,
     autorotate: false,
+    movedir: null,
   }
   
   var c = player.control // alias
@@ -205,11 +209,41 @@ controls.init = function(render) {
     }
   })
 
+  const get_touches = function(touches) {
+    const j = controls.joystick
+    let left = null,
+        right = null
+    for (let touch of touches) {
+      if (touch.identifier === j.left.id) {
+        left = touch
+      } else if (touch.identifier === j.right.id) {
+        right = touch
+      }
+    }
+    return { left: left, right: right }
+  }
+
   const mousemove_f = function(event) {
     if (!playerExists()) {
       return
     }
-    c.pointer = mouse.position
+    if (tools.isMobile && event.touches) {
+      const j = controls.joystick
+      let { left, right } = get_touches(event.touches)
+      if (left != null && j.left.id != null) {
+        const v = Vector.create(left.clientX - j.left.x, left.clientY - j.left.y)
+        c.shoot = true
+        c.altshoot = true
+        c.midshoot = true
+        c.pointer = Vector.add(Tower.player.position, v)
+      }
+      if (right != null && j.right.id != null) {
+        const v = Vector.create(right.clientX - j.right.x, right.clientY - j.right.y)
+        c.movedir = v
+      }
+    } else {
+      c.pointer = mouse.position
+    }
   }
 
   const mousedown_f = function(event) {
@@ -225,10 +259,20 @@ controls.init = function(render) {
     if ((event.buttons & 4) > 0) {
       c.midshoot = true
     }
-    if (mobileCheck()) {
-      c.shoot = true
-      c.altshoot = true
-      c.midshoot = true      
+    if (tools.isMobile && event.touches) {
+      const touch = event.touches[0],
+            j = controls.joystick
+      if (touch != null) {
+        if (touch.clientX <= window.innerWidth / 2) {
+          j.left.x = touch.clientX
+          j.left.y = touch.clientY
+          j.left.id = touch.identifier
+        } else {
+          j.right.x = touch.clientX
+          j.right.y = touch.clientY
+          j.right.id = touch.identifier
+        }
+      }
     }
   }
 
@@ -236,9 +280,24 @@ controls.init = function(render) {
     if (!playerExists()) {
       return
     }
-    c.shoot = false
-    c.altshoot = false
-    c.midshoot = false
+    if (tools.isMobile && event.touches) {
+      const j = controls.joystick
+      let { left, right } = get_touches(event.touches)
+      if (left == null) {
+        j.left = { }
+        c.movedir = Vector.create(0, 0)
+      }
+      if (right == null) {
+        j.right = { }
+        c.shoot = false
+        c.altshoot = false
+        c.midshoot = false
+      }
+    } else {
+      c.shoot = false
+      c.altshoot = false
+      c.midshoot = false
+    }
   }
   
   window.addEventListener("mousemove", mousemove_f)

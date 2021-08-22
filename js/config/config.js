@@ -13,6 +13,7 @@ export const config = {
       pos: 1.0, // none yet?
     },
   },
+  dynamic_joystick: true,
   upgradetext: {
     normal: {
       size: "projectile size",
@@ -40,6 +41,11 @@ config.updateBounds = function() {
   config.movelimits = {
     min: { x: 0, y: height * 0.35 },
     max: { x: width, y: height - 20 },
+  }
+
+  config.joystick = {
+    left:  { x: Math.min(width * 0.25, 125), y: Math.min(height * 0.75, height - 100) },
+    right: { x: Math.max(width * 0.75, width - 125), y: Math.min(height * 0.75, height - 100) },
   }
 }
 // and then call the function

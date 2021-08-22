@@ -42,6 +42,7 @@ ui.vars = {
   time: 0,
   click: false,
   preclick: false,
+  touches: false,
   hover: { x: 0, y: 0 },
   scroll: 0,
   clicktime: 0,
@@ -230,13 +231,26 @@ ui.init = function(render) {
   })
   window.addEventListener("touchstart", function(event) {
     // touchdown on mobile
-    v.click = mouse.absolute
+    if (event.touches.length === 1) {
+      v.click = mouse.absolute
+    } else {
+      v.touches = event.touches
+    }
   })
   window.addEventListener("touchmove", function(event) {
-    v.hover = mouse.absolute
+    if (event.touches.length === 1) {
+      v.hover = mouse.absolute
+    } else {
+      v.touches = event.touches
+    }
   })
   window.addEventListener("touchend", function(event) {
     // touchup on mobile
+    if (event.touches.length === 1) {
+      // do nothing
+    } else {
+      v.touches = event.touches
+    }
   })
   window.addEventListener("keydown", function(event) {
     // event.keyCode is deprecated

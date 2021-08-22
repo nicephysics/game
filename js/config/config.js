@@ -14,7 +14,7 @@ export const config = {
     },
   },
   dynamic_joystick: true,
-  pointer_joystick: true,
+  pointer_joystick: false,
   joystick_size: 20,
   upgradetext: {
     normal: {

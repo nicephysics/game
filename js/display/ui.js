@@ -87,6 +87,8 @@ ui.vars = {
   planet_sidebar: 0,
   planet_sidebar_description: true, // show the game description?
   planet_sidebar_level: -1,
+  planet_sidebar_scroll: 0,
+  planet_sidebar_target_scroll: 0,
   planet_system_scale: 1,
   planet_system_target_scale: 1,
   
@@ -517,6 +519,7 @@ ui.drawMenu = function() {
     const star = stars.stars[v.current_star_key],
           planets = star.planets
     v.planet_system_scale = math.lerp(v.planet_system_scale, v.planet_system_target_scale, 0.1)
+    v.planet_sidebar_scroll = math.lerp(v.planet_sidebar_scroll, v.planet_sidebar_target_scroll, 0.1)
     // then get the planetary system's scale
     let scale = v.planet_system_scale,
         maxPlanetOrbitSize = 0 // for keeping track of highest planet distance (for calculation of zoom limits)
@@ -534,6 +537,7 @@ ui.drawMenu = function() {
           maxStarSize = realStarSize + dispStarWobble,
           star_hovering = ui.hitcircle(mousepos, x, y, maxStarSize * 1.1),
           star_clicking = ui.hitcircle(clickpos, x, y, maxStarSize * 1.1),
+          sidebar_hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
           sidebar_clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height)
     if ("star") {
       // draw star in the middle
@@ -648,32 +652,21 @@ ui.drawMenu = function() {
       // finally, increment planet index
       index++
     } // end of planet loop
-    // do planet zoom scale
-    const min_wh = Math.min(_width - v.planet_sidebar, _height)
-    v.planet_system_min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1
-    v.planet_system_max_zoom = min_wh / maxStarSize / 2 * 0.9
-    // if scrolled, then change scale
-    if (v.scroll && v.scroll != 0) {
-      v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
-    }
-    v.planet_system_target_scale = math.bound(v.planet_system_target_scale, v.planet_system_min_zoom, v.planet_system_max_zoom)
     // move planet sidebar
     const planet_sidebar_move_rate = tools.screenMobile ? 0.15 : 0.1,
-          planet_sidebar_target = tools.screenMobile ? _width : _width * 0.3
+          planet_sidebar_target = tools.screenMobile ? _width : _width * 0.4
     if (v.planet_selected >= 0) {
       v.planet_sidebar = math.lerp(v.planet_sidebar, planet_sidebar_target, planet_sidebar_move_rate)
     } else {
       v.planet_sidebar = math.lerp(v.planet_sidebar, 0, planet_sidebar_move_rate)
     }
     // draw planet sidebar
+    let sidebar_y = _height * 0.075 - v.planet_sidebar_scroll
     if (Math.round(v.planet_sidebar) > 0) {
       // expected sidebar width
       width = planet_sidebar_target
       // check hover or click (the whole thing :O)
-      let hovering = ui.hitrect(mousepos, 0, 0, v.planet_sidebar, _height),
-          clicking = ui.hitrect(clickpos, 0, 0, v.planet_sidebar, _height), // not *exactly* sidebar_clicking
-          sidebar_y = _height * 0.075
-      if (clicking) {
+      if (sidebar_clicking) {
         clicked_on_orbit = true
       }
       const sidebar_ratio = v.planet_sidebar / width,
@@ -841,10 +834,28 @@ ui.drawMenu = function() {
             draw._rectangle(ctx, sidebar_center, sidebar_y, start_width, start_height)
             draw.setFillNoStroke(ctx, C.almostwhite)
             draw._text(ctx, sidebar_center, sidebar_y, start_text, 0, "center")
+            sidebar_y += start_height / 2
+            separator()
           }
         }
       } // end of planet information
     } // end planet sidebar
+    // do planet zoom scale
+    const min_wh = Math.min(_width - v.planet_sidebar, _height)
+    v.planet_system_min_zoom = min_wh / maxPlanetOrbitSize / 2 * 1.1
+    v.planet_system_max_zoom = min_wh / maxStarSize / 2 * 0.9
+    // if scrolled, then change scale
+    if (v.scroll && v.scroll != 0) {
+      if (sidebar_hovering) {
+        v.planet_sidebar_target_scroll += 50 * v.scroll
+      } else {
+        v.planet_system_target_scale *= Math.pow(0.9, v.scroll)
+      }
+      v.scroll = false
+    }
+    // scale and scroll bound
+    v.planet_sidebar_target_scroll = math.bound(v.planet_sidebar_target_scroll, 0, Math.max(0, sidebar_y + 50 - _height))
+    v.planet_system_target_scale = math.bound(v.planet_system_target_scale, v.planet_system_min_zoom, v.planet_system_max_zoom)
     // unselect selected planet if clicked on the space area
     if (!clicked_on_orbit && clickpos) {
       v.planet_selected = -1

@@ -295,13 +295,13 @@ controls.init = function(render) {
       let { left, right } = get_touches(event.touches)
       if (left == null) {
         j.left = { }
-        c.movedir = Vector.create(0, 0)
-      }
-      if (right == null) {
-        j.right = { }
         c.shoot = false
         c.altshoot = false
         c.midshoot = false
+      }
+      if (right == null) {
+        j.right = { }
+        c.movedir = Vector.create(0, 0)
       }
     } else {
       c.shoot = false
